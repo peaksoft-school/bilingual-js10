@@ -19,8 +19,8 @@ const FooterStyled = styled('footer')({
    alignItems: 'center',
    justifyContent: 'center',
    textAlign: 'center',
-   maxWidth: '1440px',
-   height: '95px',
+   maxWidth: '100%',
+   height: '6rem',
 })
 const Wrapper = styled('div')({
    display: 'flex',
