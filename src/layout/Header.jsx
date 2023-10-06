@@ -10,13 +10,19 @@ const Header = ({ role = 'clent' }) => {
          </LogoBox>
          <Options>
             <OptionsBlock>
-               <Typography>Tests</Typography>
+               <a href="tests">
+                  <Typography>Tests</Typography>
+               </a>
             </OptionsBlock>
             <OptionsBlock>
                {role ? (
-                  <Typography>My Results</Typography>
+                  <a href="myresults">
+                     <Typography>My Results</Typography>
+                  </a>
                ) : (
-                  <Typography>Submitted Results</Typography>
+                  <a href="submittedresult">
+                     <Typography>Submitted Results</Typography>
+                  </a>
                )}
             </OptionsBlock>
             <OptionsBlock>
@@ -27,20 +33,20 @@ const Header = ({ role = 'clent' }) => {
    )
 }
 const MyHeader = styled('header')({
-   maxWidth: '1440px',
+   maxWidth: '100%',
    height: '94px',
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
 })
 const LogoBox = styled('div')({
-   marginLeft: '120px',
+   marginLeft: '7rem',
 })
 const Options = styled('div')({
    display: 'flex',
    alignItems: 'center',
    gap: '60px',
-   marginRight: '100px',
+   marginRight: '5rem',
    textTransform: 'uppercase',
 })
 const OptionsBlock = styled('div')({
@@ -49,6 +55,9 @@ const OptionsBlock = styled('div')({
    flexDirection: 'column',
    textAlign: 'center',
    marginRight: '20px',
+   '& > a ': {
+      textDecoration: 'none',
+   },
 })
 
 export default Header
