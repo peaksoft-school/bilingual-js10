@@ -21,8 +21,12 @@ const MyStyledInput = styled(TextField)({
       padding: '12px 16px',
       color: '#757575',
    },
+
    '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
+         border: '1px solid #3A10E5',
+      },
+      '&:hover fieldset': {
          border: '1px solid #3A10E5',
       },
    },
