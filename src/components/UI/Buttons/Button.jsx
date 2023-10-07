@@ -96,13 +96,13 @@ const colors = {
    grey: '#4C4C4C',
 }
 
-const ButtonStyled = styled(MuiButton)(({ className, variant }) => {
+const ButtonStyled = styled(MuiButton)(({ className, variant, children }) => {
    const bgColors = backgroundColors[className]
    return {
       backgroundColor: `${bgColors.default}`,
       padding: `${
          className === 'toBeginButton'
-            ? '16px 65px 23px 65px'
+            ? '16px 51px 23px 51px'
             : '0.55rem 1.5rem'
       }`,
       color: `${
@@ -118,6 +118,9 @@ const ButtonStyled = styled(MuiButton)(({ className, variant }) => {
             ? ' 0px 1px 2px 0px rgba(76, 72, 89, 0.20), 0px 1px 2px 0px rgba(76, 72, 89, 0.20)'
             : 'none'
       }`,
+
+      display: 'flex',
+      justifyContent: 'center',
       backgroundRepeat: 'no-repeat',
       '&.MuiButton-root': {
          border: `${
@@ -129,7 +132,9 @@ const ButtonStyled = styled(MuiButton)(({ className, variant }) => {
          }`,
       },
       borderRadius: `${className === 'toBeginButton' ? 'none' : '8px'}`,
-
+      backgroundSize: 'contain',
+      textAlign: 'center',
+      width: `${children === 'to begin' ? '200px' : ''}`,
       '&:hover': {
          backgroundColor: bgColors.hover,
          boxShadow: `${
