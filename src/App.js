@@ -1,11 +1,5 @@
-import { LearnMap } from './components/MianMap/LearnMap'
-
 function App() {
-   return (
-      <div>
-         <LearnMap />
-      </div>
-   )
+   return <div className="App">App</div>
 }
 
 export default App
