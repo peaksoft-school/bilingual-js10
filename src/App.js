@@ -1,7 +1,9 @@
+import { LearnMap } from './components/MianMap/LearnMap'
+
 function App() {
    return (
       <div>
-         <h1>Hello World</h1>
+         <LearnMap />
       </div>
    )
 }
