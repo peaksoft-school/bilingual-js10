@@ -5,6 +5,7 @@ import Rinat from '../../assets/images/rinat.jpg'
 import Bael from '../../assets/images/bael.png'
 import Gulaiym from '../../assets/images/gulaiym.png'
 import Ayzada from '../../assets/images/ayzada.png'
+import Nurlan from '../../assets/images/nurlan.jpg'
 
 export const OurTeam = () => {
    return (
@@ -58,10 +59,7 @@ export const OurTeam = () => {
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img
-                     src="https://i.guim.co.uk/img/media/20bff8b944ac1d441b4922ec361838d2df90b62a/7_926_4793_2876/master/4793.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b37987ab930d1d6f12beb5732111a843"
-                     alt=""
-                  />
+                  <img src={Nurlan} alt="" />
                </div>
                <b>Нурлан Абдуллаев</b>
                <p>Frontend Dev</p>
