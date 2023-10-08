@@ -6,6 +6,7 @@ import Bael from '../../assets/images/bael.png'
 import Gulaiym from '../../assets/images/gulaiym.png'
 import Ayzada from '../../assets/images/ayzada.png'
 import Nurlan from '../../assets/images/nurlan.jpg'
+import Daniel from '../../assets/images/daniel.png'
 
 export const OurTeam = () => {
    return (
@@ -14,52 +15,49 @@ export const OurTeam = () => {
          <div className="ImageContainer">
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img src={Dastan} alt="" />
+                  <img src={Dastan} alt="Dastan" />
                </div>
                <b>Дастан Дулатбеков</b>
                <p>Frontend Dev</p>
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img src={Gulaiym} alt="" />
+                  <img src={Gulaiym} alt="Gulaiym" />
                </div>
                <b>Гулайым Едилбаева</b>
                <p>Frontend Dev</p>
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img src={Rinat} alt="" />
+                  <img src={Rinat} alt="Rinat" />
                </div>
                <b>Ринат Кундузов</b>
                <p>Frontend Dev</p>
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img src={Bael} alt="" />
+                  <img src={Bael} alt="Bael" />
                </div>
                <b>Байэл Сапаралиев</b>
                <p>Backend Dev</p>
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img src={Ayzada} alt="" />
+                  <img src={Ayzada} alt="Ayzada" />
                </div>
                <b>Айзада Абдыразакова</b>
                <p>Backend Dev</p>
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img
-                     src="https://i.guim.co.uk/img/media/20bff8b944ac1d441b4922ec361838d2df90b62a/7_926_4793_2876/master/4793.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b37987ab930d1d6f12beb5732111a843"
-                     alt=""
-                  />
+                  <img src={Daniel} alt="Daniel" />
                </div>
                <b>Даниел Гафуров </b>
                <p>Backend Dev</p>
             </div>
             <div className="nameAndImageDiv">
                <div className="imageDiv">
-                  <img src={Nurlan} alt="" />
+                  <img src={Nurlan} alt="Nurlan" />
                </div>
                <b>Нурлан Абдуллаев</b>
                <p>Frontend Dev</p>
