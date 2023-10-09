@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import Road from '../../assets/image/VectorIcon.png'
-import Planet from '../../assets/image/globe 1.svg'
-import Сhemistry from '../../assets/image/Group 4372.svg'
-import Nonsense from '../../assets/image/Group 4376.svg'
-import Access from '../../assets/image/Group 4386.svg'
-import Adaptive from '../../assets/image/Group 4381.svg'
-import Button from '../../assets/image/button.svg'
+import Road from '../../../assets/image/VectorIcon.png'
+import Planet from '../../../assets/image/globe 1.svg'
+import Сhemistry from '../../../assets/image/Group 4372.svg'
+import Nonsense from '../../../assets/image/Group 4376.svg'
+import Access from '../../../assets/image/Group 4386.svg'
+import Adaptive from '../../../assets/image/Group 4381.svg'
+import Button from '../../../assets/image/button.svg'
 
 export const LearnMap = () => {
    return (
@@ -119,14 +119,6 @@ const Main = styled('div')`
       background-image: url(${Button});
       border: none;
       border-radius: 2rem;
-      /* fill: linear-gradient(
-         186deg,
-         #cb4080 50.01%,
-         #c93d7d 29.76%,
-         #bd3172 80.4%,
-         #ad1e60 100.99%
-      ); */
-      /* box-shadow: 4px -5px 0px 0px rgba(255, 204, 191, 0.68) inset; */
    }
 `
 const Sections = styled('section')`
