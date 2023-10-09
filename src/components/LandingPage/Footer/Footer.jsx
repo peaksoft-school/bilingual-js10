@@ -38,7 +38,7 @@ const FAQ = [
       text: 'Today, educators recognize the increased importance of testing English learners in their home language. The research caught up to what we anecdotally suspected: Assessing kids in their first, or home language is a better pathway to provide every student an equal opportunity to demonstrate what they know and what they are ready to learn next.',
    },
 ]
-export default function ControlledAccordions() {
+export function ControlledAccordions() {
    const [expanded, setExpanded] = React.useState(false)
    const handleChange = (panel) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false)
@@ -49,9 +49,6 @@ export default function ControlledAccordions() {
             style={{
                fontFamily: 'Gilroy',
                fontSize: '40px',
-               fontStyle: 'normal',
-               fontWeight: '700',
-               lineHeight: '51px',
                color: '#fff',
             }}
          >
@@ -138,12 +135,16 @@ const ContainerAccardion = styled('div')(() => ({
    display: 'flex',
    gap: '1rem',
    flexDirection: 'column',
+   borderRadius: 'none',
+
    '& .Accordions': {
       borderTop: '1px solid #4A4A4A',
       background: '#262626',
       color: '#fff',
       fontSize: '20px',
       boxShadow: 'none',
+      paddingTop: '15px',
+      borderRadius: 'none',
    },
    '& .Typographys': {
       color: '#ffffff',
@@ -159,10 +160,6 @@ const Paragraf = styled('div')`
    display: flex;
    justify-content: center;
    color: #98a2b3;
-   font-family: 'Poppins';
    font-size: 14px;
-   font-style: normal;
-   font-weight: 400;
-   line-height: 24px;
    margin-top: 1rem;
 `
