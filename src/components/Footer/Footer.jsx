@@ -12,6 +12,34 @@ import YouTube from '../../assets/Image/Ellipse 269.svg'
 import Fecabook from '../../assets/Image/Group 4328.svg'
 import Instagram from '../../assets/Image/Ellipse 264.svg'
 
+const faq = [
+   {
+      id: 1,
+      name: 'What is Bilingual',
+      text: 'The relevance of the findings for cross-linguistic interaction in bilingual phonetic/phonological development is discussed.',
+   },
+   {
+      id: 2,
+      name: '',
+   },
+   {
+      id: 3,
+      name: '',
+      text: 'Bilingual loves its varied and ranging staff of guest contributors. From edleaders, educators and students to business leaders, tech experts and researchers we are committed to finding diverse voices that highlight the cutting edge of learning.',
+   },
+   {
+      id: 4,
+      name: '',
+      text: 'Remember, your audience doesn’t care if you’re comfortable or not, but they do care about what you have to say, so it’s your mission to make it as easy as possible for them to understand you.',
+   },
+   {
+      id: 5,
+      name: '',
+      text: 'Today, educators recognize the increased importance of testing English learners in their home language. The research caught up to what we anecdotally suspected: Assessing kids in their first, or home language is a better pathway to provide every student an equal opportunity to demonstrate what they know and what they are ready to learn next.',
+   },
+]
+console.log(faq)
+
 export default function ControlledAccordions() {
    const [expanded, setExpanded] = React.useState(false)
    const handleChange = (panel) => (event, isExpanded) => {
