@@ -1,10 +1,12 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import EnglishBook from '../../assets/images/EnglishBook.svg'
-import accessibleIcon from '../../assets/icons/accessibleIcon.svg'
-import extensiveIcon from '../../assets/icons/extensiveIcon.svg'
-import speechIcon from '../../assets/icons/speechIcon.svg'
-import tutoringIcon from '../../assets/icons/tutoringIcon.svg'
+import {
+   AccessibleIcon,
+   EnglishBook,
+   ExtensiveIcon,
+   SpeechIcon,
+   TutoringIcon,
+} from '../../assets/index'
 
 export const UserExperience = () => {
    return (
@@ -25,25 +27,24 @@ export const UserExperience = () => {
                </div>
                <ExperiencesCotainer>
                   <div>
-                     <img src={accessibleIcon} alt="accessibleIcon" />
+                     <AccessibleIcon />
                      <p>Accessible anytime, anywhere</p>
                   </div>
                   <div>
-                     <img src={extensiveIcon} alt="extensiveIcon" />
+                     <ExtensiveIcon />
                      <p>Extensive business content</p>
                   </div>
                   <div>
-                     <img src={speechIcon} alt="speechIcon" />
-                     <p>Leading speech recognition</p>
+                     <SpeechIcon /> <p>Leading speech recognition</p>
                   </div>
                   <div>
-                     <img src={tutoringIcon} alt="tutoringIcon" />
+                     <TutoringIcon />
                      <p>Unlimited live tutoring</p>
                   </div>
                </ExperiencesCotainer>
             </AllDescriptionContainer>
             <div>
-               <img src={EnglishBook} alt="EnglishBookImage" />
+               <EnglishBook />
             </div>
          </MainContainer>
       </div>
