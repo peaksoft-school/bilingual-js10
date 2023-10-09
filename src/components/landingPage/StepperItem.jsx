@@ -32,8 +32,8 @@ const Container = styled(Grid)(({ background, prop }) => ({
 
 const Title = styled('p')(({ textColor }) => ({
    color: textColor,
-   fontfamily: 'Gilroy',
-   fontStyle: 'normal',
+   fontFamily: 'Poppins',
+   // fontStyle: 'normal',
    fontWeight: 700,
    lineHeight: '46px',
    fontSize: '38px',
@@ -41,7 +41,7 @@ const Title = styled('p')(({ textColor }) => ({
    justifySelf: 'self-start',
 }))
 const Text = styled(Typography)(({ prop }) => ({
-   fontfamily: 'Poppins',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '24px',

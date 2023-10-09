@@ -1,12 +1,9 @@
 import { useState } from 'react'
 import Slider from 'react-slick'
 import { Grid, Typography, styled } from '@mui/material'
-import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
-import { ReactComponent as BackIcon } from '../../assets/icons/backIcon.svg'
-import { ReactComponent as Paging } from '../../assets/icons/paging.svg'
-import { ReactComponent as PagingActive } from '../../assets/icons/pagingActive.svg'
 import StepperItem from './StepperItem'
 import { stepperText } from '../../utils/helpers/stepperText'
+import { BackIcon, NextIcon, Paging, PagingActive } from '../../assets/index'
 
 export const Back = (props) => <BackIcon {...props} />
 export const Next = (props) => <NextIcon {...props} />
@@ -49,7 +46,7 @@ const StepperPage = () => {
 export default StepperPage
 
 const Title = styled(Typography)(() => ({
-   fontfamily: 'Gilroy',
+   // fontFamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
    fontSize: '40px',

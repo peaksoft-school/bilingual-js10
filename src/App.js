@@ -1,5 +1,11 @@
+import StepperPage from './components/landingPage/StepperPage'
+
 function App() {
-   return <div>YOLO!</div>
+   return (
+      <div>
+         <StepperPage />
+      </div>
+   )
 }
 
 export default App

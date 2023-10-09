@@ -1,13 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
 body {
    margin: 0;
-   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-      'Helvetica Neue', sans-serif;
+   font-family: 'Poppins', 'Gilroy';
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
 }
-
+@font-face {
+   font-family: 'Gilroy', 'Poppins';
+   src:
+      url('./assets/fonts/Poppins-Medium.ttf') format('ttf'),
+      url('./assets/fonts/Poppins-Regular.ttf') format('ttf'),
+      url();
+}
 code {
    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
+}
+html {
+   font-family: 'Poppins';
 }
