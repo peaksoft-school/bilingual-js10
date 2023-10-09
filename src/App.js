@@ -1,9 +1,7 @@
-import Footer from './layout/Footer'
-
 function App() {
    return (
       <div>
-         <Footer />
+         <h1>hello</h1>
       </div>
    )
 }
