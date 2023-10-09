@@ -1,7 +1,9 @@
+import BasicAccordion from './components/Footer/Footer'
+
 function App() {
    return (
       <div>
-         <h1>Hello World</h1>
+         <BasicAccordion />
       </div>
    )
 }
