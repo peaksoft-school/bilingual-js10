@@ -26,7 +26,7 @@ const Wrapper = styled('div')({
    display: 'flex',
    flexDirection: ' row',
    justifyContent: 'center',
-   gap: '50px',
+   gap: '3rem',
    '& .text': {
       color: '#98A2B3',
       fontSize: '2rem',
