@@ -1,24 +1,29 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { TextField, styled } from '@mui/material'
 
-const Input = ({ children, onChange, value, label, error, ...rest }) => {
-   return (
-      <MyStyledInput
-         label={label}
-         variant="outlined"
-         value={value}
-         onChange={onChange}
-         error={error}
-         {...rest}
-      >
-         {children}
-      </MyStyledInput>
-   )
-}
+const Input = forwardRef(
+   ({ children, onChange, value, label, error, ...rest }, ref) => {
+      return (
+         <MyStyledInput
+            label={label}
+            variant="outlined"
+            value={value}
+            onChange={onChange}
+            error={error}
+            inputRef={ref}
+            {...rest}
+         >
+            {children}
+         </MyStyledInput>
+      )
+   }
+)
 const MyStyledInput = styled(TextField)({
+   backgroundColor: 'yellow',
    '& .MuiInputBase-input': {
       width: '40vw',
-      padding: '12px 16px',
+      padding: '14px 20px',
+      lineHeight: '1.5rem',
       color: '#757575',
    },
 
