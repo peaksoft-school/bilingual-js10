@@ -46,7 +46,7 @@ const StepperPage = () => {
 export default StepperPage
 
 const Title = styled(Typography)(() => ({
-   // fontFamily: 'Gilroy',
+   fontfamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
    fontSize: '40px',
