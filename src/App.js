@@ -1,9 +1,9 @@
-import BasicAccordion from './components/Footer/Footer'
+import ControlledAccordions from './components/LandingPage/Footer/Footer'
 
 function App() {
    return (
       <div>
-         <BasicAccordion />
+         <ControlledAccordions />
       </div>
    )
 }
