@@ -143,18 +143,11 @@ const ContainerAccardion = styled('div')(() => ({
       background: '#262626',
       color: '#fff',
       fontSize: '20px',
-      fontStyle: 'normal',
-      fontWeight: '900',
-      lineHeight: '40px',
       boxShadow: 'none',
    },
    '& .Typographys': {
       color: '#ffffff',
-      fontFamily: 'Poppins',
       fontSize: '18px',
-      fontStyle: 'normal',
-      fontWeight: '300',
-      textAlign: 'start',
    },
 }))
 const ContainerIcon = styled('div')`
