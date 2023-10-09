@@ -134,7 +134,7 @@ export default function ControlledAccordions() {
 
 const ContainerAccardion = styled('div')(() => ({
    backgroundColor: '#262626',
-   padding: '110px',
+   padding: '84px 110px 0 110px',
    display: 'flex',
    gap: '1rem',
    flexDirection: 'column',
@@ -142,7 +142,6 @@ const ContainerAccardion = styled('div')(() => ({
       borderTop: '1px solid #4A4A4A',
       background: '#262626',
       color: '#fff',
-      fontFamily: 'Poppins',
       fontSize: '20px',
       fontStyle: 'normal',
       fontWeight: '900',
@@ -155,7 +154,7 @@ const ContainerAccardion = styled('div')(() => ({
       fontSize: '18px',
       fontStyle: 'normal',
       fontWeight: '300',
-      lineHeight: '150%',
+      textAlign: 'start',
    },
 }))
 const ContainerIcon = styled('div')`
