@@ -1,6 +1,6 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
-import { ReactComponent as Logo } from '../assets/svg/header-logo.svg'
+import { Logo } from '../assets'
 
 const Footer = () => {
    return (
