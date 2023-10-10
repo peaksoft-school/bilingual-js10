@@ -34,7 +34,7 @@ const MainCounter = () => {
                   const newCounter = prevCounter + 1
                   return newCounter >= 200 ? 200 : newCounter
                })
-            }, 800)
+            }, 100)
          }
       }
 
@@ -90,13 +90,8 @@ const MainCounter = () => {
          </EarthContainer>
          <PigContainer>
             <PigDiv>
-               <Dolar
-                  style={{
-                     height: '2.8vh',
-                     marginTop: '-0.9rem',
-                  }}
-               />
-               <Zero style={{ height: '4.4vh' }} />
+               <Dolar className="Dolar" />
+               <Zero className="Zero" />
             </PigDiv>
             <p>Eligible students can take the .</p>
             <p>test with absolutely zero cost to them</p>
@@ -173,6 +168,13 @@ const PigContainer = styled('div')`
    flex-direction: column;
    div {
       margin-bottom: 1.5rem;
+   }
+   .Dolar {
+      height: 2.8vh;
+      margin-top: -0.9rem;
+   }
+   .Zero {
+      height: 4.4vh;
    }
 `
 
