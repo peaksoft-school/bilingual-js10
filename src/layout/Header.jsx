@@ -1,8 +1,10 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
-import { ReactComponent as Logo } from '../assets/svg/header-logo.svg'
 
-const Header = ({ role = 'clent' }) => {
+import { Link } from 'react-router-dom'
+import { Logo } from '../assets'
+
+const Header = ({ role = 'client' }) => {
    return (
       <MyHeader>
          <LogoBox>
@@ -10,19 +12,19 @@ const Header = ({ role = 'clent' }) => {
          </LogoBox>
          <Options>
             <OptionsBlock>
-               <a href="tests">
+               <HeaderLink to="/">
                   <Typography>Tests</Typography>
-               </a>
+               </HeaderLink>
             </OptionsBlock>
             <OptionsBlock>
                {role ? (
-                  <a href="myresults">
+                  <HeaderLink to="/">
                      <Typography>My Results</Typography>
-                  </a>
+                  </HeaderLink>
                ) : (
-                  <a href="submittedresult">
+                  <HeaderLink to="/">
                      <Typography>Submitted Results</Typography>
-                  </a>
+                  </HeaderLink>
                )}
             </OptionsBlock>
             <OptionsBlock>
@@ -33,8 +35,8 @@ const Header = ({ role = 'clent' }) => {
    )
 }
 const MyHeader = styled('header')({
-   maxWidth: '100%',
-   height: '94px',
+   maxWidth: '100vw',
+   height: '5vh',
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
@@ -45,7 +47,7 @@ const LogoBox = styled('div')({
 const Options = styled('div')({
    display: 'flex',
    alignItems: 'center',
-   gap: '60px',
+   gap: '3.75rem',
    marginRight: '5rem',
    textTransform: 'uppercase',
 })
@@ -54,9 +56,13 @@ const OptionsBlock = styled('div')({
    alignItems: 'center',
    flexDirection: 'column',
    textAlign: 'center',
-   marginRight: '20px',
-   '& > a ': {
-      textDecoration: 'none',
+   marginRight: '1.7rem',
+})
+const HeaderLink = styled(Link)({
+   textDecoration: 'none',
+   color: 'black',
+   '&:focus, &:active': {
+      color: 'blue',
    },
 })
 
