@@ -4,10 +4,10 @@ import React from 'react'
 const StepperItem = ({ stepper, prop }) => {
    return (
       <Container background={stepper.background} prop={prop}>
-         <Grid style={{ display: 'flex', flexDirection: 'column' }}>
+         <AboutDesc>
             <Title textColor={stepper.titleColor}>{stepper.title}</Title>
             {prop && <Text prop={prop}>{stepper.desciption}</Text>}
-         </Grid>
+         </AboutDesc>
          <Grid>{stepper.img}</Grid>
       </Container>
    )
@@ -15,18 +15,22 @@ const StepperItem = ({ stepper, prop }) => {
 
 export default StepperItem
 
+const AboutDesc = styled(Grid)(() => ({
+   display: 'flex',
+   flexDirection: 'column',
+}))
 const Container = styled(Grid)(({ background, prop }) => ({
-   maxWidth: prop ? '1028px' : '780px',
+   maxWidth: prop ? '1028px' : '860px',
    backgroundColor: background,
    boxShadow: '16px 16px 20px rgba(0, 0, 0, 0.3)',
    width: '100%',
-   height: prop ? '440px' : '390px',
+   height: prop ? '460px' : '390px',
    borderRadius: '70px 70px 70px 0px',
-   transition: 'all 0s ease',
+   transition: 'all 2s ease',
    padding: ' 46px 100px 60px 44px',
    display: 'flex',
    marginLeft: prop ? '10px' : '50px',
-   marginTop: prop ? '0px' : '20px',
+   marginTop: prop ? '5px' : '20px',
    gap: '42px',
 }))
 
@@ -35,7 +39,8 @@ const Title = styled('p')(({ textColor }) => ({
    fontfamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 700,
-   lineHeight: '46px',
+   lineHeight: '40px',
+   // marginBottom: '-1rem',
    fontSize: '38px',
    maxWidth: '508px',
    justifySelf: 'self-start',

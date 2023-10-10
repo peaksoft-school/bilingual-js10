@@ -7,27 +7,34 @@ import { BackIcon, NextIcon, Paging, PagingActive } from '../../assets/index'
 
 export const Back = (props) => <BackIcon {...props} />
 export const Next = (props) => <NextIcon {...props} />
+
 const StepperPage = () => {
    const [pointer, setPointer] = useState(0)
+
    const customDots = (dots) => <div>{dots}</div>
    const paging = (i) => (i === pointer ? <PagingActive /> : <Paging />)
+
    const settings = {
-      infinite: false,
+      infinite: true,
       className: 'center',
       slidesToShow: 1,
-      speed: 500,
+      speed: 1000,
       dots: true,
+      slidesToScroll: 1,
       appendDots: (dots) => customDots(dots),
       customPaging: (i) => paging(i),
       nextArrow: <NextIcon />,
       prevArrow: <BackIcon />,
-      beforeChange: (_, next) => setPointer(next),
+      afterChange: (current) => {
+         setPointer(current)
+      },
    }
+
    return (
-      <>
-         <Grid style={{ display: 'flex', justifyContent: 'center' }}>
+      <div>
+         <ContainerTitle>
             <Title>Check out each question type</Title>
-         </Grid>
+         </ContainerTitle>
          <Container>
             <Stepper {...settings}>
                {stepperText.map((stepper, i) => (
@@ -39,12 +46,16 @@ const StepperPage = () => {
                ))}
             </Stepper>
          </Container>
-      </>
+      </div>
    )
 }
 
 export default StepperPage
 
+const ContainerTitle = styled(Grid)(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+}))
 const Title = styled(Typography)(() => ({
    fontfamily: 'Gilroy',
    fontStyle: 'normal',
@@ -57,15 +68,11 @@ const Title = styled(Typography)(() => ({
 const Container = styled(Grid)(() => ({
    display: 'flex',
    justifyContent: 'center',
-   '& .slick-center': {
-      transition: 'all 0.3s ease',
-      transform: 'scale(1.15)',
-   },
    gap: '50px',
    overflow: 'hidden',
    marginBottom: '120px',
    marginTop: '30px',
-   widht: '100%',
+   width: '100%',
 }))
 
 const Stepper = styled(Slider)({
