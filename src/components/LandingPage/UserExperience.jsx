@@ -68,12 +68,16 @@ const MainContainer = styled('div')({
    '& .Earth': {
       marginTop: '15px',
    },
+   '& p': {
+      fontFamily: 'Poppins',
+   },
 })
 const AllDescriptionContainer = styled('div')({
    '& h1': {
       width: '20.5rem',
       marginBottom: '34px',
       color: '#3752B4',
+      fontFamily: 'Gilroy',
    },
    '& .description': {
       width: '40rem',

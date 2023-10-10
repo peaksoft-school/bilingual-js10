@@ -50,9 +50,14 @@ const MainTeamContainer = styled('div')(() => {
          textAlign: 'center',
          marginBottom: '47px',
          color: ' #3752B4',
+         fontFamily: 'Gilroy',
       },
       '& b': {
          color: ' #3A10E5',
+         fontFamily: 'Poppins',
+      },
+      '& p': {
+         fontFamily: 'Poppins',
       },
       '& .nameAndImageDiv': {
          textAlign: 'center',
