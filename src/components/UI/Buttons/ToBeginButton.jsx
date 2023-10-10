@@ -1,7 +1,7 @@
 import { Button, styled } from '@mui/material'
 import React from 'react'
-import toBeginButtonIcon from '../../../assets/icons/button.svg'
-import toBeginButtonHoverIcon from '../../../assets/icons/button-hover.svg'
+import toBeginButtonIcon from '../../../assets/icons/toBeginButtonIcon.png'
+import toBeginButtonHoverIcon from '../../../assets/icons/toBeginHoverIcon.png'
 
 export const ToBeginButton = ({ children }) => {
    return <ToBeginButtonStyled>{children}</ToBeginButtonStyled>
@@ -9,6 +9,7 @@ export const ToBeginButton = ({ children }) => {
 const ToBeginButtonStyled = styled(Button)(() => ({
    backgroundImage: `url(${toBeginButtonIcon})`,
    backgroundColor: '#ffffff1a',
+   paddingBottom: '15px',
    width: '200px',
    height: '60px',
    color: 'white',
