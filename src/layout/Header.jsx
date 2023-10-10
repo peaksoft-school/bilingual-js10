@@ -13,17 +13,17 @@ const Header = ({ role = 'client' }) => {
          <Options>
             <OptionsBlock>
                <HeaderLink to="/">
-                  <Typography>Tests</Typography>
+                  <MyText>Tests</MyText>
                </HeaderLink>
             </OptionsBlock>
             <OptionsBlock>
                {role ? (
                   <HeaderLink to="/">
-                     <Typography>My Results</Typography>
+                     <MyText>My Results</MyText>
                   </HeaderLink>
                ) : (
                   <HeaderLink to="/">
-                     <Typography>Submitted Results</Typography>
+                     <MyText>Submitted Results</MyText>
                   </HeaderLink>
                )}
             </OptionsBlock>
@@ -36,12 +36,14 @@ const Header = ({ role = 'client' }) => {
 }
 const MyHeader = styled('header')({
    maxWidth: '100vw',
-   height: '5vh',
+   height: '16vh',
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
 })
 const LogoBox = styled('div')({
+   position: 'sticky',
+   top: '1.6rem',
    marginLeft: '7rem',
 })
 const Options = styled('div')({
@@ -49,6 +51,9 @@ const Options = styled('div')({
    alignItems: 'center',
    gap: '3.75rem',
    marginRight: '5rem',
+   position: 'sticky',
+   top: '1.6rem',
+   bottom: '1.6rem',
    textTransform: 'uppercase',
 })
 const OptionsBlock = styled('div')({
@@ -63,6 +68,16 @@ const HeaderLink = styled(Link)({
    color: 'black',
    '&:focus, &:active': {
       color: 'blue',
+   },
+})
+const MyText = styled(Typography)({
+   '&': {
+      fontFamily: 'DINNextRoundedLTPro-Bold',
+      fontSize: '1rem',
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      lineHeight: 'normal',
+      textTransform: 'uppercase',
    },
 })
 
