@@ -120,21 +120,21 @@ const ContainerFooter = styled('div')(() => ({
    borderRadius: 'none',
    '& .H1': {
       color: '#fff',
-      fontSize: '40px',
+      fontSize: '2.5rem',
       fontFamily: 'Gilroy',
    },
    '& .Accordions': {
       borderTop: '1px solid #4A4A4A',
       background: '#262626',
       color: '#fff',
-      fontSize: '20px',
+      fontSize: '1.25rem',
       boxShadow: 'none',
       paddingTop: '15px',
       borderRadius: 'none',
    },
    '& .Typographys': {
       color: '#ffffff',
-      fontSize: '18px',
+      fontSize: '1.1rem',
       fontFamily: 'Poppins',
    },
    '& .TypographyWidth': {
@@ -157,6 +157,6 @@ const Paragraf = styled('div')`
    display: flex;
    justify-content: center;
    color: #98a2b3;
-   font-size: 14px;
+   font-size: 1rem;
    margin-top: 1rem;
 `
