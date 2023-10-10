@@ -3,12 +3,12 @@ import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
-import AddOutlinedIcon from '@mui/icons-material/AddOutlinedIcon'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+import ClearIcon from '@mui/icons-material/Clear'
 import styled from '@emotion/styled'
-import ClearIcon from '@mui/icons-material/ClearIcon'
 import bilingual from '../../../assets/Image/Layer 2.svg'
 import youTube from '../../../assets/Image/Ellipse 269.svg'
-import Facebook from '../../../assets/Image/Group 4328.svg'
+import facebook from '../../../assets/Image/Group 4328.svg'
 import instagram from '../../../assets/Image/Ellipse 264.svg'
 
 const FAQ = [
@@ -47,17 +47,10 @@ export function FooterAccordions() {
       <ContainerFooter>
          <h1 className="H1">FAQ:</h1>
          {FAQ.map((item) => (
-            <Accordion
+            <StyledAccordion
                className="Accordions"
                key={item.id}
-               sx={
-                  item.id === 5
-                     ? {
-                          borderBottom: '1px solid #a0a0a04c',
-                          paddingBottom: '20px',
-                       }
-                     : 'none'
-               }
+               item={item}
                expanded={expanded === `panel${item.id}`}
                onChange={handleChange(`panel${item.id}`)}
             >
@@ -85,7 +78,7 @@ export function FooterAccordions() {
                      </Typography>
                   </AccordionDetails>
                )}
-            </Accordion>
+            </StyledAccordion>
          ))}
 
          <ContainerIcon>
@@ -97,7 +90,7 @@ export function FooterAccordions() {
                   <img src={youTube} alt="YouTube" />
                </a>
                <a href="https://www.youtube.com/watch?v=JBB9iAo7yrM">
-                  <img src={Facebook} alt="Facebook" />
+                  <img src={facebook} alt="Facebook" />
                </a>
                <a href="https://www.instagram.com/">
                   <img src={instagram} alt="Instagram" />
@@ -110,6 +103,13 @@ export function FooterAccordions() {
       </ContainerFooter>
    )
 }
+
+const StyledAccordion = styled(Accordion)(({ item }) => ({
+   ...(item.id === 5 && {
+      borderBottom: '1px solid #a0a0a04c',
+      paddingBottom: '20px',
+   }),
+}))
 
 const ContainerFooter = styled('div')(() => ({
    backgroundColor: '#262626',
@@ -138,7 +138,7 @@ const ContainerFooter = styled('div')(() => ({
       fontFamily: 'Poppins',
    },
    '& .TypographyWidth': {
-      width: '50%',
+      width: '80%',
    },
    '& .ClearIcons': {
       color: '#fff',
@@ -156,6 +156,7 @@ const ContainerIcon = styled('div')(() => ({
 const Paragraf = styled('div')`
    display: flex;
    justify-content: center;
+   text-align: center;
    color: #98a2b3;
    font-size: 1rem;
    margin-top: 1rem;
