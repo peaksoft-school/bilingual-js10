@@ -19,10 +19,8 @@ const Input = forwardRef(
    }
 )
 const MyStyledInput = styled(TextField)({
-   backgroundColor: 'yellow',
    '& .MuiInputBase-input': {
-      width: '40vw',
-      padding: '14px 20px',
+      padding: '1rem 1.4rem',
       lineHeight: '1.5rem',
       color: '#757575',
    },
