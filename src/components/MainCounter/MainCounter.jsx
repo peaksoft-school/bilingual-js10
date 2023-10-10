@@ -22,7 +22,7 @@ const MainCounter = () => {
          if (jetCounter < 10000) {
             jetIntervalId = setInterval(() => {
                setJetCounter((prevCounter) => {
-                  const newCounter = prevCounter + 60
+                  const newCounter = prevCounter + 2
                   return newCounter >= 10000 ? 10000 : newCounter
                })
             }, 100)
@@ -34,7 +34,7 @@ const MainCounter = () => {
                   const newCounter = prevCounter + 1
                   return newCounter >= 200 ? 200 : newCounter
                })
-            }, 90)
+            }, 800)
          }
       }
 
