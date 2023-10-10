@@ -1,5 +1,9 @@
 function App() {
-   return <div />
+   return (
+      <div>
+         <h1>Bilingual js`9</h1>
+      </div>
+   )
 }
 
 export default App
