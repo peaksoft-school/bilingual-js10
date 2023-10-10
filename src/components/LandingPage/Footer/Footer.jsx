@@ -3,9 +3,9 @@ import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlinedIcon'
 import styled from '@emotion/styled'
-import ClearIcon from '@mui/icons-material/Clear'
+import ClearIcon from '@mui/icons-material/ClearIcon'
 import bilingual from '../../../assets/Image/Layer 2.svg'
 import youTube from '../../../assets/Image/Ellipse 269.svg'
 import Facebook from '../../../assets/Image/Group 4328.svg'
@@ -135,6 +135,7 @@ const ContainerFooter = styled('div')(() => ({
    '& .Typographys': {
       color: '#ffffff',
       fontSize: '18px',
+      fontFamily: 'Poppins',
    },
    '& .TypographyWidth': {
       width: '50%',
