@@ -1,9 +1,7 @@
-import Header from './layout/Header'
-
 function App() {
    return (
       <div>
-         <Header />
+         <h1>Bilingual js`9</h1>
       </div>
    )
 }
