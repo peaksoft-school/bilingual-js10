@@ -20,27 +20,26 @@ const AboutDesc = styled(Grid)(() => ({
    flexDirection: 'column',
 }))
 const Container = styled(Grid)(({ background, prop }) => ({
-   maxWidth: prop ? '1028px' : '860px',
+   maxWidth: prop ? '1028px' : '780px',
    backgroundColor: background,
    boxShadow: '16px 16px 20px rgba(0, 0, 0, 0.3)',
    width: '100%',
-   height: prop ? '460px' : '390px',
+   height: prop ? '440px' : '390px',
    borderRadius: '70px 70px 70px 0px',
-   transition: 'all 2s ease',
+   transition: 'all 0s ease',
    padding: ' 46px 100px 60px 44px',
    display: 'flex',
    marginLeft: prop ? '10px' : '50px',
-   marginTop: prop ? '5px' : '20px',
+   marginTop: prop ? '0px' : '20px',
    gap: '42px',
 }))
 
 const Title = styled('p')(({ textColor }) => ({
    color: textColor,
-   fontfamily: 'Poppins',
+   fontfamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
-   lineHeight: '40px',
-   // marginBottom: '-1rem',
+   lineHeight: '46px',
    fontSize: '38px',
    maxWidth: '508px',
    justifySelf: 'self-start',
