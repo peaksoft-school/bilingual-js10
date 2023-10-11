@@ -28,7 +28,14 @@ const Header = ({ role = 'client' }) => {
                )}
             </OptionsBlock>
             <OptionsBlock>
-               <Button>Logout</Button>
+               <Button
+                  className="logOutButton"
+                  variant="outlined"
+                  defaultStyle="white"
+                  hoverStyle="blue"
+               >
+                  Logout
+               </Button>
             </OptionsBlock>
          </Options>
       </MyHeader>
