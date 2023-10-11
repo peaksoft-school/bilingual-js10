@@ -1,8 +1,8 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
-
 import { Link } from 'react-router-dom'
 import { Logo } from '../assets'
+import Button from '../components/UI/Buttons/Button'
 
 const Header = ({ role = 'client' }) => {
    return (
@@ -28,7 +28,7 @@ const Header = ({ role = 'client' }) => {
                )}
             </OptionsBlock>
             <OptionsBlock>
-               <button>Logout</button>
+               <Button>Logout</Button>
             </OptionsBlock>
          </Options>
       </MyHeader>
