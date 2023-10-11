@@ -1,5 +1,4 @@
 import { ToBeginButton } from './components/UI/Buttons/ToBeginButton'
-import Header from './layout/Header'
 
 function App() {
    return (
@@ -8,7 +7,6 @@ function App() {
          <div>
             <ToBeginButton>TO BEGIN</ToBeginButton>
          </div>
-         <Header />
       </div>
    )
 }
