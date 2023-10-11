@@ -8,9 +8,13 @@ import { ReactComponent as youTube } from './Ellipse 269.svg'
 import { ReactComponent as facebook } from './Group 4328.svg'
 import { ReactComponent as instagram } from './Ellipse 264.svg'
 
-<<<<<<< HEAD
-export { Zero, Dolar, bilingual, youTube, facebook, instagram }
-=======
-export { toBeginButtonIcon, toBeginButtonHoverIcon }
-export { Zero, Dolar }
->>>>>>> ce83e7bb937515292531191b483a732c720862d6
+export {
+   Zero,
+   Dolar,
+   bilingual,
+   youTube,
+   facebook,
+   instagram,
+   toBeginButtonIcon,
+   toBeginButtonHoverIcon,
+}
