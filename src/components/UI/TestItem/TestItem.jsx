@@ -5,16 +5,16 @@ import { InputRadio } from '../InputRadio'
 import Edits from '../../../assets/icons/edit.svg'
 import Delete from '../../../assets/icons/delete.svg'
 
-export const TestItem = ({ children }) => {
+export const TestItem = ({ text, onDelete, onEdit, checked }) => {
    return (
       <ContainerItems>
-         <p>{children} Test number 1</p>
+         <p>{text}</p>
          <div className="radio">
-            <InputRadio variant="SWITCH" className="Switch" />
-            <Button className="edites">
+            <InputRadio variant="SWITCH" checkedSwitch={checked} />
+            <Button onClick={onEdit}>
                <img src={Edits} alt="Изменения" />
             </Button>
-            <Button>
+            <Button onClick={onDelete}>
                <img src={Delete} alt="Изменения" />
             </Button>
          </div>
@@ -37,7 +37,6 @@ const ContainerItems = styled('div')(() => ({
    '& .Buttons': {
       display: 'flex',
       alignItems: 'center',
-      gap: '22px',
       border: '#fff',
    },
    '& .Switch': {
@@ -47,6 +46,7 @@ const ContainerItems = styled('div')(() => ({
    '& .radio ': {
       display: 'flex',
       alignItems: 'center',
+      gap: '0.5rem',
    },
    '& .MuiButtonBase-root': {
       minWidth: '0',
