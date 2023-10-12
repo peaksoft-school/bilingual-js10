@@ -34,7 +34,7 @@ const Header = ({ role = 'client' }) => {
                   defaultStyle="white"
                   hoverStyle="blue"
                >
-                  Logout
+                  <MyText>Log out</MyText>
                </Button>
             </OptionsBlock>
          </Options>
@@ -42,25 +42,26 @@ const Header = ({ role = 'client' }) => {
    )
 }
 const MyHeader = styled('header')({
+   backgroundColor: 'beige',
    maxWidth: '100vw',
-   height: '16vh',
+   height: '15vh',
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
 })
 const LogoBox = styled('div')({
    position: 'sticky',
-   top: '1.6rem',
+   top: '1.2rem',
    marginLeft: '7rem',
 })
 const Options = styled('div')({
    display: 'flex',
    alignItems: 'center',
-   gap: '3.75rem',
-   marginRight: '5rem',
+   gap: '3.5rem',
+   marginRight: '7rem',
    position: 'sticky',
-   top: '1.6rem',
-   bottom: '1.6rem',
+   top: '1.2rem',
+   bottom: '1.2rem',
    textTransform: 'uppercase',
 })
 const OptionsBlock = styled('div')({
