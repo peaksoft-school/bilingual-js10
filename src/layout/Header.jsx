@@ -42,7 +42,6 @@ const Header = ({ role = 'client' }) => {
    )
 }
 const MyHeader = styled('header')({
-   backgroundColor: 'beige',
    maxWidth: '100vw',
    height: '15vh',
    display: 'flex',
