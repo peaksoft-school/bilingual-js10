@@ -3,16 +3,25 @@ import React from 'react'
 
 export const Background = ({ children }) => {
    return (
-      <Box>
+      <BackgroundBox>
          <StyleBackground>{children}</StyleBackground>
-      </Box>
+      </BackgroundBox>
    )
 }
 
+const BackgroundBox = styled(Box)(() => {
+   return {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+   }
+})
+
 const StyleBackground = styled('div')(() => {
    return {
+      marginTop: '55px',
       maxWidth: '1060px',
-      padding: '50px 80px',
+      padding: '3.125rem 5rem',
       borderRadius: '25px',
       boxShadow: '0px 4px 39px rgba(196, 196, 196, 0.60)',
    }

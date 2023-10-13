@@ -1,5 +1,5 @@
 import { Button as MuiButton, styled } from '@mui/material'
-import { AddIcon } from '@mui/icons-material/Add'
+import AddIcon from '@mui/icons-material/Add'
 import React from 'react'
 
 const Button = ({
@@ -11,6 +11,8 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
+   onCLick,
+   ...rest
 }) => {
    return (
       <ButtonStyled
@@ -22,6 +24,8 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
+         onClick={onCLick}
+         {...rest}
       >
          {children}
       </ButtonStyled>
