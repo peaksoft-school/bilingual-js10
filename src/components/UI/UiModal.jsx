@@ -2,7 +2,14 @@ import UiModal from '@mui/material/Modal'
 import { Box } from '@mui/material'
 import React from 'react'
 
-export const Modal = ({ open, handleClose, children, width, height }) => {
+export const Modal = ({
+   open,
+   handleClose,
+   children,
+   width,
+   height,
+   padding,
+}) => {
    const style = {
       width: { width },
       height: { height },
@@ -13,6 +20,7 @@ export const Modal = ({ open, handleClose, children, width, height }) => {
       borderRadius: '10px',
       backgroundColor: '#FFF',
       boxShadow: '0px 4px 39px -5px rgba(196, 196, 196, 0.60)',
+      padding: `${padding}`,
    }
    return (
       <UiModal
