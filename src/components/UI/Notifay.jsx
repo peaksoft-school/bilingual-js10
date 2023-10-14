@@ -50,13 +50,6 @@ const Notify = (messageVariant, messages, text) => {
       )
    }
 
-   const message =
-      messageVariant === 'success'
-         ? 'Successfully saved'
-         : 'Please fill in all fields'
-
-   console.log(message, messageVariant)
-
    showLoadingToast()
 
    return (
