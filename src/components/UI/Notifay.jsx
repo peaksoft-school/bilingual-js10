@@ -1,46 +1,63 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { styled } from '@mui/material'
+import { StickRed } from '../../assets'
 
 const Notify = (messageVariant, messages, text) => {
    const showLoadingToast = () => {
       return toast.promise(
-         new Promise((resolve) => {
+         new Promise((resolve, reject) => {
             setTimeout(() => {
-               resolve()
-            }, 2000)
+               if (messageVariant === 'success') {
+                  resolve()
+               } else {
+                  reject()
+               }
+            }, 1000)
          }),
          {
-            pending: 'Загрузка контента...',
+            pending: 'Promise is pending...',
+            success: {
+               render() {
+                  return (
+                     <SuccessToast>
+                        <h4>{messages}</h4>
+                        <p>{text}</p>
+                     </SuccessToast>
+                  )
+               },
+               style: {
+                  backgroundColor: '#e9fbe7',
+                  height: '6rem',
+               },
+            },
+            error: {
+               render() {
+                  return (
+                     <ErrorToast>
+                        <h4>{messages}</h4>
+                        <p>{text}</p>
+                     </ErrorToast>
+                  )
+               },
+               style: {
+                  backgroundColor: '#fff1f1',
+                  height: '6rem',
+               },
+               icon: <StickRed />,
+            },
          }
       )
    }
 
    const message =
       messageVariant === 'success'
-         ? 'Успешно сохранено'
-         : 'Пожалуйста, заполните все поля'
+         ? 'Successfully saved'
+         : 'Please fill in all fields'
 
    console.log(message, messageVariant)
 
-   showLoadingToast().then(() => {
-      toast[messageVariant](
-         <div>
-            <h4>{messages}</h4>
-            <p>{text}</p>
-         </div>,
-         {
-            position: 'top-right',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-         }
-      )
-   })
+   showLoadingToast()
 
    return (
       <ToastContainer
@@ -58,3 +75,19 @@ const Notify = (messageVariant, messages, text) => {
    )
 }
 export default Notify
+const SuccessToast = styled('div')`
+   h4 {
+      color: #4d4859;
+   }
+   p {
+      color: #646464;
+   }
+`
+const ErrorToast = styled('div')`
+   h4 {
+      color: #4d4859;
+   }
+   p {
+      color: #646464;
+   }
+`
