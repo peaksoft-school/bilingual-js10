@@ -36,21 +36,21 @@ export const CreateTest = ({ onClickSave, onClickGoBack }) => {
 }
 
 const TestStyle = styled('div')(() => ({
-   '& .testInput': {
+   ' .testInput': {
       width: '53.94vw',
       maxWidth: '820px',
       marginTop: '12px',
    },
-   '& .twoP': {
+   ' .twoP': {
       marginTop: '28px',
    },
-   '& p': {
+   ' p': {
       fontSize: '16px',
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: 'normal',
    },
-   '& .testButtonContainer': {
+   ' .testButtonContainer': {
       marginTop: '32px',
       display: 'flex',
       justifyContent: 'end',
