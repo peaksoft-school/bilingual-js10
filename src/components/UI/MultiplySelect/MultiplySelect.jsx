@@ -27,7 +27,7 @@ export const MultiplySelect = ({
 }
 
 const Container = styled('div')(() => ({
-   '& .ContainerMultiply': {
+   '.ContainerMultiply': {
       display: 'flex',
       gap: '0.4rem',
       justifyContent: 'center',
@@ -40,19 +40,19 @@ const Container = styled('div')(() => ({
       color: '#4C4859',
       lineHeight: '1rem',
    },
-   '& .InputCheckBox': {
+   ' .InputCheckBox': {
       display: 'flex',
       width: '6rem',
       height: '2.6rem',
       justifyContent: 'center',
       alignItems: 'center',
    },
-   '& .checked': {
+   ' .checked': {
       width: '12.4rem',
       color: '#4C4859',
       border: ' 2px solid #3A10E5',
    },
-   '& .IconValue': {
+   ' .IconValue': {
       width: '3.3rem',
       height: '2.6rem',
       marginLeft: '3rem',
@@ -62,12 +62,12 @@ const Container = styled('div')(() => ({
       color: '#D4D0D0',
       background: 'white',
    },
-   '& .IconValue.checked': {
+   ' .IconValue.checked': {
       color: 'white',
       background: '#3A10E5',
       border: ' 1.5px solid #3A10E5',
    },
-   '& .WidhtP': {
+   ' .WidhtP': {
       color: '#4C4859',
    },
 }))
