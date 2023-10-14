@@ -11,8 +11,10 @@ export const MultiplySelect = ({
    return (
       <Container>
          <div className={`ContainerMultiply ${isChecked ? 'checked' : ''}`}>
-            {VolumeUp}
-            <p>{text}</p>
+            <div className="textCon">
+               {VolumeUp}
+               <p>{text}</p>
+            </div>
             <div className="InputCheckBox">
                <button
                   className={`IconValue ${isChecked ? 'checked' : ''}`}
@@ -29,8 +31,8 @@ export const MultiplySelect = ({
 const Container = styled('div')(() => ({
    '.ContainerMultiply': {
       display: 'flex',
-      gap: '0.4rem',
-      justifyContent: 'center',
+      gap: '2rem',
+      justifyContent: 'space-between',
       alignItems: 'center',
       border: '1.5px solid #D4D0D0',
       borderRadius: '0.5rem',
@@ -40,9 +42,15 @@ const Container = styled('div')(() => ({
       color: '#4C4859',
       lineHeight: '1rem',
    },
+   ' .textCon': {
+      display: 'flex',
+      justifyContent: 'spase-between',
+      gap: '0.7rem',
+      alignItems: 'center',
+   },
    ' .InputCheckBox': {
       display: 'flex',
-      width: '6rem',
+      width: '3rem',
       height: '2.6rem',
       justifyContent: 'center',
       alignItems: 'center',
@@ -55,7 +63,6 @@ const Container = styled('div')(() => ({
    ' .IconValue': {
       width: '3.3rem',
       height: '2.6rem',
-      marginLeft: '3rem',
       border: '1.5px solid #D4D0D0',
       borderRadius: '0rem 0.5rem 0.5rem 0rem',
       borderRight: 'none',
@@ -66,8 +73,5 @@ const Container = styled('div')(() => ({
       color: 'white',
       background: '#3A10E5',
       border: ' 1.5px solid #3A10E5',
-   },
-   ' .WidhtP': {
-      color: '#4C4859',
    },
 }))
