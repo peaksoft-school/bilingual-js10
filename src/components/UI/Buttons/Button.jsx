@@ -1,6 +1,6 @@
 import { Button as MuiButton, styled } from '@mui/material'
+import { AddIcon } from '@mui/icons-material/Add'
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add'
 
 const Button = ({
    defaultStyle,

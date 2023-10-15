@@ -48,12 +48,7 @@ export const InputRadio = ({
                <div>
                   <button>
                      {clicked && (
-                        <CheckIcon
-                           sx={{
-                              color: '#2AB930',
-                              width: '17px',
-                           }}
-                        />
+                        <CheckIcon sx={{ color: '#2AB930', width: '17px' }} />
                      )}
                   </button>
                </div>
@@ -66,7 +61,6 @@ export const InputRadio = ({
 }
 
 const ButtonContainer = styled('div')`
-   margin-top: 4px;
    border-radius: 99%;
    min-width: 0;
    button {
