@@ -11,6 +11,7 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
+   onClick,
 }) => {
    return (
       <ButtonStyled
@@ -22,6 +23,7 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
+         onClick={onClick}
       >
          {children}
       </ButtonStyled>
@@ -76,7 +78,7 @@ const ButtonStyled = styled(MuiButton)(({
          color: `${
             className === 'registerButton' || className === 'logOutButton'
                ? `${className === 'registerButton' ? '#4C4C4C' : '#fff'}`
-               : 'white'
+               : `${hoverStyle === '#3A10E5' ? 'white' : '#fff'}`
          }`,
          border: `${
             variant === 'contained'
