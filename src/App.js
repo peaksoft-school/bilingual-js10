@@ -1,7 +1,9 @@
+import Select from './components/UI/select/Select'
+
 function App() {
    return (
       <div>
-         <h1>Bilingual js-10</h1>
+         <Select />
       </div>
    )
 }
