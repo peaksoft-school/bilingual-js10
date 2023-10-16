@@ -79,7 +79,7 @@ const HeaderLink = styled(Link)({
 })
 const MyText = styled(Typography)({
    '&': {
-      fontFamily: 'DINNextRoundedLTPro-Bold',
+      fontFamily: 'DIN Next Rounded LT Pro Bold',
       fontSize: '1rem',
       fontStyle: 'normal',
       fontWeight: 'bold',
