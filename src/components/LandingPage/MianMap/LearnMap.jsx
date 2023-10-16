@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import Road from '../../../assets/image/VectorIcon.png'
-import Planet from '../../../assets/image/globe 1.svg'
-import Сhemistry from '../../../assets/image/Group 4372.svg'
-import Nonsense from '../../../assets/image/Group 4376.svg'
-import Access from '../../../assets/image/Group 4386.svg'
-import Adaptive from '../../../assets/image/Group 4381.svg'
-import Button from '../../../assets/image/button.svg'
+import Road from '../../../assets/images/VectorIcon.png'
+import Planet from '../../../assets/images/globe 1.svg'
+import Сhemistry from '../../../assets/images/Group 4372.svg'
+import Nonsense from '../../../assets/images/Group 4376.svg'
+import Access from '../../../assets/images/Group 4386.svg'
+import Adaptive from '../../../assets/images/Group 4381.svg'
+import Button from '../../../assets/images/button.svg'
 
 export const LearnMap = () => {
    return (

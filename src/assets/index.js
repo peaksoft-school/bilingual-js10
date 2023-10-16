@@ -23,11 +23,11 @@ import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
 
-import Kamchy from './image/ Kamchy.jpeg'
-import Aziat from './image/Aziat.jpg'
-import Avaz from './image/avazultramax.jpg'
-import Ulan from './image/ Ulan.jpg'
-import Aijan from './image/Aijan.png'
+import Kamchy from './images/ Kamchy.jpeg'
+import Aziat from './images/Aziat.jpg'
+import Avaz from './images/avazultramax.jpg'
+import Ulan from './images/ Ulan.jpg'
+import Aijan from './images/Aijan.png'
 
 export {
    EnglishBook,
