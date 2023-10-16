@@ -11,10 +11,13 @@ import { ReactComponent as ExtensiveIcon } from './icons/extensiveIcon.svg'
 import { ReactComponent as SpeechIcon } from './icons/speechIcon.svg'
 import { ReactComponent as TutoringIcon } from './icons/tutoringIcon.svg'
 
-import { ReactComponent as bilingual } from './Image/Layer 2.svg'
-import { ReactComponent as youTube } from './Image/Ellipse 269.svg'
-import { ReactComponent as facebook } from './Image/Group 4328.svg'
-import { ReactComponent as instagram } from './Image/Ellipse 264.svg'
+import { ReactComponent as bilingual } from './images/layer.svg'
+import { ReactComponent as youTube } from './images/ellipse.svg'
+import { ReactComponent as facebook } from './images/faceBook.svg'
+import { ReactComponent as instagram } from './images/ellipse2.svg'
+
+import { ReactComponent as Edits } from './icons/edit.svg'
+import { ReactComponent as Delete } from './icons/delete.svg'
 import { ReactComponent as FiveStars } from './icons/FiveStars.svg'
 import { ReactComponent as RoundRight } from './icons/roundRight.svg'
 import { ReactComponent as RoundLeft } from './icons/roundLeft.svg'
@@ -23,11 +26,11 @@ import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
 
-import Kamchy from './Image/ Kamchy.jpeg'
-import Aziat from './Image/Aziat.jpg'
-import Avaz from './Image/avazultramax.jpg'
-import Ulan from './Image/ Ulan.jpg'
-import Aijan from './Image/Aijan.png'
+import Kamchy from './images/ Kamchy.jpeg'
+import Aziat from './images/Aziat.jpg'
+import Avaz from './images/avazultramax.jpg'
+import Ulan from './images/ Ulan.jpg'
+import Aijan from './images/Aijan.png'
 
 export {
    EnglishBook,
@@ -46,6 +49,8 @@ export {
    BackIcon,
    Paging,
    PagingActive,
+   Edits,
+   Delete,
    FiveStars,
    RoundRight,
    RoundLeft,
