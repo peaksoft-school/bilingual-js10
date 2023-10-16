@@ -16,7 +16,17 @@ export const MultiplySelect = () => {
       }
    }
 
-   const allWords = ['Word 1', 'Word 2', 'Word 3', 'Word 4', 'Word 5', 'Word 6']
+   const allWords = [
+      'Word 1',
+      'Word 2',
+      'Word 3',
+      'Word 4',
+      'Word 5',
+      'Word 6',
+      'Word 7',
+      'Word 8',
+      'Word 9',
+   ]
 
    return (
       <SelectEnglishWord

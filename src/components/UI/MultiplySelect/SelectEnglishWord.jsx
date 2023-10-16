@@ -39,7 +39,10 @@ export const SelectEnglishWord = ({
 
 const Container = styled('div')(() => ({
    display: 'flex',
-   gap: '2rem',
+   width: '800px',
+   flexWrap: 'wrap',
+   columnGap: '100px',
+   rowGap: '20px',
    '.ContainerMultiply': {
       display: 'flex',
       gap: '2rem',
