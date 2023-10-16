@@ -73,7 +73,8 @@ const SignIn = ({ toggleSignUp }) => {
                <StyledButton
                   type="submit"
                   fullWidth="fullWidth"
-                  hoverStyle="#4e23f8"
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#3A10E5E5"
                >
                   {' '}
                   SIGN iN

@@ -107,7 +107,8 @@ const SignUp = ({ toggleSignIn }) => {
                   onClick={handleSignUpClick}
                   type="submit"
                   fullWidth="fullWidth"
-                  hoverStyle="#4e23f8"
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#3A10E5E5"
                >
                   SIGN UP
                </StyledButton>
