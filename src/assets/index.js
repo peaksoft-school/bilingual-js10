@@ -4,6 +4,7 @@ import { ReactComponent as Paging } from './icons/paging.svg'
 import { ReactComponent as PagingActive } from './icons/pagingActive.svg'
 import { ReactComponent as Zero } from './icons/Zero.svg'
 import { ReactComponent as Dolar } from './icons/Dolar.svg'
+import { ReactComponent as Logo } from './icons/header-logo.svg'
 import { ReactComponent as EnglishBook } from './icons/EnglishBook.svg'
 import { ReactComponent as AccessibleIcon } from './icons/accessibleIcon.svg'
 import { ReactComponent as ExtensiveIcon } from './icons/extensiveIcon.svg'
@@ -43,6 +44,7 @@ export {
    instagram,
    Zero,
    Dolar,
+   Logo,
    NextIcon,
    BackIcon,
    Paging,
