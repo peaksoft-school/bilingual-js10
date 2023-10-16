@@ -4,7 +4,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 
 import FormControl from '@mui/material/FormControl'
 import MuiSelect from '@mui/material/Select'
-import { MenuItem, Typography, styled } from '@mui/material'
+import { MenuItem, styled } from '@mui/material'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -41,10 +41,6 @@ const Select = () => {
    }
    return (
       <div>
-         <StyledBox>
-            <MyText variant="h1">Dropdown</MyText>
-         </StyledBox>
-
          <StyledFormControl>
             <StyledSelect
                displayEmpty
@@ -78,25 +74,6 @@ const Select = () => {
 }
 export default Select
 
-const StyledBox = styled('div')({
-   marginLeft: '1rem',
-   width: '43vw',
-   height: '4.9vh',
-   backgroundColor: '#4D9E3F',
-   marginBottom: '2rem',
-})
-
-const MyText = styled(Typography)({
-   '&': {
-      fontFamily: 'DIN Next Rounded LT W04 Medium',
-      fontSize: '1.2rem',
-      fontStyle: 'normal',
-      fontWeight: '500',
-      lineHeight: '1.3',
-      textTransform: 'uppercase',
-      padding: '29px, 0px, 16px, 0px',
-   },
-})
 const StyledFormControl = styled(FormControl)(() => ({
    '&.MuiFormControl-root': {
       marginLeft: '1rem',
