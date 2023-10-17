@@ -4,15 +4,18 @@ import { ReactComponent as Paging } from './icons/paging.svg'
 import { ReactComponent as PagingActive } from './icons/pagingActive.svg'
 import { ReactComponent as Zero } from './icons/Zero.svg'
 import { ReactComponent as Dolar } from './icons/Dolar.svg'
+import { ReactComponent as Logo } from './icons/header-logo.svg'
 import { ReactComponent as EnglishBook } from './icons/EnglishBook.svg'
 import { ReactComponent as AccessibleIcon } from './icons/accessibleIcon.svg'
 import { ReactComponent as ExtensiveIcon } from './icons/extensiveIcon.svg'
 import { ReactComponent as SpeechIcon } from './icons/speechIcon.svg'
 import { ReactComponent as TutoringIcon } from './icons/tutoringIcon.svg'
-import { ReactComponent as bilingual } from './Layer 2.svg'
-import { ReactComponent as youTube } from './Ellipse 269.svg'
-import { ReactComponent as facebook } from './Group 4328.svg'
-import { ReactComponent as instagram } from './Ellipse 264.svg'
+
+import { ReactComponent as bilingual } from './images/layer.svg'
+import { ReactComponent as youTube } from './images/ellipse.svg'
+import { ReactComponent as facebook } from './images/faceBook.svg'
+import { ReactComponent as instagram } from './images/ellipse2.svg'
+
 import { ReactComponent as Edits } from './icons/edit.svg'
 import { ReactComponent as Delete } from './icons/delete.svg'
 import { ReactComponent as FiveStars } from './icons/FiveStars.svg'
@@ -23,11 +26,11 @@ import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
 
-import Kamchy from './image/ Kamchy.jpeg'
-import Aziat from './image/Aziat.jpg'
-import Avaz from './image/avazultramax.jpg'
-import Ulan from './image/ Ulan.jpg'
-import Aijan from './image/Aijan.png'
+import Kamchy from './images/ Kamchy.jpeg'
+import Aziat from './images/Aziat.jpg'
+import Avaz from './images/avazultramax.jpg'
+import Ulan from './images/ Ulan.jpg'
+import Aijan from './images/Aijan.png'
 
 export {
    EnglishBook,
@@ -41,6 +44,7 @@ export {
    instagram,
    Zero,
    Dolar,
+   Logo,
    NextIcon,
    BackIcon,
    Paging,
