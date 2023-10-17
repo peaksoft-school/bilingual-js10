@@ -9,11 +9,8 @@ import { validationAuthSignIn } from '../../utils/helpers/validate/authValidate'
 
 const SignIn = ({ toggleSignUp }) => {
    const [showPassword, setShowPassword] = useState(false)
-
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
-         firstName: '',
-         lastName: '',
          email: '',
          password: '',
       },
@@ -22,7 +19,9 @@ const SignIn = ({ toggleSignUp }) => {
    const togglePassword = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword)
    }
-
+   const handleSignInClick = () => {
+      console.log('Данные формы:', values)
+   }
    const errorMessages = Object.values(errors).filter(Boolean)
    return (
       <Background>
@@ -71,12 +70,12 @@ const SignIn = ({ toggleSignUp }) => {
                   <Text>To remember me</Text>
                </CheckboxContain>
                <StyledButton
+                  onClick={handleSignInClick}
                   type="submit"
                   fullWidth="fullWidth"
                   defaultStyle="#3A10E5"
                   hoverStyle="#3A10E5E5"
                >
-                  {' '}
                   SIGN iN
                </StyledButton>
                <ButtonContainer defaultStyle="white" hoverStyle="#d9d6d6">

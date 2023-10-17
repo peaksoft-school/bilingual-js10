@@ -11,6 +11,7 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
+   onClick,
 }) => {
    return (
       <ButtonStyled
@@ -22,6 +23,7 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
+         onClick={onClick}
       >
          {children}
       </ButtonStyled>

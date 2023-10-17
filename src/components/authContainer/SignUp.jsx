@@ -5,11 +5,12 @@ import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { validationAuthSignUp } from '../../utils/helpers/validate/authValidate'
 import { Error, Eye, EyeClosed, Google, Layer, System } from '../../assets'
+import { inputFields } from '../../utils/helpers/constants/inputFields'
 
 const SignUp = ({ toggleSignIn }) => {
    const [showPassword, setShowPassword] = useState(false)
    const [formSubmitted, setFormSubmitted] = useState(false)
-   const { values, handleChange, handleSubmit, errors, setValues } = useFormik({
+   const { values, handleSubmit, handleChange, errors, setValues } = useFormik({
       initialValues: {
          firstName: '',
          lastName: '',
@@ -17,7 +18,6 @@ const SignUp = ({ toggleSignIn }) => {
          password: '',
          error: '',
       },
-
       validationSchema: validationAuthSignUp,
    })
    const handleSignUpClick = () => {
@@ -51,52 +51,37 @@ const SignUp = ({ toggleSignIn }) => {
             <MainContainer>
                <StyledLayer />
                <Title>Create an Account</Title>
-               <StyledInput
-                  label="First name"
-                  name="firstName"
-                  type="text"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  error={!!errors.firstName}
-               />
+               {inputFields.map((inputField) => (
+                  <StyledInput
+                     key={inputField.name}
+                     label={inputField.label}
+                     name={inputField.name}
+                     type={
+                        inputField.name === 'password' && showPassword
+                           ? 'text'
+                           : inputField.type
+                     }
+                     value={values[inputField.name]}
+                     onChange={handleChange}
+                     error={!!errors[inputField.name]}
+                     InputProps={
+                        inputField.name === 'password'
+                           ? {
+                                endAdornment: (
+                                   <InputAdornment position="end">
+                                      {showPassword ? (
+                                         <Eye onClick={togglePassword} />
+                                      ) : (
+                                         <EyeClosed onClick={togglePassword} />
+                                      )}
+                                   </InputAdornment>
+                                ),
+                             }
+                           : null
+                     }
+                  />
+               ))}
 
-               <StyledInput
-                  label="Last name"
-                  name="lastName"
-                  type="text"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  error={!!errors.lastName}
-               />
-
-               <StyledInput
-                  label="Email"
-                  name="email"
-                  type="text"
-                  value={values.email}
-                  onChange={handleChange}
-                  error={!!errors.email}
-               />
-
-               <StyledInput
-                  label="Password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={values.password}
-                  onChange={handleChange}
-                  error={!!errors.password}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           {showPassword ? (
-                              <Eye onClick={togglePassword} />
-                           ) : (
-                              <EyeClosed onClick={togglePassword} />
-                           )}
-                        </InputAdornment>
-                     ),
-                  }}
-               />
                {errorMessages.length > 0 && (
                   <ErrorMessage>
                      {`Incorrect ${errorMessages.join(', ')}`}
