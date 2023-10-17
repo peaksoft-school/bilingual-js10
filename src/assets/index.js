@@ -10,10 +10,10 @@ import { ReactComponent as ExtensiveIcon } from './icons/extensiveIcon.svg'
 import { ReactComponent as SpeechIcon } from './icons/speechIcon.svg'
 import { ReactComponent as TutoringIcon } from './icons/tutoringIcon.svg'
 
-import { ReactComponent as bilingual } from './Layer 2.svg'
-import { ReactComponent as youTube } from './Ellipse 269.svg'
-import { ReactComponent as facebook } from './Group 4328.svg'
-import { ReactComponent as instagram } from './Ellipse 264.svg'
+// import { ReactComponent as bilingual } from './Layer 2.svg'
+// import { ReactComponent as youTube } from './Ellipse 269.svg'
+// import { ReactComponent as facebook } from './Group 4328.svg'
+// import { ReactComponent as instagram } from './Ellipse 264.svg'
 import { ReactComponent as FiveStars } from './icons/FiveStars.svg'
 import { ReactComponent as RoundRight } from './icons/roundRight.svg'
 import { ReactComponent as RoundLeft } from './icons/roundLeft.svg'
@@ -34,10 +34,10 @@ export {
    ExtensiveIcon,
    SpeechIcon,
    TutoringIcon,
-   bilingual,
-   youTube,
-   facebook,
-   instagram,
+   // bilingual,
+   // youTube,
+   // facebook,
+   // instagram,
    Zero,
    Dolar,
    NextIcon,
