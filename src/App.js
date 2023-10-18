@@ -2,7 +2,7 @@
 // import SignIn from './components/authForm/SignIn'
 // import SignUp from './components/authForm/SignUp'
 
-// Для SIGNIN и SIGNUP.ИШТЕТИП КОРГУЛО
+// Для SIGNIN и SIGNUP.ИШТЕТИП КОРГОНГО
 function App() {
    // const [isSignIn, setIsSignIn] = useState(true)
    // const toggleSignInSignUp = () => {
