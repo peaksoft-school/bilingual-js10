@@ -30,7 +30,7 @@ import { ReactComponent as Layer } from './icons/Layer.svg'
 import { ReactComponent as Google } from './icons/googleRegister.svg'
 import { ReactComponent as Eye } from './icons/eye.svg'
 import { ReactComponent as EyeClosed } from './icons/eyeClosed.svg'
-import { ReactComponent as Error } from './icons/errorAuth.svg'
+import { ReactComponent as ErrorIcon } from './icons/errorAuth.svg'
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
@@ -73,5 +73,5 @@ export {
    Google,
    Eye,
    EyeClosed,
-   Error,
+   ErrorIcon,
 }

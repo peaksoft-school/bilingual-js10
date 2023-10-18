@@ -1,28 +1,33 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import { Grid, Typography, styled, InputAdornment } from '@mui/material'
+import { Grid, Typography, InputAdornment, styled } from '@mui/material'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
+import { ErrorIcon, Eye, EyeClosed, Google, Layer, System } from '../../assets'
 import { InputRadio } from '../UI/InputRadio'
-import { Error, Eye, EyeClosed, Google, Layer, System } from '../../assets'
-import { validationAuthSignIn } from '../../utils/helpers/validate/authValidate'
 
-const SignIn = ({ toggleSignUp }) => {
+const AuthContainer = ({
+   title,
+   formFields,
+   validationSchema,
+   onSubmit,
+   toggleLinkText,
+   toggleLinkClick,
+   googleButtonText,
+}) => {
    const [showPassword, setShowPassword] = useState(false)
    const { values, handleChange, handleSubmit, errors } = useFormik({
-      initialValues: {
-         email: '',
-         password: '',
-      },
-      validationSchema: validationAuthSignIn,
+      initialValues: formFields.initialValues,
+      validationSchema,
+      onSubmit,
    })
+
    const togglePassword = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword)
    }
-   const handleSignInClick = () => {
-      console.log('Данные формы:', values)
-   }
+
    const errorMessages = Object.values(errors).filter(Boolean)
+
    return (
       <Background>
          <SignInForm onSubmit={handleSubmit}>
@@ -31,61 +36,69 @@ const SignIn = ({ toggleSignUp }) => {
             </IconStyled>
             <MainContainer>
                <StyledLayer />
-               <Title>Sign in</Title>
-               <StyledInput
-                  label="Email"
-                  name="email"
-                  type="text"
-                  value={values.email}
-                  onChange={handleChange}
-                  error={!!errors.email}
-               />
-               <StyledInput
-                  label="Password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={values.password}
-                  onChange={handleChange}
-                  error={!!errors.password}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           {showPassword ? (
-                              <Eye onClick={togglePassword} />
-                           ) : (
-                              <EyeClosed onClick={togglePassword} />
-                           )}
-                        </InputAdornment>
-                     ),
-                  }}
-               />
+               <Title>{title}</Title>
+               {formFields.fields.map((field) => (
+                  <StyledInput
+                     key={field.name}
+                     label={field.label}
+                     name={field.name}
+                     type={
+                        field.type === 'password' && showPassword
+                           ? 'text'
+                           : field.type
+                     }
+                     value={values[field.name]}
+                     onChange={handleChange}
+                     error={!!errors[field.name]}
+                     InputProps={
+                        field.type === 'password'
+                           ? {
+                                endAdornment: (
+                                   <InputAdornment position="end">
+                                      {showPassword ? (
+                                         <Eye onClick={togglePassword} />
+                                      ) : (
+                                         <EyeClosed onClick={togglePassword} />
+                                      )}
+                                   </InputAdornment>
+                                ),
+                             }
+                           : null
+                     }
+                  />
+               ))}
+               {title === 'Sign in' && (
+                  <RememberContainer>
+                     <InputRadio variant="CHECKED" />
+                     <Remember>To remember me</Remember>
+                  </RememberContainer>
+               )}
                {errorMessages.length > 0 && (
                   <ErrorMessage>
                      {`Incorrect ${errorMessages.join(', ')}`}
-                     <ErrorIcon />
+                     <Error />
                   </ErrorMessage>
                )}
-               <CheckboxContain>
-                  <InputRadio variant="CHECKED" />
-                  <Text>To remember me</Text>
-               </CheckboxContain>
                <StyledButton
-                  onClick={handleSignInClick}
+                  onClick={handleSubmit}
                   type="submit"
                   fullWidth="fullWidth"
                   defaultStyle="#3A10E5"
                   hoverStyle="#3A10E5E5"
                >
-                  SIGN iN
+                  {title.toUpperCase()}
                </StyledButton>
                <ButtonContainer defaultStyle="white" hoverStyle="#d9d6d6">
                   <GoogleIcon />
-                  sign in with google
+                  {` ${googleButtonText.toLowerCase()}`}
                </ButtonContainer>
+
                <StyledText>
-                  DON`T HAVE AN ACCOUNT?
-                  <StyledRegister onClick={toggleSignUp}>
-                     REGISTER
+                  {toggleLinkText === ' Register'
+                     ? 'ALREADY HAVE AN ACCOUNT?'
+                     : "DON'T HAVE AN ACCOUNT?"}
+                  <StyledRegister onClick={toggleLinkClick}>
+                     {toggleLinkText === ' Register' ? 'LOG IN' : 'REGISTER'}
                   </StyledRegister>
                </StyledText>
             </MainContainer>
@@ -93,16 +106,17 @@ const SignIn = ({ toggleSignUp }) => {
       </Background>
    )
 }
-export default SignIn
 
+export default AuthContainer
+
+const Background = styled(Grid)(() => ({
+   background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
+   padding: '40px',
+}))
 const ErrorMessage = styled(Typography)(() => ({
    color: 'red',
    display: 'flex',
    justifyContent: 'center',
-}))
-const Background = styled(Grid)(() => ({
-   background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
-   padding: '40px 0',
 }))
 
 const SignInForm = styled('form')(() => ({
@@ -120,6 +134,10 @@ const MainContainer = styled(Grid)(() => ({
    width: '500px',
    marginLeft: '39px',
 }))
+const RememberContainer = styled(Grid)(() => ({
+   display: 'flex',
+   gap: '5px',
+}))
 
 const Title = styled(Typography)(() => ({
    textAlign: 'center',
@@ -130,11 +148,18 @@ const Title = styled(Typography)(() => ({
    fontSize: '24px',
    lineHeight: '36px',
    color: '#4C4859',
+   letterSpacing: '0.02em',
    marginBottom: '32px',
 }))
-const ErrorIcon = styled(Error)(() => ({
-   marginLeft: '5px',
-   marginTop: '2px',
+
+const Remember = styled(Typography)(() => ({
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '14px',
+   lineHeight: '0px',
+   color: '#757575',
+   marginTop: '13px',
 }))
 const StyledInput = styled(Input)(() => ({
    height: '52px',
@@ -144,20 +169,7 @@ const StyledButton = styled(Button)(() => ({
    marginTop: '30px',
    fontFamily: 'Poppins',
 }))
-const CheckboxContain = styled(Grid)(() => ({
-   display: 'flex',
-   gap: '8px',
-}))
 
-const Text = styled(Typography)(() => ({
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '14px',
-   lineHeight: '0px',
-   color: '#757575',
-   marginTop: '13px',
-}))
 const StyledText = styled(Typography)(() => ({
    display: 'flex',
    justifyContent: 'center',
@@ -174,6 +186,10 @@ const StyledText = styled(Typography)(() => ({
 
 const CloseIcon = styled(System)(() => ({
    cursor: 'pointer',
+}))
+const Error = styled(ErrorIcon)(() => ({
+   marginLeft: '5px',
+   marginTop: '2px',
 }))
 const IconStyled = styled('div')(() => ({
    textAlign: 'end',
