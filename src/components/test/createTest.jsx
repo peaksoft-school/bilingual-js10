@@ -34,7 +34,7 @@ export const CreateTest = ({ onClickSave, onClickGoBack }) => {
          <Background>
             <form onSubmit={formik.handleSubmit}>
                <div>
-                  <p>Заголовок</p>
+                  <p>Title</p>
                   <Input
                      className="testInput"
                      type="text"
@@ -47,7 +47,7 @@ export const CreateTest = ({ onClickSave, onClickGoBack }) => {
                   )}
                </div>
                <div>
-                  <p className="twoP">Краткое описание</p>
+                  <p className="twoP">Short Description</p>
                   <Input
                      className="testInput"
                      type="text"
