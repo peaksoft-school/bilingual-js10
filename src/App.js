@@ -2,8 +2,8 @@
 // import SignIn from './components/authForm/SignIn'
 // import SignUp from './components/authForm/SignUp'
 
+// Для SIGNIN и SIGNUP.ИШТЕТИП КОРГУЛО
 function App() {
-   // Для SIGNIN и SIGNUP
    // const [isSignIn, setIsSignIn] = useState(true)
    // const toggleSignInSignUp = () => {
    //    setIsSignIn(!isSignIn)
