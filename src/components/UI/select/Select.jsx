@@ -74,7 +74,7 @@ const Select = () => {
 }
 export default Select
 
-const StyledFormControl = styled(FormControl)(() => ({
+const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
       marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
@@ -111,7 +111,7 @@ const StyledFormControl = styled(FormControl)(() => ({
          lineHeight: '1.2rem',
       },
    },
-}))
+})
 const StyledSelect = styled(MuiSelect)({
    '& .MuiSelect-select': {
       padding: '0.4rem',
