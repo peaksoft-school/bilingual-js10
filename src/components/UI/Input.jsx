@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react'
 import { TextField, styled } from '@mui/material'
 
 const Input = forwardRef(
-   ({ children, onChange, value, label, error, ...rest }, ref) => {
+   ({ children, onChange, value, label, error, fullWidth, ...rest }, ref) => {
       return (
          <MyStyledInput
             label={label}
@@ -11,6 +11,7 @@ const Input = forwardRef(
             onChange={onChange}
             error={error}
             inputRef={ref}
+            fullWidth={fullWidth}
             {...rest}
          >
             {children}

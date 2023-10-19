@@ -12,6 +12,7 @@ const Button = ({
    className,
    fullWidth,
    onClick,
+   ...rest
 }) => {
    return (
       <ButtonStyled
@@ -23,7 +24,8 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
-         onClick={onClick}
+         onClick={onCLick}
+         {...rest}
       >
          {children}
       </ButtonStyled>
@@ -46,7 +48,7 @@ const ButtonStyled = styled(MuiButton)(({
       backgroundColor: `${defaultStyle}`,
       padding: '0.55rem 1.5rem',
       height: '42px',
-      fontFamily: 'DINNextRoundedLTPro-Bold',
+      fontFamily: 'Poppins',
       borderRadius: '8px',
       color: `${
          className === 'registerButton' || className === 'logOutButton'
