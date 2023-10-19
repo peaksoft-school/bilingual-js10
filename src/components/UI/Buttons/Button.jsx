@@ -11,20 +11,20 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
-   onClick,
+   onCLick,
    ...rest
 }) => {
    return (
       <ButtonStyled
          variant={variant}
          fullWidth={fullWidth}
-         onClick={onClick}
          className={className}
          disabled={disabled}
          startIcon={className === 'addNewTestButton' ? <AddIcon /> : null}
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
+         onClick={onCLick}
          {...rest}
       >
          {children}
