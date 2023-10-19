@@ -7,3 +7,6 @@
    margin: 0;
    font-family: 'Poppins', 'Gilroy';
 }
+body .MuiPaper-elevation {
+   box-shadow: 'none';
+}
