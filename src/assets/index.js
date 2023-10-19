@@ -25,11 +25,6 @@ import { ReactComponent as StickBlue } from './icons/stickBlue.svg'
 import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
-import { ReactComponent as Don } from './icons/donit.svg'
-import { ReactComponent as Adama } from './icons/adama.svg'
-import { ReactComponent as Basf } from './icons/basf.svg'
-import { ReactComponent as Decalb } from './icons/decalb.svg'
-import { ReactComponent as Lidea } from './icons/lidea.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -68,9 +63,4 @@ export {
    Aijan,
    RoundLeftBlue,
    RoundRightBlue,
-   Don,
-   Adama,
-   Basf,
-   Decalb,
-   Lidea,
 }
