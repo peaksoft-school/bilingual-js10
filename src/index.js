@@ -1,24 +1,22 @@
+import { ThemeProvider } from '@emotion/react'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import { ThemeProvider } from '@emotion/react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import { BrowserRouter } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
 import { theme } from './assets/theme/globalTheme'
+import './index.css'
+import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <React.StrictMode>
-      <DndProvider backend={HTML5Backend}>
-         <ThemeProvider theme={theme}>
-            <BrowserRouter>
-               <App />
-            </BrowserRouter>
-         </ThemeProvider>
-      </DndProvider>
+      <ThemeProvider theme={theme}>
+         <BrowserRouter>
+            <ToastContainer />
+            <App />
+         </BrowserRouter>
+      </ThemeProvider>
    </React.StrictMode>
 )
 

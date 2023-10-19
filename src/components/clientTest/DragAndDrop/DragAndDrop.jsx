@@ -24,7 +24,6 @@ const DragAndDrop = () => {
    const [boards, setBoards] = useState(initialState)
    const [currentBoard, setCurrentBoard] = useState(null)
    const [currentItem, setCurrentItem] = useState(null)
-   const [result, setResult] = useState([])
 
    const isFirstBoard = (board) => boards.indexOf(board) === 0
    const isSecondBoard = (board) => boards.indexOf(board) === 1
@@ -40,8 +39,8 @@ const DragAndDrop = () => {
    function dragEnterHandler(e) {
       e.preventDefault()
       e.target.style.backgroundColor = 'rgba(58, 16, 229, 0.10)'
-      setResult([...result, ])
    }
+
    function dragLeaveHandler(e) {
       e.preventDefault()
       e.target.style.backgroundColor = '#fff'
@@ -157,6 +156,7 @@ const Item = styled('div')(() => ({
    padding: '7px 34px 10px 34px',
    borderRadius: '8px',
    margin: '5px 0',
+   fontFamily: 'Poppins',
    cursor: 'grab',
    backgroundColor: '#fff',
    '&:hover': {
