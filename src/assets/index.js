@@ -25,6 +25,7 @@ import { ReactComponent as StickBlue } from './icons/stickBlue.svg'
 import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
+import { ReactComponent as StickRed } from './icons/StickRed.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -63,4 +64,8 @@ export {
    Aijan,
    RoundLeftBlue,
    RoundRightBlue,
+<<<<<<< HEAD
+=======
+   StickRed,
+>>>>>>> 7a249f677ee5c714ec207729ad72e51852934fea
 }
