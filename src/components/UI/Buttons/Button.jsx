@@ -11,17 +11,21 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
+   onClick,
+   ...rest
 }) => {
    return (
       <ButtonStyled
          variant={variant}
          fullWidth={fullWidth}
-         disabled={disabled}
+         onClick={onClick}
          className={className}
+         disabled={disabled}
          startIcon={className === 'addNewTestButton' ? <AddIcon /> : null}
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
+         {...rest}
       >
          {children}
       </ButtonStyled>
@@ -46,7 +50,7 @@ const ButtonStyled = styled(MuiButton)(({
       backgroundColor: `${defaultStyle}`,
       padding: '0.55rem 1.5rem',
       height: '42px',
-      fontFamily: 'DINNextRoundedLTPro-Bold',
+      fontFamily: 'Poppins',
       borderRadius: '8px',
       color: `${
          className === 'registerButton' || className === 'logOutButton'

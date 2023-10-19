@@ -1,13 +1,59 @@
 import { styled } from '@mui/material'
+import React, { useRef, useState } from 'react'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import Input from '../components/UI/Input'
+import Button from '../components/UI/Buttons/Button'
+import { Delete } from '../assets'
+import { InputRadio } from '../components/UI/InputRadio'
+import { ListenModal } from './ListenModal'
 
-const ListenSelect = () => {
+export const ListenSelect = () => {
+   const [time, setTime] = useState('15:00')
+   const [state, setState] = useState(false)
+   const [values, setValues] = useState('')
+   const handleClose = () => setState(false)
+   const [options, setOptions] = useState([
+      {
+         text: 'WORD 1',
+         checked: false,
+      },
+   ])
+
+   const handleSave = () => {
+      const newOption = {
+         text: values,
+         checked: true,
+      }
+      setValues('')
+      setOptions([...options, newOption])
+      handleClose()
+   }
+   const fileInputRef = useRef(null)
+   const handleClick = () => {
+      if (fileInputRef.current) {
+         fileInputRef.current.click()
+      }
+   }
+   const formik = useFormik({
+      initialValues: {
+         selectedFile: null,
+      },
+      validationSchema: Yup.object({
+         selectedFile: Yup.mixed().required('Please select a file'),
+      }),
+      onSubmit: () => {
+         // console.log('Selected file:', values.selectedFile)
+         handleClose()
+      },
+   })
    return (
       <Container>
-         <div className="ContainMomdal">
+         <div className="ContainBorder">
             <div className="display">
                <div className="Contain">
                   <p>Title</p>
-                  <input
+                  <Input
                      className="InputText"
                      type="text"
                      placeholder="Select real English words"
@@ -18,7 +64,12 @@ const ListenSelect = () => {
                      <p>
                         Duration <br /> (in minutes)
                      </p>
-                     <input className="InputTime" type="time" />
+                     <input
+                        type="time"
+                        className="InputTime"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                     />
                   </label>
                </div>
             </div>
@@ -31,11 +82,36 @@ const ListenSelect = () => {
                   <option>Select real English words</option>
                   <option>Select real English words</option>
                </select>
-            </div>
-            <div className="ContainButton">
-               <Button> ADD OPTIONS</Button>
+               <div className="ContainButton">
+                  <Button
+                     hoverStyle="rgba(58, 16, 229, 0.90)"
+                     defaultStyle="#3A10E5"
+                     className="addNewTestButton"
+                     onClick={() => setState(true)}
+                  >
+                     ADD OPTIONS
+                  </Button>
+               </div>
+               {options.map((el) => (
+                  <div key={el.id}>
+                     <h1>{el.text}</h1>
+                     <InputRadio value={values} variant="CHECKBOX" />
+                     <Delete />
+                  </div>
+               ))}
             </div>
          </div>
+         <ListenModal
+            open={state}
+            handleClose={handleClose}
+            state={state}
+            handleClick={handleClick}
+            formik={formik}
+            handleSave={handleSave}
+            fileInputRef={fileInputRef}
+            values={values}
+            setValues={setValues}
+         />
       </Container>
    )
 }
@@ -48,9 +124,9 @@ const Container = styled('div')(() => ({
    width: '100%',
    height: '100vh',
    border: 'none',
-   '.ContainMomdal': {
+   '.ContainBorder': {
       paddingTop: '3.1rem',
-      width: '61.2rem',
+      width: '62rem',
       height: ' 22.8rem',
       background: '#FFF',
       BoxShadow: '(0px 4px 39px rgba(196, 196, 196, 0.60))',
@@ -72,37 +148,32 @@ const Container = styled('div')(() => ({
    ' .InputText': {
       width: '43.5rem',
       height: '2.8rem',
-      borderRadius: '0.5rem',
-      border: ' 1.53px solid #D4D0D0',
       backgrount: '#fff',
-      paddingLeft: '1rem',
    },
+   ' .InputTime:hover': {
+      border: ' 1.53px solid blue',
+   },
+
    ' .InputTime': {
       width: '6.1rem',
-      height: '2.8rem',
-      borderRadius: '0.5rem',
-      border: ' 1.53px solid#D4D0D0',
+      height: '3.4rem',
+      borderRadius: '0.2rem',
+      border: ' 1.53px solid #D4D0D0',
       backgrount: '#fff',
+      paddingLeft: '2rem',
+      fontWeight: '500',
+      outline: 'none',
    },
    '.Contain': {
-      marginTop: '1.5rem',
+      marginTop: '0.8rem',
    },
    '.ContainButton': {
       display: 'flex',
       justifyContent: 'end',
-      marginRight: '5rem',
-   },
-   button: {
-      display: 'flex',
-      height: '2.625rem',
-      padding: ' 0.75rem 1.5rem 0.75rem 1rem',
-      gap: '0.5rem',
-      borderRadius: ' 0.5rem',
-      background: '#3A10E5',
-      color: '#FFF',
-      fontSize: '0.875rem',
-      textAlign: 'center',
-      border: 'none',
+      marginRight: '0.8rem',
+      marginTop: '2rem',
+      fontFamly: 'Poppins',
+      fontWeight: '800',
    },
    '.ContainSelect': {
       display: 'flex',
@@ -118,5 +189,3 @@ const Container = styled('div')(() => ({
       margin: '3.2rem 5rem',
    },
 }))
-
-export default ListenSelect
