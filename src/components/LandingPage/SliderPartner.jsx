@@ -4,7 +4,7 @@ import { partnersIcons } from '../../utils/helpers/PartnersIcons'
 
 const SliderPartner = () => {
    return (
-      <Container>
+      <Slider>
          <MyText>Partners </MyText>
          <StyledBox>
             {partnersIcons.map((item) => (
@@ -13,12 +13,12 @@ const SliderPartner = () => {
                </InnerBox>
             ))}
          </StyledBox>
-      </Container>
+      </Slider>
    )
 }
 
 export default SliderPartner
-const Container = styled('div')({
+const Slider = styled('div')({
    width: '100%',
    height: '214px',
    display: 'flex',
@@ -26,6 +26,7 @@ const Container = styled('div')({
    border: '1px solid blue',
    justifyContent: 'end',
    gap: '2rem',
+   position: 'relative',
 })
 const MyText = styled(Typography)({
    fontFamily: 'Gilroy',
