@@ -40,7 +40,7 @@
          }
       ],
       "no-undef": "off",
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-console": ["off", { "allow": ["warn", "error"] }],
       "jsx-a11y/label-has-associated-control": [
          "error",
          {
