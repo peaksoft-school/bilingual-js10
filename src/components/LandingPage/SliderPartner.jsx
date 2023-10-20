@@ -10,14 +10,14 @@ const SliderPartner = () => {
             <StyledBox1>
                {partnersIcons.map((item) => (
                   <InnerBox key={item.id}>
-                     <img src={item.icon} alt="" />
+                     <img src={item.icon} alt="#" />
                   </InnerBox>
                ))}
             </StyledBox1>
             <StyledBox2>
                {partnersIcons.map((item) => (
                   <InnerBox key={item.id}>
-                     <img src={item.icon} alt="" />
+                     <img src={item.icon} alt="#" />
                   </InnerBox>
                ))}
             </StyledBox2>
