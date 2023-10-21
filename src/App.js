@@ -1,11 +1,8 @@
-import { DragAndDrop } from './components/clientTest/DragAndDrop/DragAndDrop'
-
 function App() {
    return (
       <div>
-         <DragAndDrop />
+         <h1>Bilingual js-10</h1>
       </div>
    )
 }
-
 export default App
