@@ -1,27 +1,39 @@
 import { styled } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Background } from '../../../layout/Background'
+import Button from '../../UI/Buttons/Button'
 
-const initialState = [
-   {
-      id: 1,
-      items: [
-         { id: 1, title: 'hello' },
-         { id: 2, title: 'agay' },
-         { id: 3, title: 'my' },
-         { id: 4, title: 'name' },
-         { id: 5, title: 'is' },
-         { id: 6, title: 'rinat' },
-      ],
-   },
-   {
-      id: 2,
-      title: 'select words and drag here',
-      items: [],
-   },
-]
-
-const DragAndDrop = () => {
+export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
+   const [itemsData, setItemsData] = useState([])
+   const [movedItems, setMovedItems] = useState([])
+   const timer = 30
+   const initialState = [
+      {
+         id: 1,
+         items: itemsData,
+      },
+      {
+         id: 2,
+         title: 'select words and drag here',
+         items: [],
+      },
+   ]
    const [boards, setBoards] = useState(initialState)
+
+   useEffect(() => {
+      const getData = async () => {
+         const response = await fetch(
+            'https://jsonplaceholder.typicode.com/todos'
+         )
+         const data = await response.json()
+         setItemsData(data.splice(0, 194))
+         const updatedBoards = [...boards]
+         updatedBoards[0].items = data
+         setBoards(updatedBoards)
+      }
+      getData()
+   }, [])
+
    const [currentBoard, setCurrentBoard] = useState(null)
    const [currentItem, setCurrentItem] = useState(null)
 
@@ -29,6 +41,7 @@ const DragAndDrop = () => {
    const isSecondBoard = (board) => boards.indexOf(board) === 1
 
    function dragStartHandler(e, board, item) {
+      e.target.style.backgroundColor = 'rgb(51, 0, 255)'
       setCurrentBoard(board)
       setCurrentItem(item)
    }
@@ -36,6 +49,7 @@ const DragAndDrop = () => {
    function dragOverHandler(e) {
       e.preventDefault()
    }
+
    function dragEnterHandler(e) {
       e.preventDefault()
       e.target.style.backgroundColor = 'rgba(58, 16, 229, 0.10)'
@@ -48,7 +62,6 @@ const DragAndDrop = () => {
 
    function dragEndHandler(e) {
       if (e.target.classList.contains('item')) {
-         e.target.style.boxShadow = 'none'
          e.target.style.backgroundColor = '#fff'
       }
    }
@@ -88,40 +101,81 @@ const DragAndDrop = () => {
             }
             return board
          })
+
          setBoards(newBoards)
+         if (sourceBoard.id === 1 && targetBoard.id === 2) {
+            // Item moved from the first board to the second board
+            setMovedItems([...movedItems, sourceItem])
+         } else if (sourceBoard.id === 2 && targetBoard.id === 1) {
+            // Item moved from the second board to the first board
+            setMovedItems(
+               movedItems.filter((item) => item.id !== sourceItem.id)
+            )
+         }
       }
    }
 
    return (
-      <Container>
-         {boards.map((board) => (
-            <Board
-               key={board.id}
-               onDragOver={(e) => dragOverHandler(e)}
-               onDrop={(e) => dropHandler(e, board, null)}
-               isFirstBoard={isFirstBoard(board)}
-               isSecondBoard={isSecondBoard(board)}
-               onDragEnter={(e) => dragEnterHandler(e)}
-               onDragLeave={(e) => dragLeaveHandler(e)}
+      <GlobalDiv>
+         <div className="buttonContainer">
+            <Button
+               defaultStyle="white"
+               hoverStyle="#3A10E5"
+               className="logOutButton"
+               variant="outlined"
+               onCLick={onClickQuitTest}
             >
-               <BoardTitle>
-                  {board.items.length === 0 ? board.title : ''}
-               </BoardTitle>
-               {board.items.map((item) => (
-                  <Item
-                     key={item.id}
-                     onDragStart={(e) => dragStartHandler(e, board, item)}
-                     onDragEnd={(e) => dragEndHandler(e)}
-                     // eslint-disable-next-line react/jsx-boolean-value
-                     draggable={true}
-                     className="item"
+               QUIT TEST
+            </Button>
+         </div>
+         <BackgroundStyle marginTop="10px">
+            <div className="timer">0:{timer}</div>
+            <div className="title">
+               select the real English words in this list
+            </div>
+            <Container>
+               {boards.map((board) => (
+                  <Board
+                     key={board.id}
+                     onDragOver={(e) => dragOverHandler(e)}
+                     onDrop={(e) => dropHandler(e, board, null)}
+                     isFirstBoard={isFirstBoard(board)}
+                     isSecondBoard={isSecondBoard(board)}
+                     onDragEnter={(e) => dragEnterHandler(e)}
+                     onDragLeave={(e) => dragLeaveHandler(e)}
                   >
-                     {item.title}
-                  </Item>
+                     <BoardTitle>
+                        {board.items.length === 0 ? board.title : ''}
+                     </BoardTitle>
+                     {board?.items?.map((item) => (
+                        <Item
+                           key={item.id}
+                           onDragStart={(e) => dragStartHandler(e, board, item)}
+                           onDragEnd={(e) => dragEndHandler(e)}
+                           draggable={Boolean(true)}
+                           className="item"
+                        >
+                           {item.title}
+                        </Item>
+                     ))}
+                  </Board>
                ))}
-            </Board>
-         ))}
-      </Container>
+               <div className="nextButtonContainer">
+                  <Button
+                     disabled={
+                        movedItems.length === 0 ? Boolean(true) : Boolean(false)
+                     }
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="nextButton"
+                     onCLick={onClickNext}
+                  >
+                     next
+                  </Button>
+               </div>
+            </Container>
+         </BackgroundStyle>
+      </GlobalDiv>
    )
 }
 
@@ -129,11 +183,11 @@ const Container = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'end',
-   gap: '30px',
+   gap: '5px',
 }))
 
 const Board = styled('div')(({ isFirstBoard, isSecondBoard }) => ({
-   minWidth: isSecondBoard ? '243px' : '100vw',
+   minWidth: isSecondBoard ? '243px' : '100%',
    minHeight: '20vh',
    border: isFirstBoard ? 'none' : 'dashed 2px lightgray',
    padding: '20px 18px',
@@ -141,6 +195,9 @@ const Board = styled('div')(({ isFirstBoard, isSecondBoard }) => ({
    margin: '10px',
    display: 'flex',
    alignItems: 'center',
+   rowGap: '0px',
+   columnGap: '10px',
+   flexWrap: 'wrap',
 }))
 
 const BoardTitle = styled('div')(() => ({
@@ -157,6 +214,7 @@ const Item = styled('div')(() => ({
    borderRadius: '8px',
    margin: '5px 0',
    fontFamily: 'Poppins',
+   fontWeight: '500',
    cursor: 'grab',
    backgroundColor: '#fff',
    '&:hover': {
@@ -168,4 +226,52 @@ const Item = styled('div')(() => ({
    },
 }))
 
-export default DragAndDrop
+const BackgroundStyle = styled(Background)(() => ({
+   minWidth: '62.5vw',
+   '& .timer': {
+      color: '#4C4859',
+      fontFamily: 'Poppins',
+      fontSize: '32px',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      lineHeight: '24px',
+   },
+   '& .title': {
+      marginTop: '15px',
+      width: '100%',
+      height: '70px',
+      borderRadius: '3px',
+      alignItems: 'end',
+      borderTop: '8px solid var(--Grey-INPUT, #D4D0D0)',
+      justifyContent: 'center',
+      display: 'flex',
+      color: '#4C4859',
+      fontFamily: 'Poppins',
+      fontSize: '28px',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      lineHeight: '24px',
+   },
+}))
+const GlobalDiv = styled('div')(() => ({
+   height: '100vh',
+   background: '#D7E1F8',
+   '& .buttonContainer': {
+      display: 'flex',
+      padding: '15px 40px 0 0',
+      alignItems: 'center',
+      justifyContent: 'end',
+      width: '100%',
+   },
+   '& .nextButtonContainer': {
+      height: '70px',
+      width: '100%',
+      borderTop: '2px solid #D4D0D0',
+      display: 'flex',
+      alignItems: 'end',
+      justifyContent: 'end',
+      '& Button': {
+         width: '143px',
+      },
+   },
+}))

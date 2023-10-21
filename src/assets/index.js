@@ -64,5 +64,8 @@ export {
    Aijan,
    RoundLeftBlue,
    RoundRightBlue,
+<<<<<<< HEAD
+=======
    StickRed,
+>>>>>>> 7a249f677ee5c714ec207729ad72e51852934fea
 }
