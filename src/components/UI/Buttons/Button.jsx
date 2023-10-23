@@ -11,7 +11,7 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
-   onCLick,
+   onClick,
    ...rest
 }) => {
    return (
@@ -24,20 +24,18 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
-         onClick={onCLick}
+         onClick={onClick}
          {...rest}
       >
          {children}
       </ButtonStyled>
    )
 }
-
 const colors = {
    contained: '#fff',
    outlined: '#3A10E5',
    grey: '#4C4C4C',
 }
-
 const ButtonStyled = styled(MuiButton)(({
    className,
    variant,
@@ -69,7 +67,6 @@ const ButtonStyled = styled(MuiButton)(({
                  colors[className === 'logOutButton' ? 'grey' : variant]
               }`
       }`,
-
       '&:hover': {
          backgroundColor: `${hoverStyle}`,
          boxShadow: `${
@@ -79,14 +76,26 @@ const ButtonStyled = styled(MuiButton)(({
          }`,
          color: `${
             className === 'registerButton' || className === 'logOutButton'
-               ? `${className === 'registerButton' ? '#4C4C4C' : '#fff'}`
-               : 'white'
+               ? `${
+                    className === 'registerButton'
+                       ? '#4C4C4C'
+                       : `${variant === 'grey' ? '#4C4C4C' : '#fff'}`
+                 }`
+               : `${
+                    hoverStyle === '#3A10E5' || hoverStyle === '#3A10E5E5'
+                       ? 'white'
+                       : '#4C4C4C'
+                 }`
          }`,
          border: `${
             variant === 'contained'
                ? 'none'
                : `3px solid ${
-                    colors[className === 'logOutButton' ? 'outlined' : variant]
+                    colors[
+                       className === 'logOutButton'
+                          ? `${variant === 'grey' ? 'grey' : 'outlined'}`
+                          : variant
+                    ]
                  }`
          }`,
       },

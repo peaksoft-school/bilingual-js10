@@ -16,10 +16,11 @@ const MenuProps = {
       },
    },
 }
-export const options = [
+const options = [
    'Select real English words',
    'Listen and select word',
    'Type what you hear',
+   'Describe image',
    'Record saying statement',
    'Respond in at least N words',
 ]
@@ -50,7 +51,7 @@ const Select = () => {
                input={<OutlinedInput />}
                renderValue={(selected) => {
                   if (selected.length === 0) {
-                     return <p>Describe Image</p>
+                     // return <p>Describe image</p>
                   }
                   return selected
                }}
@@ -80,7 +81,7 @@ const StyledFormControl = styled(FormControl)({
       fontFamily: 'DIN Next Rounded LT W01 Regular',
       height: '5.9vh',
       backgroundColor: '#FFF',
-
+      color: '#313144',
       '& .MuiOutlinedInput-root': {
          padding: '0.4rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
@@ -89,15 +90,16 @@ const StyledFormControl = styled(FormControl)({
          fontWeight: '400',
          lineHeight: '1.2rem',
          '& fieldset': {
-            borderRadius: ' 8px 8px 0px 0px',
-            border: '1.3px solid #3A10E5',
+            borderRadius: ' 8px 8px 8px 8px',
+            border: '2px solid #D4D0D0',
          },
          backgroundColor: '#FFF',
          '&.Mui-focused fieldset': {
-            border: '1.3px solid #3A10E5',
+            border: '2px solid #3A10E5',
+            borderRadius: ' 8px 8px 0px 0px',
          },
          '&:hover fieldset': {
-            border: '1.3px solid #3A10E5',
+            border: '2px solid #3A10E5',
          },
       },
       '& p': {
@@ -119,19 +121,21 @@ const StyledSelect = styled(MuiSelect)({
       fontStyle: 'normal',
       fontWeight: '400',
       lineHeight: '1.2rem',
+      display: 'flex',
+      justifyContent: 'center',
    },
 })
 
 const StyledMenuItem = styled(MenuItem)({
    '&.MuiMenuItem-root': {
-      color: 'black',
+      color: '#4C4859',
       padding: '0.7rem, 1.6rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
       '&.Mui-selected': {
-         backgroundColor: '#c1bfc7',
+         backgroundColor: '#3A10E529',
       },
       '&:hover': {
-         backgroundColor: '#c1bfc7',
+         backgroundColor: '#3A10E529',
       },
    },
 })

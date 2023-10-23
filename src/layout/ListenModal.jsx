@@ -32,9 +32,10 @@ export const ListenModal = ({
                <Input
                   type="text"
                   value={values}
-                  onChange={(e) => setValues(e.target.value)}
+                  onChange={(e) => setValues(e.target.value.slice(0, 6))}
                   placeholder="Listen and select English word"
                   className="InputTitle"
+                  maxLength={6}
                />
             </div>
             <div className="container">
@@ -47,7 +48,6 @@ export const ListenModal = ({
                      formik.setFieldValue('selectedFile', e.target.files[0])
                   }}
                   accept="audio/*"
-                  className="InputSelectfile"
                />
                <input
                   type="button"
@@ -125,9 +125,6 @@ const ModalList = styled(Modal)(() => ({
       height: '1rem',
       color: '#4C4859',
       marginLeft: '2rem',
-   },
-   '.InputSelectfile': {
-      display: 'flex',
    },
    '.ContainButton': {
       background: '#F0F1F1',
