@@ -4,13 +4,13 @@ import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 
 export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
-   const [itemsData, setItemsData] = useState([])
    const [movedItems, setMovedItems] = useState([])
    const timer = 30
+
    const initialState = [
       {
          id: 1,
-         items: itemsData,
+         items: [],
       },
       {
          id: 2,
@@ -18,6 +18,7 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
          items: [],
       },
    ]
+
    const [boards, setBoards] = useState(initialState)
 
    useEffect(() => {
@@ -26,9 +27,9 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
             'https://jsonplaceholder.typicode.com/todos'
          )
          const data = await response.json()
-         setItemsData(data.splice(0, 194))
          const updatedBoards = [...boards]
-         updatedBoards[0].items = data
+         const sliceData = data.slice(80, 86)
+         updatedBoards[0].items = sliceData
          setBoards(updatedBoards)
       }
       getData()
@@ -147,7 +148,7 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
                      <BoardTitle>
                         {board.items.length === 0 ? board.title : ''}
                      </BoardTitle>
-                     {board?.items?.map((item) => (
+                     {board.items?.map((item) => (
                         <Item
                            key={item.id}
                            onDragStart={(e) => dragStartHandler(e, board, item)}

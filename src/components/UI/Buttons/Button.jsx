@@ -24,7 +24,7 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
-         onClick={onCLick}
+         onClick={onClick}
          {...rest}
       >
          {children}
