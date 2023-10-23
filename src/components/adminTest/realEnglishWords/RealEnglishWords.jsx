@@ -1,10 +1,10 @@
 import { useState } from 'react'
-// import { v4 as uuidv4 } from 'uuid'
-import { InputLabel, Select, styled } from '@mui/material'
+import { InputLabel, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import OptionModal from '../addOptionModal/AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets/index'
+import Select from '../../UI/select/Select'
 
 const TestQuestions = () => {
    const [isModalOpen, setModalOpen] = useState(false)
@@ -64,7 +64,9 @@ const TestQuestions = () => {
                </DivInputOne>
                <DivInputSecond>
                   <InputLabelTextType>Type</InputLabelTextType>
-                  <SelectType name="select" displayEmpty />
+                  <SelectStyled>
+                     <Select fullWidth />
+                  </SelectStyled>
                </DivInputSecond>
             </FormSubmit>
 
@@ -111,6 +113,7 @@ const DivCreateTest = styled('div')(() => ({
       ' rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
 }))
 const FormSubmit = styled('form')(() => ({}))
+const SelectStyled = styled('div')(() => ({}))
 const AddOption = styled(Button)(() => ({
    width: '15.82%',
    height: '42px',
@@ -132,6 +135,9 @@ const DivInputOne = styled('div')(() => ({
    gap: '24px',
 }))
 const InputOne = styled('input')(() => ({
+   '&::placeholder': {
+      color: '#4C4859',
+   },
    width: '98.9%',
    height: '60.53%',
    borderRadius: '8px',
@@ -184,8 +190,8 @@ const DivTimerInput = styled('div')(() => ({
 }))
 
 const DivInputSecond = styled('div')(() => ({
-   width: '83.67%',
-   height: '74px',
+   // width: '51rem',
+   // height: '74px',
    margin: '24px 8.16% 32px 8.16%',
 }))
 
@@ -196,15 +202,4 @@ const InputLabelTextType = styled(InputLabel)(() => ({
    fontSize: '16px',
    lineHeight: '16px',
    color: '#4B4759',
-}))
-
-const SelectType = styled(Select)(() => ({
-   width: '100%',
-   height: '46px',
-   background: '#FFFFFF',
-   borderRadius: '8px',
-   marginTop: '12px',
-   display: 'flex',
-   textAlign: 'center',
-   transitionDuration: '3333251ms',
 }))
