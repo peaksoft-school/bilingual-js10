@@ -16,7 +16,7 @@ const MenuProps = {
       },
    },
 }
-const options = [
+export const options = [
    'Select real English words',
    'Listen and select word',
    'Type what you hear',
@@ -41,8 +41,9 @@ const Select = () => {
    }
    return (
       <div>
-         <StyledFormControl>
+         <StyledFormControl fullWidth>
             <StyledSelect
+               fullWidth
                displayEmpty
                value={selectedOption}
                onChange={handleChange}
@@ -76,9 +77,7 @@ export default Select
 
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
-      marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
-      width: '43vw',
       height: '5.9vh',
       backgroundColor: '#FFF',
 

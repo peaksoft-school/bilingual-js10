@@ -14,20 +14,26 @@ export const ListenModal = ({
    fileInputRef,
    values,
    setValues,
+   handleFile,
 }) => {
    return (
-      <ModalList open={state} handleClose={handleClose}>
+      <ModalList
+         open={state}
+         handleClose={handleClose}
+         width="40rem"
+         height="25.5rem"
+      >
+         <div className="Close">
+            <CloseIcon onClick={handleClose} />
+         </div>
          <div className="ContainModal">
-            <div className="Close">
-               <CloseIcon onClick={handleClose} />
-            </div>
             <div>
                <p>Title</p>
                <Input
                   type="text"
                   value={values}
                   onChange={(e) => setValues(e.target.value)}
-                  placeholder="Listen and select English word "
+                  placeholder="Listen and select English word"
                   className="InputTitle"
                />
             </div>
@@ -37,11 +43,11 @@ export const ListenModal = ({
                   type="file"
                   id="myFileInput"
                   onChange={(e) => {
-                     formik.setFieldValue(
-                        'selectedFile',
-                        e.currentTarget.files[0]
-                     )
+                     handleFile(e)
+                     formik.setFieldValue('selectedFile', e.target.files[0])
                   }}
+                  accept="audio/*"
+                  className="InputSelectfile"
                />
                <input
                   type="button"
@@ -55,30 +61,35 @@ export const ListenModal = ({
                      : 'No File Chosen'}
                </label>
             </div>
-         </div>
-         <div className="ContainButton">
-            <Button
-               variant="outlined"
-               hoverStyle="#3A10E5"
-               onClick={handleClose}
-               className="Button"
-            >
-               GO BACK
-            </Button>
-            <Button
-               defaultStyle="#2AB930"
-               hoverStyle="#31CF38"
-               onClick={handleSave}
-               className="ButtonTwo"
-            >
-               SAVE
-            </Button>
+            <div className="ContainButton">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={handleClose}
+                  className="Button"
+               >
+                  GO BACK
+               </Button>
+               <Button
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+                  onClick={handleSave}
+                  className="ButtonTwo"
+               >
+                  SAVE
+               </Button>
+            </div>
          </div>
       </ModalList>
    )
 }
 const ModalList = styled(Modal)(() => ({
-   '.Close': { display: 'flex', justifyContent: 'end', marginLeft: '5rem' },
+   '.Close': {
+      display: 'flex',
+      justifyContent: 'end',
+      cursor: 'pointer',
+      padding: '1.25rem 1.25rem 0px 0px',
+   },
    '.InputTitle': {
       width: '32.3rem',
       height: '2.8rem',
@@ -87,18 +98,11 @@ const ModalList = styled(Modal)(() => ({
       display: 'flex',
       flexDirection: 'column',
       lineHeight: '4rem',
-      padding: '1.25rem 3.25rem 1.65rem 3.75rem',
+      padding: '1.25rem 3.75rem 5rem 3.75rem',
+      fontFamly: 'Poppins',
    },
    '& .InputFile:hover': {
-      width: '10.4rem',
-      height: '2.7rem',
-      marginTop: '1.5rem',
-      fontSize: '1rem',
-      fontWeight: '500',
-      border: '2px solid blue',
       color: '#fff',
-      borderRadius: '0.5rem',
-      padding: '0.5rem',
       background: '#3A10E5',
    },
    '& .InputFile': {
@@ -117,22 +121,25 @@ const ModalList = styled(Modal)(() => ({
       fontFamly: 'Poppins',
       fontWeight: '400',
       fontSize: '1rem',
-      width: '14rem',
+      width: '100vw',
       height: '1rem',
       color: '#4C4859',
       marginLeft: '2rem',
    },
+   '.InputSelectfile': {
+      display: 'flex',
+   },
    '.ContainButton': {
       background: '#F0F1F1',
-      width: '100%',
+      width: '40rem',
       height: '5.5rem',
-      borderRadius: '0px 1rem',
+      borderRadius: '0px 0rem 0.5rem 0.5rem',
       display: 'flex',
       gap: '1rem',
       justifyContent: 'end',
       alignItems: 'center',
       paddingRight: '3.3rem',
-      marginTop: '4.5rem',
+      margin: '3.2rem 0px 10rem -3.75rem',
    },
    '#myFileInput': {
       display: 'none',
