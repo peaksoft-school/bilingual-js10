@@ -105,10 +105,8 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
 
          setBoards(newBoards)
          if (sourceBoard.id === 1 && targetBoard.id === 2) {
-            // Item moved from the first board to the second board
             setMovedItems([...movedItems, sourceItem])
          } else if (sourceBoard.id === 2 && targetBoard.id === 1) {
-            // Item moved from the second board to the first board
             setMovedItems(
                movedItems.filter((item) => item.id !== sourceItem.id)
             )
@@ -124,7 +122,7 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
                hoverStyle="#3A10E5"
                className="logOutButton"
                variant="outlined"
-               onCLick={onClickQuitTest}
+               onClick={onClickQuitTest}
             >
                QUIT TEST
             </Button>
@@ -169,7 +167,7 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
                      defaultStyle="#3A10E5"
                      hoverStyle="#4E28E8"
                      className="nextButton"
-                     onCLick={onClickNext}
+                     onClick={onClickNext}
                   >
                      next
                   </Button>
@@ -229,7 +227,7 @@ const Item = styled('div')(() => ({
 
 const BackgroundStyle = styled(Background)(() => ({
    minWidth: '62.5vw',
-   '& .timer': {
+   '.timer': {
       color: '#4C4859',
       fontFamily: 'Poppins',
       fontSize: '32px',
@@ -237,7 +235,7 @@ const BackgroundStyle = styled(Background)(() => ({
       fontWeight: '500',
       lineHeight: '24px',
    },
-   '& .title': {
+   '.title': {
       marginTop: '15px',
       width: '100%',
       height: '70px',
@@ -257,14 +255,14 @@ const BackgroundStyle = styled(Background)(() => ({
 const GlobalDiv = styled('div')(() => ({
    height: '100vh',
    background: '#D7E1F8',
-   '& .buttonContainer': {
+   '.buttonContainer': {
       display: 'flex',
       padding: '15px 40px 0 0',
       alignItems: 'center',
       justifyContent: 'end',
       width: '100%',
    },
-   '& .nextButtonContainer': {
+   '.nextButtonContainer': {
       height: '70px',
       width: '100%',
       borderTop: '2px solid #D4D0D0',
