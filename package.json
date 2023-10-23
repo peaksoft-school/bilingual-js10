@@ -7,7 +7,7 @@
       "@emotion/styled": "^11.11.0",
       "@hookform/resolvers": "^3.3.2",
       "@mui/icons-material": "^5.14.13",
-      "@mui/material": "^5.14.13",
+      "@mui/material": "^5.14.14",
       "@reduxjs/toolkit": "^1.9.7",
       "@testing-library/jest-dom": "^5.17.0",
       "@testing-library/react": "^13.4.0",
