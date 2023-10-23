@@ -24,7 +24,7 @@ const Button = ({
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
-         onClick={onCLick}
+         onClick={onClick}
          {...rest}
       >
          {children}
@@ -82,7 +82,10 @@ const ButtonStyled = styled(MuiButton)(({
                        : `${variant === 'grey' ? '#4C4C4C' : '#fff'}`
                  }`
                : `${
-                    hoverStyle === '#3A10E5' || hoverStyle === '#3A10E5E5'
+                    hoverStyle === '#3A10E5' ||
+                    hoverStyle === '#3A10E5E5' ||
+                    hoverStyle === '#31CF38' ||
+                    hoverStyle === '#4E28E8'
                        ? 'white'
                        : '#4C4C4C'
                  }`
