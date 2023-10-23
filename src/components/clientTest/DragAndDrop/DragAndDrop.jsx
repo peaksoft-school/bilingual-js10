@@ -1,5 +1,5 @@
 import { styled } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 
@@ -10,7 +10,14 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
    const initialState = [
       {
          id: 1,
-         items: [],
+         items: [
+            { id: 1, title: 'hello' },
+            { id: 1, title: 'world' },
+            { id: 1, title: 'get' },
+            { id: 1, title: 'post' },
+            { id: 1, title: 'delete' },
+            { id: 1, title: 'put' },
+         ],
       },
       {
          id: 2,
@@ -21,19 +28,19 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
 
    const [boards, setBoards] = useState(initialState)
 
-   useEffect(() => {
-      const getData = async () => {
-         const response = await fetch(
-            'https://jsonplaceholder.typicode.com/todos'
-         )
-         const data = await response.json()
-         const updatedBoards = [...boards]
-         const sliceData = data.slice(80, 86)
-         updatedBoards[0].items = sliceData
-         setBoards(updatedBoards)
-      }
-      getData()
-   }, [])
+   // useEffect(() => {
+   //    const getData = async () => {
+   //       const response = await fetch(
+   //          'https://jsonplaceholder.typicode.com/todos'
+   //       )
+   //       const data = await response.json()
+   //       const updatedBoards = [...boards]
+   //       const sliceData = data.slice(80, 86)
+   //       updatedBoards[0].items = sliceData
+   //       setBoards(updatedBoards)
+   //    }
+   //    getData()
+   // }, [])
 
    const [currentBoard, setCurrentBoard] = useState(null)
    const [currentItem, setCurrentItem] = useState(null)
