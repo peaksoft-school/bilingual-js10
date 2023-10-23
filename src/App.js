@@ -1,8 +1,11 @@
+import Button from './components/UI/Buttons/Button'
+
 function App() {
    return (
-      <div>
+      <>
          <h1>Bilingual js-10</h1>
-      </div>
+         <Button className="addNewTestButton">add option </Button>
+      </>
    )
 }
 export default App

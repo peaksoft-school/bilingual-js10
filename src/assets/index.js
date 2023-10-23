@@ -32,6 +32,7 @@ import { ReactComponent as Eye } from './icons/eye.svg'
 import { ReactComponent as EyeClosed } from './icons/eyeClosed.svg'
 import { ReactComponent as ErrorIcon } from './icons/errorAuth.svg'
 import { ReactComponent as StickRed } from './icons/StickRed.svg'
+import { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -77,4 +78,5 @@ export {
    EyeClosed,
    ErrorIcon,
    StickRed,
+   PlusIcon,
 }
