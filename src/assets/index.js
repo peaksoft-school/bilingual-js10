@@ -26,7 +26,8 @@ import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
 import { ReactComponent as StickRed } from './icons/StickRed.svg'
-
+import { ReactComponent as CancelModal } from './icons/cancelModal.svg'
+import { ReactComponent as DeleteRealEnglishWord } from './icons/deleteForRealEnglishWord.svg'
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
@@ -65,4 +66,6 @@ export {
    RoundLeftBlue,
    RoundRightBlue,
    StickRed,
+   CancelModal,
+   DeleteRealEnglishWord,
 }

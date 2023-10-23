@@ -1,9 +1,11 @@
 import React from 'react'
+import TestQuestions from './components/adminTest/realEnglishWords/RealEnglishWords'
 
 function App() {
    return (
       <div>
-         <h1>Bilingual js-9</h1>
+         <TestQuestions />
+         {/* <h1>Bilingual js-10</h1> */}
       </div>
    )
 }
