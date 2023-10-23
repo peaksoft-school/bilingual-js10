@@ -1,6 +1,6 @@
 import { Button as MuiButton, styled } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
 import React from 'react'
+import { PlusIcon } from '../../../assets'
 
 const Button = ({
    defaultStyle,
@@ -20,7 +20,7 @@ const Button = ({
          fullWidth={fullWidth}
          disabled={disabled}
          className={className}
-         startIcon={className === 'addNewTestButton' ? <AddIcon /> : null}
+         startIcon={className === 'addNewTestButton' ? <PlusIcon /> : null}
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
