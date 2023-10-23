@@ -1,10 +1,12 @@
 import { Box, styled } from '@mui/material'
 import React from 'react'
 
-export const Background = ({ children }) => {
+export const Background = ({ children, marginTop, ...rest }) => {
    return (
       <BackgroundBox>
-         <StyleBackground>{children}</StyleBackground>
+         <StyleBackground marginTop={marginTop} {...rest}>
+            {children}
+         </StyleBackground>
       </BackgroundBox>
    )
 }
@@ -17,12 +19,13 @@ const BackgroundBox = styled(Box)(() => {
    }
 })
 
-const StyleBackground = styled('div')(() => {
+const StyleBackground = styled('div')(({ marginTop }) => {
    return {
-      marginTop: '55px',
+      marginTop: `${marginTop}`,
       maxWidth: '1060px',
       padding: '3.125rem 5rem',
       borderRadius: '25px',
+      background: 'white',
       boxShadow: '0px 4px 39px rgba(196, 196, 196, 0.60)',
    }
 })
