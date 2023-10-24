@@ -40,49 +40,42 @@ const Select = () => {
       setSelectedOption(event.target.value)
    }
    return (
-      <div>
-         <StyledFormControl fullWidth>
-            <StyledSelect
-               displayEmpty
-               value={selectedOption}
-               onChange={handleChange}
-               input={<OutlinedInput />}
-               renderValue={(selected) => {
-                  if (selected.length === 0) {
-                     // return <p>Describe image</p>
-                  }
-                  return selected
-               }}
-               MenuProps={MenuProps}
-            >
-               {/* <MenuItem disabled value="">
-            <em>Placeholder</em>
-          </MenuItem> */}
-               {options.map((option) => (
-                  <StyledMenuItem
-                     key={option}
-                     value={option}
-                     style={getStyles(option, selectedOption, theme)}
-                  >
-                     {option}
-                  </StyledMenuItem>
-               ))}
-            </StyledSelect>
-         </StyledFormControl>
-      </div>
+      <StyledFormControl fullWidth>
+         <StyledSelect
+            displayEmpty
+            value={selectedOption}
+            onChange={handleChange}
+            input={<OutlinedInput />}
+            renderValue={(selected) => {
+               if (selected.length === 0) {
+                  // return <p>Describe image</p>
+               }
+               return selected
+            }}
+            MenuProps={MenuProps}
+         >
+            {options.map((option) => (
+               <StyledMenuItem
+                  key={option}
+                  value={option}
+                  style={getStyles(option, selectedOption, theme)}
+               >
+                  {option}
+               </StyledMenuItem>
+            ))}
+         </StyledSelect>
+      </StyledFormControl>
    )
 }
 export default Select
 
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
-      marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
-      height: '5.9vh',
       backgroundColor: '#FFF',
       color: '#313144',
       '& .MuiOutlinedInput-root': {
-         padding: '0.4rem',
+         padding: '0.3rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
          fontSize: '1rem',
          fontStyle: 'normal',
@@ -90,15 +83,15 @@ const StyledFormControl = styled(FormControl)({
          lineHeight: '1.2rem',
          '& fieldset': {
             borderRadius: ' 8px 8px 8px 8px',
-            border: '2px solid #D4D0D0',
+            border: '1.53px solid #D4D0D0',
          },
          backgroundColor: '#FFF',
          '&.Mui-focused fieldset': {
-            border: '1.3px solid #3A10E5',
+            border: '1.53px solid #3A10E5',
             borderRadius: ' 8px 8px 0px 0px',
          },
          '&:hover fieldset': {
-            border: '1.3px solid #3A10E5',
+            border: '1.53px solid #3A10E5',
          },
       },
       '& p': {

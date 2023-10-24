@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
-// import { v4 as uuidv4 } from 'uuid'
 import { styled } from '@mui/material'
 import { Modal } from '../../UI/UiModal'
 import { InputRadio } from '../../UI/InputRadio'
 import Button from '../../UI/Buttons/Button'
 import { CancelModal } from '../../../assets'
 
-const OptionModal = ({
-   open,
-   handleCloseModal,
-   onSaveOption,
-   // onDeleteOption,
-}) => {
+const OptionModal = ({ open, handleCloseModal, onSaveOption }) => {
    const [isTrueOption, setIsTrueOption] = useState(false)
    const [title, setTitle] = useState('')
-   // const [isChecked, setIsChecked] = useState(isTrueOption)
 
    const handleSaveOption = () => {
       if (title) {
@@ -30,34 +23,32 @@ const OptionModal = ({
          open={open}
          onClose={handleCloseModal}
          onSaveOption={handleSaveOption}
-         // onDeleteOption={handleDeleteOption}
          width="40rem"
          height="25rem"
          backgroundColor="#FFF"
       >
          <>
             <CancelIcon onClick={handleCloseModal} />
-            <DivInputOne>
+            <ContainerFirstInput>
                <TextTitle>Title</TextTitle>
-               <InputOne
+               <FirstInput
                   placeholder="Select real English words"
                   name="title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value.slice(0, 13))}
+                  maxLength={13}
                />
-            </DivInputOne>
+            </ContainerFirstInput>
             <Container>
                <TextOption> Is true option?</TextOption>
-
                <Radio
                   variant="CHECKBOX"
                   checked={isTrueOption}
-                  // onChange={(e) => setIsTrueOption(e.target.checked)}
                   onChange={() => setIsTrueOption(!isTrueOption)}
                />
             </Container>
-            <FooterContainer>
-               <Mini>
+            <ContainerForButtons>
+               <FAM>
                   <Button
                      variant="outlined"
                      hoverStyle="#3A10E5"
@@ -72,8 +63,8 @@ const OptionModal = ({
                   >
                      Save
                   </Button>
-               </Mini>
-            </FooterContainer>
+               </FAM>
+            </ContainerForButtons>
          </>
       </Modal>
    )
@@ -81,7 +72,7 @@ const OptionModal = ({
 
 export default OptionModal
 
-const InputOne = styled('input')(() => ({
+const FirstInput = styled('input')(() => ({
    width: ' 32.3125rem ',
    height: ' 2.875rem',
    borderRadius: '8px',
@@ -93,6 +84,10 @@ const InputOne = styled('input')(() => ({
    lineHeight: '18px',
    color: '#4C4859',
    paddingLeft: '16px',
+   outline: 'none',
+   '&:hover, &:focus': {
+      border: '1.53px solid #3A10E5',
+   },
 }))
 const TextTitle = styled('h1')(() => ({
    display: 'flex',
@@ -115,7 +110,7 @@ const CancelIcon = styled(CancelModal)(() => ({
    position: 'absolute',
    marginTop: '1rem',
 }))
-const FooterContainer = styled('div')(() => ({
+const ContainerForButtons = styled('div')(() => ({
    marginTop: '5.7rem',
    borderRadius: ' 0px 0px 9px 9px',
    width: '40rem',
@@ -124,7 +119,7 @@ const FooterContainer = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
 }))
-const Mini = styled('div')(() => ({
+const FAM = styled('div')(() => ({
    display: 'flex',
    gap: '1rem',
    marginLeft: '24rem',
@@ -141,7 +136,7 @@ const TextOption = styled('h1')(() => ({
    lineHeight: 'normal',
    color: '#4C4859',
 }))
-const DivInputOne = styled('div')(() => ({
+const ContainerFirstInput = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'center',
