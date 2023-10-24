@@ -34,6 +34,8 @@ import { ReactComponent as ErrorIcon } from './icons/errorAuth.svg'
 import { ReactComponent as StickRed } from './icons/StickRed.svg'
 import { ReactComponent as CancelModal } from './icons/cancelModal.svg'
 import { ReactComponent as DeleteRealEnglishWord } from './icons/deleteForRealEnglishWord.svg'
+import { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
+
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
@@ -80,4 +82,5 @@ export {
    Eye,
    EyeClosed,
    ErrorIcon,
+   PlusIcon,
 }
