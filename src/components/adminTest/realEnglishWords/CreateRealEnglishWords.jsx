@@ -63,7 +63,7 @@ const CreateRealEnglishWord = () => {
                   <Select fullWidth />
                </ContainerInputSecond>
                <MiniContainerButton>
-                  <AddOption
+                  <Button
                      defaultStyle="#3A10E5"
                      className="addNewTestButton"
                      hoverStyle="#3A10E5E5"
@@ -71,7 +71,7 @@ const CreateRealEnglishWord = () => {
                      variant="contained"
                   >
                      add options
-                  </AddOption>
+                  </Button>
                </MiniContainerButton>
             </FormSubmit>
 
@@ -124,9 +124,6 @@ const CreateRealEnglishWord = () => {
 }
 export default CreateRealEnglishWord
 
-const AddOption = styled(Button)(() => ({
-   width: '10rem',
-}))
 const MainContainer = styled('div')(() => ({
    display: 'flex',
    gap: '10px',
