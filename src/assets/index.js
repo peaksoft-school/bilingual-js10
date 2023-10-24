@@ -24,7 +24,6 @@ import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
 
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
 import { ReactComponent as Check } from './icons/check.svg'
-import { ReactComponent as Eyes } from './icons/eyes.svg'
 
 import Kamchy from './image/ Kamchy.jpeg'
 import Aziat from './image/Aziat.jpg'
@@ -62,5 +61,4 @@ export {
    RoundRightBlue,
    TrashCan,
    Check,
-   Eyes,
 }
