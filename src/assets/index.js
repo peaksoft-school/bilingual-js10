@@ -22,7 +22,7 @@ import { ReactComponent as StickPink } from './icons/stickPink.svg'
 import { ReactComponent as RoundLeftBlue } from './icons/RoundLeftBlue.svg'
 import { ReactComponent as RoundRightBlue } from './icons/RoundRightBlue.svg'
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
-import { ReactComponent as Eyes } from './icons/eye.svg'
+import { ReactComponent as Eyes } from './icons/eyes.svg'
 import { ReactComponent as Check } from './icons/check.svg'
 
 import Kamchy from './image/ Kamchy.jpeg'
