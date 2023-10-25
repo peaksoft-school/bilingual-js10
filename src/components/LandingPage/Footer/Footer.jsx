@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import ClearIcon from '@mui/icons-material/Clear'
 import styled from '@emotion/styled'
-import bilingual from '../../../assets/Image/Layer 2.svg'
-import youTube from '../../../assets/Image/Ellipse 269.svg'
-import facebook from '../../../assets/Image/Group 4328.svg'
-import instagram from '../../../assets/Image/Ellipse 264.svg'
+import bilingual from '../../../assets/images/layer.svg'
+import youTube from '../../../assets/images/ellipse.svg'
+import facebook from '../../../assets/images/faceBook.svg'
+import instagram from '../../../assets/images/ellipse2.svg'
 
 const FAQ = [
    {
