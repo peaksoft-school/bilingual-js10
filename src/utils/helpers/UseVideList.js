@@ -1,20 +1,20 @@
 export const usefulVideosList = [
    {
       id: '1',
-      url: 'https://www.youtube.com/watch?v=6tlydXoNC2Q',
+      url: 'https://www.youtube.com/watch?v=RMIG8PwvdIE',
       title: 'Test Overview',
-      duration: '',
+      duration: '15:00',
    },
    {
       id: '2',
-      url: 'https://www.youtube.com/watch?v=D0Ajq682yrA',
+      url: 'https://youtu.be/HGeuA4iJ8vI?t=20',
       title: 'Test Walkthrough',
-      duration: '',
+      duration: '4:03',
    },
    {
       id: '3',
-      url: 'https://www.youtube.com/watch?v=TJhfl5vdxp4',
+      url: 'https://youtu.be/dKHsDC-oB2w',
       title: 'Integrated Subscores',
-      duration: '',
+      duration: '8:15',
    },
 ]

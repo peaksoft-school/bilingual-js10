@@ -1,5 +1,6 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
+import ReactPlayer from 'react-player'
 import { usefulVideosList } from '../../utils/helpers/UseVideList'
 
 const UsefulVideo = () => {
@@ -10,14 +11,16 @@ const UsefulVideo = () => {
             {usefulVideosList.map((item) => (
                <StyledInnerBox key={item.id}>
                   <BoxVideo>
-                     <video>
-                        <track kind="captions" />
-                        <source src={item.url} type="video/mp4" />
-                     </video>
+                     <ReactPlayer
+                        url={item.url}
+                        controls
+                        height={261}
+                        width={370}
+                     />
                   </BoxVideo>
                   <StyledBottomBox>
-                     <Typography>{item.title}</Typography>
-                     <p>Duration: {item.duration}</p>
+                     <Title>{item.title}</Title>
+                     <Text>Duration {item.duration}</Text>
                   </StyledBottomBox>
                </StyledInnerBox>
             ))}
@@ -35,6 +38,7 @@ const Container = styled('div')({
    flexDirection: 'column',
    alignItems: 'center',
    gap: '2.8rem',
+   overflow: 'hidden',
 })
 
 const StyledBox = styled('div')({
@@ -43,6 +47,7 @@ const StyledBox = styled('div')({
    flexDirection: 'row',
    justifyContent: 'space-around',
    alignItems: 'center',
+   overflow: 'hidden',
 })
 
 const MyText = styled(Typography)({
@@ -54,30 +59,53 @@ const MyText = styled(Typography)({
    color: '#3752B4',
    textAlign: 'center',
 })
-
+const Title = styled(Typography)({
+   fontFamily: 'Gilroy',
+   fontSize: '1.3rem',
+   fontStyle: 'normal',
+   fontWeight: '700',
+   lineHeight: '24.18px',
+   color: '#3752B4',
+   paddingLeft: '20px',
+})
+const Text = styled(Typography)({
+   fontFamily: 'Gilroy',
+   fontSize: '1.2rem',
+   fontStyle: 'normal',
+   fontWeight: '400',
+   lineHeight: '20.88px',
+   color: '#212629',
+   paddingLeft: '20px',
+})
 const StyledInnerBox = styled('div')({
-   width: '370px',
-   height: '348px',
+   width: '27vw',
+   height: '50vh',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'start',
-   borderRadius: '16px, 16px, 16px, 16px',
+   borderTopLeftRadius: '16px',
+   borderTopRightRadius: '16px',
+   borderBottomLeftRadius: '16px',
+   borderBottomRightRadius: '16px',
+   overflow: 'hidden',
    gap: '0.5rem',
    border: '1px solid #DDDDDD',
    backgroundColor: 'white',
+   borderCollapse: 'separate ',
 })
 
 const BoxVideo = styled('div')({
    border: '1px solid #DDDDDD',
-   width: '370px',
-   height: '261px',
-   borderRadius: '16px, 16px, 0px, 0px',
+   borderTopLeftRadius: '16px',
+   borderTopRightRadius: '16px',
+   overflow: 'hidden',
 })
 
 const StyledBottomBox = styled('div')({
-   width: '370px',
-   height: '87px',
+   width: '27vw',
+   height: '15vh',
    display: 'flex',
    flexDirection: 'column',
+   justifyContent: 'space-around',
 })
 export default UsefulVideo
