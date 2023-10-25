@@ -4,6 +4,8 @@ import { ThemeProvider } from '@emotion/react'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import App from './App'
 import { theme } from './assets/theme/globalTheme'
 import reportWebVitals from './reportWebVitals'
@@ -13,8 +15,10 @@ root.render(
    <React.StrictMode>
       <ThemeProvider theme={theme}>
          <BrowserRouter>
-            <ToastContainer />
-            <App />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+               <ToastContainer />
+               <App />
+            </LocalizationProvider>
          </BrowserRouter>
       </ThemeProvider>
    </React.StrictMode>

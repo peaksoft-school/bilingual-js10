@@ -1,6 +1,6 @@
 import { Button as MuiButton, styled } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
 import React from 'react'
+import { PlusIcon } from '../../../assets'
 
 const Button = ({
    defaultStyle,
@@ -19,8 +19,7 @@ const Button = ({
          variant={variant}
          fullWidth={fullWidth}
          className={className}
-         disabled={disabled}
-         startIcon={className === 'addNewTestButton' ? <AddIcon /> : null}
+         startIcon={className === 'addNewTestButton' ? <PlusIcon /> : null}
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
@@ -82,7 +81,10 @@ const ButtonStyled = styled(MuiButton)(({
                        : `${variant === 'grey' ? '#4C4C4C' : '#fff'}`
                  }`
                : `${
-                    hoverStyle === '#3A10E5' || hoverStyle === '#3A10E5E5'
+                    hoverStyle === '#3A10E5' ||
+                    hoverStyle === '#3A10E5E5' ||
+                    hoverStyle === '#31CF38' ||
+                    hoverStyle === '#4E28E8'
                        ? 'white'
                        : '#4C4C4C'
                  }`

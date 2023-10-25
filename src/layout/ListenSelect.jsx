@@ -2,40 +2,32 @@ import { styled } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { VolumeUp } from '@mui/icons-material'
+import { TimeField } from '@mui/x-date-pickers'
 import Button from '../components/UI/Buttons/Button'
-import { Delete } from '../assets'
+import { Delete, VolumeForEnglishWord } from '../assets'
 import { InputRadio } from '../components/UI/InputRadio'
 import { ListenModal } from './ListenModal'
 import Select from '../components/UI/select/Select'
 import { Background } from './Background'
 
+const audioContainer = {
+   display: 'flex',
+   alignItems: 'center',
+   gap: '15px',
+}
+const ContainDeleteChek = {
+   display: 'flex',
+   alignItems: 'center',
+   gap: '4px',
+}
 export const ListenSelect = () => {
-   const [time, setTime] = useState('15:00')
    const [state, setState] = useState(false)
    const [values, setValues] = useState('')
    const handleClose = () => setState(false)
-   const [options, setOptions] = useState([{ text: 'Word 1' }])
-   const removeElement = (id) => {
-      const newOption = options.filter((option) => option.id !== id)
-      setOptions(newOption)
-   }
-   const handleSave = () => {
-      const newOption = {
-         id: Math.floor(Math.random() * 100),
-         text: values,
-         checked: false,
-      }
-      setValues('')
-      setOptions([...options, newOption])
-      handleClose()
-   }
-   const fileInputRef = useRef(null)
-   const handleClick = () => {
-      if (fileInputRef.current) {
-         fileInputRef.current.click()
-      }
-   }
+   const [options, setOptions] = useState([])
+   const [audioFile, setAudioFile] = useState([])
+   const [audioPlaying, setAudioPlaying] = useState(false)
+
    const formik = useFormik({
       initialValues: {
          selectedFile: null,
@@ -47,44 +39,74 @@ export const ListenSelect = () => {
          handleClose()
       },
    })
-
-   const [audioFile, setAudioFile] = useState(null)
-
-   const handleFile = (event) => {
-      const file = event.target.files[0]
-      setAudioFile(file)
-   }
-   const handlePlayAudio = () => {
-      if (audioFile) {
-         const audio = new Audio(URL.createObjectURL(audioFile))
-         audio.play()
+   const handleSave = () => {
+      const newOption = {
+         id: Math.random(),
+         text: values,
+         checked: false,
+         checkedMusic: false,
+      }
+      setValues('')
+      if (audioFile.length === 0) {
+         console.log('error')
+      } else {
+         setOptions([...options, newOption])
+         handleClose()
+         formik.handleReset()
       }
    }
+   const fileInputRef = useRef(null)
+   const handleClick = () => {
+      if (fileInputRef.current) {
+         fileInputRef.current.click()
+      }
+   }
+   const handleFile = (event) => {
+      const file = event.target.files[0]
+      setAudioFile((prev) => [...prev, file])
+   }
+   const handlePlayAudio = (index, id) => {
+      if (audioFile) {
+         if (audioPlaying || (audioPlaying && audioPlaying.id !== id)) {
+            audioPlaying.audio.pause()
+            setAudioPlaying(false)
+            if (audioPlaying && audioPlaying.id === id) {
+               return
+            }
+         }
+         const audio = new Audio(URL.createObjectURL(audioFile[index]))
+         audio.play()
+         audio.addEventListener('ended', () => {
+            setAudioPlaying(false)
+         })
+         setAudioPlaying({ audio, id })
+      }
+   }
+   console.log(!audioFile)
 
+   const removeElement = (id) => {
+      const newOption = options.filter((option) => option.id !== id)
+      setOptions(newOption)
+   }
    return (
       <Container>
          <Background>
-            <div className="display">
+            <div className="ContainerCreateTest">
                <div className="Contain">
                   <div className="InputTitle">
                      <p>Title</p>
                      <InputTitle
                         className="InputTitles"
                         type="text"
-                        placeholder="Select real English words"
+                        placeholder="Listen and select English word"
                      />
                   </div>
-                  <label>
+                  <div>
                      <p className="InputText">
                         Duration <br /> (in minutes)
                      </p>
-                     <input
-                        type="time"
-                        className="InputTime"
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
-                     />
-                  </label>
+                     <ContainTimeField format="mm:ss" />
+                  </div>
                </div>
 
                <div className="ContainSelects">
@@ -103,41 +125,52 @@ export const ListenSelect = () => {
                   </div>
                </div>
                <div className="CreatTeasts">
-                  {options.map((el, index) => (
+                  {options?.map((el, index) => (
                      <div key={el.id} className="CreatTest">
-                        <p>{index + 1}</p>
-                        <VolumeUp
-                           onClick={handlePlayAudio}
-                           className="VolumUp"
-                        />
-                        <p>{el.text}</p>
-                        <InputRadio variant="CHECKBOX" />
-                        <Delete
-                           onClick={() => removeElement(el.id)}
-                           className="DeleteIcon"
-                        />
+                        <div style={audioContainer}>
+                           <p>{index + 1}</p>
+                           <VolumeForEnglishWord
+                              onClick={() => handlePlayAudio(index, el.id)}
+                              style={{
+                                 fill:
+                                    audioPlaying?.id === el.id
+                                       ? '#3A10E5 '
+                                       : '#655F5F ',
+                              }}
+                           />
+                           <p>{el.text}</p>
+                        </div>
+                        <div style={ContainDeleteChek}>
+                           <InputRadio variant="CHECKBOX" />
+                           <Delete
+                              onClick={() => removeElement(el.id)}
+                              className="DeleteIcon"
+                           />
+                        </div>
                      </div>
                   ))}
                </div>
             </div>
-            <div className="ControlButton">
-               <Button
-                  variant="outlined"
-                  hoverStyle="#3A10E5"
-                  onClick={handleClose}
-                  className="Button"
-               >
-                  GO BACK
-               </Button>
-               <Button
-                  defaultStyle="#2AB930"
-                  hoverStyle="#31CF38"
-                  className="saveButton"
-                  variant="contained"
-               >
-                  SAVE
-               </Button>
-            </div>
+            {options.length > 0 ? (
+               <div className="ControlButton">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={handleClose}
+                     className="Button"
+                  >
+                     GO BACK
+                  </Button>
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     className="saveButton"
+                     variant="contained"
+                  >
+                     SAVE
+                  </Button>
+               </div>
+            ) : null}
             <ListenModal
                open={state}
                handleClose={handleClose}
@@ -154,10 +187,30 @@ export const ListenSelect = () => {
       </Container>
    )
 }
-
+const ContainTimeField = styled(TimeField)(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+   alignContent: 'center',
+   width: '6rem',
+   height: '3.2rem',
+   borderRadius: '0.5rem',
+   '& .css-1fpet8r-MuiInputBase-root-MuiOutlinedInput-root ': {
+      borderRadius: '0.5rem',
+      width: '6rem',
+      height: '3.2rem',
+      marginBottom: '0.5rem',
+      paddingLeft: '12px',
+      border: '2px solid #D4D0D0',
+      color: '#4C4859',
+      ':hover': {
+         border: '2px solid blue',
+      },
+   },
+   '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': { border: 'none' },
+}))
 const InputTitle = styled('input')(() => ({
-   width: '43.5rem',
-   height: '3rem',
+   width: '43rem',
+   height: '3.2rem',
    borderRadius: '8px',
    border: '2px solid #D4D0D0',
    fontFamily: 'Poppins',
@@ -168,7 +221,11 @@ const InputTitle = styled('input')(() => ({
    color: '#D4D0D0',
    paddingLeft: '16px',
    marginTop: '1rem',
-   '& .InputTitles:hover': {
+   outline: 'none',
+   ':hover': {
+      border: '2px solid blue',
+   },
+   ':focus': {
       border: '2px solid blue',
    },
 }))
@@ -178,17 +235,18 @@ const Container = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',
    background: '#D7E1F8',
-   '.display': {
+   '.ContainerCreateTest': {
       display: 'flex',
       gap: '1.5rem',
       flexWrap: 'wrap',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       alignItems: 'center',
+      width: '800px',
    },
    '.Contain': {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'start',
       gap: '1rem',
    },
    p: {
@@ -198,25 +256,12 @@ const Container = styled('div')(() => ({
       color: ' #4B4759',
       fontFamly: 'Poppins',
    },
-   '.InputText': { paddingBottom: '0.75rem' },
+   '.InputText': { paddingBottom: '0.75rem', width: '110px' },
    '.InputTitle': { paddingTop: '0.75rem' },
-   ' .InputTime:hover': {
-      border: ' 2px solid blue',
-   },
-   ' .InputTime': {
-      width: '6.2rem',
-      height: '3rem',
-      borderRadius: '0.5rem',
-      border: ' 2px solid #D4D0D0',
-      marginBottom: '0.6rem',
-      backgrount: '#fff',
-      paddingLeft: '2rem',
-      fontWeight: '500',
-      outline: 'none',
-      fontFamly: 'Poppins',
-   },
+   '.InputTitles': { color: '#4C4859' },
    '.ContainSelects': {
-      width: '51.1rem',
+      width: '51rem',
+      height: '2.8rem',
       '.TextType': { paddingBottom: '0.75rem' },
    },
    '.DeleteIcon': {
@@ -234,10 +279,9 @@ const Container = styled('div')(() => ({
       display: 'flex',
       justifyContent: 'center',
       rowGap: '1rem',
-      columnGap: '1rem',
+      columnGap: '2rem',
       flexWrap: 'wrap',
-      marginTop: '2rem',
-      marginLeft: '1rem',
+      marginTop: '7rem',
       fontFamly: 'Poppins',
       ul: {
          fontSize: '16px',
@@ -251,23 +295,19 @@ const Container = styled('div')(() => ({
       display: 'flex',
       alignItems: 'center',
       gap: '1rem',
-      border: '1px solid grey',
+      border: '1.53px solid #D4D0D0',
       width: '15rem',
       height: '3rem',
       borderRadius: '8px',
       padding: '0.80rem 0.85rem 0.80rem 0.85rem',
       fontFamly: 'Poppins',
    },
-   '.VolumUp': {
-      color: 'grey',
-   },
    '.ControlButton': {
       display: 'flex',
       gap: '1rem',
       justifyContent: 'end',
       alignItems: 'center',
-      marginRight: '2.7rem',
-      marginTop: '4rem',
+      marginTop: '5rem',
       fontFamly: 'Poppins',
    },
 }))
