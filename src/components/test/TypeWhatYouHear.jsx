@@ -7,7 +7,7 @@ import Select from '../UI/select/Select'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
 
-export const TypeWhatYouHear = () => {
+export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
    const [audioFile, setFile] = useState(null)
    const [quantityInputValue, setQuantityInputValue] = useState(0)
    const [correctAnswer, setCorrectAnswer] = useState('')
@@ -96,6 +96,7 @@ export const TypeWhatYouHear = () => {
                      variant="outlined"
                      className="goBackButton"
                      hoverStyle="#3A10E5"
+                     onClick={onGoBack}
                   >
                      Go back
                   </Button>
@@ -104,6 +105,7 @@ export const TypeWhatYouHear = () => {
                      className="saveButton"
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
+                     onClick={onSave}
                   >
                      Save
                   </Button>
