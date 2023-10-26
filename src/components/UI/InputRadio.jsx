@@ -48,7 +48,12 @@ export const InputRadio = ({
                <div>
                   <button>
                      {clicked && (
-                        <CheckIcon sx={{ color: '#2AB930', width: '17px' }} />
+                        <CheckIcon
+                           sx={{
+                              color: '#2AB930',
+                              width: '17px',
+                           }}
+                        />
                      )}
                   </button>
                </div>
@@ -72,6 +77,7 @@ const ButtonContainer = styled('div')`
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-top: 3px;
    }
 `
 

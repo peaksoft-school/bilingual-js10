@@ -1,6 +1,6 @@
 import { Button as MuiButton, styled } from '@mui/material'
-import { AddIcon } from '@mui/icons-material/Add'
 import React from 'react'
+import { PlusIcon } from '../../../assets'
 
 const Button = ({
    defaultStyle,
@@ -11,6 +11,8 @@ const Button = ({
    variant = 'contained',
    className,
    fullWidth,
+   onClick,
+   ...rest
 }) => {
    return (
       <ButtonStyled
@@ -18,22 +20,22 @@ const Button = ({
          fullWidth={fullWidth}
          disabled={disabled}
          className={className}
-         startIcon={className === 'addNewTestButton' ? <AddIcon /> : null}
+         startIcon={className === 'addNewTestButton' ? <PlusIcon /> : null}
          defaultStyle={defaultStyle}
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
+         onClick={onClick}
+         {...rest}
       >
          {children}
       </ButtonStyled>
    )
 }
-
 const colors = {
    contained: '#fff',
    outlined: '#3A10E5',
    grey: '#4C4C4C',
 }
-
 const ButtonStyled = styled(MuiButton)(({
    className,
    variant,
@@ -46,7 +48,7 @@ const ButtonStyled = styled(MuiButton)(({
       backgroundColor: `${defaultStyle}`,
       padding: '0.55rem 1.5rem',
       height: '42px',
-      fontFamily: 'DINNextRoundedLTPro-Bold',
+      fontFamily: 'Poppins',
       borderRadius: '8px',
       color: `${
          className === 'registerButton' || className === 'logOutButton'
@@ -65,7 +67,6 @@ const ButtonStyled = styled(MuiButton)(({
                  colors[className === 'logOutButton' ? 'grey' : variant]
               }`
       }`,
-
       '&:hover': {
          backgroundColor: `${hoverStyle}`,
          boxShadow: `${
@@ -75,14 +76,29 @@ const ButtonStyled = styled(MuiButton)(({
          }`,
          color: `${
             className === 'registerButton' || className === 'logOutButton'
-               ? `${className === 'registerButton' ? '#4C4C4C' : '#fff'}`
-               : 'white'
+               ? `${
+                    className === 'registerButton'
+                       ? '#4C4C4C'
+                       : `${variant === 'grey' ? '#4C4C4C' : '#fff'}`
+                 }`
+               : `${
+                    hoverStyle === '#3A10E5' ||
+                    hoverStyle === '#3A10E5E5' ||
+                    hoverStyle === '#31CF38' ||
+                    hoverStyle === '#4E28E8'
+                       ? 'white'
+                       : '#4C4C4C'
+                 }`
          }`,
          border: `${
             variant === 'contained'
                ? 'none'
                : `3px solid ${
-                    colors[className === 'logOutButton' ? 'outlined' : variant]
+                    colors[
+                       className === 'logOutButton'
+                          ? `${variant === 'grey' ? 'grey' : 'outlined'}`
+                          : variant
+                    ]
                  }`
          }`,
       },
