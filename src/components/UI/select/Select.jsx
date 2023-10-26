@@ -33,7 +33,7 @@ function getStyles(option, selectedOption, theme) {
             : theme.typography.fontWeightMedium,
    }
 }
-const Select = () => {
+const Select = ({ ...rest }) => {
    const theme = useTheme()
    const [selectedOption, setSelectedOption] = React.useState([])
 
@@ -42,7 +42,7 @@ const Select = () => {
    }
    return (
       <div>
-         <StyledFormControl>
+         <StyledFormControl fullWidth>
             <StyledSelect
                displayEmpty
                value={selectedOption}
@@ -55,6 +55,7 @@ const Select = () => {
                   return selected
                }}
                MenuProps={MenuProps}
+               {...rest}
             >
                {/* <MenuItem disabled value="">
             <em>Placeholder</em>
@@ -77,9 +78,7 @@ export default Select
 
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
-      marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
-      width: '43vw',
       height: '5.9vh',
       backgroundColor: '#FFF',
       color: '#313144',
@@ -92,15 +91,15 @@ const StyledFormControl = styled(FormControl)({
          lineHeight: '1.2rem',
          '& fieldset': {
             borderRadius: ' 8px 8px 8px 8px',
-            // border: '1.3px solid #3A10E5',
+            border: '2.2px solid #D4D0D0',
          },
          backgroundColor: '#FFF',
          '&.Mui-focused fieldset': {
-            border: '1.3px solid #3A10E5',
+            border: '2.2px solid #3A10E5',
             borderRadius: ' 8px 8px 0px 0px',
          },
          '&:hover fieldset': {
-            border: '1.3px solid #3A10E5',
+            border: '2.2px solid #3A10E5',
          },
       },
       '& p': {
