@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from './components/UI/Table'
+import { Table } from './components/components/table/Table'
 import { Check, Eye, TrashCan } from './assets'
 import { styled } from '@mui/material'
 
