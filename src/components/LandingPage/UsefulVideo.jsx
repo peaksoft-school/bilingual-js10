@@ -6,7 +6,7 @@ import { usefulVideosList } from '../../utils/helpers/UseVideList'
 const UsefulVideo = () => {
    return (
       <Container>
-         <MyText>Useful videos </MyText>
+         <MyText>Useful videos</MyText>
          <StyledBox>
             {usefulVideosList.map((item) => (
                <StyledInnerBox key={item.id}>
@@ -14,8 +14,16 @@ const UsefulVideo = () => {
                      <ReactPlayer
                         url={item.url}
                         controls
+                        pip
                         height={261}
                         width={370}
+                        config={{
+                           file: {
+                              attributes: {
+                                 crossorigin: 'anonymous',
+                              },
+                           },
+                        }}
                      />
                   </BoxVideo>
                   <StyledBottomBox>
@@ -51,25 +59,26 @@ const StyledBox = styled('div')({
 })
 
 const MyText = styled(Typography)({
-   fontFamily: 'Gilroy',
+   fontfamily: 'Gilroy',
    fontSize: '2.5rem',
    fontStyle: 'normal',
    fontWeight: '700',
    lineHeight: '48.36px',
    color: '#3752B4',
    textAlign: 'center',
+   paddingTop: '10px',
 })
 const Title = styled(Typography)({
-   fontFamily: 'Gilroy',
+   fontfamily: 'Gilroy',
    fontSize: '1.3rem',
    fontStyle: 'normal',
    fontWeight: '700',
    lineHeight: '24.18px',
-   color: '#3752B4',
+   color: '#3A10E5',
    paddingLeft: '20px',
 })
 const Text = styled(Typography)({
-   fontFamily: 'Gilroy',
+   fontfamily: 'Gilroy',
    fontSize: '1.2rem',
    fontStyle: 'normal',
    fontWeight: '400',
@@ -93,7 +102,6 @@ const StyledInnerBox = styled('div')({
    backgroundColor: 'white',
    borderCollapse: 'separate ',
 })
-
 const BoxVideo = styled('div')({
    border: '1px solid #DDDDDD',
    borderTopLeftRadius: '16px',

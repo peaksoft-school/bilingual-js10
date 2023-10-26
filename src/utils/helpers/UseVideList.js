@@ -7,13 +7,13 @@ export const usefulVideosList = [
    },
    {
       id: '2',
-      url: 'https://youtu.be/HGeuA4iJ8vI?t=20',
+      url: 'https://www.youtube.com/watch?v=75p-N9YKqNo',
       title: 'Test Walkthrough',
       duration: '4:03',
    },
    {
       id: '3',
-      url: 'https://youtu.be/dKHsDC-oB2w',
+      url: 'https://www.youtube.com/watch?v=Yt8GFgxlITs',
       title: 'Integrated Subscores',
       duration: '8:15',
    },

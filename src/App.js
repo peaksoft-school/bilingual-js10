@@ -1,7 +1,10 @@
+import UsefulVideo from './components/LandingPage/UsefulVideo'
+
 function App() {
    return (
       <div>
          <h1>Bilingual js-10</h1>
+         <UsefulVideo />
       </div>
    )
 }
