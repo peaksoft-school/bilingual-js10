@@ -1,11 +1,11 @@
-import { InputLabel, styled } from '@mui/material'
-import { TimeField } from '@mui/x-date-pickers/TimeField'
-import { useState } from 'react'
-import { DeleteRealEnglishWord } from '../../../assets/index'
-import Button from '../../UI/Buttons/Button'
-import { InputRadio } from '../../UI/InputRadio'
-import Select from '../../UI/select/Select'
+import React, { useState } from 'react'
+import { styled } from '@mui/material'
+import CustomForm from '../customFormCreateTest/CustomFormCreateTest'
 import OptionModal from '../addOptionModal/AddOptionModal'
+import { InputRadio } from '../../UI/InputRadio'
+import { DeleteRealEnglishWord } from '../../../assets'
+import Button from '../../UI/Buttons/Button'
+import { Background } from '../../../layout/Background'
 
 const CreateRealEnglishWord = () => {
    const [isModalOpen, setModalOpen] = useState(false)
@@ -39,51 +39,35 @@ const CreateRealEnglishWord = () => {
    }
 
    return (
-      <>
-         <MainCreateTest>
-            <FormSubmit>
-               <ContainerTitleInput>
-                  <Container>
-                     <TextTitle>Title</TextTitle>
-                     <FirstInput
-                        placeholder="Select real English words"
-                        name="title"
-                     />
-                  </Container>
-                  <ContainerTimerInput>
-                     <TimeText htmlFor="timeInput">
-                        Duration
-                        <p>(in minutes)</p>
-                     </TimeText>
-                     <FieldTime format="mm:ss" />
-                  </ContainerTimerInput>
-               </ContainerTitleInput>
-               <ContainerInputSecond>
-                  <InputLabelTextType>Type</InputLabelTextType>
-                  <Select fullWidth />
-               </ContainerInputSecond>
-               <MiniContainerButton>
-                  <Button
-                     defaultStyle="#3A10E5"
-                     className="addNewTestButton"
-                     hoverStyle="#3A10E5E5"
-                     onClick={handleOpenModal}
-                     variant="contained"
-                  >
-                     add options
-                  </Button>
-               </MiniContainerButton>
-            </FormSubmit>
-
+      <Background marginTop="4rem">
+         <Container>
+            <CustomForm
+               titlePlaceholder="Select real English words"
+               durationLabel="Duration"
+               selectLabel="Type"
+            />
+            <MiniContainerButton>
+               <Button
+                  defaultStyle="#3A10E5"
+                  className="addNewTestButton"
+                  hoverStyle="#3A10E5E5"
+                  variant="contained"
+                  onClick={handleOpenModal}
+               >
+                  add options
+               </Button>
+            </MiniContainerButton>
             <ContainerCreateTest>
                {options.map((option, index) => (
                   <CreateTest key={option.id}>
-                     <MainContainer>
-                        <p className="Number-Words">{index + 1}</p>
-                        <div className="NumberText">
-                           <p>{option.text}</p>
-                        </div>
-                     </MainContainer>
+                     <div style={{ width: '1rem' }}>
+                        <MainContainer>
+                           <p className="Number-Words">{index + 1}</p>
+                           <div className="NumberText">
+                              <p>{option.text}</p>
+                           </div>
+                        </MainContainer>
+                     </div>
                      <div className="InputDelete">
                         <InputRadio
                            variant="CHECKBOX"
@@ -97,21 +81,7 @@ const CreateRealEnglishWord = () => {
                   </CreateTest>
                ))}
             </ContainerCreateTest>
-            {options.length > 0 && (
-               <ContainerButtons>
-                  <Button
-                     variant="outlined"
-                     hoverStyle="#3A10E5"
-                     onClick={handleCloseModal}
-                  >
-                     GO BACK
-                  </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
-                     Save
-                  </Button>
-               </ContainerButtons>
-            )}
-         </MainCreateTest>
+         </Container>
          {isModalOpen && (
             <OptionModal
                open={isModalOpen}
@@ -119,22 +89,30 @@ const CreateRealEnglishWord = () => {
                onSaveOption={handleSaveOption}
             />
          )}
-      </>
+         {options.length > 0 && (
+            <ContainerButtons>
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={handleCloseModal}
+               >
+                  GO BACK
+               </Button>
+               <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  Save
+               </Button>
+            </ContainerButtons>
+         )}
+      </Background>
    )
 }
+
 export default CreateRealEnglishWord
 
-const MainContainer = styled('div')(() => ({
-   display: 'flex',
-   gap: '10px',
-   '.Number-Words': {
-      color: '#4C4859',
-   },
+const Container = styled('div')(() => ({
+   width: '50rem',
 }))
-const MiniContainerButton = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'end',
-}))
+
 const ContainerCreateTest = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',
@@ -142,12 +120,6 @@ const ContainerCreateTest = styled('div')(() => ({
    marginTop: '9px',
    flexWrap: 'wrap',
    paddingTop: '20px',
-}))
-const ContainerButtons = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'end',
-   marginTop: '2rem',
-   gap: '1rem',
 }))
 
 const CreateTest = styled('div')(() => ({
@@ -173,108 +145,21 @@ const CreateTest = styled('div')(() => ({
       alignItems: 'center',
    },
 }))
-const MainCreateTest = styled('div')(() => ({
-   margin: '50px auto',
-   width: '68%',
-   height: 'auto',
-   background: '#ffffff',
-   marginTop: '48px',
-   borderRadius: '20px',
-   padding: '50px 70px',
-   boxShadow:
-      ' rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
-}))
-const FormSubmit = styled('form')(() => ({
-   marginTop: '30px',
+const MainContainer = styled('div')(() => ({
    display: 'flex',
-   gap: '30px',
-   flexDirection: 'column',
-}))
-const ContainerTitleInput = styled('div')(() => ({
-   display: 'flex',
-   gap: '20px',
-   alignItems: 'end',
-}))
-const Container = styled('div')(() => ({
-   width: '100%',
-   height: '76px',
-   paddingTop: '4px',
-   display: 'flex',
-   flexDirection: 'column',
    gap: '10px',
-}))
-const FirstInput = styled('input')(() => ({
-   '&::placeholder': {
+   '.Number-Words': {
       color: '#4C4859',
    },
-
-   width: '100%',
-   borderRadius: '8px',
-   border: 'solid 1.53px #D4D0D0',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
-   padding: '12px',
-   paddingLeft: '16px',
-   outline: 'none',
-   '&:hover, &:focus': {
-      border: '1.53px solid #3A10E5',
-   },
 }))
-const TextTitle = styled('h1')(() => ({
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4B4759',
-}))
-const TimeText = styled('label')(() => ({
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '1rem',
+const MiniContainerButton = styled('div')(() => ({
+   marginTop: '2rem',
    display: 'flex',
-   color: '#4B4759',
-   flexDirection: 'column',
-   width: '120px',
+   justifyContent: 'end',
 }))
-
-const ContainerTimerInput = styled('div')(() => ({
-   width: '120px',
+const ContainerButtons = styled('div')(() => ({
    display: 'flex',
-   flexDirection: 'column',
-   justifyContent: 'start',
-}))
-
-const ContainerInputSecond = styled('div')(() => ({
-   display: 'flex',
-   flexDirection: 'column',
-   gap: '13px',
-}))
-const FieldTime = styled(TimeField)(() => ({
-   width: '7rem',
-   '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input ': {
-      height: '0.5rem',
-      borderRadius: ' 0.5rem',
-      border: '1.53px solid #D4D0D0',
-      '&:hover, &:focus': {
-         border: '1.53px solid #3A10E5',
-      },
-   },
-   '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline ': {
-      border: 'none',
-   },
-}))
-
-const InputLabelTextType = styled(InputLabel)(() => ({
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '16px',
-   color: '#4B4759',
+   justifyContent: 'end',
+   marginTop: '2rem',
+   gap: '1rem',
 }))

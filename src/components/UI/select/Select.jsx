@@ -73,7 +73,7 @@ const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
       fontFamily: 'DIN Next Rounded LT W01 Regular',
       backgroundColor: '#FFF',
-      color: '#313144',
+      // color: '#3c00ff',
       '& .MuiOutlinedInput-root': {
          padding: '0.3rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
