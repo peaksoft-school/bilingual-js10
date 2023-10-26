@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useTheme } from '@mui/material/styles'
 import OutlinedInput from '@mui/material/OutlinedInput'
-
 import FormControl from '@mui/material/FormControl'
 import MuiSelect from '@mui/material/Select'
 import { MenuItem, styled } from '@mui/material'
@@ -42,7 +41,7 @@ const Select = () => {
    }
    return (
       <div>
-         <StyledFormControl>
+         <StyledFormControl fullWidth>
             <StyledSelect
                displayEmpty
                value={selectedOption}
@@ -77,12 +76,11 @@ export default Select
 
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
-      marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
-      width: '43vw',
       height: '5.9vh',
       backgroundColor: '#FFF',
       color: '#313144',
+
       '& .MuiOutlinedInput-root': {
          padding: '0.4rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
