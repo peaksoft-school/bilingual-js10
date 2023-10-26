@@ -8,13 +8,27 @@ import Button from '../UI/Buttons/Button'
 
 export const RespondLeast = () => {
    const [inputValue, setInputValue] = useState('')
+   const [replays, setReplays] = useState('')
    const lines = inputValue.split('\n')
 
    const handleInputChange = (e) => {
       const userInput = e.target.value
       setInputValue(userInput)
       const wordCount = userInput.split(/\s+/).filter(Boolean).length
-      console.log(`Количество слов: ${wordCount}`)
+      console.log(`Word count: ${wordCount}`)
+   }
+
+   const handleReplaysChange = (e) => {
+      const replayValue = e.target.value
+      setReplays(replayValue)
+   }
+
+   const handleSave = () => {
+      const data = {
+         replays,
+         inputValue,
+      }
+      console.log(data)
    }
 
    return (
@@ -45,6 +59,7 @@ export const RespondLeast = () => {
                <Container>
                   <label htmlFor="Question statement">Question statement</label>
                   <textarea
+                     id="QuestionStatement"
                      rows={lines.length + 2}
                      value={inputValue}
                      onChange={handleInputChange}
@@ -57,8 +72,10 @@ export const RespondLeast = () => {
                      <p>Number off</p>
                      <p>Replays</p>
                      <input
-                        border="2.2px solid #D4D0D0"
+                        type="number"
                         className="Input replaceInput"
+                        value={replays}
+                        onChange={handleReplaysChange}
                      />
                   </div>
                </div>
@@ -71,6 +88,7 @@ export const RespondLeast = () => {
                      Go back
                   </Button>
                   <Button
+                     onClick={handleSave}
                      variant="contained"
                      className="saveButton"
                      defaultStyle="#2AB930"
