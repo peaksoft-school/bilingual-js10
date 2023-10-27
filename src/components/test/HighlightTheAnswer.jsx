@@ -12,13 +12,8 @@ export const HighlightTheAnswer = () => {
    function save() {
       const answer = window.getSelection().toString()
       setAnswerValue(answer)
-      const res = {
-         text,
-         answerValue,
-         question,
-      }
-      console.log(res)
    }
+   console.log(answerValue)
 
    return (
       <div>
@@ -26,6 +21,7 @@ export const HighlightTheAnswer = () => {
             <MainPassageContainer>
                <p>Questions to the Passage</p>
                <Input
+                  value={question}
                   border=" 2.3px solid #D4D0D0"
                   fullWidth
                   onChange={(e) => setQuestion(e.target.value)}
