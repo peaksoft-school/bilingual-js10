@@ -17,11 +17,14 @@ const MenuProps = {
 }
 const options = [
    'Select real English words',
-   'Listen and select word',
+   'Listen and select English word',
    'Type what you hear',
    'Record saying statement',
    'Respond in at least N words',
    'Describe image',
+   'Highlight the answer',
+   'Select the main idea',
+   'Select best title',
 ]
 
 function getStyles(option, selectedOption, theme) {
@@ -32,13 +35,9 @@ function getStyles(option, selectedOption, theme) {
             : theme.typography.fontWeightMedium,
    }
 }
-const Select = () => {
+const Select = ({ selectedOption, handleChange }) => {
    const theme = useTheme()
-   const [selectedOption, setSelectedOption] = React.useState([])
 
-   const handleChange = (event) => {
-      setSelectedOption(event.target.value)
-   }
    return (
       <StyledFormControl fullWidth>
          <StyledSelect

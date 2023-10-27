@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import CustomForm from '../customFormCreateTest/CustomFormCreateTest'
 import OptionModal from '../addOptionModal/AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
-import { Background } from '../../../layout/Background'
 
-const CreateRealEnglishWord = () => {
+export const CreateRealEnglishWord = () => {
    const [isModalOpen, setModalOpen] = useState(false)
    const [options, setOptions] = useState([])
 
@@ -39,13 +37,8 @@ const CreateRealEnglishWord = () => {
    }
 
    return (
-      <Background marginTop="4rem">
+      <>
          <Container>
-            <CustomForm
-               titlePlaceholder="Select real English words"
-               durationLabel="Duration"
-               selectLabel="Type"
-            />
             <MiniContainerButton>
                <Button
                   defaultStyle="#3A10E5"
@@ -103,11 +96,9 @@ const CreateRealEnglishWord = () => {
                </Button>
             </ContainerButtons>
          )}
-      </Background>
+      </>
    )
 }
-
-export default CreateRealEnglishWord
 
 const Container = styled('div')(() => ({
    width: '50rem',
