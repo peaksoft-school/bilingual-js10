@@ -11,20 +11,7 @@ const UsefulVideo = () => {
             {usefulVideosList.map((item) => (
                <StyledInnerBox key={item.id}>
                   <BoxVideo>
-                     <ReactPlayer
-                        url={item.url}
-                        controls
-                        pip
-                        height={261}
-                        width={370}
-                        config={{
-                           file: {
-                              attributes: {
-                                 crossorigin: 'anonymous',
-                              },
-                           },
-                        }}
-                     />
+                     <ReactPlayer url={item.url} width="100%" height="100%" />
                   </BoxVideo>
                   <StyledBottomBox>
                      <Title>{item.title}</Title>
@@ -40,22 +27,25 @@ const UsefulVideo = () => {
 const Container = styled('div')({
    backgroundColor: '#FEF5E8',
    position: 'relative',
-   width: '100vw',
-   height: '444px',
+   left: '3rem',
+   width: '79rem',
+   height: '28rem',
+   // width: '1250px',
+   // height: '444px',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
-   gap: '2.8rem',
    overflow: 'hidden',
+   gap: '2.8rem',
 })
 
 const StyledBox = styled('div')({
-   width: '100vw',
+   width: '79rem',
+   height: '21.05rem',
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'space-around',
    alignItems: 'center',
-   overflow: 'hidden',
 })
 
 const MyText = styled(Typography)({
@@ -87,8 +77,8 @@ const Text = styled(Typography)({
    paddingLeft: '20px',
 })
 const StyledInnerBox = styled('div')({
-   width: '27vw',
-   height: '50vh',
+   width: '23rem',
+   height: '21.75rem',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'start',
@@ -96,13 +86,14 @@ const StyledInnerBox = styled('div')({
    borderTopRightRadius: '16px',
    borderBottomLeftRadius: '16px',
    borderBottomRightRadius: '16px',
-   overflow: 'hidden',
-   gap: '0.5rem',
+   gap: '0.7rem',
    border: '1px solid #DDDDDD',
    backgroundColor: 'white',
    borderCollapse: 'separate ',
 })
 const BoxVideo = styled('div')({
+   width: '23rem',
+   height: '16rem',
    border: '1px solid #DDDDDD',
    borderTopLeftRadius: '16px',
    borderTopRightRadius: '16px',
@@ -110,8 +101,8 @@ const BoxVideo = styled('div')({
 })
 
 const StyledBottomBox = styled('div')({
-   width: '27vw',
-   height: '15vh',
+   width: '23rem',
+   height: '5rem',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-around',
