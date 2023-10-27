@@ -133,7 +133,6 @@ const TimeText = styled('label')(() => ({
    display: 'flex',
    color: '#4B4759',
    flexDirection: 'column',
-   // paddingLeft: '8px',
    width: '110px',
    '& input': {
       alignItems: 'center',
