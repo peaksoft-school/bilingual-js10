@@ -1,5 +1,5 @@
 import { TextField as MuiTextArea, styled } from '@mui/material'
-import React from 'react'
+import React, { forwardRef } from 'react'
 
 const TextArea = forwardRef(
    ({ onChange, value, label, error, ...rest }, ref) => {
