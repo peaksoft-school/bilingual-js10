@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { TimeField } from '@mui/x-date-pickers'
 import { Background } from '../../layout/Background'
 import Input from '../UI/Input'
-import Select from '../UI/select/Select'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
 
@@ -23,26 +21,6 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
       <MainContainer>
          <Background marginTop="65px">
             <div className="widthContainer">
-               <div className="titleAndDurationContainer">
-                  <div className="titleAndInputContainer">
-                     <p className="labelTitle">Title</p>
-                     <Input
-                        border="2.2px solid #D4D0D0"
-                        fullWidth
-                        className="Input"
-                        padding="0.710rem 1.4rem"
-                     />
-                  </div>
-                  <div className="durationContainer">
-                     <p>Duration</p>
-                     <p className="text">(in minutes)</p>
-                     <TimeField format="mm:ss" className="tiemField" />
-                  </div>
-               </div>
-               <div>
-                  <p className="typeText">Type</p>
-                  <Select />
-               </div>
                <div className="audioContainer">
                   <div>
                      <p>Number off</p>
