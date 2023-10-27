@@ -95,11 +95,8 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
 }
 
 const MainContainer = styled('div')(() => ({
-   '.tiemField': {
-      width: '100',
-   },
    '.widthContainer': {
-      width: '850px',
+      width: '53.125rem',
       display: 'flex',
       flexDirection: 'column',
       rowGap: '24px',
@@ -107,9 +104,6 @@ const MainContainer = styled('div')(() => ({
          display: 'flex',
          justifyContent: 'end',
          gap: '16px',
-      },
-      '.typeText': {
-         marginBottom: '10px',
       },
       '.audioContainer': {
          display: 'flex',
@@ -133,33 +127,6 @@ const MainContainer = styled('div')(() => ({
             outline: 'none',
             width: '100%',
             paddingLeft: '22px',
-         },
-      },
-   },
-   '.titleAndDurationContainer': {
-      display: 'flex',
-      justifyContent: 'space-between',
-      columnGap: '24px',
-      alignItems: 'end',
-      '.titleAndInputContainer': {
-         width: '100%',
-         '.labelTitle': {
-            marginBottom: '10px',
-         },
-      },
-      '.durationContainer': {
-         width: '115px',
-         '.css-1d3z3hw-MuiOutlinedInput-notchedOutline ': {
-            border: '2.2px solid #D4D0D0',
-            borderRadius: '8px',
-            outline: 'none',
-            height: '53px',
-         },
-         input: {
-            height: '15px',
-         },
-         '.text': {
-            marginBottom: ' 10px',
          },
       },
    },
