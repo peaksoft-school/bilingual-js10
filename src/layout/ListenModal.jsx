@@ -119,7 +119,9 @@ const ModalList = styled(Modal)(() => ({
       display: 'flex',
       gap: '1rem',
       flexDirection: 'column',
-      padding: '1.25rem 3.75rem 5rem 3.75rem',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1.25rem 3.75rem 0rem 3.75rem',
       fontFamly: 'Poppins',
    },
    '& .InputFile:hover': {
@@ -137,6 +139,7 @@ const ModalList = styled(Modal)(() => ({
       borderRadius: '0.5rem',
       padding: '0.5rem',
       background: '#fff',
+      marginRight: '1.1rem',
    },
    '.label': {
       fontFamly: 'Poppins',
@@ -145,7 +148,7 @@ const ModalList = styled(Modal)(() => ({
       width: '100vw',
       height: '1rem',
       color: '#4C4859',
-      marginLeft: '2rem',
+      paddingRight: '13.5rem',
    },
    '.ContainButton': {
       background: '#F0F1F1',
@@ -156,8 +159,8 @@ const ModalList = styled(Modal)(() => ({
       gap: '1.5rem',
       justifyContent: 'end',
       alignItems: 'center',
-      paddingRight: '3.3rem',
-      margin: '3.2rem 0px 10rem -3.75rem',
+      paddingRight: '3.9rem',
+      marginTop: '2.9rem',
    },
    '#myFileInput': {
       display: 'none',

@@ -100,7 +100,7 @@ export const ListenSelect = () => {
                   ADD OPTIONS
                </Button>
             </div>
-            <div className="CreatTeasts">
+            <div className="CreatTests">
                {options?.map((el, index) => (
                   <div key={el.id} className="CreatTest">
                      <div style={audioContainer}>
@@ -168,34 +168,12 @@ const Container = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',
    background: '#D7E1F8',
-   '.ContainerCreateTest': {
-      display: 'flex',
-      gap: '1.5rem',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      width: '800px',
-   },
-   '.Contain': {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'start',
-      gap: '1rem',
-   },
    p: {
       fontSize: '1rem',
       fontStyle: 'normal',
       fontWeight: '500',
       color: ' #4B4759',
       fontFamly: 'Poppins',
-   },
-   '.InputText': { paddingBottom: '0.75rem', width: '110px' },
-   '.InputTitle': { paddingTop: '0.75rem' },
-   '.InputTitles': { color: '#4C4859' },
-   '.ContainSelects': {
-      width: '51rem',
-      height: '2.8rem',
-      '.TextType': { paddingBottom: '0.75rem' },
    },
    '.DeleteIcon': {
       width: '1.25rem',
@@ -208,7 +186,7 @@ const Container = styled('div')(() => ({
       fontFamly: 'Poppins',
       fontWeight: '800',
    },
-   '.CreatTeasts': {
+   '.CreatTests': {
       display: 'flex',
       justifyContent: 'center',
       rowGap: '1rem',
@@ -231,7 +209,7 @@ const Container = styled('div')(() => ({
       border: '1.53px solid #D4D0D0',
       width: '15rem',
       height: '3rem',
-      borderRadius: '8px',
+      borderRadius: '0.5rem',
       padding: '0.80rem 0.85rem 0.80rem 0.85rem',
       fontFamly: 'Poppins',
    },
