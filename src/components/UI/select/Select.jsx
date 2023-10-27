@@ -23,7 +23,6 @@ const options = [
    'Record saying statement',
    'Respond in at least N words',
 ]
-
 function getStyles(option, selectedOption, theme) {
    return {
       fontWeight:
@@ -35,13 +34,12 @@ function getStyles(option, selectedOption, theme) {
 const Select = () => {
    const theme = useTheme()
    const [selectedOption, setSelectedOption] = React.useState([])
-
    const handleChange = (event) => {
       setSelectedOption(event.target.value)
    }
    return (
       <div>
-         <StyledFormControl fullWidth>
+         <StyledFormControl>
             <StyledSelect
                displayEmpty
                value={selectedOption}
@@ -73,14 +71,14 @@ const Select = () => {
    )
 }
 export default Select
-
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
+      marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
+      width: '43vw',
       height: '5.9vh',
       backgroundColor: '#FFF',
       color: '#313144',
-
       '& .MuiOutlinedInput-root': {
          padding: '0.4rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
@@ -122,7 +120,6 @@ const StyledSelect = styled(MuiSelect)({
       lineHeight: '1.2rem',
    },
 })
-
 const StyledMenuItem = styled(MenuItem)({
    '&.MuiMenuItem-root': {
       color: 'black',

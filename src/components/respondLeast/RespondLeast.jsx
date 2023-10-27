@@ -1,21 +1,15 @@
 import React, { useState } from 'react'
-import { styled } from '@mui/material'
-import { TimeField } from '@mui/x-date-pickers'
+import { TextField, styled } from '@mui/material'
 import { Background } from '../../layout/Background'
-import Input from '../UI/Input'
-import Select from '../UI/select/Select'
 import Button from '../UI/Buttons/Button'
 
 export const RespondLeast = () => {
-   const [inputValue, setInputValue] = useState('')
+   const [questionAndAnswer, setQuestionAndAnswer] = useState('')
    const [replays, setReplays] = useState('')
-   const lines = inputValue.split('\n')
 
    const handleInputChange = (e) => {
       const userInput = e.target.value
-      setInputValue(userInput)
-      const wordCount = userInput.split(/\s+/).filter(Boolean).length
-      console.log(`Word count: ${wordCount}`)
+      setQuestionAndAnswer(userInput)
    }
 
    const handleReplaysChange = (e) => {
@@ -26,7 +20,7 @@ export const RespondLeast = () => {
    const handleSave = () => {
       const data = {
          replays,
-         inputValue,
+         questionAndAnswer,
       }
       console.log(data)
    }
@@ -35,36 +29,13 @@ export const RespondLeast = () => {
       <MainContainer>
          <Background marginTop="65px">
             <div className="widthContainer">
-               <div className="titleAndDurationContainer">
-                  <div className="titleAndInputContainer">
-                     <p className="labelTitle">Title</p>
-                     <Input
-                        border="2.2px solid #D4D0D0"
-                        fullWidth
-                        className="Input"
-                        padding="0.710rem 1.4rem"
-                        placeholder="Respond in at least N words "
-                     />
-                  </div>
-                  <div className="durationContainer">
-                     <p>Duration</p>
-                     <p className="text">(in minutes)</p>
-                     <TimeField format="mm:ss" className="tiemField" />
-                  </div>
-               </div>
-               <div>
-                  <p className="typeText">Type</p>
-                  <Select />
-               </div>
                <Container>
                   <label htmlFor="Question statement">Question statement</label>
-                  <textarea
+                  <TextFieldStyled
+                     multiline
                      id="QuestionStatement"
-                     rows={lines.length + 2}
-                     value={inputValue}
+                     value={questionAndAnswer}
                      onChange={handleInputChange}
-                     style={{ width: '100%' }}
-                     placeholder="Describe a time you were surprised. what happened?"
                   />
                </Container>
                <div className="audioContainer">
@@ -107,81 +78,52 @@ const Container = styled('div')`
    align-items: start;
    justify-content: center;
    flex-direction: column;
-   textarea {
-      width: 53rem;
-      padding: 0 1rem;
-      border-radius: 0.5rem;
-      border: 1.53px solid #d4d0d0;
-      background: #fff;
-   }
+   gap: 1rem;
 `
+const TextFieldStyled = styled(TextField)({
+   width: '53rem',
+   height: '2.875rem',
+   borderRadius: '0.5rem',
+   background: '#fff',
+   '.css-1tzkmqz-MuiInputBase-root-MuiOutlinedInput-root ': {
+      borderRadius: '0.5rem',
+      position: 'none',
+   },
+})
 
 const MainContainer = styled('div')(() => ({
    '.tiemField': {
       width: '100',
    },
    '.widthContainer': {
-      width: '850px',
+      width: '53.12rem',
       display: 'flex',
       flexDirection: 'column',
-      rowGap: '24px',
+      rowGap: '2rem',
       '.buttons': {
          display: 'flex',
          justifyContent: 'end',
-         gap: '16px',
+         gap: '1rem',
       },
       '.typeText': {
-         marginBottom: '10px',
+         marginBottom: '0.9rem',
       },
       '.audioContainer': {
          display: 'flex',
          alignItems: 'end',
          '.replaceInput': {
-            width: '59px',
-            marginTop: '10px',
+            width: '3.6rem',
+            height: '3rem',
+            marginTop: '0.9rem',
          },
-         '.uploadContainer': {
-            display: 'flex',
-            columnGap: '15px',
-            alignItems: 'center',
-            input: {
-               display: 'none',
-            },
-         },
+
          input: {
-            height: '42px',
-            border: '2.2px solid #D4D0D0',
-            borderRadius: '8px',
-            outline: 'none',
+            height: '3rem',
             width: '100%',
-            paddingLeft: '1.1rem',
-         },
-      },
-   },
-   '.titleAndDurationContainer': {
-      display: 'flex',
-      justifyContent: 'space-between',
-      columnGap: '24px',
-      alignItems: 'end',
-      '.titleAndInputContainer': {
-         width: '100%',
-         '.labelTitle': {
-            marginBottom: '10px',
-         },
-      },
-      '.durationContainer': {
-         width: '115px',
-         '.css-1d3z3hw-MuiOutlinedInput-notchedOutline ': {
             border: '2.2px solid #D4D0D0',
-            borderRadius: '8px',
+            borderRadius: '0.5rem',
             outline: 'none',
-            height: '53px',
-         },
-         input: {
-            height: '1rem',
-         },
-         '.text': {
-            marginBottom: ' 10px',
+            paddingLeft: '0.7rem',
          },
       },
    },
