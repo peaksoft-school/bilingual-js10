@@ -2,12 +2,10 @@ import { styled } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { TimeField } from '@mui/x-date-pickers'
 import Button from '../components/UI/Buttons/Button'
 import { Delete, VolumeForEnglishWord } from '../assets'
 import { InputRadio } from '../components/UI/InputRadio'
 import { ListenModal } from './ListenModal'
-import Select from '../components/UI/select/Select'
 import { Background } from './Background'
 
 const audioContainer = {
@@ -91,65 +89,42 @@ export const ListenSelect = () => {
    return (
       <Container>
          <Background>
-            <div className="ContainerCreateTest">
-               <div className="Contain">
-                  <div className="InputTitle">
-                     <p>Title</p>
-                     <InputTitle
-                        className="InputTitles"
-                        type="text"
-                        placeholder="Listen and select English word"
-                     />
-                  </div>
-                  <div>
-                     <p className="InputText">
-                        Duration <br /> (in minutes)
-                     </p>
-                     <ContainTimeField format="mm:ss" />
-                  </div>
-               </div>
-
-               <div className="ContainSelects">
-                  <p className="TextType">Type</p>
-                  <Select />
-                  <div className="ContainButton">
-                     <Button
-                        hoverStyle="#3A10E5E5"
-                        defaultStyle="#3A10E5"
-                        className="addNewTestButton"
-                        variant="contained"
-                        onClick={() => setState(true)}
-                     >
-                        ADD OPTIONS
-                     </Button>
-                  </div>
-               </div>
-               <div className="CreatTeasts">
-                  {options?.map((el, index) => (
-                     <div key={el.id} className="CreatTest">
-                        <div style={audioContainer}>
-                           <p>{index + 1}</p>
-                           <VolumeForEnglishWord
-                              onClick={() => handlePlayAudio(index, el.id)}
-                              style={{
-                                 fill:
-                                    audioPlaying?.id === el.id
-                                       ? '#3A10E5 '
-                                       : '#655F5F ',
-                              }}
-                           />
-                           <p>{el.text}</p>
-                        </div>
-                        <div style={ContainDeleteChek}>
-                           <InputRadio variant="CHECKBOX" />
-                           <Delete
-                              onClick={() => removeElement(el.id)}
-                              className="DeleteIcon"
-                           />
-                        </div>
+            <div className="ContainButton">
+               <Button
+                  hoverStyle="#3A10E5E5"
+                  defaultStyle="#3A10E5"
+                  className="addNewTestButton"
+                  variant="contained"
+                  onClick={() => setState(true)}
+               >
+                  ADD OPTIONS
+               </Button>
+            </div>
+            <div className="CreatTeasts">
+               {options?.map((el, index) => (
+                  <div key={el.id} className="CreatTest">
+                     <div style={audioContainer}>
+                        <p>{index + 1}</p>
+                        <VolumeForEnglishWord
+                           onClick={() => handlePlayAudio(index, el.id)}
+                           style={{
+                              fill:
+                                 audioPlaying?.id === el.id
+                                    ? '#3A10E5 '
+                                    : '#655F5F ',
+                           }}
+                        />
+                        <p>{el.text}</p>
                      </div>
-                  ))}
-               </div>
+                     <div style={ContainDeleteChek}>
+                        <InputRadio variant="CHECKBOX" />
+                        <Delete
+                           onClick={() => removeElement(el.id)}
+                           className="DeleteIcon"
+                        />
+                     </div>
+                  </div>
+               ))}
             </div>
             {options.length > 0 ? (
                <div className="ControlButton">
@@ -187,48 +162,6 @@ export const ListenSelect = () => {
       </Container>
    )
 }
-const ContainTimeField = styled(TimeField)(() => ({
-   display: 'flex',
-   justifyContent: 'center',
-   alignContent: 'center',
-   width: '6rem',
-   height: '3.2rem',
-   borderRadius: '0.5rem',
-   '& .css-1fpet8r-MuiInputBase-root-MuiOutlinedInput-root ': {
-      borderRadius: '0.5rem',
-      width: '6rem',
-      height: '3.2rem',
-      marginBottom: '0.5rem',
-      paddingLeft: '12px',
-      border: '2px solid #D4D0D0',
-      color: '#4C4859',
-      ':hover': {
-         border: '2px solid blue',
-      },
-   },
-   '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': { border: 'none' },
-}))
-const InputTitle = styled('input')(() => ({
-   width: '43rem',
-   height: '3.2rem',
-   borderRadius: '8px',
-   border: '2px solid #D4D0D0',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#D4D0D0',
-   paddingLeft: '16px',
-   marginTop: '1rem',
-   outline: 'none',
-   ':hover': {
-      border: '2px solid blue',
-   },
-   ':focus': {
-      border: '2px solid blue',
-   },
-}))
 const Container = styled('div')(() => ({
    width: '100vw',
    height: '100vh',
@@ -307,7 +240,7 @@ const Container = styled('div')(() => ({
       gap: '1rem',
       justifyContent: 'end',
       alignItems: 'center',
-      marginTop: '5rem',
+      marginTop: '2.5rem',
       fontFamly: 'Poppins',
    },
 }))
