@@ -1,9 +1,9 @@
 import { styled } from '@mui/material'
 import React from 'react'
-// import { CloseIcon } from '../assets'
 import { Modal } from '../components/UI/UiModal'
 import Button from '../components/UI/Buttons/Button'
 import { InputRadio } from '../components/UI/InputRadio'
+import { CloseIcon } from '../assets'
 
 export const SelectBestModal = ({
    state,
@@ -13,53 +13,54 @@ export const SelectBestModal = ({
    setValues,
 }) => {
    return (
-      <ModalList
+      <Modal
          open={state}
          handleClose={handleClose}
          width="40rem"
          height="24rem"
       >
-         <div className="Close">
-            {/* <CloseIcon onClick={handleClose} /> */}
-         </div>
-         <div className="ContainModal">
-            <div>
-               <div className="InputTitle">
-                  <p>Title</p>
-                  <InputTitle
-                     className="InputTitles"
-                     type="text"
-                     placeholder="Select Best title"
-                     value={values}
-                     onChange={(e) => setValues(e.target.value.slice(0, 8))}
-                     maxLength={8}
-                  />
+         <ContainClose>
+            <CloseIcon onClick={handleClose} />
+         </ContainClose>
+         <ModalList>
+            <div className="ContainModal">
+               <div className="ControlTitleInput">
+                  <div className="InputTitle">
+                     <p>Title</p>
+                     <InputTitle
+                        className="InputTitles"
+                        type="text"
+                        placeholder="Select Best title"
+                        value={values}
+                        onChange={(e) => setValues(e.target.value)}
+                     />
+                  </div>
+                  <div className="ParagrafCheck">
+                     <p>Is true option?</p>
+                     <InputRadio variant="CHECKBOX" />
+                  </div>
                </div>
-               <div>
-                  <p>Is true option?</p>
-                  <InputRadio variant="CHECKBOX" />
+               <div className="ContainButton">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={handleClose}
+                     className="Button"
+                  >
+                     GO BACK
+                  </Button>
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     onClick={handleSave}
+                     className="ButtonTwo"
+                  >
+                     SAVE
+                  </Button>
                </div>
             </div>
-            <div className="ContainButton">
-               <Button
-                  variant="outlined"
-                  hoverStyle="#3A10E5"
-                  onClick={handleClose}
-                  className="Button"
-               >
-                  GO BACK
-               </Button>
-               <Button
-                  defaultStyle="#2AB930"
-                  hoverStyle="#31CF38"
-                  onClick={handleSave}
-                  className="ButtonTwo"
-               >
-                  SAVE
-               </Button>
-            </div>
-         </div>
-      </ModalList>
+         </ModalList>
+      </Modal>
    )
 }
 const InputTitle = styled('input')(() => ({
@@ -83,21 +84,20 @@ const InputTitle = styled('input')(() => ({
       border: '2px solid blue',
    },
 }))
-const ModalList = styled(Modal)(() => ({
+const ModalList = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   padding: '1.25rem 3.75rem 5rem 3.75rem',
    '& .MuiInputBase-root': {
       borderRadius: '0.5rem',
    },
-   //  '.Close': {
-   //     display: 'flex',
-   //     justifyContent: 'end',
-   //     cursor: 'pointer',
-   //     padding: '1.25rem 1.25rem 0px 0px',
-   //  },
    ' .ContainModal': {
       display: 'flex',
-      gap: '1rem',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '5.5rem',
       flexDirection: 'column',
-      padding: '1.25rem 3.75rem 5rem 3.75rem',
       fontFamly: 'Poppins',
    },
    '.ContainButton': {
@@ -109,21 +109,24 @@ const ModalList = styled(Modal)(() => ({
       gap: '1.5rem',
       justifyContent: 'end',
       alignItems: 'center',
-      paddingRight: '3.3rem',
-      margin: '3.2rem 0px 10rem -3.75rem',
+      paddingRight: '3.9rem',
    },
-   '.Button': {
-      width: '6.9rem',
-      height: '2.5rem',
-      fontSize: '0.7rem',
-      fontWeight: '800',
-      fontFamly: 'Poppins',
+   '.ParagrafCheck': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'start',
+      gap: '0.88rem',
    },
-   '.ButtonTwo': {
-      width: '5.1rem',
-      height: '2.5rem',
-      fontSize: '0.7rem',
-      fontWeight: '800',
-      fontFamly: 'Poppins',
+   '.ControlTitleInput': {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1.13rem',
    },
+}))
+const ContainClose = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'end',
+   alignItems: 'end',
+   cursor: 'pointer',
+   padding: '1.25rem 1.25rem 0px 0px',
 }))
