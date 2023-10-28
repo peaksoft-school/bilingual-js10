@@ -3,8 +3,8 @@ import React from 'react'
 import toBeginButtonIcon from '../../../assets/icons/toBeginButtonIcon.png'
 import toBeginButtonHoverIcon from '../../../assets/icons/toBeginHoverIcon.png'
 
-export const ToBeginButton = ({ children }) => {
-   return <ToBeginButtonStyled>{children}</ToBeginButtonStyled>
+export const ToBeginButton = ({ children, ...rest }) => {
+   return <ToBeginButtonStyled {...rest}>{children}</ToBeginButtonStyled>
 }
 const ToBeginButtonStyled = styled(Button)(() => ({
    backgroundImage: `url(${toBeginButtonIcon})`,

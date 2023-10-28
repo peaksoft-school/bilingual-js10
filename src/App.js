@@ -1,12 +1,8 @@
-import React from 'react'
-import SelectImage from './layout/selectImg/SelectImage'
-
 function App() {
    return (
       <div>
-         <SelectImage />
+         <h1>Bilingual js-10</h1>
       </div>
    )
 }
-
 export default App

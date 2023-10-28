@@ -1,6 +1,7 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import Button from '../../components/UI/Buttons/Button'
+import Select from '../../components/UI/select/Select'
 
 const SelectImage = ({ handleClose }) => {
    return (
@@ -11,8 +12,8 @@ const SelectImage = ({ handleClose }) => {
                   {' '}
                   <p className="title">Title</p>
                   {/* <Input label="text" variant="outlined" /> */}
-                  <InputTitle
-                     className="InputTitles"
+                  <StyledInput
+                     className="InputTitle"
                      type="text"
                      placeholder="Take a free practice test and estimate your score"
                      // value={values}
@@ -24,17 +25,13 @@ const SelectImage = ({ handleClose }) => {
                      Duration
                      <br /> (in minutes)
                   </p>
-                  <InputDuration placeholder="15:00" />
+                  <StyledInput className="InputDuration" placeholder="15:00" />
                   {/* <Input label="text" variant="outlined" /> */}
                </div>
             </div>
             <div className="SelectBlock">
                <p>Type</p>
-               <InputAnswer
-                  type="text"
-                  // value={values}
-                  // onChange={(e) => setValues(e.target.value)}
-               />
+               <StyledSelect className="select" />
             </div>
             <div className="ImgBlock">
                <div className="UpploadBox">
@@ -46,7 +43,8 @@ const SelectImage = ({ handleClose }) => {
             </div>
             <div className="AnswerBlock">
                <p>CorrectAnswer</p>
-               <InputAnswer
+               <StyledInput
+                  className="InputAnswer"
                   type="text"
                   // value={values}
                   // onChange={(e) => setValues(e.target.value)}
@@ -74,9 +72,15 @@ const SelectImage = ({ handleClose }) => {
       </Container>
    )
 }
-const InputTitle = styled('input')(() => ({
-   width: '43rem',
-   height: '2.8rem',
+const StyledSelect = styled(Select)({
+   '&.MuiFormControl-root': {
+      marginLeft: '0 !important',
+      width: '51rem',
+      height: '2.8rem',
+      borderRadius: '8px',
+   },
+})
+const StyledInput = styled('input')(() => ({
    borderRadius: '8px',
    border: '2px solid #D4D0D0',
    fontfamily: 'Poppins',
@@ -86,7 +90,7 @@ const InputTitle = styled('input')(() => ({
    lineHeight: '18px',
    color: '#4C4859',
    paddingLeft: '16px',
-   marginTop: '1rem',
+   marginTop: '0.6rem',
    outline: 'none',
    ':hover': {
       border: '2px solid blue',
@@ -94,46 +98,18 @@ const InputTitle = styled('input')(() => ({
    ':focus': {
       border: '2px solid blue',
    },
-}))
-const InputDuration = styled('input')(() => ({
-   width: '6rem',
-   height: '2.8rem',
-   borderRadius: '8px',
-   border: '2px solid #D4D0D0',
-   fontfamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
-   paddingLeft: '16px',
-   outline: 'none',
-   ':hover': {
-      border: '2px solid blue',
+   '&.InputTitle': {
+      marginTop: '1.5rem',
+      width: '43rem',
+      height: '2.8rem',
    },
-   ':focus': {
-      border: '2px solid blue',
+   '&.InputDuration': {
+      width: '6rem',
+      height: '2.8rem',
    },
-}))
-const InputAnswer = styled('input')(() => ({
-   width: '51rem',
-   height: '2.8rem',
-   borderRadius: '8px',
-   border: '2px solid #D4D0D0',
-   fontfamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
-   paddingLeft: '16px',
-   marginTop: '1rem',
-   outline: 'none',
-   ':hover': {
-      border: '2px solid blue',
-   },
-   ':focus': {
-      border: '2px solid blue',
+   '&.InputAnswer': {
+      width: '51rem',
+      height: '2.8rem',
    },
 }))
 const Container = styled('div')(() => ({
@@ -148,7 +124,7 @@ const Container = styled('div')(() => ({
       width: '60rem',
       height: '41rem',
       borderRadius: '8px',
-      backgroundColor: 'yellow',
+      backgroundColor: '#FFFFFF',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
@@ -158,8 +134,8 @@ const Container = styled('div')(() => ({
    '.TitleBlock': {
       display: 'flex',
       flexDirection: 'row',
-      marginTop: '1.75rem',
-      gap: '2rem',
+      marginTop: '2.75rem',
+      gap: '3rem',
    },
    '.TitleBox': {
       width: '43rem',
