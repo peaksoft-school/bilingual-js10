@@ -30,7 +30,7 @@ const SelectImage = ({ handleClose }) => {
                </div>
             </div>
             <div className="SelectBlock">
-               <p>Type</p>
+               <p className="SelectType">Type</p>
                <StyledSelect className="select" />
             </div>
             <div className="ImgBlock">
@@ -165,7 +165,7 @@ const Container = styled('div')(() => ({
       justifyContent: 'flex-start',
    },
    '.SelectBlock': {
-      marginTop: '1rem',
+      marginTop: '2rem',
    },
    '.AnswerBlock': {
       marginTop: '1rem',
@@ -173,10 +173,16 @@ const Container = styled('div')(() => ({
    '& .title': {
       marginTop: '0.6rem',
    },
+   '.SelectType': {
+      marginBottom: '1rem',
+   },
    '& .uppload': {
       textAlign: 'center',
       color: '#3A10E5',
       paddingLeft: '1rem',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      lineHeight: 'normal',
    },
    '.ButtonBlock': {
       display: 'flex',
