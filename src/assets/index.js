@@ -63,6 +63,4 @@ export {
    Aijan,
    RoundLeftBlue,
    RoundRightBlue,
-   Birdgeen,
-   StickRed,
 }
