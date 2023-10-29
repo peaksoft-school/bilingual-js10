@@ -80,6 +80,7 @@ export const CreateRealEnglishWord = () => {
                open={isModalOpen}
                handleCloseModal={handleCloseModal}
                onSaveOption={handleSaveOption}
+               title="Select real English words"
             />
          )}
          {options.length > 0 && (
