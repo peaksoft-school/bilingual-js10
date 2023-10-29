@@ -26,7 +26,7 @@ export const SelectBestModal = ({
             <div className="ContainModal">
                <div className="ControlTitleInput">
                   <div className="InputTitle">
-                     <p>Title</p>
+                     <span>Title</span>
                      <InputTitle
                         className="InputTitles"
                         type="text"
@@ -35,8 +35,8 @@ export const SelectBestModal = ({
                         onChange={(e) => setValues(e.target.value)}
                      />
                   </div>
-                  <div className="ParagrafCheck">
-                     <p>Is true option?</p>
+                  <div className="ParagraphCheck">
+                     <span>Is true option?</span>
                      <InputRadio variant="CHECKBOX" />
                   </div>
                </div>
@@ -77,6 +77,7 @@ const InputTitle = styled('input')(() => ({
    paddingLeft: '16px',
    marginTop: '1rem',
    outline: 'none',
+   display: 'flex',
    ':hover': {
       border: '2px solid blue',
    },
@@ -111,7 +112,7 @@ const ModalList = styled('div')(() => ({
       alignItems: 'center',
       paddingRight: '3.9rem',
    },
-   '.ParagrafCheck': {
+   '.ParagraphCheck': {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'start',

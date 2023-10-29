@@ -10,7 +10,6 @@ export const SelectBestTitle = () => {
    const [state, setState] = useState(false)
    const [values, setValues] = useState('')
    const [options, setOptions] = useState([])
-   console.log(options)
    const [initialText, setInitialText] = useState(
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
    )
@@ -34,7 +33,7 @@ export const SelectBestTitle = () => {
       <Container>
          <WidthContainer>
             <div className="ContainTextArea">
-               <p>Passage</p>
+               <span>Passage</span>
                <TextArea
                   variant="outlined"
                   multiline
@@ -53,7 +52,7 @@ export const SelectBestTitle = () => {
                   ADD OPTIONS
                </Button>
             </div>
-            <div className="CreatTeasts">
+            <div className="CreateTests">
                {options?.map((el, index) => (
                   <div
                      style={{ width: '51.25rem' }}
@@ -93,7 +92,7 @@ export const SelectBestTitle = () => {
                </div>
             ) : null}
             <SelectBestModal
-               open={state}
+               // open={state}
                handleClose={handleClose}
                state={state}
                values={values}
@@ -139,7 +138,7 @@ const Container = styled('div')(() => ({
       padding: '0.88rem',
       widht: '100%',
    },
-   '.CreatTeasts': {
+   '.CreateTests': {
       display: 'flex',
       justifyContent: 'start',
       rowGap: '1rem',
