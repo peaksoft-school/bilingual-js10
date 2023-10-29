@@ -5,6 +5,7 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
+import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 
 const renderedContent = {
    'Select real English words': {
@@ -41,7 +42,7 @@ const renderedContent = {
    },
    'Select best title': {
       placeholder: 'Select best title',
-      content: <div>Select best title</div>,
+      content: <SelectBestTitle />,
    },
 }
 

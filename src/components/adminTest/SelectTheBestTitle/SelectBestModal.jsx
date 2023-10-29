@@ -1,9 +1,9 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import { Modal } from '../components/UI/UiModal'
-import Button from '../components/UI/Buttons/Button'
-import { InputRadio } from '../components/UI/InputRadio'
-import { CloseIcon } from '../assets'
+import { Modal } from '../../UI/UiModal'
+import Button from '../../UI/Buttons/Button'
+import { InputRadio } from '../../UI/InputRadio'
+import { CloseIcon } from '../../../assets'
 
 export const SelectBestModal = ({
    state,

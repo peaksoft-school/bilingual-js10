@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import Button from '../components/UI/Buttons/Button'
-import { InputRadio } from '../components/UI/InputRadio'
-import { Delete } from '../assets'
-import { Background } from './Background'
+import Button from '../../UI/Buttons/Button'
+import { InputRadio } from '../../UI/InputRadio'
+import { Delete } from '../../../assets'
 import { SelectBestModal } from './SelectBestModal'
-import TextArea from '../components/UI/textarea/TextArea'
+import TextArea from '../../UI/textarea/TextArea'
 
 export const SelectBestTitle = () => {
    const [state, setState] = useState(false)
@@ -33,89 +32,82 @@ export const SelectBestTitle = () => {
    }
    return (
       <Container>
-         <Background>
-            <WidthContainer>
-               <div className="ContainTextArea">
-                  <p>Passage</p>
-                  <TextArea
-                     variant="outlined"
-                     multiline
-                     value={initialText}
-                     fullWidth
-                  />
-               </div>
-               <div className="ContainButton">
-                  <Button
-                     hoverStyle="#3A10E5E5"
-                     defaultStyle="#3A10E5"
-                     className="addNewTestButton"
-                     variant="contained"
-                     onClick={() => setState(true)}
+         <WidthContainer>
+            <div className="ContainTextArea">
+               <p>Passage</p>
+               <TextArea
+                  variant="outlined"
+                  multiline
+                  value={initialText}
+                  fullWidth
+               />
+            </div>
+            <div className="ContainButton">
+               <Button
+                  hoverStyle="#3A10E5E5"
+                  defaultStyle="#3A10E5"
+                  className="addNewTestButton"
+                  variant="contained"
+                  onClick={() => setState(true)}
+               >
+                  ADD OPTIONS
+               </Button>
+            </div>
+            <div className="CreatTeasts">
+               {options?.map((el, index) => (
+                  <div
+                     style={{ width: '51.25rem' }}
+                     key={el.id}
+                     className="CreatTest"
                   >
-                     ADD OPTIONS
+                     <p className="Number">{index + 1}</p>
+                     <p>{el.text}</p>
+                     <div className="RadioDelete">
+                        <InputRadio variant="RADIO" />
+                        <Delete
+                           onClick={() => removeElement(el.id)}
+                           className="DeleteIcon"
+                        />
+                     </div>
+                  </div>
+               ))}
+            </div>
+            {options.length > 0 ? (
+               <div className="ControlButton">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={handleClose}
+                     className="Button"
+                  >
+                     GO BACK
+                  </Button>
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     className="saveButton"
+                     variant="contained"
+                  >
+                     SAVE
                   </Button>
                </div>
-               <div className="CreatTeasts">
-                  {options?.map((el, index) => (
-                     <div
-                        style={{ width: '51.25rem' }}
-                        key={el.id}
-                        className="CreatTest"
-                     >
-                        <p className="Number">{index + 1}</p>
-                        <p>{el.text}</p>
-                        <div className="RadioDelete">
-                           <InputRadio variant="RADIO" />
-                           <Delete
-                              onClick={() => removeElement(el.id)}
-                              className="DeleteIcon"
-                           />
-                        </div>
-                     </div>
-                  ))}
-               </div>
-               {options.length > 0 ? (
-                  <div className="ControlButton">
-                     <Button
-                        variant="outlined"
-                        hoverStyle="#3A10E5"
-                        onClick={handleClose}
-                        className="Button"
-                     >
-                        GO BACK
-                     </Button>
-                     <Button
-                        defaultStyle="#2AB930"
-                        hoverStyle="#31CF38"
-                        className="saveButton"
-                        variant="contained"
-                     >
-                        SAVE
-                     </Button>
-                  </div>
-               ) : null}
-               <SelectBestModal
-                  open={state}
-                  handleClose={handleClose}
-                  state={state}
-                  values={values}
-                  setValues={setValues}
-                  handleSave={handleSave}
-               />
-            </WidthContainer>
-         </Background>
+            ) : null}
+            <SelectBestModal
+               open={state}
+               handleClose={handleClose}
+               state={state}
+               values={values}
+               setValues={setValues}
+               handleSave={handleSave}
+            />
+         </WidthContainer>
       </Container>
    )
 }
 const WidthContainer = styled('div')({
-   width: '51.25rem',
+   width: '50rem',
 })
 const Container = styled('div')(() => ({
-   width: '100%',
-   height: '60rem',
-   display: 'flex',
-   justifyContent: 'center',
-   background: '#D7E1F8',
    '.DeleteIcon': {
       width: '1.25rem',
       height: '1.25rem',
@@ -167,6 +159,7 @@ const Container = styled('div')(() => ({
       flexDirection: 'column',
       rowGap: '1rem',
       height: '12rem',
+      marginTop: '1.5rem',
    },
    '.Number': { paddingBottom: '1.3rem', cursor: 'pointer' },
    '.RadioDelete': {
