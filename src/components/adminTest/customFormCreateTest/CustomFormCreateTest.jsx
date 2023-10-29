@@ -45,7 +45,7 @@ const renderedContent = {
    },
 }
 
-const CustomFormCraeteTest = ({ selectLabel, formStyles, labelStyles }) => {
+const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
    const [selectedOption, setSelectedOption] = React.useState(
       'Select real English words'
    )
@@ -53,7 +53,6 @@ const CustomFormCraeteTest = ({ selectLabel, formStyles, labelStyles }) => {
    const handleChange = (event) => {
       setSelectedOption(event.target.value)
    }
-   console.log(renderedContent[selectedOption]?.placeholder)
    return (
       <Background marginTop="4rem">
          <FormSubmit style={formStyles}>
@@ -70,13 +69,13 @@ const CustomFormCraeteTest = ({ selectLabel, formStyles, labelStyles }) => {
                <ContainerTimerInput>
                   <TimeText htmlFor="timeInput">
                      Duration
-                     <p>(in minutes)</p>
+                     <span>(in minutes)</span>
                   </TimeText>
                   <FieldTime format="mm:ss" />
                </ContainerTimerInput>
             </ContainerTitleInput>
             <ContainerInputSecond>
-               <InputLabelTextType>{selectLabel}</InputLabelTextType>{' '}
+               <InputLabelTextType>{selectLabel}Type</InputLabelTextType>{' '}
                <Select
                   selectedOption={selectedOption}
                   handleChange={handleChange}
@@ -89,7 +88,7 @@ const CustomFormCraeteTest = ({ selectLabel, formStyles, labelStyles }) => {
    )
 }
 
-export default CustomFormCraeteTest
+export default CustomFormCreateTest
 
 const FormSubmit = styled('form')(() => ({
    width: '50rem',
@@ -118,10 +117,10 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 const TextTitle = styled('h1')(() => ({
-   fontFamily: 'Poppins',
+   fontfamily: 'DINNextRoundedLTW04-Medium',
    fontStyle: 'normal',
    fontWeight: 500,
-   fontSize: '16px',
+   fontSize: '1rem',
    lineHeight: '18px',
    color: '#4B4759',
 }))
@@ -133,7 +132,6 @@ const TimeText = styled('label')(() => ({
    display: 'flex',
    color: '#4B4759',
    flexDirection: 'column',
-   // paddingLeft: '8px',
    width: '110px',
    '& input': {
       alignItems: 'center',
