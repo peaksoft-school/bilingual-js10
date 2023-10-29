@@ -7,14 +7,13 @@ import { SelectBestModal } from './SelectBestModal'
 import TextArea from '../../UI/textarea/TextArea'
 
 export const SelectBestTitle = () => {
-   const [state, setState] = useState(false)
-   const [values, setValues] = useState('')
+   const [openModal, setOpenModal] = useState(false)
+   const [titleValues, setTitleValues] = useState('')
    const [options, setOptions] = useState([])
    const [initialText, setInitialText] = useState(
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
    )
-   console.log(setInitialText)
-   const handleClose = () => setState(false)
+   const handleClose = () => setOpenModal(false)
    const removeElement = (id) => {
       const newOption = options.filter((option) => option.id !== id)
       setOptions(newOption)
@@ -22,10 +21,10 @@ export const SelectBestTitle = () => {
    const handleSave = () => {
       const newOption = {
          id: Math.random(),
-         text: values,
+         text: titleValues,
          checked: false,
       }
-      setValues('')
+      setTitleValues('')
       setOptions([...options, newOption])
       handleClose()
    }
@@ -39,6 +38,7 @@ export const SelectBestTitle = () => {
                   multiline
                   value={initialText}
                   fullWidth
+                  onChange={(e) => setInitialText(e.target.value)}
                />
             </div>
             <div className="ContainButton">
@@ -47,17 +47,17 @@ export const SelectBestTitle = () => {
                   defaultStyle="#3A10E5"
                   className="addNewTestButton"
                   variant="contained"
-                  onClick={() => setState(true)}
+                  onClick={() => setOpenModal(true)}
                >
                   ADD OPTIONS
                </Button>
             </div>
-            <div className="CreateTests">
+            <div className="ContainerCreateTests">
                {options?.map((el, index) => (
                   <div
                      style={{ width: '51.25rem' }}
                      key={el.id}
-                     className="CreatTest"
+                     className="ContainCreatTest"
                   >
                      <p className="Number">{index + 1}</p>
                      <p>{el.text}</p>
@@ -92,11 +92,10 @@ export const SelectBestTitle = () => {
                </div>
             ) : null}
             <SelectBestModal
-               // open={state}
                handleClose={handleClose}
-               state={state}
-               values={values}
-               setValues={setValues}
+               openModal={openModal}
+               titleValues={titleValues}
+               setTitleValues={setTitleValues}
                handleSave={handleSave}
             />
          </WidthContainer>
@@ -126,7 +125,7 @@ const Container = styled('div')(() => ({
       marginTop: '2rem',
       fontFamly: 'Poppins',
    },
-   '.CreatTest': {
+   '.ContainCreatTest': {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -138,7 +137,7 @@ const Container = styled('div')(() => ({
       padding: '0.88rem',
       widht: '100%',
    },
-   '.CreateTests': {
+   '.ContainerCreateTests': {
       display: 'flex',
       justifyContent: 'start',
       rowGap: '1rem',

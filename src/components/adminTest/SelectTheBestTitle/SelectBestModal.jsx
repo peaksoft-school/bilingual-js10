@@ -6,15 +6,15 @@ import { InputRadio } from '../../UI/InputRadio'
 import { CloseIcon } from '../../../assets'
 
 export const SelectBestModal = ({
-   state,
+   openModal,
    handleSave,
    handleClose,
-   values,
-   setValues,
+   titleValues,
+   setTitleValues,
 }) => {
    return (
       <Modal
-         open={state}
+         open={openModal}
          handleClose={handleClose}
          width="40rem"
          height="24rem"
@@ -31,8 +31,8 @@ export const SelectBestModal = ({
                         className="InputTitles"
                         type="text"
                         placeholder="Select Best title"
-                        value={values}
-                        onChange={(e) => setValues(e.target.value)}
+                        value={titleValues}
+                        onChange={(e) => setTitleValues(e.target.value)}
                      />
                   </div>
                   <div className="ParagraphCheck">
