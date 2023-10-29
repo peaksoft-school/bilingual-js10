@@ -57,7 +57,7 @@ export const CreateRealEnglishWord = () => {
                         <MainContainer>
                            <p className="Number-Words">{index + 1}</p>
                            <div className="NumberText">
-                              <p>{option.text}</p>
+                              <span>{option.text}</span>
                            </div>
                         </MainContainer>
                      </div>
@@ -67,7 +67,7 @@ export const CreateRealEnglishWord = () => {
                            checked={option.isTrue}
                            onChange={() => handleCheckboxChange(index)}
                         />
-                        <DeleteRealEnglishWord
+                        <DeleteIcon
                            onClick={() => handleDeleteOption(option.id)}
                         />
                      </div>
@@ -103,7 +103,9 @@ export const CreateRealEnglishWord = () => {
 const Container = styled('div')(() => ({
    width: '50rem',
 }))
-
+const DeleteIcon = styled(DeleteRealEnglishWord)(() => ({
+   cursor: 'pointer',
+}))
 const ContainerCreateTest = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',

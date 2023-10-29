@@ -35,8 +35,8 @@ const OptionModal = ({ open, handleCloseModal, onSaveOption }) => {
                   placeholder="Select real English words"
                   name="title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value.slice(0, 13))}
-                  maxLength={13}
+                  onChange={(e) => setTitle(e.target.value.slice(0, 12))}
+                  maxLength={12}
                />
             </ContainerFirstInput>
             <Container>
