@@ -1,5 +1,6 @@
 import { TextField as MuiTextArea, styled } from '@mui/material'
-import React from 'react'
+
+import React, { forwardRef } from 'react'
 
 const TextArea = forwardRef(
    ({ onChange, value, label, error, ...rest }, ref) => {
@@ -26,11 +27,12 @@ const TextArea = forwardRef(
 
 const StyledTextArea = styled(MuiTextArea)({
    backgroundColor: 'white',
-   width: '33vw',
+   width: '51rem',
    '& .MuiOutlinedInput-root': {
       fontFamily: 'DIN Next Rounded LT W01 Regular',
+      color: '#4C4859',
       borderRadius: '8px',
-      color: '#D4D0D0',
+      // color: '#D4D0D0',
       '&.Mui-focused fieldset': {
          border: '2px solid #3A10E5',
       },

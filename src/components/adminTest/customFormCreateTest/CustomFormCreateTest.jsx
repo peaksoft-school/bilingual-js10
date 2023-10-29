@@ -5,6 +5,7 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
+import { CreateSelectMainIdea } from '../selectMainIdea/CreateSelectMainIdea'
 
 const renderedContent = {
    'Select real English words': {
@@ -37,7 +38,7 @@ const renderedContent = {
    },
    'Select the main idea': {
       placeholder: 'Select the main idea',
-      content: <div>Select the main idea</div>,
+      content: <CreateSelectMainIdea />,
    },
    'Select best title': {
       placeholder: 'Select best title',
@@ -45,7 +46,7 @@ const renderedContent = {
    },
 }
 
-const CustomFormCraeteTest = ({ selectLabel, formStyles, labelStyles }) => {
+const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
    const [selectedOption, setSelectedOption] = React.useState(
       'Select real English words'
    )
@@ -89,7 +90,7 @@ const CustomFormCraeteTest = ({ selectLabel, formStyles, labelStyles }) => {
    )
 }
 
-export default CustomFormCraeteTest
+export default CustomFormCreateTest
 
 const FormSubmit = styled('form')(() => ({
    width: '50rem',
