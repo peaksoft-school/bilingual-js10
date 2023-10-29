@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useTheme } from '@mui/material/styles'
 import OutlinedInput from '@mui/material/OutlinedInput'
-
 import FormControl from '@mui/material/FormControl'
 import MuiSelect from '@mui/material/Select'
 import { MenuItem, styled } from '@mui/material'
@@ -18,11 +17,15 @@ const MenuProps = {
 }
 const options = [
    'Select real English words',
-   'Listen and select word',
+   'Listen and select English word',
    'Type what you hear',
    'Describe image',
    'Record saying statement',
    'Respond in at least N words',
+   'Describe image',
+   'Highlight the answer',
+   'Select the main idea',
+   'Select best title',
 ]
 
 function getStyles(option, selectedOption, theme) {
@@ -33,45 +36,35 @@ function getStyles(option, selectedOption, theme) {
             : theme.typography.fontWeightMedium,
    }
 }
-const Select = () => {
+const Select = ({ selectedOption, handleChange }) => {
    const theme = useTheme()
-   const [selectedOption, setSelectedOption] = React.useState([])
 
-   const handleChange = (event) => {
-      setSelectedOption(event.target.value)
-   }
    return (
-      <div>
-         <StyledFormControl fullWidth>
-            <StyledSelect
-               fullWidth
-               displayEmpty
-               value={selectedOption}
-               onChange={handleChange}
-               input={<OutlinedInput />}
-               renderValue={(selected) => {
-                  if (selected.length === 0) {
-                     // return <p>Describe image</p>
-                  }
-                  return selected
-               }}
-               MenuProps={MenuProps}
-            >
-               {/* <MenuItem disabled value="">
-            <em>Placeholder</em>
-          </MenuItem> */}
-               {options.map((option) => (
-                  <StyledMenuItem
-                     key={option}
-                     value={option}
-                     style={getStyles(option, selectedOption, theme)}
-                  >
-                     {option}
-                  </StyledMenuItem>
-               ))}
-            </StyledSelect>
-         </StyledFormControl>
-      </div>
+      <StyledFormControl fullWidth>
+         <StyledSelect
+            displayEmpty
+            value={selectedOption}
+            onChange={handleChange}
+            input={<OutlinedInput />}
+            renderValue={(selected) => {
+               if (selected.length === 0) {
+                  // return <p>Describe image</p>
+               }
+               return selected
+            }}
+            MenuProps={MenuProps}
+         >
+            {options.map((option) => (
+               <StyledMenuItem
+                  key={option}
+                  value={option}
+                  style={getStyles(option, selectedOption, theme)}
+               >
+                  {option}
+               </StyledMenuItem>
+            ))}
+         </StyledSelect>
+      </StyledFormControl>
    )
 }
 export default Select
@@ -81,9 +74,8 @@ const StyledFormControl = styled(FormControl)({
       fontFamily: 'DIN Next Rounded LT W01 Regular',
       height: '5.9vh',
       backgroundColor: '#FFF',
-      color: '#313144',
       '& .MuiOutlinedInput-root': {
-         padding: '0.4rem',
+         padding: '0.3rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
          fontSize: '1rem',
          fontStyle: 'normal',

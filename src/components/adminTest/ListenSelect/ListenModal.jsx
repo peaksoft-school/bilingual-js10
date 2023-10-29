@@ -1,8 +1,8 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import { CloseIcon } from '../assets'
-import { Modal } from '../components/UI/UiModal'
-import Button from '../components/UI/Buttons/Button'
+import { CancelModal } from '../../../assets'
+import { Modal } from '../../UI/UiModal'
+import Button from '../../UI/Buttons/Button'
 
 export const ListenModal = ({
    state,
@@ -23,7 +23,7 @@ export const ListenModal = ({
          height="24rem"
       >
          <div className="Close">
-            <CloseIcon onClick={handleClose} />
+            <CancelModal onClick={handleClose} />
          </div>
          <div className="ContainModal">
             <div>
@@ -139,16 +139,16 @@ const ModalList = styled(Modal)(() => ({
       borderRadius: '0.5rem',
       padding: '0.5rem',
       background: '#fff',
-      marginRight: '1.1rem',
+      marginRight: '1rem',
    },
    '.label': {
       fontFamly: 'Poppins',
       fontWeight: '400',
       fontSize: '1rem',
-      width: '100vw',
-      height: '1rem',
+      width: '100%',
+      height: '2rem',
       color: '#4C4859',
-      paddingRight: '13.5rem',
+      marginRight: '13.6rem',
    },
    '.ContainButton': {
       background: '#F0F1F1',

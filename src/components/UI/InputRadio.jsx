@@ -9,6 +9,7 @@ export const InputRadio = ({
    valueRadio,
    onChange,
    value,
+   ...other
 }) => {
    const [clicked, setClicked] = useState(false)
 
@@ -33,6 +34,7 @@ export const InputRadio = ({
          return (
             <Checkbox
                value={value}
+               {...other}
                onChange={onChange}
                color="default"
                sx={{

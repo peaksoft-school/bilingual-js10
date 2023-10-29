@@ -2,22 +2,11 @@ import { styled } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import Button from '../components/UI/Buttons/Button'
-import { Delete, VolumeForEnglishWord } from '../assets'
-import { InputRadio } from '../components/UI/InputRadio'
+import Button from '../../UI/Buttons/Button'
+import { Delete, VolumeForEnglishWord } from '../../../assets'
+import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
-import { Background } from './Background'
 
-const audioContainer = {
-   display: 'flex',
-   alignItems: 'center',
-   gap: '15px',
-}
-const ContainDeleteChek = {
-   display: 'flex',
-   alignItems: 'center',
-   gap: '4px',
-}
 export const ListenSelect = () => {
    const [state, setState] = useState(false)
    const [values, setValues] = useState('')
@@ -37,6 +26,7 @@ export const ListenSelect = () => {
          handleClose()
       },
    })
+
    const handleSave = () => {
       const newOption = {
          id: Math.random(),
@@ -44,11 +34,13 @@ export const ListenSelect = () => {
          checked: false,
          checkedMusic: false,
       }
+      if (options.length < 6) {
+         setOptions([...options, newOption])
+      }
       setValues('')
       if (audioFile.length === 0) {
          console.log('error')
       } else {
-         setOptions([...options, newOption])
          handleClose()
          formik.handleReset()
       }
@@ -88,86 +80,79 @@ export const ListenSelect = () => {
    }
    return (
       <Container>
-         <Background>
-            <div className="ContainButton">
+         <div className="ContainButton">
+            <Button
+               hoverStyle="#3A10E5E5"
+               defaultStyle="#3A10E5"
+               className="addNewTestButton"
+               variant="contained"
+               onClick={() => setState(true)}
+            >
+               ADD OPTIONS
+            </Button>
+         </div>
+         <div className="CreatTests">
+            {options?.map((el, index) => (
+               <div key={el.id} className="CreatTest">
+                  <AudioContainer>
+                     <p>{index + 1}</p>
+                     <VolumeForEnglishWord
+                        onClick={() => handlePlayAudio(index, el.id)}
+                        style={{
+                           fill:
+                              audioPlaying?.id === el.id
+                                 ? '#3A10E5 '
+                                 : '#655F5F ',
+                        }}
+                     />
+                     <p>{el.text}</p>
+                  </AudioContainer>
+                  <ContainDeleteChek>
+                     <InputRadio variant="CHECKBOX" />
+                     <Delete
+                        onClick={() => removeElement(el.id)}
+                        className="DeleteIcon"
+                     />
+                  </ContainDeleteChek>
+               </div>
+            ))}
+         </div>
+         {options.length > 0 ? (
+            <div className="ControlButton">
                <Button
-                  hoverStyle="#3A10E5E5"
-                  defaultStyle="#3A10E5"
-                  className="addNewTestButton"
-                  variant="contained"
-                  onClick={() => setState(true)}
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={handleClose}
+                  className="Button"
                >
-                  ADD OPTIONS
+                  GO BACK
+               </Button>
+               <Button
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+                  className="saveButton"
+                  variant="contained"
+               >
+                  SAVE
                </Button>
             </div>
-            <div className="CreatTests">
-               {options?.map((el, index) => (
-                  <div key={el.id} className="CreatTest">
-                     <div style={audioContainer}>
-                        <p>{index + 1}</p>
-                        <VolumeForEnglishWord
-                           onClick={() => handlePlayAudio(index, el.id)}
-                           style={{
-                              fill:
-                                 audioPlaying?.id === el.id
-                                    ? '#3A10E5 '
-                                    : '#655F5F ',
-                           }}
-                        />
-                        <p>{el.text}</p>
-                     </div>
-                     <div style={ContainDeleteChek}>
-                        <InputRadio variant="CHECKBOX" />
-                        <Delete
-                           onClick={() => removeElement(el.id)}
-                           className="DeleteIcon"
-                        />
-                     </div>
-                  </div>
-               ))}
-            </div>
-            {options.length > 0 ? (
-               <div className="ControlButton">
-                  <Button
-                     variant="outlined"
-                     hoverStyle="#3A10E5"
-                     onClick={handleClose}
-                     className="Button"
-                  >
-                     GO BACK
-                  </Button>
-                  <Button
-                     defaultStyle="#2AB930"
-                     hoverStyle="#31CF38"
-                     className="saveButton"
-                     variant="contained"
-                  >
-                     SAVE
-                  </Button>
-               </div>
-            ) : null}
-            <ListenModal
-               open={state}
-               handleClose={handleClose}
-               state={state}
-               handleClick={handleClick}
-               formik={formik}
-               handleSave={handleSave}
-               fileInputRef={fileInputRef}
-               values={values}
-               setValues={setValues}
-               handleFile={handleFile}
-            />
-         </Background>
+         ) : null}
+         <ListenModal
+            open={state}
+            handleClose={handleClose}
+            state={state}
+            handleClick={handleClick}
+            formik={formik}
+            handleSave={handleSave}
+            fileInputRef={fileInputRef}
+            values={values}
+            setValues={setValues}
+            handleFile={handleFile}
+         />
       </Container>
    )
 }
 const Container = styled('div')(() => ({
-   width: '100vw',
-   height: '100vh',
-   display: 'flex',
-   justifyContent: 'center',
-   background: '#D7E1F8',
    p: {
       fontSize: '1rem',
       fontStyle: 'normal',
@@ -185,14 +170,15 @@ const Container = styled('div')(() => ({
       marginTop: '2rem',
       fontFamly: 'Poppins',
       fontWeight: '800',
+      marginRight: '0.3rem',
    },
    '.CreatTests': {
       display: 'flex',
       justifyContent: 'center',
-      rowGap: '1rem',
-      columnGap: '2rem',
+      rowGap: '1.12rem',
+      columnGap: '1.12rem',
       flexWrap: 'wrap',
-      marginTop: '7rem',
+      marginTop: '2rem',
       fontFamly: 'Poppins',
       ul: {
          fontSize: '16px',
@@ -220,5 +206,16 @@ const Container = styled('div')(() => ({
       alignItems: 'center',
       marginTop: '2.5rem',
       fontFamly: 'Poppins',
+      marginRight: '0.3rem',
    },
+}))
+const ContainDeleteChek = styled('div')(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '4px',
+}))
+const AudioContainer = styled('div')(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '15px',
 }))

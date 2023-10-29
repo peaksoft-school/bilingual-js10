@@ -23,7 +23,7 @@ const StyleBackground = styled('div')(({ marginTop }) => {
    return {
       marginTop: `${marginTop}`,
       maxWidth: '1060px',
-      padding: '3.125rem 5rem',
+      padding: '3.125rem 8rem',
       backgroundColor: '#fff',
       borderRadius: '25px',
       background: 'white',
