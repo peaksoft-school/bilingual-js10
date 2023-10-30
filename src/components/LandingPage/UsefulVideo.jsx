@@ -25,17 +25,15 @@ const UsefulVideo = () => {
 }
 
 const Container = styled('div')({
-   backgroundColor: '#FEF5E8',
+   fontfamily: 'Gilroy',
+   fontStyle: 'normal',
    position: 'relative',
    left: '3rem',
    width: '79rem',
    height: '28rem',
-   // width: '1250px',
-   // height: '444px',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
-   overflow: 'hidden',
    gap: '2.8rem',
 })
 
@@ -49,9 +47,7 @@ const StyledBox = styled('div')({
 })
 
 const MyText = styled(Typography)({
-   fontfamily: 'Gilroy',
    fontSize: '2.5rem',
-   fontStyle: 'normal',
    fontWeight: '700',
    lineHeight: '48.36px',
    color: '#3752B4',
@@ -59,9 +55,7 @@ const MyText = styled(Typography)({
    paddingTop: '10px',
 })
 const Title = styled(Typography)({
-   fontfamily: 'Gilroy',
    fontSize: '1.3rem',
-   fontStyle: 'normal',
    fontWeight: '700',
    lineHeight: '24.18px',
    color: '#3A10E5',
@@ -70,7 +64,6 @@ const Title = styled(Typography)({
 const Text = styled(Typography)({
    fontfamily: 'Gilroy',
    fontSize: '1.2rem',
-   fontStyle: 'normal',
    fontWeight: '400',
    lineHeight: '20.88px',
    color: '#212629',
@@ -82,14 +75,10 @@ const StyledInnerBox = styled('div')({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'start',
-   borderTopLeftRadius: '16px',
-   borderTopRightRadius: '16px',
-   borderBottomLeftRadius: '16px',
-   borderBottomRightRadius: '16px',
+   borderRadius: '16px',
    gap: '0.7rem',
    border: '1px solid #DDDDDD',
    backgroundColor: 'white',
-   borderCollapse: 'separate ',
 })
 const BoxVideo = styled('div')({
    width: '23rem',
