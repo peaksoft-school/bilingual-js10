@@ -4,7 +4,7 @@ import { ThemeProvider } from '@emotion/react'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import App from './App'
+import App from './App.jsx'
 import { theme } from './assets/theme/globalTheme'
 import reportWebVitals from './reportWebVitals'
 
