@@ -1,8 +1,8 @@
-import { TextField, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import React, { useState } from 'react'
-import { Background } from '../../layout/Background'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
+import TextArea from '../UI/textarea/TextArea'
 
 export const HighlightTheAnswer = () => {
    const [text, setText] = useState('')
@@ -17,50 +17,51 @@ export const HighlightTheAnswer = () => {
 
    return (
       <div>
-         <Background>
-            <MainPassageContainer>
-               <p>Questions to the Passage</p>
-               <Input
-                  value={question}
-                  border=" 2.3px solid #D4D0D0"
+         <MainPassageContainer>
+            <span>Questions to the Passage</span>
+            <Input
+               value={question}
+               border=" 1.53px solid #D4D0D0"
+               className="input"
+               padding="10px 16px"
+               fullWidth
+               onChange={(e) => setQuestion(e.target.value)}
+            />
+            <span>Passage</span>
+            <TextFieldStyle>
+               <TextArea
+                  multiline
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
                   fullWidth
-                  onChange={(e) => setQuestion(e.target.value)}
+                  className="textarea"
                />
-               <p>Passage</p>
-               <TextFieldStyle>
-                  <TextField
-                     multiline
-                     value={text}
-                     onChange={(e) => setText(e.target.value)}
-                     fullWidth
-                  />
-               </TextFieldStyle>
-               <p>Highlight correct answer:</p>
-               <div
-                  style={{
-                     width: '820px',
-                     wordBreak: 'break-word',
-                     minHeight: '40px',
-                  }}
+            </TextFieldStyle>
+            <span>Highlight correct answer:</span>
+            <div
+               style={{
+                  width: '820px',
+                  wordBreak: 'break-word',
+                  minHeight: '40px',
+               }}
+            >
+               <Pstyle>{text}</Pstyle>
+            </div>
+            <ButtonContainer>
+               <Button variant="outlined" hoverStyle="#3A10E5">
+                  go back
+               </Button>
+               <Button
+                  hoverStyle="#31CF38"
+                  variant="contained"
+                  defaultStyle="#2AB930"
+                  className="saveButton"
+                  onClick={() => save()}
                >
-                  <Pstyle>{text}</Pstyle>
-               </div>
-               <ButtonContainer>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
-                     go back
-                  </Button>
-                  <Button
-                     hoverStyle="#31CF38"
-                     variant="contained"
-                     defaultStyle="#2AB930"
-                     className="saveButton"
-                     onClick={() => save()}
-                  >
-                     save
-                  </Button>
-               </ButtonContainer>
-            </MainPassageContainer>
-         </Background>
+                  save
+               </Button>
+            </ButtonContainer>
+         </MainPassageContainer>
       </div>
    )
 }
@@ -86,14 +87,17 @@ const TextFieldStyle = styled('div')(() => ({
 }))
 
 const MainPassageContainer = styled('div')(() => ({
-   '& > p': {
+   '& > span': {
       fontSize: '16px',
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: '16px',
       color: '#4C4859',
       marginBottom: '12px',
-      marginTop: '24px',
+   },
+   '& > .input, .textarea': {
+      marginBottom: '24px',
+      marginTop: '12px',
    },
 }))
 
