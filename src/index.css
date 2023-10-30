@@ -5,7 +5,14 @@
    box-sizing: border-box;
    padding: 0;
    margin: 0;
-   /* font-family: 'Poppins', 'Gilroy'; */
+   fontfamily: 'Poppins', 'Gilroy';
+}
+body {
+   margin: 0;
+   font-family: 'Poppins', 'Gilroy';
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   background: #d7e1f8;
 }
 body .MuiPaper-elevation {
    box-shadow: 'none';

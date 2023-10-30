@@ -1,4 +1,6 @@
 import { ThemeProvider } from '@emotion/react'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
@@ -13,8 +15,10 @@ root.render(
    <React.StrictMode>
       <ThemeProvider theme={theme}>
          <BrowserRouter>
-            <ToastContainer />
-            <App />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+               <ToastContainer />
+               <App />
+            </LocalizationProvider>
          </BrowserRouter>
       </ThemeProvider>
    </React.StrictMode>
