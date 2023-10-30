@@ -10,9 +10,6 @@ export const SelectBestTitle = () => {
    const [openModal, setOpenModal] = useState(false)
    const [titleValues, setTitleValues] = useState('')
    const [options, setOptions] = useState([])
-   const [initialText, setInitialText] = useState(
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
-   )
    const handleClose = () => setOpenModal(false)
    const removeElement = (id) => {
       const newOption = options.filter((option) => option.id !== id)
@@ -32,14 +29,8 @@ export const SelectBestTitle = () => {
       <Container>
          <WidthContainer>
             <div className="ContainTextArea">
-               <span>Passage</span>
-               <TextArea
-                  variant="outlined"
-                  multiline
-                  value={initialText}
-                  fullWidth
-                  onChange={(e) => setInitialText(e.target.value)}
-               />
+               <span className="ContainSpan">Passage</span>
+               <TextArea variant="outlined" multiline fullWidth />
             </div>
             <div className="ContainButton">
                <Button
@@ -104,6 +95,7 @@ export const SelectBestTitle = () => {
 }
 const WidthContainer = styled('div')({
    width: '50rem',
+   color: '#4C4859',
 })
 const Container = styled('div')(() => ({
    '.DeleteIcon': {
@@ -113,7 +105,8 @@ const Container = styled('div')(() => ({
    '.ContainButton': {
       display: 'flex',
       justifyContent: 'end',
-      marginTop: '6rem',
+      alignItems: 'center',
+      marginTop: '2rem',
       fontFamly: 'Poppins',
       fontWeight: '800',
    },
@@ -127,9 +120,8 @@ const Container = styled('div')(() => ({
    },
    '.ContainCreatTest': {
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       alignItems: 'center',
-      height: '4.5rem',
       borderRadius: '0.5rem',
       border: '1.53px solid #D4D0D0',
       background: '#fff',
@@ -139,7 +131,7 @@ const Container = styled('div')(() => ({
    },
    '.ContainerCreateTests': {
       display: 'flex',
-      justifyContent: 'start',
+      justifyContent: '',
       rowGap: '1rem',
       flexWrap: 'wrap',
       marginTop: '1.35rem',
@@ -156,7 +148,6 @@ const Container = styled('div')(() => ({
       display: 'flex',
       flexDirection: 'column',
       rowGap: '1rem',
-      height: '12rem',
       marginTop: '1.5rem',
    },
    '.Number': { paddingBottom: '1.3rem', cursor: 'pointer' },
@@ -168,4 +159,5 @@ const Container = styled('div')(() => ({
       paddingBottom: '1.3rem',
       cursor: 'pointer',
    },
+   '.ContainSpan': { fontSize: '1rem', fontWeight: '500' },
 }))
