@@ -1,50 +1,20 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import Button from '../../components/UI/Buttons/Button'
-import Select from '../../components/UI/select/Select'
 import { Background } from '../Background'
+import Input from '../../components/UI/Input'
 
 const SelectImage = ({ handleClose }) => {
    return (
       <Background>
          <Container>
             <div className="Box">
-               <div className="TitleBlock">
-                  <div className="TitleBox">
-                     {' '}
-                     <p className="title">Title</p>
-                     {/* <Input label="text" variant="outlined" /> */}
-                     <StyledInput
-                        className="InputTitle"
-                        type="text"
-                        placeholder="Take a free practice test and estimate your score"
-                        // value={values}
-                        // onChange={(e) => setValues(e.target.value)}
-                     />
-                  </div>
-                  <div className="DurationBox">
-                     <p>
-                        Duration
-                        <br /> (in minutes)
-                     </p>
-                     <StyledInput
-                        className="InputDuration"
-                        placeholder="15:00"
-                     />
-                     {/* <Input label="text" variant="outlined" /> */}
-                  </div>
-               </div>
-               <div className="SelectBlock">
-                  <p className="SelectType">Type</p>
-                  <Select fullWidth />
-               </div>
                <div className="ImgBlock">
                   <StyledInput
+                     type="file"
                      placeholder="Uppload image"
                      className="UpploadBox"
-                  >
-                     {/* <p className="uppload">Uppload image </p> */}
-                  </StyledInput>
+                  />
                   <div>
                      <p>file_Name_oftheimg_file.jpg</p>
                   </div>
@@ -54,6 +24,7 @@ const SelectImage = ({ handleClose }) => {
                   <StyledInput
                      className="InputAnswer"
                      type="text"
+                     padding="0"
                      // value={values}
                      // onChange={(e) => setValues(e.target.value)}
                   />
@@ -81,41 +52,25 @@ const SelectImage = ({ handleClose }) => {
       </Background>
    )
 }
-// const StyledSelect = styled(Select)({
-//    '&.MuiFormControl-root': {
-//       marginLeft: '0 !important',
-//       width: '51rem',
-//       height: '2.8rem',
-//       borderRadius: '8px',
-//    },
-// })
-const StyledInput = styled('input')(() => ({
-   borderRadius: '8px',
-   border: '2px solid #D4D0D0',
-   fontfamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
-   paddingLeft: '16px',
-   marginTop: '0.6rem',
-   outline: 'none',
-   ':hover': {
-      border: '2px solid blue',
-   },
-   ':focus': {
-      border: '2px solid blue',
-   },
-   '&.InputTitle': {
-      marginTop: '1.5rem',
-      width: '44rem',
-      height: '2.8rem',
-   },
-   '&.InputDuration': {
-      width: '6rem',
-      height: '2.8rem',
-   },
+
+const StyledInput = styled(Input)(() => ({
+   // borderRadius: '8px',
+   // border: '2px solid #D4D0D0',
+   // fontfamily: 'Poppins',
+   // fontStyle: 'normal',
+   // fontWeight: 400,
+   // fontSize: '16px',
+   // lineHeight: '18px',
+   // color: '#4C4859',
+   // paddingLeft: '16px',
+   // marginTop: '0.6rem',
+   // outline: 'none',
+   // ':hover': {
+   //    border: '2px solid blue',
+   // },
+   // ':focus': {
+   //    border: '2px solid blue',
+   // },
    '&.InputAnswer': {
       width: '100%',
       height: '2.8rem',
@@ -137,28 +92,9 @@ const Container = styled('div')(() => ({
    display: 'flex',
    fontfamily: 'Poppins',
    '& .Box': {
-      // width: '60rem',
-      // height: '41rem',
-      // borderRadius: '8px',
-      // backgroundColor: '#FFFFFF',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
-   },
-   '.TitleBlock': {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'row',
-      marginTop: '1.75rem',
-      gap: '2rem',
-   },
-   '.TitleBox': {
-      width: '100%',
-      height: '4.75rem',
-   },
-   '.DurationBox': {
-      width: '8rem',
-      height: '5.85rem',
    },
    '.ImgBlock': {
       width: '28rem',
