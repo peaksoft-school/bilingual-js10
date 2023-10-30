@@ -2,84 +2,93 @@ import React from 'react'
 import { styled } from '@mui/material'
 import Button from '../../components/UI/Buttons/Button'
 import Select from '../../components/UI/select/Select'
+import { Background } from '../Background'
 
 const SelectImage = ({ handleClose }) => {
    return (
-      <Container>
-         <div className="Box">
-            <div className="TitleBlock">
-               <div className="TitleBox">
-                  {' '}
-                  <p className="title">Title</p>
-                  {/* <Input label="text" variant="outlined" /> */}
+      <Background>
+         <Container>
+            <div className="Box">
+               <div className="TitleBlock">
+                  <div className="TitleBox">
+                     {' '}
+                     <p className="title">Title</p>
+                     {/* <Input label="text" variant="outlined" /> */}
+                     <StyledInput
+                        className="InputTitle"
+                        type="text"
+                        placeholder="Take a free practice test and estimate your score"
+                        // value={values}
+                        // onChange={(e) => setValues(e.target.value)}
+                     />
+                  </div>
+                  <div className="DurationBox">
+                     <p>
+                        Duration
+                        <br /> (in minutes)
+                     </p>
+                     <StyledInput
+                        className="InputDuration"
+                        placeholder="15:00"
+                     />
+                     {/* <Input label="text" variant="outlined" /> */}
+                  </div>
+               </div>
+               <div className="SelectBlock">
+                  <p className="SelectType">Type</p>
+                  <Select fullWidth />
+               </div>
+               <div className="ImgBlock">
                   <StyledInput
-                     className="InputTitle"
+                     placeholder="Uppload image"
+                     className="UpploadBox"
+                  >
+                     {/* <p className="uppload">Uppload image </p> */}
+                  </StyledInput>
+                  <div>
+                     <p>file_Name_oftheimg_file.jpg</p>
+                  </div>
+               </div>
+               <div className="AnswerBlock">
+                  <p>Correct Answer</p>
+                  <StyledInput
+                     className="InputAnswer"
                      type="text"
-                     placeholder="Take a free practice test and estimate your score"
                      // value={values}
                      // onChange={(e) => setValues(e.target.value)}
                   />
                </div>
-               <div className="DurationBox">
-                  <p>
-                     Duration
-                     <br /> (in minutes)
-                  </p>
-                  <StyledInput className="InputDuration" placeholder="15:00" />
-                  {/* <Input label="text" variant="outlined" /> */}
+               <div className="ButtonBlock">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={handleClose}
+                     className="Button"
+                  >
+                     GO BACK
+                  </Button>
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     className="saveButton"
+                     variant="contained"
+                  >
+                     SAVE
+                  </Button>
                </div>
             </div>
-            <div className="SelectBlock">
-               <p className="SelectType">Type</p>
-               <StyledSelect className="select" />
-            </div>
-            <div className="ImgBlock">
-               <div className="UpploadBox">
-                  <p className="uppload">Uppload image </p>
-               </div>
-               <div>
-                  <p>file_Name_oftheimg_file.jpg</p>
-               </div>
-            </div>
-            <div className="AnswerBlock">
-               <p>CorrectAnswer</p>
-               <StyledInput
-                  className="InputAnswer"
-                  type="text"
-                  // value={values}
-                  // onChange={(e) => setValues(e.target.value)}
-               />
-            </div>
-            <div className="ButtonBlock">
-               <Button
-                  variant="outlined"
-                  hoverStyle="#3A10E5"
-                  onClick={handleClose}
-                  className="Button"
-               >
-                  GO BACK
-               </Button>
-               <Button
-                  defaultStyle="#2AB930"
-                  hoverStyle="#31CF38"
-                  className="saveButton"
-                  variant="contained"
-               >
-                  SAVE
-               </Button>
-            </div>
-         </div>
-      </Container>
+         </Container>
+      </Background>
    )
 }
-const StyledSelect = styled(Select)({
-   '&.MuiFormControl-root': {
-      marginLeft: '0 !important',
-      width: '51rem',
-      height: '2.8rem',
-      borderRadius: '8px',
-   },
-})
+// const StyledSelect = styled(Select)({
+//    '&.MuiFormControl-root': {
+//       marginLeft: '0 !important',
+//       width: '51rem',
+//       height: '2.8rem',
+//       borderRadius: '8px',
+//    },
+// })
 const StyledInput = styled('input')(() => ({
    borderRadius: '8px',
    border: '2px solid #D4D0D0',
@@ -100,7 +109,7 @@ const StyledInput = styled('input')(() => ({
    },
    '&.InputTitle': {
       marginTop: '1.5rem',
-      width: '43rem',
+      width: '44rem',
       height: '2.8rem',
    },
    '&.InputDuration': {
@@ -108,41 +117,47 @@ const StyledInput = styled('input')(() => ({
       height: '2.8rem',
    },
    '&.InputAnswer': {
-      width: '51rem',
+      width: '100%',
       height: '2.8rem',
+   },
+   '&.InputUpload': {
+      width: '11.3rem',
+      height: '11.1rem',
+      border: '1.5px solid #D4D0D0',
+      borderRadius: '8px',
+      textAlign: 'center',
+      color: '#3A10E5',
+      paddingLeft: '1rem',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      lineHeight: 'normal',
    },
 }))
 const Container = styled('div')(() => ({
-   width: '100vw',
-   height: '100vh',
    display: 'flex',
-   justifyContent: 'center',
-   alignItems: 'center',
-   background: '#D7E1F8',
    fontfamily: 'Poppins',
    '& .Box': {
-      width: '60rem',
-      height: '41rem',
-      borderRadius: '8px',
-      backgroundColor: '#FFFFFF',
+      // width: '60rem',
+      // height: '41rem',
+      // borderRadius: '8px',
+      // backgroundColor: '#FFFFFF',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-      paddingLeft: '3rem',
    },
    '.TitleBlock': {
+      width: '100%',
       display: 'flex',
       flexDirection: 'row',
-      marginTop: '2.75rem',
-      gap: '3rem',
+      marginTop: '1.75rem',
+      gap: '2rem',
    },
    '.TitleBox': {
-      width: '43rem',
+      width: '100%',
       height: '4.75rem',
    },
    '.DurationBox': {
-      width: '7rem',
+      width: '8rem',
       height: '5.85rem',
    },
    '.ImgBlock': {
@@ -165,9 +180,11 @@ const Container = styled('div')(() => ({
       justifyContent: 'flex-start',
    },
    '.SelectBlock': {
+      width: '100%',
       marginTop: '2rem',
    },
    '.AnswerBlock': {
+      width: '100%',
       marginTop: '1rem',
    },
    '& .title': {
@@ -186,12 +203,12 @@ const Container = styled('div')(() => ({
    },
    '.ButtonBlock': {
       display: 'flex',
+      flexDirection: 'row',
       gap: '1rem',
-      justifyContent: 'end',
-      alignItems: 'center',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
       marginTop: '2rem',
       fontFamly: 'Poppins',
-      paddingLeft: '37rem',
       fontfamily: 'Poppins',
    },
 }))

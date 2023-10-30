@@ -33,7 +33,7 @@ function getStyles(option, selectedOption, theme) {
             : theme.typography.fontWeightMedium,
    }
 }
-const Select = () => {
+const Select = ({ fullWidth }) => {
    const theme = useTheme()
    const [selectedOption, setSelectedOption] = React.useState([])
 
@@ -42,8 +42,9 @@ const Select = () => {
    }
    return (
       <div>
-         <StyledFormControl>
+         <StyledFormControl fullWidth={fullWidth}>
             <StyledSelect
+               fullWidth
                displayEmpty
                value={selectedOption}
                onChange={handleChange}
@@ -77,9 +78,7 @@ export default Select
 
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
-      marginLeft: '1rem',
       fontFamily: 'DIN Next Rounded LT W01 Regular',
-      width: '43vw',
       height: '5.9vh',
       backgroundColor: '#FFF',
       color: '#313144',
