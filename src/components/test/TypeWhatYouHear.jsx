@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { Background } from '../../layout/Background'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
@@ -19,7 +18,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
 
    return (
       <MainContainer>
-         <Background marginTop="65px">
+         <div>
             <div className="widthContainer">
                <div className="audioContainer">
                   <div>
@@ -89,7 +88,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                   </Button>
                </div>
             </div>
-         </Background>
+         </div>
       </MainContainer>
    )
 }
@@ -100,6 +99,7 @@ const MainContainer = styled('div')(() => ({
       display: 'flex',
       flexDirection: 'column',
       rowGap: '24px',
+      marginTop: '24px',
       '.buttons': {
          display: 'flex',
          justifyContent: 'end',

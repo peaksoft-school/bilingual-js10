@@ -32,6 +32,8 @@ import { ReactComponent as Eye } from './icons/eye.svg'
 import { ReactComponent as EyeClosed } from './icons/eyeClosed.svg'
 import { ReactComponent as ErrorIcon } from './icons/errorAuth.svg'
 import { ReactComponent as StickRed } from './icons/StickRed.svg'
+import { ReactComponent as CancelModal } from './icons/cancelModal.svg'
+import { ReactComponent as DeleteRealEnglishWord } from './icons/deleteForRealEnglishWord.svg'
 import { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
 import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
 
@@ -72,13 +74,15 @@ export {
    Aijan,
    RoundLeftBlue,
    RoundRightBlue,
+   StickRed,
+   CancelModal,
+   DeleteRealEnglishWord,
    System,
    Layer,
    Google,
    Eye,
    EyeClosed,
    ErrorIcon,
-   StickRed,
    PlusIcon,
    PlayAudioIcon,
 }

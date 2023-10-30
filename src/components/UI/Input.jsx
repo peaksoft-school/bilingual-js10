@@ -19,7 +19,6 @@ const Input = forwardRef(
       )
    }
 )
-
 const MyStyledInput = styled(TextField)((props) => ({
    '.css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
       border: 'none',
@@ -31,7 +30,6 @@ const MyStyledInput = styled(TextField)((props) => ({
       border: `${props.border ? props.border : '1.3px solid #D4D0D0'}`,
       borderRadius: '8px',
    },
-
    '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
          border: '1.3px solid #3A10E5',
@@ -43,5 +41,4 @@ const MyStyledInput = styled(TextField)((props) => ({
       },
    },
 }))
-
 export default Input
