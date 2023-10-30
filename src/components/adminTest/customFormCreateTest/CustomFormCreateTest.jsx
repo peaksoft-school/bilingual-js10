@@ -83,8 +83,8 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                   fullWidth
                />
             </ContainerInputSecond>
+            {renderedContent[selectedOption]?.content}
          </FormSubmit>
-         {renderedContent[selectedOption]?.content}
       </Background>
    )
 }

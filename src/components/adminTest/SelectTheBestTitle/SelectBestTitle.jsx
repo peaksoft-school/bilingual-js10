@@ -121,7 +121,7 @@ const Container = styled('div')(() => ({
    '.ContainCreatTest': {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center',
+      alignItems: 'start',
       borderRadius: '0.5rem',
       border: '1.53px solid #D4D0D0',
       background: '#fff',
@@ -136,6 +136,7 @@ const Container = styled('div')(() => ({
       flexWrap: 'wrap',
       marginTop: '1.35rem',
       fontFamly: 'Poppins',
+      wordBreak: 'break-word',
       ul: {
          fontSize: '16px',
          fontStyle: 'normal',

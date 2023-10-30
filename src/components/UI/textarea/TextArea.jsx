@@ -32,16 +32,16 @@ const StyledTextArea = styled(MuiTextArea)({
       color: ' #4C4859',
       padding: '0.88rem 1rem 2.83rem 1rem',
       '&.Mui-focused fieldset': {
-         border: '2px solid #3A10E5',
+         border: '1.53px solid #3A10E5',
       },
       '&:hover fieldset': {
-         border: '2px solid #3A10E5',
+         border: '1.53px solid #3A10E5',
       },
       '&:invalid fieldset': {
-         border: '2px solid red',
+         border: '1.53px solid red',
       },
       '&:required fieldset': {
-         border: '2px solid black',
+         border: '1.53px solid black',
       },
    },
 })
