@@ -9,6 +9,7 @@
       "ecmaVersion": "latest",
       "sourceType": "module"
    },
+
    "plugins": ["react", "react-hooks"],
    "rules": {
       "import/no-cycle": "off",
@@ -28,6 +29,7 @@
       "import/no-unresolved": "off",
       "react/function-component-definition": "off",
       "jsx-a11y/click-events-have-key-events": "off",
+      "import/no-extraneous-dependencies": "off",
       "max-len": [
          "error",
          {
@@ -38,7 +40,7 @@
          }
       ],
       "no-undef": "off",
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-console": ["off", { "allow": ["warn", "error"] }],
       "jsx-a11y/label-has-associated-control": [
          "error",
          {

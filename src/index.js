@@ -1,16 +1,25 @@
+import { ThemeProvider } from '@emotion/react'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import { ThemeProvider } from '@emotion/react'
+import { BrowserRouter } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
 import { theme } from './assets/theme/globalTheme'
+import './index.css'
+import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <React.StrictMode>
       <ThemeProvider theme={theme}>
-         <App />
+         <BrowserRouter>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+               <ToastContainer />
+               <App />
+            </LocalizationProvider>
+         </BrowserRouter>
       </ThemeProvider>
    </React.StrictMode>
 )
