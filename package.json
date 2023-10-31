@@ -26,6 +26,7 @@
       "react-slick": "^0.29.0",
       "react-spring": "^9.7.3",
       "react-toastify": "^9.1.3",
+      "react-mic": "12.4.5",
       "styled-components": "^6.0.8",
       "wavesurfer.js": "^7.4.2",
       "web-vitals": "^2.1.4",

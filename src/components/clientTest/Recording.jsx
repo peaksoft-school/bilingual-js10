@@ -39,82 +39,43 @@
 // }
 
 // const AudioRec = styled('div')({
-// '::after': {
-//    content: '"<span>hello</span>"',
-// },
+//    '::after': {
+//       content: '"<span>hello</span>"',
+//    },
 // })
 
-import React, { useRef, useState, useEffect } from 'react'
-import WaveSurfer from 'wavesurfer.js'
+import React, { useState } from 'react'
+import ReactMic from 'react-mic'
 
-const AudioRecorder = () => {
-   const [recording, setRecording] = useState(false)
-   const wavesurferRef = useRef(null)
-   const mediaRecorderRef = useRef(null) // Добавляем useRef для объекта MediaRecorder
+export const Recording = () => {
+   const [isRecording, setIsRecording] = useState(false)
 
-   const startRecording = async () => {
-      try {
-         const stream = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-         })
-         const mediaRecorder = new MediaRecorder(stream)
-         mediaRecorderRef.current = mediaRecorder // Сохраняем объект MediaRecorder в ref
-
-         const chunks = [] // Добавляем массив для сохранения частей аудио
-
-         mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-               chunks.push(event.data) // Сохраняем части аудио в массиве
-            }
-         }
-
-         mediaRecorder.onstop = () => {
-            setRecording(false)
-            const audioBlob = new Blob(chunks, { type: 'audio/wav' }) // Создаем Blob из массива частей
-            const audioUrl = URL.createObjectURL(audioBlob)
-
-            if (wavesurferRef.current) {
-               wavesurferRef.current.load(audioUrl)
-            }
-         }
-
-         mediaRecorder.start()
-         setRecording(true)
-      } catch (error) {
-         console.error('Ошибка при получении доступа к микрофону:', error)
-      }
+   const startRecording = () => {
+      setIsRecording(true)
    }
 
    const stopRecording = () => {
-      if (
-         mediaRecorderRef.current &&
-         mediaRecorderRef.current.state === 'recording'
-      ) {
-         mediaRecorderRef.current.stop()
-      }
+      setIsRecording(false)
    }
 
-   useEffect(() => {
-      if (wavesurferRef.current) {
-         const wavesurfer = WaveSurfer.create({
-            container: wavesurferRef.current,
-            waveColor: 'violet',
-            progressColor: 'purple',
-         })
-         wavesurferRef.current = wavesurfer
-      }
-   }, [])
+   // const onData = (recordedData) => {
+   //    // Обработка данных, записанных в реальном времени.
+   // }
+
+   // const onStop = (recordedData) => {
+   //    // Обработка данных после остановки записи.
+   // }
 
    return (
       <div>
-         <button onClick={recording ? stopRecording : startRecording}>
-            {recording ? 'Stop Recording' : 'Start Recording'}
-         </button>
-         <div id="waveform" ref={wavesurferRef}>
-            p
-         </div>
+         <button onClick={startRecording}>Начать запись</button>
+         <button onClick={stopRecording}>Остановить запись</button>
+         <ReactMic
+            record={isRecording}
+            className="sound-wave"
+            onStop={onStop}
+            onData={onData}
+         />
       </div>
    )
 }
-
-export default AudioRecorder

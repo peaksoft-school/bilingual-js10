@@ -1,10 +1,10 @@
-import AudioRecorder from './components/clientTest/Recording'
+import { Recording } from './components/clientTest/Recording'
 
 function App() {
    return (
       <div>
          <h1>Bilingual js-10</h1>
-         <AudioRecorder />
+         <Recording />
       </div>
    )
 }
