@@ -35,6 +35,7 @@ import { ReactComponent as StickRed } from './icons/StickRed.svg'
 import { ReactComponent as CancelModal } from './icons/cancelModal.svg'
 import { ReactComponent as DeleteRealEnglishWord } from './icons/deleteForRealEnglishWord.svg'
 import { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
+import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
 import { ReactComponent as Check } from './icons/check.svg'
 
@@ -87,4 +88,5 @@ export {
    EyeClosed,
    ErrorIcon,
    PlusIcon,
+   PlayAudioIcon,
 }
