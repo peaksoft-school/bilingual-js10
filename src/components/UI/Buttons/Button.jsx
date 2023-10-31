@@ -43,10 +43,11 @@ const ButtonStyled = styled(MuiButton)(({
    hoverStyle,
    disabled,
    activeStyle,
+   padding,
 }) => {
    return {
       backgroundColor: `${defaultStyle}`,
-      padding: '0.55rem 1.5rem',
+      padding: `${padding || '0.55rem 1.5rem'}`,
       height: '42px',
       fontFamily: 'Poppins',
       borderRadius: '8px',
