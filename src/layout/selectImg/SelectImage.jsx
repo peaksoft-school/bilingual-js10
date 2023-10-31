@@ -1,32 +1,44 @@
 import React from 'react'
-import { styled } from '@mui/material'
+import { InputLabel, styled } from '@mui/material'
+import { useFormik } from 'formik'
 import Button from '../../components/UI/Buttons/Button'
-import { Background } from '../Background'
 import Input from '../../components/UI/Input'
+import UploadFile from './UploadFile'
 
 const SelectImage = ({ handleClose }) => {
+   const formik = useFormik({
+      initialValues: {
+         inputValue: '',
+      },
+      validate: (values) => {
+         const errors = {}
+         if (!values.inputValue) {
+            errors.inputValue = 'Required'
+         } else if (values.inputValue.length > 40) {
+            errors.inputValue = 'Must be 30 characters or less'
+         }
+         return errors
+      },
+      onSubmit: (values) => {
+         console.log('Form submitted with values:', values)
+      },
+   })
+
    return (
-      <Background>
-         <Container>
-            <div className="Box">
-               <div className="ImgBlock">
-                  <StyledInput
-                     type="file"
-                     placeholder="Uppload image"
-                     className="UpploadBox"
-                  />
-                  <div>
-                     <p>file_Name_oftheimg_file.jpg</p>
-                  </div>
-               </div>
+      <Container>
+         <div className="Box">
+            <form onSubmit={formik.handleSubmit}>
+               <UploadFile />
                <div className="AnswerBlock">
-                  <p>Correct Answer</p>
-                  <StyledInput
-                     className="InputAnswer"
+                  <InputTextAnswer>Correct Answer</InputTextAnswer>
+                  <Input
                      type="text"
-                     padding="0"
-                     // value={values}
-                     // onChange={(e) => setValues(e.target.value)}
+                     padding="0.6rem 1rem"
+                     fullWidth
+                     name="inputValue"
+                     value={formik.values.inputValue}
+                     onChange={formik.handleChange}
+                     onBlur={formik.handleBlur}
                   />
                </div>
                <div className="ButtonBlock">
@@ -34,108 +46,53 @@ const SelectImage = ({ handleClose }) => {
                      variant="outlined"
                      hoverStyle="#3A10E5"
                      onClick={handleClose}
-                     className="Button"
                   >
                      GO BACK
                   </Button>
+                  {formik.touched.inputValue && formik.errors.inputValue ? (
+                     <div style={{ color: 'red' }}>
+                        {formik.errors.inputValue}
+                     </div>
+                  ) : null}
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     className="saveButton"
                      variant="contained"
+                     type="submit"
                   >
                      SAVE
                   </Button>
                </div>
-            </div>
-         </Container>
-      </Background>
+            </form>
+         </div>
+      </Container>
    )
 }
 
-const StyledInput = styled(Input)(() => ({
-   // borderRadius: '8px',
-   // border: '2px solid #D4D0D0',
-   // fontfamily: 'Poppins',
-   // fontStyle: 'normal',
-   // fontWeight: 400,
-   // fontSize: '16px',
-   // lineHeight: '18px',
-   // color: '#4C4859',
-   // paddingLeft: '16px',
-   // marginTop: '0.6rem',
-   // outline: 'none',
-   // ':hover': {
-   //    border: '2px solid blue',
-   // },
-   // ':focus': {
-   //    border: '2px solid blue',
-   // },
-   '&.InputAnswer': {
-      width: '100%',
-      height: '2.8rem',
-   },
-   '&.InputUpload': {
-      width: '11.3rem',
-      height: '11.1rem',
-      border: '1.5px solid #D4D0D0',
-      borderRadius: '8px',
-      textAlign: 'center',
-      color: '#3A10E5',
-      paddingLeft: '1rem',
-      fontStyle: 'normal',
-      fontWeight: '500',
-      lineHeight: 'normal',
-   },
+const InputTextAnswer = styled(InputLabel)(() => ({
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: 500,
+   fontSize: '16px',
+   lineHeight: '16px',
+   color: '#4C4859',
+   marginBottom: '0.6rem',
 }))
 const Container = styled('div')(() => ({
+   width: '100%',
    display: 'flex',
    fontfamily: 'Poppins',
    '& .Box': {
+      width: '100%',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
    },
-   '.ImgBlock': {
-      width: '28rem',
-      height: '11.1rem',
+   '& .AnswerBlock': {
       display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'start',
-      gap: '2rem',
-      marginTop: '1.75rem',
-   },
-   '.UpploadBox': {
-      width: '11.3rem',
-      height: '11.1rem',
-      border: '1.5px solid #D4D0D0',
-      borderRadius: '8px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-   },
-   '.SelectBlock': {
+      flexDirection: 'column',
+      gap: '7px',
       width: '100%',
-      marginTop: '2rem',
-   },
-   '.AnswerBlock': {
-      width: '100%',
-      marginTop: '1rem',
-   },
-   '& .title': {
-      marginTop: '0.6rem',
-   },
-   '.SelectType': {
-      marginBottom: '1rem',
-   },
-   '& .uppload': {
-      textAlign: 'center',
-      color: '#3A10E5',
-      paddingLeft: '1rem',
-      fontStyle: 'normal',
-      fontWeight: '500',
-      lineHeight: 'normal',
    },
    '.ButtonBlock': {
       display: 'flex',
@@ -144,7 +101,6 @@ const Container = styled('div')(() => ({
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
       marginTop: '2rem',
-      fontFamly: 'Poppins',
       fontfamily: 'Poppins',
    },
 }))
