@@ -1,9 +1,8 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import { Background } from '../../layout/Background'
-import { ReactComponent as TestListIcon } from '../../assets/icons/testListIcon.svg'
-import { ReactComponent as BilingualLogo } from '../../assets/icons/billingualLogo.svg'
 import Button from '../UI/Buttons/Button'
+import { BilingualLogo, TestListIcon } from '../../assets'
 
 export const TestList = ({ onClickTryTest }) => {
    return (
@@ -27,10 +26,10 @@ export const TestList = ({ onClickTryTest }) => {
                </Button>
             </ListContainerStyle>
          </Background>
-         <HeaderStyle>
+         <FooterStyle>
             <BilingualLogo />
             <p>© 2022 Peaksoft</p>
-         </HeaderStyle>
+         </FooterStyle>
       </PurpleBackground>
    )
 }
@@ -74,7 +73,7 @@ const ListContainerStyle = styled('div')({
    },
 })
 
-const HeaderStyle = styled('div')({
+const FooterStyle = styled('div')({
    position: 'fixed',
    width: '100vw',
    bottom: '0',
