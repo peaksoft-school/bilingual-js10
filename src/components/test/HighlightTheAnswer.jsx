@@ -38,15 +38,9 @@ export const HighlightTheAnswer = () => {
                />
             </TextFieldStyle>
             <span>Highlight correct answer:</span>
-            <div
-               style={{
-                  width: '820px',
-                  wordBreak: 'break-word',
-                  minHeight: '40px',
-               }}
-            >
+            <CorrectAnswerBlock>
                <Pstyle>{text}</Pstyle>
-            </div>
+            </CorrectAnswerBlock>
             <ButtonContainer>
                <Button variant="outlined" hoverStyle="#3A10E5">
                   go back
@@ -106,4 +100,10 @@ const ButtonContainer = styled('div')({
    justifyContent: 'end',
    alignItems: 'center',
    gap: '16px',
+})
+
+const CorrectAnswerBlock = styled('div')({
+   width: '820px',
+   wordBreak: 'break-word',
+   minHeight: '40px',
 })
