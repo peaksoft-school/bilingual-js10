@@ -169,7 +169,6 @@ const Container = styled('div')(() => ({
    marginTop: '1.7rem',
 }))
 const DeleteIcon = styled(DeleteRealEnglishWord)(() => ({
-   marginTop: '-2px',
    cursor: 'pointer',
 }))
 const ContainerCreateTest = styled('div')(() => ({
@@ -197,6 +196,8 @@ const CreateTest = styled('div')(() => ({
    '.InputDelete': {
       gap: '1rem',
       display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
    },
 }))
 const MainContainer = styled('div')(() => ({
