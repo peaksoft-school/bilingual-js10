@@ -1,35 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
+import PauseIcon from '@mui/icons-material/Pause'
+import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
 
 export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
-   const [audioFile, setFile] = useState(null)
-   const [quantityInputValue, setQuantityInputValue] = useState(0)
-   const [correctAnswer, setCorrectAnswer] = useState('')
+   const [audioFile, setAudioFile] = useState(null)
+   const [isAudioTrue, setIsAudioTrue] = useState(false)
+   const [audio, setAudio] = useState(null)
+
+   const formik = useFormik({
+      initialValues: {
+         quantityInputValue: 0,
+         correctAnswer: '',
+      },
+      onSubmit: (values) => {
+         console.log(values.quantityInputValue, values.correctAnswer, audioFile)
+      },
+   })
 
    const playAudio = () => {
-      if (audioFile) {
-         const audio = new Audio(URL.createObjectURL(audioFile))
-         audio.play()
-      }
+      setIsAudioTrue((prev) => !prev)
    }
+
+   useEffect(() => {
+      if (audioFile) {
+         if (isAudioTrue) {
+            const audio = new Audio(URL.createObjectURL(audioFile))
+            audio.play()
+            setAudio(audio)
+         } else if (audio) {
+            audio.pause()
+            setAudio(null)
+         }
+      }
+   }, [isAudioTrue, audioFile])
 
    return (
       <MainContainer>
-         <div>
+         <form onSubmit={formik.handleSubmit}>
             <div className="widthContainer">
                <div className="audioContainer">
                   <div>
                      <p>Number off</p>
                      <p>Replays</p>
                      <input
-                        type="number"
-                        value={quantityInputValue}
-                        border="2.2px solid #D4D0D0"
                         className="Input replaceInput"
-                        onChange={(e) => setQuantityInputValue(e.target.value)}
+                        min="0"
+                        type="number"
+                        name="quantityInputValue"
+                        value={formik.values.quantityInputValue}
+                        onChange={formik.handleChange}
                      />
                   </div>
                   <div className="uploadContainer">
@@ -44,7 +67,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                         id="fileInput"
                         type="file"
                         // value={audioFile}
-                        onChange={(e) => setFile(e.target.files[0])}
+                        onChange={(e) => setAudioFile(e.target.files[0])}
                      />
                      <Button
                         variant="contained"
@@ -52,7 +75,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                         hoverStyle="#4E28E8"
                         onClick={playAudio}
                      >
-                        <PlayAudioIcon />
+                        {isAudioTrue ? <PauseIcon /> : <PlayAudioIcon />}
                      </Button>
                      <p>{audioFile ? audioFile.name : 'Выберите аудиофайл'}</p>
                   </div>
@@ -62,10 +85,11 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                   <Input
                      border="2.2px solid #D4D0D0"
                      fullWidth
+                     name="correctAnswer"
                      className="Input"
                      padding="0.710rem 1.4rem"
-                     onChange={(e) => setCorrectAnswer(e.target.value)}
-                     value={correctAnswer}
+                     onChange={formik.handleChange}
+                     value={formik.values.correctAnswer}
                   />
                </div>
                <div className="buttons">
@@ -78,6 +102,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                      Go back
                   </Button>
                   <Button
+                     type="submit"
                      variant="contained"
                      className="saveButton"
                      defaultStyle="#2AB930"
@@ -88,7 +113,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                   </Button>
                </div>
             </div>
-         </div>
+         </form>
       </MainContainer>
    )
 }
