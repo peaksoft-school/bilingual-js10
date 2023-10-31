@@ -1,50 +1,56 @@
 import { styled } from '@mui/material'
-import React, { useRef, useState } from 'react'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import Button from '../../UI/Buttons/Button'
+import { Form, FormikProvider, useFormik } from 'formik'
+import React, { useRef } from 'react'
 import { Delete, VolumeForEnglishWord } from '../../../assets'
+import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
 
 export const ListenSelect = () => {
-   const [state, setState] = useState(false)
-   const [values, setValues] = useState('')
-   const handleClose = () => setState(false)
-   const [options, setOptions] = useState([])
-   const [audioFile, setAudioFile] = useState([])
-   const [audioPlaying, setAudioPlaying] = useState(false)
-
    const formik = useFormik({
       initialValues: {
-         selectedFile: null,
+         titleValues: '',
+         selectedFile: '',
+         isModalOpen: false,
+         options: [],
+         audioFile: [],
+         audioPlaying: null,
       },
-      validationSchema: Yup.object({
-         selectedFile: Yup.mixed().required('Please select a file'),
-      }),
-      onSubmit: () => {
-         handleClose()
+      onSubmit: (values) => {
+         console.log(values)
       },
    })
-
+   const addedOptionsModal = () => {
+      formik.setFieldValue('isModalOpen', true)
+      const Url = new URL(window.location)
+      Url.searchParams.set('modal', 'true')
+      window.history.pushState({}, '', Url)
+   }
+   const handleClose = () => {
+      formik.setFieldValue('isModalOpen', false)
+      const Url = new URL(window.location)
+      Url.searchParams.delete('modal')
+      window.history.pushState({}, '', Url)
+   }
    const handleSave = () => {
       const newOption = {
          id: Math.random(),
-         text: values,
+         text: formik.values.titleValues,
          checked: false,
          checkedMusic: false,
       }
-      if (options.length < 6) {
-         setOptions([...options, newOption])
-      }
-      setValues('')
-      if (audioFile.length === 0) {
-         console.log('error')
-      } else {
+      if (formik.values) {
+         formik.setValues({
+            ...formik.values,
+            options: [...formik.values.options, newOption],
+            titleValues: '',
+            selectedFile: '',
+         })
          handleClose()
-         formik.handleReset()
       }
    }
+   console.log(formik.values.selectedFile)
+   console.log(formik.values.titleValues)
    const fileInputRef = useRef(null)
    const handleClick = () => {
       if (fileInputRef.current) {
@@ -53,105 +59,120 @@ export const ListenSelect = () => {
    }
    const handleFile = (event) => {
       const file = event.target.files[0]
-      setAudioFile((prev) => [...prev, file])
+      formik.setValues({
+         ...formik.values,
+         audioFile: [...formik.values.audioFile, file],
+      })
    }
    const handlePlayAudio = (index, id) => {
-      if (audioFile) {
-         if (audioPlaying || (audioPlaying && audioPlaying.id !== id)) {
-            audioPlaying.audio.pause()
-            setAudioPlaying(false)
-            if (audioPlaying && audioPlaying.id === id) {
+      if (formik.values.audioFile) {
+         if (
+            formik.values.audioPlaying ||
+            (formik.values.audioPlaying && formik.values.audioPlaying.id !== id)
+         ) {
+            formik.values.audioPlaying.audio.pause()
+            formik.setValues({ ...formik.values, audioPlaying: null })
+            if (
+               formik.values.audioPlaying &&
+               formik.values.audioPlaying.id === id
+            ) {
                return
             }
          }
-         const audio = new Audio(URL.createObjectURL(audioFile[index]))
+         const audio = new Audio(
+            URL.createObjectURL(formik.values.audioFile[index])
+         )
          audio.play()
          audio.addEventListener('ended', () => {
-            setAudioPlaying(false)
+            formik.setValues({ ...formik.values, audioPlaying: null })
          })
-         setAudioPlaying({ audio, id })
+         formik.setValues({ ...formik.values, audioPlaying: { audio, id } })
       }
    }
-   console.log(!audioFile)
-
    const removeElement = (id) => {
-      const newOption = options.filter((option) => option.id !== id)
-      setOptions(newOption)
+      const newOption = formik.values.options.filter(
+         (option) => option.id !== id
+      )
+      formik.setValues({ ...formik.values, options: newOption })
    }
+
    return (
-      <Container>
-         <div className="ContainButton">
-            <Button
-               hoverStyle="#3A10E5E5"
-               defaultStyle="#3A10E5"
-               className="addNewTestButton"
-               variant="contained"
-               onClick={() => setState(true)}
-            >
-               ADD OPTIONS
-            </Button>
-         </div>
-         <div className="CreatTests">
-            {options?.map((el, index) => (
-               <div key={el.id} className="CreatTest">
-                  <AudioContainer>
-                     <p>{index + 1}</p>
-                     <VolumeForEnglishWord
-                        onClick={() => handlePlayAudio(index, el.id)}
-                        style={{
-                           fill:
-                              audioPlaying?.id === el.id
-                                 ? '#3A10E5 '
-                                 : '#655F5F ',
-                        }}
-                     />
-                     <p>{el.text}</p>
-                  </AudioContainer>
-                  <ContainDeleteChek>
-                     <InputRadio variant="CHECKBOX" />
-                     <Delete
-                        onClick={() => removeElement(el.id)}
-                        className="DeleteIcon"
-                     />
-                  </ContainDeleteChek>
+      <FormikProvider value={formik}>
+         <Form onSubmit={formik.handleSubmit}>
+            <Container>
+               <div className="ContainButton">
+                  <Button
+                     hoverStyle="#3A10E5E5"
+                     defaultStyle="#3A10E5"
+                     className="addNewTestButton"
+                     variant="contained"
+                     onClick={addedOptionsModal}
+                  >
+                     ADD OPTIONS
+                  </Button>
                </div>
-            ))}
-         </div>
-         {options.length > 0 ? (
-            <div className="ControlButton">
-               <Button
-                  variant="outlined"
-                  hoverStyle="#3A10E5"
-                  onClick={handleClose}
-                  className="Button"
-               >
-                  GO BACK
-               </Button>
-               <Button
-                  defaultStyle="#2AB930"
-                  hoverStyle="#31CF38"
-                  className="saveButton"
-                  variant="contained"
-               >
-                  SAVE
-               </Button>
-            </div>
-         ) : null}
-         <ListenModal
-            open={state}
-            handleClose={handleClose}
-            state={state}
-            handleClick={handleClick}
-            formik={formik}
-            handleSave={handleSave}
-            fileInputRef={fileInputRef}
-            values={values}
-            setValues={setValues}
-            handleFile={handleFile}
-         />
-      </Container>
+               <div className="CreatTests">
+                  {formik.values.options?.map((el, index) => (
+                     <div key={el.id} className="CreatTest">
+                        <AudioContainer>
+                           <p>{index + 1}</p>
+                           <VolumeForEnglishWord
+                              onClick={() => handlePlayAudio(index, el.id)}
+                              style={{
+                                 fill:
+                                    formik.values.audioPlaying?.id === el.id
+                                       ? '#3A10E5 '
+                                       : '#655F5F ',
+                              }}
+                           />
+                           <p>{el.text}</p>
+                        </AudioContainer>
+                        <ContainDeleteChek>
+                           <InputRadio variant="CHECKBOX" />
+                           <Delete
+                              onClick={() => removeElement(el.id)}
+                              className="DeleteIcon"
+                           />
+                        </ContainDeleteChek>
+                     </div>
+                  ))}
+               </div>
+               {formik.values.options.length > 0 ? (
+                  <div className="ControlButton">
+                     <Button
+                        variant="outlined"
+                        hoverStyle="#3A10E5"
+                        className="Button"
+                     >
+                        GO BACK
+                     </Button>
+                     <Button
+                        defaultStyle="#2AB930"
+                        hoverStyle="#31CF38"
+                        className="saveButton"
+                        variant="contained"
+                     >
+                        SAVE
+                     </Button>
+                  </div>
+               ) : null}
+               {formik.values.isModalOpen && (
+                  <ListenModal
+                     open={formik.values.isModalOpen}
+                     handleClose={handleClose}
+                     handleClick={handleClick}
+                     handleFile={handleFile}
+                     formik={formik}
+                     handleSave={handleSave}
+                     fileInputRef={fileInputRef}
+                  />
+               )}
+            </Container>
+         </Form>
+      </FormikProvider>
    )
 }
+
 const Container = styled('div')(() => ({
    p: {
       fontSize: '1rem',
@@ -213,9 +234,11 @@ const ContainDeleteChek = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
    gap: '4px',
+   cursor: 'pointer',
 }))
 const AudioContainer = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
    gap: '15px',
+   cursor: 'pointer',
 }))

@@ -16,6 +16,7 @@ const Button = ({
 }) => {
    return (
       <ButtonStyled
+         disabled={disabled}
          variant={variant}
          fullWidth={fullWidth}
          className={className}

@@ -1,23 +1,21 @@
 import { styled } from '@mui/material'
 import React from 'react'
 import { CancelModal } from '../../../assets'
-import { Modal } from '../../UI/UiModal'
 import Button from '../../UI/Buttons/Button'
+import { Modal } from '../../UI/UiModal'
 
 export const ListenModal = ({
-   state,
-   handleClick,
+   open,
    formik,
+   handleClick,
    handleSave,
    handleClose,
    fileInputRef,
-   values,
-   setValues,
    handleFile,
 }) => {
    return (
       <ModalList
-         open={state}
+         open={open}
          handleClose={handleClose}
          width="40rem"
          height="24rem"
@@ -28,13 +26,15 @@ export const ListenModal = ({
          <div className="ContainModal">
             <div>
                <div className="InputTitle">
-                  <p>Title</p>
+                  <span htmlFor="lastName">Title</span>
                   <InputTitle
+                     id="lastName"
                      className="InputTitles"
                      type="text"
                      placeholder="Listen and select English word"
-                     value={values}
-                     onChange={(e) => setValues(e.target.value.slice(0, 8))}
+                     name="titleValues"
+                     value={formik.values.titleValues}
+                     onChange={formik.handleChange}
                      maxLength={8}
                   />
                </div>
@@ -53,7 +53,7 @@ export const ListenModal = ({
                <input
                   type="button"
                   onClick={handleClick}
-                  value="Uppload audio file"
+                  value="Upload audio file"
                   className="InputFile"
                />
                <label htmlFor="myFileInput" className="label">
@@ -72,9 +72,16 @@ export const ListenModal = ({
                   GO BACK
                </Button>
                <Button
+                  disabled={
+                     !formik.values.titleValues || !formik.values.selectedFile
+                  }
+                  type="submit"
                   defaultStyle="#2AB930"
                   hoverStyle="#31CF38"
-                  onClick={handleSave}
+                  onClick={() => {
+                     handleSave()
+                     formik.handleSubmit()
+                  }}
                   className="ButtonTwo"
                >
                   SAVE
@@ -84,11 +91,12 @@ export const ListenModal = ({
       </ModalList>
    )
 }
+
 const InputTitle = styled('input')(() => ({
    width: '32.3rem',
    height: '3rem',
    borderRadius: '8px',
-   border: '2px solid #D4D0D0',
+   border: '1.53px solid #D4D0D0',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
@@ -98,11 +106,12 @@ const InputTitle = styled('input')(() => ({
    paddingLeft: '16px',
    marginTop: '1rem',
    outline: 'none',
+   display: 'flex',
    ':hover': {
-      border: '2px solid blue',
+      border: '1.53px solid blue',
    },
    ':focus': {
-      border: '2px solid blue',
+      border: '1.53px solid blue',
    },
 }))
 const ModalList = styled(Modal)(() => ({
