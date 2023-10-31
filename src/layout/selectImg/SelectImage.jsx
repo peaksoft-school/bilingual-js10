@@ -3,7 +3,7 @@ import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import Button from '../../components/UI/Buttons/Button'
 import Input from '../../components/UI/Input'
-import UploadFile from './UploadFile'
+import UpploadFile from './UpploadFile'
 
 const SelectImage = ({ handleClose }) => {
    const formik = useFormik({
@@ -28,7 +28,7 @@ const SelectImage = ({ handleClose }) => {
       <Container>
          <div className="Box">
             <form onSubmit={formik.handleSubmit}>
-               <UploadFile />
+               <UpploadFile />
                <div className="AnswerBlock">
                   <InputTextAnswer>Correct Answer</InputTextAnswer>
                   <Input

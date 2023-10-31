@@ -2,7 +2,7 @@ import { styled } from '@mui/material'
 import React, { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-const UploadFile = () => {
+const UpploadFile = () => {
    const [selectedImage, setSelectedImage] = useState(null)
    const [imageName, setImageName] = useState('')
 
@@ -32,7 +32,7 @@ const UploadFile = () => {
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop,
-      accept: 'image/*', // Allow only image files
+      accept: 'image/*',
    })
 
    return (
@@ -115,4 +115,4 @@ const StyledDropzone = styled('div')({
    cursor: 'pointer',
 })
 
-export default UploadFile
+export default UpploadFile
