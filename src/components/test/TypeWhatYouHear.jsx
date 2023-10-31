@@ -44,9 +44,12 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
             <div className="widthContainer">
                <div className="audioContainer">
                   <div>
-                     <p>Number off</p>
-                     <p>Replays</p>
+                     <label htmlFor="quantity">
+                        <p>Number off</p>
+                        <p>Replays</p>
+                     </label>
                      <input
+                        id="quantity"
                         className="Input replaceInput"
                         min="0"
                         type="number"
@@ -75,9 +78,15 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                         hoverStyle="#4E28E8"
                         onClick={playAudio}
                      >
-                        {isAudioTrue ? <PauseIcon /> : <PlayAudioIcon />}
+                        {isAudioTrue && audioFile ? (
+                           <PauseIcon />
+                        ) : (
+                           <PlayAudioIcon />
+                        )}
                      </Button>
-                     <p>{audioFile ? audioFile.name : 'Выберите аудиофайл'}</p>
+                     <label htmlFor="fileInput">
+                        {audioFile ? audioFile.name : 'Выберите аудиофайл'}
+                     </label>
                   </div>
                </div>
                <div>
