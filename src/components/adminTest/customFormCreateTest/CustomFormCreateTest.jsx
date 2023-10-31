@@ -6,6 +6,7 @@ import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
 import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import StatementInput from '../statement/StatementInput'
 
 const renderedContent = {
    'Select real English words': {
@@ -22,7 +23,7 @@ const renderedContent = {
    },
    'Record saying statement': {
       placeholder: 'My uncle is at work',
-      content: <div>Record saying statement</div>,
+      content: <StatementInput />,
    },
    'Respond in at least N words': {
       placeholder: 'Respond in at least N words',
