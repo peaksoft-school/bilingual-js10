@@ -28,7 +28,6 @@ export const SelectBestModal = ({
                   <div className="InputTitle">
                      <span>Title</span>
                      <InputTitle
-                        className="InputTitles"
                         type="text"
                         placeholder="Select Best title"
                         value={titleValues}
@@ -54,6 +53,7 @@ export const SelectBestModal = ({
                      hoverStyle="#31CF38"
                      onClick={handleSave}
                      className="ButtonTwo"
+                     disabled={!titleValues}
                   >
                      SAVE
                   </Button>
