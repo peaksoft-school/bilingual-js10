@@ -5,6 +5,7 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
+import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
 
 const renderedContent = {
@@ -14,7 +15,7 @@ const renderedContent = {
    },
    'Listen and select English word': {
       placeholder: 'Listen and select English word',
-      content: <div>Listen and select English word</div>,
+      content: <ListenSelect />,
    },
    'Type what you hear': {
       placeholder: 'Take a free practice test and estimate your score',
