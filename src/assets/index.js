@@ -10,12 +10,10 @@ import { ReactComponent as AccessibleIcon } from './icons/accessibleIcon.svg'
 import { ReactComponent as ExtensiveIcon } from './icons/extensiveIcon.svg'
 import { ReactComponent as SpeechIcon } from './icons/speechIcon.svg'
 import { ReactComponent as TutoringIcon } from './icons/tutoringIcon.svg'
-
 import { ReactComponent as bilingual } from './images/layer.svg'
 import { ReactComponent as youTube } from './images/ellipse.svg'
 import { ReactComponent as facebook } from './images/faceBook.svg'
 import { ReactComponent as instagram } from './images/ellipse2.svg'
-
 import { ReactComponent as Edits } from './icons/edit.svg'
 import { ReactComponent as Delete } from './icons/delete.svg'
 import { ReactComponent as FiveStars } from './icons/FiveStars.svg'
@@ -36,10 +34,10 @@ import { ReactComponent as CancelModal } from './icons/cancelModal.svg'
 import { ReactComponent as DeleteRealEnglishWord } from './icons/deleteForRealEnglishWord.svg'
 import { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
 import { ReactComponent as CloseIcon } from './icons/Close.svg'
+import { ReactComponent as VolumeForEnglishWord } from './icons/volumeForEnglishWord.svg'
 import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
 import { ReactComponent as Check } from './icons/check.svg'
-
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
@@ -90,5 +88,6 @@ export {
    ErrorIcon,
    PlusIcon,
    CloseIcon,
+   VolumeForEnglishWord,
    PlayAudioIcon,
 }
