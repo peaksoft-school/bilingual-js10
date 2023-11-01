@@ -1,86 +1,92 @@
-import React, { useState } from 'react'
-import { styled } from '@mui/material'
+import React from 'react'
+import { useFormik } from 'formik'
+import { Typography, styled } from '@mui/material'
 import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
+import { validationAuthSignUp } from '../../helpers/validation'
 
 export const RespondLeast = () => {
-   const [questionAndAnswer, setQuestionAndAnswer] = useState('')
-   const [replays, setReplays] = useState('')
-
-   const handleInputChange = (e) => {
-      const userInput = e.target.value
-      setQuestionAndAnswer(userInput)
-   }
-
-   const handleReplaysChange = (e) => {
-      const replayValue = e.target.value
-      setReplays(replayValue)
-   }
-
-   const handleSave = () => {
-      const data = {
-         replays,
-         questionAndAnswer,
-      }
-      console.log(data)
-   }
+   const formik = useFormik({
+      initialValues: {
+         questionStatement: '',
+         numberReplays: '',
+      },
+      validationSchema: validationAuthSignUp,
+      onSubmit: (values) => {
+         console.log(JSON.stringify(values, null, 2))
+      },
+   })
 
    return (
-      <div>
-         <WidthContainer>
-            <Container>
-               <label htmlFor="Question statement">Question statement</label>
+      <form onSubmit={formik.handleSubmit}>
+         <Container>
+            <label htmlFor="questionStatement">Question statement</label>
+            <Input
+               className="Input replaceInput"
+               id="questionStatement"
+               name="questionStatement"
+               type="text"
+               value={formik.values.questionStatement}
+               onChange={formik.handleChange}
+               placeholder="“describe a time you were surprised. what happened?”"
+            />
+            {formik.errors.questionStatement && (
+               <ErrorMessage>{formik.errors.questionStatement}</ErrorMessage>
+            )}
+         </Container>
+         <AudioContainer>
+            <div>
+               <p className="LabelTop">Number of</p>
+               <p className="LabelBottom">Replays</p>
                <Input
-                  value={questionAndAnswer}
-                  onChange={handleInputChange}
-                  placeholder="“describe a time you were surprised. what happened?”"
+                  type="number"
+                  id="numberReplays"
+                  name="numberReplays"
+                  value={formik.values.numberReplays}
+                  onChange={formik.handleChange}
+                  min="0"
                />
-            </Container>
-            <AudioContainer>
-               <div>
-                  <p>Number off</p>
-                  <p style={{ marginBottom: '1rem' }}>Replays</p>
-                  <Input
-                     type="number"
-                     className="Input replaceInput"
-                     value={replays}
-                     onChange={handleReplaysChange}
-                     min="0"
-                  />
-               </div>
-            </AudioContainer>
-            <Buttons>
-               <Button
-                  variant="outlined"
-                  className="goBackButton"
-                  hoverStyle="#3A10E5"
-               >
-                  Go back
-               </Button>
-               <Button
-                  onClick={handleSave}
-                  variant="contained"
-                  defaultStyle="#2AB930"
-                  hoverStyle="#31CF38"
-               >
-                  Save
-               </Button>
-            </Buttons>
-         </WidthContainer>
-      </div>
+               {formik.errors.numberReplays && (
+                  <ErrorMessagesesaa>
+                     {formik.errors.numberReplays}
+                  </ErrorMessagesesaa>
+               )}
+            </div>
+         </AudioContainer>
+         <Buttons>
+            <Button variant="outlined" hoverStyle="#3A10E5">
+               Go back
+            </Button>
+            <Button
+               type="submit"
+               variant="contained"
+               defaultStyle="#2AB930"
+               hoverStyle="#31CF38"
+            >
+               Save
+            </Button>
+         </Buttons>
+      </form>
    )
 }
+const ErrorMessage = styled(Typography)(() => ({
+   color: 'red',
+}))
+const ErrorMessagesesaa = styled(Typography)(() => ({
+   color: 'red',
+}))
 const Container = styled('div')`
    display: flex;
    align-items: start;
    justify-content: center;
    flex-direction: column;
    gap: 1rem;
+
    label {
       margin-top: 1rem;
-      color: var(--Dark-grey-font-color, #4c4859);
+      color: var(--4C4859, #4c4859);
    }
-   input {
+   Input {
       width: 47rem;
       height: 1rem;
    }
@@ -91,27 +97,20 @@ const Buttons = styled('div')`
    justify-content: end;
    margin-right: 3.5rem;
 `
-const WidthContainer = styled('div')`
-   width: 53.12rem;
-   display: flex;
-   flex-direction: column;
-   row-gap: 2rem;
-`
 const AudioContainer = styled('div')`
    display: flex;
    align-items: end;
-   p {
-      color: var(--Dark-grey-font-color, #4c4859);
+   .LabelTop {
+      margin-top: 1rem;
    }
-
-   .replaceinput {
-      width: 3.6rem;
-      height: 3rem;
+   .LabelBottom {
+      margin-bottom: 1rem;
    }
-   input {
-      width: 2rem;
+   .css-1m9tnob-MuiFormControl-root-MuiTextField-root .MuiInputBase-input {
+      width: 2.5rem;
       height: 1.5rem;
-      outline: none;
-      position: none;
+   }
+   .MuiInputBase-input {
+      padding: 1rem 0rem 1rem 1rem;
    }
 `
