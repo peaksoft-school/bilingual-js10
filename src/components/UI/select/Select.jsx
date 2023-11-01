@@ -27,7 +27,6 @@ const options = [
    'Select the main idea',
    'Select best title',
 ]
-
 function getStyles(option, selectedOption, theme) {
    return {
       fontWeight:
@@ -38,7 +37,6 @@ function getStyles(option, selectedOption, theme) {
 }
 const Select = ({ selectedOption, handleChange }) => {
    const theme = useTheme()
-
    return (
       <StyledFormControl fullWidth>
          <StyledSelect
@@ -68,7 +66,6 @@ const Select = ({ selectedOption, handleChange }) => {
    )
 }
 export default Select
-
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
       fontFamily: 'DIN Next Rounded LT W01 Regular',
@@ -117,7 +114,6 @@ const StyledSelect = styled(MuiSelect)({
       justifyContent: 'center',
    },
 })
-
 const StyledMenuItem = styled(MenuItem)({
    '&.MuiMenuItem-root': {
       color: '#4C4859',
