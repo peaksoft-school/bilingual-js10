@@ -82,13 +82,13 @@ const Container = styled('div')(() => ({
    width: '100%',
    display: 'flex',
    fontfamily: 'Poppins',
-   '& .Box': {
+   '.Box': {
       width: '100%',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
    },
-   '& .AnswerBlock': {
+   '.AnswerBlock': {
       display: 'flex',
       flexDirection: 'column',
       gap: '7px',

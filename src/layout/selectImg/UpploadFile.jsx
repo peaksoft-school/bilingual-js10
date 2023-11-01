@@ -51,7 +51,9 @@ const UpploadFile = () => {
             </StyledDropzone>
          )}
          <BoxText>
-            <p>{selectedImage ? imageName : 'The file name'}</p>
+            <p className="filename">
+               {selectedImage ? imageName : 'The file name'}
+            </p>
          </BoxText>
       </Container>
    )
@@ -92,7 +94,7 @@ const BoxText = styled('div')({
    alignContent: 'center',
    display: 'flex',
    alignItems: 'center',
-   '& > p': {
+   '.filename': {
       textAlign: 'center',
       color: '#4C4859',
       fontfamily: 'Poppins',
