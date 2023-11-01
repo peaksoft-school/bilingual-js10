@@ -87,7 +87,7 @@ const Container = styled('div')(() => ({
    '.StatementBlock': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '7px',
+      gap: '0.5rem',
       width: '100%',
    },
    '.ButtonBlock': {
