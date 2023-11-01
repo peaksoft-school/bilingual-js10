@@ -13,6 +13,7 @@ const Input = forwardRef(
             inputRef={ref}
             fullWidth={fullWidth}
             {...rest}
+            InputProps={{ inputProps: { min: 0, max: 1000 } }}
          >
             {children}
          </MyStyledInput>
