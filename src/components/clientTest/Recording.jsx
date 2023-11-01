@@ -46,10 +46,15 @@
 
 import React, { useState } from 'react'
 import { ReactMic } from 'react-mic'
+import { styled } from '@mui/material'
+import { Background } from '../../layout/Background'
+import Button from '../UI/Buttons/Button'
+import { SpeakIcon } from '../../assets'
 
 function Example() {
    const [record, setRecord] = useState(false)
-
+   const [file, setFile] = useState(null)
+   console.log(file)
    const startRecording = () => {
       setRecord(true)
    }
@@ -58,16 +63,41 @@ function Example() {
       setRecord(false)
    }
 
-   const onData = (recordedBlob) => {
-      console.log('chunk of real-time data is: ', recordedBlob)
+   const onData = (blob) => {
+      console.log('chunk of real-time data is: ', blob)
    }
 
-   const onStop = (recordedBlob) => {
-      console.log('recordedBlob is: ', recordedBlob)
+   const onStop = (blob) => {
+      const audioFile = new File([blob], 'recording.webm', {
+         type: 'audio/webm',
+      })
+      setFile(audioFile)
    }
 
    return (
       <div>
+         <Background>
+            <div>
+               <div>
+                  <div>
+                     <Title>Record yorself saying the statement below:</Title>
+                  </div>
+                  <div>
+                     <div>
+                        <SpeakIcon />
+                     </div>
+                     <div>&quot; My uncle is at work &quot;.</div>
+                  </div>
+               </div>
+               <hr />
+               <div>
+                  <Button defaultStyle="#3A10E5" hoverStyle="#4E28E8">
+                     record now
+                  </Button>
+               </div>
+            </div>
+         </Background>
+
          <ReactMic
             record={record}
             className="sound-wave"
@@ -87,3 +117,9 @@ function Example() {
 }
 
 export default Example
+
+const Title = styled('div')({
+   color: ' #4C4859',
+   fontSize: '24px',
+   fontWeight: '400',
+})
