@@ -14,6 +14,7 @@ export const HighlightTheAnswer = () => {
       setAnswerValue(answer)
    }
    console.log(answerValue)
+   console.log(text.includes(answerValue), 'heloo')
 
    return (
       <div>
@@ -39,7 +40,9 @@ export const HighlightTheAnswer = () => {
             </TextFieldStyle>
             <span>Highlight correct answer:</span>
             <CorrectAnswerBlock>
-               <Pstyle>{text}</Pstyle>
+               <Pstyle text={text} answerValue={answerValue}>
+                  {text}
+               </Pstyle>
             </CorrectAnswerBlock>
             <ButtonContainer>
                <Button variant="outlined" hoverStyle="#3A10E5">
@@ -60,8 +63,8 @@ export const HighlightTheAnswer = () => {
    )
 }
 
-const Pstyle = styled('p')(() => ({
-   color: '#4C4859',
+const Pstyle = styled('p')(({ text, answerValue }) => ({
+   color: text.includes(answerValue) ? 'red' : '#4C4859',
    marginBottom: '25px',
    '::selection': {
       color: '#3A10E5',
