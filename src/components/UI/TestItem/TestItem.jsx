@@ -15,7 +15,7 @@ export const TestItem = ({ text, onDelete, onEdit, checked }) => {
                <img src={Edits} alt="Изменения" />
             </Button>
             <Button onClick={onDelete}>
-               <img src={Delete} alt="Изменения" />
+               <img src={Delete} alt="Удаления" />
             </Button>
          </div>
       </ContainerItems>
