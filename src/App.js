@@ -1,13 +1,10 @@
-import React from 'react'
-import Example from './components/clientTest/Recording'
+import React from 'react';
 
 function App() {
    return (
       <div>
-         <h1>Bilingual js-10</h1>
-         <Example />
+         <h1>Bilingual js-9❤️</h1>
       </div>
    )
 }
-
 export default App

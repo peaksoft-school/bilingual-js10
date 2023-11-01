@@ -19,6 +19,7 @@ const options = [
    'Select real English words',
    'Listen and select English word',
    'Type what you hear',
+   'Describe image',
    'Record saying statement',
    'Respond in at least N words',
    'Describe image',
@@ -26,7 +27,6 @@ const options = [
    'Select the main idea',
    'Select best title',
 ]
-
 function getStyles(option, selectedOption, theme) {
    return {
       fontWeight:
@@ -37,7 +37,6 @@ function getStyles(option, selectedOption, theme) {
 }
 const Select = ({ selectedOption, handleChange }) => {
    const theme = useTheme()
-
    return (
       <StyledFormControl fullWidth>
          <StyledSelect
@@ -67,12 +66,11 @@ const Select = ({ selectedOption, handleChange }) => {
    )
 }
 export default Select
-
 const StyledFormControl = styled(FormControl)({
    '&.MuiFormControl-root': {
       fontFamily: 'DIN Next Rounded LT W01 Regular',
+      height: '5.9vh',
       backgroundColor: '#FFF',
-      // color: '#3c00ff',
       '& .MuiOutlinedInput-root': {
          padding: '0.3rem',
          fontFamily: 'DIN Next Rounded LT W01 Regular',
@@ -82,15 +80,15 @@ const StyledFormControl = styled(FormControl)({
          lineHeight: '1.2rem',
          '& fieldset': {
             borderRadius: ' 8px 8px 8px 8px',
-            border: '1.53px solid #D4D0D0',
+            border: '2px solid #D4D0D0',
          },
          backgroundColor: '#FFF',
          '&.Mui-focused fieldset': {
-            border: '1.53px solid #3A10E5',
+            border: '2px solid #3A10E5',
             borderRadius: ' 8px 8px 0px 0px',
          },
          '&:hover fieldset': {
-            border: '1.53px solid #3A10E5',
+            border: '2px solid #3A10E5',
          },
       },
       '& p': {
@@ -116,7 +114,6 @@ const StyledSelect = styled(MuiSelect)({
       justifyContent: 'center',
    },
 })
-
 const StyledMenuItem = styled(MenuItem)({
    '&.MuiMenuItem-root': {
       color: '#4C4859',

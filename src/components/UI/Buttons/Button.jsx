@@ -16,9 +16,9 @@ const Button = ({
 }) => {
    return (
       <ButtonStyled
+         disabled={disabled}
          variant={variant}
          fullWidth={fullWidth}
-         disabled={disabled}
          className={className}
          startIcon={className === 'addNewTestButton' ? <PlusIcon /> : null}
          defaultStyle={defaultStyle}
