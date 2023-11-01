@@ -51,7 +51,7 @@ import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { SpeakIcon } from '../../assets'
 
-function Example() {
+function Recording() {
    const [record, setRecord] = useState(false)
    const [file, setFile] = useState(null)
    console.log(file)
@@ -116,7 +116,7 @@ function Example() {
    )
 }
 
-export default Example
+export default Recording
 
 const Title = styled('div')({
    color: ' #4C4859',
