@@ -10,25 +10,22 @@ const UpploadFile = () => {
 
    const validateFileName = (file) => {
       const fileName = file.name.toLowerCase()
-      return fileName.length < maxFileNameLength
+      return fileName
    }
 
-   const onDrop = (acceptedFiles, rejectedFiles) => {
-      if (rejectedFiles.length > 0) {
-         // eslint-disable-next-line no-alert
-         alert('The file name length should be less than 30 characters.')
-         return
+   const onDrop = (acceptedFiles) => {
+      const file = acceptedFiles[0]
+      let acceptFileName = file.name
+      if (file.name.length > maxFileNameLength) {
+         acceptFileName = file.name.slice(0, maxFileNameLength)
       }
 
-      const file = acceptedFiles[0]
       if (validateFileName(file)) {
          setSelectedImage(URL.createObjectURL(file))
-         setImageName(file.name)
-      } else {
-         // eslint-disable-next-line no-alert
-         alert('The file name length should be less than 30 characters.')
+         setImageName(acceptFileName)
       }
    }
+   console.log(imageName, 'imageName')
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop,
@@ -46,7 +43,6 @@ const UpploadFile = () => {
                <input {...getInputProps()} />
                <StyledTextUppload className="upploads">
                   Uppload Image
-                  {/* Drag & drop an image here, or click to select one */}
                </StyledTextUppload>
             </StyledDropzone>
          )}
@@ -58,7 +54,6 @@ const UpploadFile = () => {
       </Container>
    )
 }
-
 const StyledTextUppload = styled('p')({
    fontfamily: 'Poppins',
    textAlign: 'center',

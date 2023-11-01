@@ -5,6 +5,8 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
+import { RespondLeast } from '../../respondLeast/RespondLeast'
+import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 
@@ -15,7 +17,7 @@ const renderedContent = {
    },
    'Listen and select English word': {
       placeholder: 'Listen and select English word',
-      content: <div>Listen and select English word</div>,
+      content: <ListenSelect />,
    },
    'Type what you hear': {
       placeholder: 'Take a free practice test and estimate your score',
@@ -27,7 +29,7 @@ const renderedContent = {
    },
    'Respond in at least N words': {
       placeholder: 'Respond in at least N words',
-      content: <div>Respond in at least N words</div>,
+      content: <RespondLeast />,
    },
    'Describe image': {
       placeholder: 'Take a free practice test and estimate your score',

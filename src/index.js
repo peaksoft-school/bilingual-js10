@@ -23,5 +23,4 @@ root.render(
       </ThemeProvider>
    </React.StrictMode>
 )
-
 reportWebVitals()
