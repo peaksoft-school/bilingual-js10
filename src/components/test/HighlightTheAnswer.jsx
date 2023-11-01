@@ -1,47 +1,60 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
+import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import TextArea from '../UI/textarea/TextArea'
 
 export const HighlightTheAnswer = () => {
-   const [text, setText] = useState('')
    const [answerValue, setAnswerValue] = useState('')
-   const [question, setQuestion] = useState('')
 
-   function save() {
-      const answer = window.getSelection().toString()
-      setAnswerValue(answer)
-   }
-   console.log(answerValue)
-   console.log(text.includes(answerValue), 'heloo')
+   const formik = useFormik({
+      initialValues: {
+         question: '',
+         text: '',
+      },
+      onSubmit: (values) => {
+         const result = {
+            'PassageQuestions to the Passage': values.question,
+            Passage: values.text,
+            'Highlight correct answer': answerValue,
+         }
+         console.log(result)
+      },
+   })
 
    return (
       <div>
-         <MainPassageContainer>
+         <MainPassageContainer onSubmit={formik.handleSubmit}>
             <span>Questions to the Passage</span>
             <Input
-               value={question}
                border=" 1.53px solid #D4D0D0"
                className="input"
                padding="10px 16px"
                fullWidth
-               onChange={(e) => setQuestion(e.target.value)}
+               name="question"
+               value={formik.values.question}
+               onChange={formik.handleChange}
             />
             <span>Passage</span>
             <TextFieldStyle>
                <TextArea
                   multiline
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  name="text"
+                  value={formik.values.text}
+                  onChange={formik.handleChange}
                   fullWidth
                   className="textarea"
                />
             </TextFieldStyle>
             <span>Highlight correct answer:</span>
             <CorrectAnswerBlock>
-               <Pstyle text={text} answerValue={answerValue}>
-                  {text}
+               <Pstyle
+                  onMouseUp={() =>
+                     setAnswerValue(window.getSelection().toString())
+                  }
+               >
+                  {formik.values.text}
                </Pstyle>
             </CorrectAnswerBlock>
             <ButtonContainer>
@@ -53,7 +66,7 @@ export const HighlightTheAnswer = () => {
                   variant="contained"
                   defaultStyle="#2AB930"
                   className="saveButton"
-                  onClick={() => save()}
+                  type="submit"
                >
                   save
                </Button>
@@ -63,8 +76,8 @@ export const HighlightTheAnswer = () => {
    )
 }
 
-const Pstyle = styled('p')(({ text, answerValue }) => ({
-   color: text.includes(answerValue) ? 'red' : '#4C4859',
+const Pstyle = styled('p')(() => ({
+   color: '#4C4859',
    marginBottom: '25px',
    '::selection': {
       color: '#3A10E5',
@@ -83,7 +96,7 @@ const TextFieldStyle = styled('div')(() => ({
    },
 }))
 
-const MainPassageContainer = styled('div')(() => ({
+const MainPassageContainer = styled('form')(() => ({
    '& > span': {
       fontSize: '16px',
       fontStyle: 'normal',
