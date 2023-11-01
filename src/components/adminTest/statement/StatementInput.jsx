@@ -47,9 +47,7 @@ const StatementInput = ({ handleClose }) => {
                      GO BACK
                   </Button>
                   {formik.touched.inputValue && formik.errors.inputValue ? (
-                     <div style={{ color: 'red' }}>
-                        {formik.errors.inputValue}
-                     </div>
+                     <div className="formik">{formik.errors.inputValue}</div>
                   ) : null}
                   <Button
                      defaultStyle="#2AB930"
@@ -70,8 +68,8 @@ const InputTextAnswer = styled(InputLabel)(() => ({
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '16px',
+   fontSize: '1rem',
+   lineHeight: '1rem',
    color: '#4C4859',
    marginBottom: '0.6rem',
 }))
@@ -100,6 +98,9 @@ const Container = styled('div')(() => ({
       alignItems: 'flex-end',
       marginTop: '2rem',
       fontfamily: 'Poppins',
+   },
+   '.formik': {
+      color: 'red',
    },
 }))
 export default StatementInput
