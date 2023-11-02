@@ -2,16 +2,9 @@ import { styled } from '@mui/material'
 import React, { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-const UpploadFile = () => {
-   const [selectedImage, setSelectedImage] = useState(null)
+const UpploadFile = ({ setSelectedImage, selectedImage }) => {
    const [imageName, setImageName] = useState('')
-
-   const maxFileNameLength = 30
-
-   const validateFileName = (file) => {
-      const fileName = file.name.toLowerCase()
-      return fileName
-   }
+   const maxFileNameLength = 20
 
    const onDrop = (acceptedFiles) => {
       const file = acceptedFiles[0]
@@ -19,13 +12,16 @@ const UpploadFile = () => {
       if (file.name.length > maxFileNameLength) {
          acceptFileName = file.name.slice(0, maxFileNameLength)
       }
-
-      if (validateFileName(file)) {
-         setSelectedImage(URL.createObjectURL(file))
-         setImageName(acceptFileName)
-      }
+      setSelectedImage(acceptedFiles[0])
+      setImageName(acceptFileName)
    }
-   console.log(imageName, 'imageName')
+
+   const handleChange = (event) => {
+      const file = event.target.files[0]
+      setSelectedImage(file)
+      console.log(file)
+      setImageName(file)
+   }
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop,
@@ -34,18 +30,37 @@ const UpploadFile = () => {
 
    return (
       <Container>
-         {selectedImage ? (
-            <BoxImg>
-               <StyledImage src={selectedImage} alt={imageName} />
-            </BoxImg>
-         ) : (
-            <StyledDropzone {...getRootProps()}>
-               <input {...getInputProps()} />
-               <StyledTextUppload className="upploads">
-                  Uppload Image
-               </StyledTextUppload>
-            </StyledDropzone>
-         )}
+         <StyledDropzone {...getRootProps()}>
+            {selectedImage ? (
+               <BoxImg>
+                  <StyledImage
+                     src={
+                        typeof selectedImage === 'string'
+                           ? selectedImage
+                           : URL.createObjectURL(selectedImage)
+                     }
+                     alt={imageName}
+                  />
+               </BoxImg>
+            ) : (
+               <>
+                  <StyledInput
+                     type="file"
+                     onChange={handleChange}
+                     value={selectedImage}
+                     {...getInputProps()}
+                  />
+                  <label htmlFor="fileInput">
+                     {selectedImage ? null : (
+                        <StyledTextUppload className="upploads">
+                           Uppload Image
+                        </StyledTextUppload>
+                     )}
+                  </label>
+               </>
+            )}
+         </StyledDropzone>
+
          <BoxText>
             <p className="filename">
                {selectedImage ? imageName : 'The file name'}
@@ -54,6 +69,9 @@ const UpploadFile = () => {
       </Container>
    )
 }
+const StyledInput = styled('input')({
+   display: 'none',
+})
 const StyledTextUppload = styled('p')({
    fontfamily: 'Poppins',
    textAlign: 'center',

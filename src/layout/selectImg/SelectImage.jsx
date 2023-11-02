@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import Button from '../../components/UI/Buttons/Button'
@@ -6,6 +6,9 @@ import Input from '../../components/UI/Input'
 import UpploadFile from './UpploadFile'
 
 const SelectImage = ({ handleClose }) => {
+   const [selectedImage, setSelectedImage] = useState(null)
+
+   console.log(selectedImage)
    const formik = useFormik({
       initialValues: {
          inputValue: '',
@@ -14,13 +17,13 @@ const SelectImage = ({ handleClose }) => {
          const errors = {}
          if (!values.inputValue) {
             errors.inputValue = 'Required'
-         } else if (values.inputValue.length > 40) {
+         } else if (values.inputValue.length > 30) {
             errors.inputValue = 'Must be 30 characters or less'
          }
          return errors
       },
       onSubmit: (values) => {
-         console.log('Form submitted with values:', values)
+         console.log('Form submitted with values:', values, selectedImage)
       },
    })
 
@@ -28,7 +31,12 @@ const SelectImage = ({ handleClose }) => {
       <Container>
          <div className="Box">
             <form onSubmit={formik.handleSubmit}>
-               <UpploadFile />
+               <UpploadFile
+                  inputFile={formik.values.inputFile}
+                  name="inputFile"
+                  selectedImage={selectedImage}
+                  setSelectedImage={setSelectedImage}
+               />
                <div className="AnswerBlock">
                   <InputTextAnswer>Correct Answer</InputTextAnswer>
                   <Input
