@@ -1,4 +1,5 @@
-// /* eslint-disable react/self-closing-comp */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/self-closing-comp */
 // import { styled } from '@mui/material'
 // import React, { useState, useEffect } from 'react'
 
@@ -39,10 +40,10 @@
 //    }, [minutes, seconds, isRunning])
 
 //    useEffect(() => {
-//       if (minutes === 0 && seconds === 0) {
+//       if (seconds === 0) {
 //          document.querySelector('h1').textContent = '0:00'
 //       }
-//    }, [minutes, seconds])
+//    }, [seconds])
 
 //    useEffect(() => {
 //       if (isRunning) {
@@ -89,16 +90,18 @@
 // const Container = styled('div')`
 //    margin: 6.25rem auto;
 //    width: 50.87506rem;
+//    height: 0.5rem;
 //    text-align: center;
 //    h1 {
 //       width: 6rem;
+//       color: #4c4859;
 //    }
 //    .progress-bar2.animation-start {
-//       animation: progressAnimation 6s;
+//       animation: progressAnimation 60s;
 //    }
 //    .progress2 {
-//       padding: 6px;
-//       border-radius: 2rem;
+//       height: 0.5rem;
+//       border-radius: 0.5rem;
 //       background: rgba(0, 0, 0, 0.25);
 //       box-shadow:
 //          inset 0 1px 2px rgba(0, 0, 0, 0.25),
@@ -112,7 +115,7 @@
 //          rgba(255, 255, 255, 0.3),
 //          rgba(255, 255, 255, 0.05)
 //       );
-//       transition: 0.4s linear;
+//       transition: 2s linear;
 //       transition-property: width, background-color;
 //    }
 
@@ -128,48 +131,85 @@
 //    }
 // `
 import { styled } from '@mui/material'
-import React from 'react'
+import { useState } from 'react'
 
-const GridStyle = styled('div')(() => ({
-   width: '100%',
-   // height: '540px',
-   // margin: '0 auto',
-   paddingTop: '1px',
-}))
+const ProgressBar = () => {
+   const [progressWidth, setProgressWidth] = useState(100)
+   const [interval, setInterval] = useState(10)
 
-const DivProgressBar = styled('div')(() => ({
-   width: '100%',
-   height: '52px',
-}))
-const Time = styled('h3')(() => ({
-   width: '61px',
-   height: '24px',
-   marginBottom: '20px',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '32px',
-   lineHeight: '24px',
-}))
+   const handleStartClick = () => {
+      const startTimer = () => {
+         const countDown = setInterval(() => {
+            setInterval(interval - 1)
 
-const ProgressLine = styled('progress')(() => ({
-   height: '15px',
-   width: '100%',
-   accentColor: ' #3909fa',
-}))
+            setProgressWidth((prevWidth) => (interval / 10) * 100)
 
-const ProgressBar = ({ timeObject, timeProgress }) => {
+            if (interval <= 1) {
+               clearInterval(countDown)
+               setProgressWidth(0)
+            }
+         }, 1000)
+      }
+   }
+
    return (
-      <div>
-         <GridStyle>
-            <DivProgressBar>
-               <Time>
-                  {timeObject.minute}:{timeObject.seconds}
-               </Time>
-               <ProgressLine value={100 - timeProgress} max="100" />
-            </DivProgressBar>
-         </GridStyle>
-      </div>
+      <Container>
+         <h1>counter timeer</h1>
+         <p>
+            timer left: <span className="timer">{interval}s</span>
+         </p>
+         <div className="progres">
+            <div
+               className="progres-inner"
+               style={{ width: `${progressWidth}%` }}
+            ></div>
+         </div>
+         <button className="btn-start" onClick={handleStartClick}>
+            start
+         </button>
+      </Container>
    )
 }
 
-export default React.memo(ProgressBar)
+export default ProgressBar
+
+const Container = styled('div')`
+   width: 100%;
+   background-color: blueviolet;
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   h1 {
+      font-size: 50px;
+      font-weight: bold;
+      margin-bottom: 50px;
+   }
+   p {
+      font-size: 20px;
+      margin-bottom: 50px;
+      font-weight: bold;
+   }
+   .progres {
+      width: 400px;
+      height: 50px;
+      background-color: azure;
+      padding: 20px;
+      margin-bottom: 50px;
+      position: relative;
+   }
+
+   .progres-inner {
+      background: green;
+      position: absolute;
+      width: 10%;
+      /* height: 10%; */
+   }
+   .btn-start {
+      padding: 20px;
+      width: 100px;
+      background-color: aqua;
+      font-size: 20px;
+   }
+`
