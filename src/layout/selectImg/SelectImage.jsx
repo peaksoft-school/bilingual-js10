@@ -17,8 +17,8 @@ const SelectImage = ({ handleClose }) => {
          const errors = {}
          if (!values.inputValue) {
             errors.inputValue = 'Required'
-         } else if (values.inputValue.length > 30) {
-            errors.inputValue = 'Must be 30 characters or less'
+         } else if (values.inputValue.length > 50) {
+            errors.inputValue = 'Must be 50 characters or less'
          }
          return errors
       },
@@ -74,7 +74,7 @@ const SelectImage = ({ handleClose }) => {
       </Container>
    )
 }
-const Boxerror = styled('div')({
+const Boxerror = styled('span')({
    color: 'red',
 })
 const InputTextAnswer = styled(InputLabel)(() => ({
