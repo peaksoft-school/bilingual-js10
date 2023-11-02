@@ -4,43 +4,63 @@ import { Link } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 
-const Header = ({ role = 'client' }) => {
+const Header = ({ role = 'guest' }) => {
    return (
       <MyHeader>
          <LogoBox>
             <Logo />
          </LogoBox>
-         <Options>
-            <OptionsBlock>
-               <HeaderLink to="/">
-                  <MyText>Tests</MyText>
-               </HeaderLink>
-            </OptionsBlock>
-            <OptionsBlock>
-               {role ? (
-                  <HeaderLink to="/">
-                     <MyText>My Results</MyText>
-                  </HeaderLink>
-               ) : (
-                  <HeaderLink to="/">
-                     <MyText>Submitted Results</MyText>
-                  </HeaderLink>
-               )}
-            </OptionsBlock>
-            <OptionsBlock>
-               <Button
-                  className="logOutButton"
-                  variant="outlined"
-                  defaultStyle="white"
-                  hoverStyle="blue"
-               >
-                  <MyText>Log out</MyText>
+         {role === 'guest' ? (
+            <ButtonsContainer>
+               <Button defaultStyle="#3A10E5" hoverStyle="#4E28E8">
+                  to come in
                </Button>
-            </OptionsBlock>
-         </Options>
+               <Button
+                  defaultStyle="white"
+                  hoverStyle="#F0EDED"
+                  className="registerButton"
+               >
+                  register
+               </Button>
+            </ButtonsContainer>
+         ) : (
+            <Options>
+               <OptionsBlock>
+                  <HeaderLink to="/">
+                     <MyText>Tests</MyText>
+                  </HeaderLink>
+               </OptionsBlock>
+               <OptionsBlock>
+                  {role ? (
+                     <HeaderLink to="/">
+                        <MyText>My Results</MyText>
+                     </HeaderLink>
+                  ) : (
+                     <HeaderLink to="/">
+                        <MyText>Submitted Results</MyText>
+                     </HeaderLink>
+                  )}
+               </OptionsBlock>
+               <OptionsBlock>
+                  <Button
+                     className="logOutButton"
+                     variant="outlined"
+                     defaultStyle="white"
+                     hoverStyle="blue"
+                  >
+                     <MyText>Log out</MyText>
+                  </Button>
+               </OptionsBlock>
+            </Options>
+         )}
       </MyHeader>
    )
 }
+const ButtonsContainer = styled('div')(() => ({
+   paddingRight: '80px',
+   display: 'flex',
+   columnGap: '24px',
+}))
 const MyHeader = styled('header')({
    maxWidth: '100vw',
    height: '15vh',
@@ -87,5 +107,4 @@ const MyText = styled(Typography)({
       textTransform: 'uppercase',
    },
 })
-
 export default Header
