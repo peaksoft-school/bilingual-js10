@@ -11,7 +11,11 @@ export const SelectBestModal = ({
    handleClose,
    titleValues,
    setTitleValues,
+   setCheckboxValue,
+   checkboxValue,
+   options,
 }) => {
+   const trueOption = options.find((el) => el.checked === true)
    return (
       <Modal
          open={openModal}
@@ -34,9 +38,18 @@ export const SelectBestModal = ({
                         onChange={(e) => setTitleValues(e.target.value)}
                      />
                   </div>
-                  <div className="ParagraphCheck">
+                  <div
+                     style={
+                        trueOption ? { display: 'none' } : { display: 'block' }
+                     }
+                     className="ParagraphCheck"
+                  >
                      <span>Is true option?</span>
-                     <InputRadio variant="CHECKBOX" />
+                     <InputRadio
+                        variant="CHECKBOX"
+                        checked={checkboxValue}
+                        onChange={(e) => setCheckboxValue(e.target.checked)}
+                     />
                   </div>
                </div>
                <div className="ContainButton">
@@ -67,7 +80,7 @@ const InputTitle = styled('input')(() => ({
    width: '32.3rem',
    height: '3rem',
    borderRadius: '8px',
-   border: '2px solid #D4D0D0',
+   border: '1.53px solid #D4D0D0',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
@@ -79,10 +92,10 @@ const InputTitle = styled('input')(() => ({
    outline: 'none',
    display: 'flex',
    ':hover': {
-      border: '2px solid blue',
+      border: '1.53px solid blue',
    },
    ':focus': {
-      border: '2px solid blue',
+      border: '1.53px solid blue',
    },
 }))
 const ModalList = styled('div')(() => ({
@@ -121,7 +134,7 @@ const ModalList = styled('div')(() => ({
    '.ControlTitleInput': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '1.13rem',
+      gap: '2.1rem',
    },
 }))
 const ContainClose = styled('div')(() => ({
