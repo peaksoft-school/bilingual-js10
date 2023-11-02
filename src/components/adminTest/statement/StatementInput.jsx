@@ -13,8 +13,8 @@ const StatementInput = ({ handleClose }) => {
          const errors = {}
          if (!values.inputValue) {
             errors.inputValue = 'Required'
-         } else if (values.inputValue.length > 40) {
-            errors.inputValue = 'Must be 30 characters or less'
+         } else if (values.inputValue.length > 50) {
+            errors.inputValue = 'Must be 50 characters or less'
          }
          return errors
       },
@@ -37,6 +37,9 @@ const StatementInput = ({ handleClose }) => {
                      onChange={formik.handleChange}
                      onBlur={formik.handleBlur}
                   />
+                  {formik.touched.inputValue && formik.errors.inputValue ? (
+                     <Error>{formik.errors.inputValue}</Error>
+                  ) : null}
                </div>
                <div className="ButtonBlock">
                   <Button
@@ -46,9 +49,6 @@ const StatementInput = ({ handleClose }) => {
                   >
                      GO BACK
                   </Button>
-                  {formik.touched.inputValue && formik.errors.inputValue ? (
-                     <div className="formik">{formik.errors.inputValue}</div>
-                  ) : null}
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
@@ -63,7 +63,9 @@ const StatementInput = ({ handleClose }) => {
       </Container>
    )
 }
-
+const Error = styled('p')({
+   color: 'red',
+})
 const InputTextAnswer = styled(InputLabel)(() => ({
    fontFamily: 'Poppins',
    fontStyle: 'normal',
@@ -98,9 +100,6 @@ const Container = styled('div')(() => ({
       alignItems: 'flex-end',
       marginTop: '2rem',
       fontfamily: 'Poppins',
-   },
-   '.formik': {
-      color: 'red',
    },
 }))
 export default StatementInput
