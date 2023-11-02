@@ -1,9 +1,10 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import Input from '../UI/Input'
-import Button from '../UI/Buttons/Button'
-import TextArea from '../UI/textarea/TextArea'
+import Input from '../../UI/Input'
+import Button from '../../UI/Buttons/Button'
+import TextArea from '../../UI/textarea/TextArea'
+import { schemaHighlight } from './validationYup'
 
 export const HighlightTheAnswer = () => {
    const [answerValue, setAnswerValue] = useState('')
@@ -13,6 +14,7 @@ export const HighlightTheAnswer = () => {
          question: '',
          text: '',
       },
+      validationSchema: schemaHighlight,
       onSubmit: (values) => {
          const result = {
             'PassageQuestions to the Passage': values.question,
@@ -27,6 +29,9 @@ export const HighlightTheAnswer = () => {
       <div>
          <MainPassageContainer onSubmit={formik.handleSubmit}>
             <span>Questions to the Passage</span>
+            {formik.errors.question ? (
+               <div className="error">{formik.errors.question}</div>
+            ) : null}
             <Input
                border=" 1.53px solid #D4D0D0"
                className="input"
@@ -38,6 +43,9 @@ export const HighlightTheAnswer = () => {
             />
             <span>Passage</span>
             <TextFieldStyle>
+               {formik.errors.text ? (
+                  <div className="error">{formik.errors.text}</div>
+               ) : null}
                <TextArea
                   multiline
                   name="text"
@@ -108,6 +116,13 @@ const MainPassageContainer = styled('form')(() => ({
    '& > .input, .textarea': {
       marginBottom: '24px',
       marginTop: '12px',
+   },
+   '.error': {
+      color: '#ff0000',
+      fontWeight: '700',
+      fontSize: '13px',
+      lineHeight: '9px',
+      letterSpacing: '1px',
    },
 }))
 
