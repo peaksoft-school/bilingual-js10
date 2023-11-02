@@ -129,7 +129,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
 
 const MainContainer = styled('div')(() => ({
    '.widthContainer': {
-      width: '53.125rem',
+      width: '50rem',
       display: 'flex',
       flexDirection: 'column',
       rowGap: '24px',
