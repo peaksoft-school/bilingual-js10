@@ -48,6 +48,9 @@ const SelectImage = ({ handleClose }) => {
                      onChange={formik.handleChange}
                      onBlur={formik.handleBlur}
                   />
+                  {formik.touched.inputValue && formik.errors.inputValue ? (
+                     <Boxerror>{formik.errors.inputValue}</Boxerror>
+                  ) : null}
                </div>
                <div className="ButtonBlock">
                   <Button
@@ -57,11 +60,6 @@ const SelectImage = ({ handleClose }) => {
                   >
                      GO BACK
                   </Button>
-                  {formik.touched.inputValue && formik.errors.inputValue ? (
-                     <div style={{ color: 'red' }}>
-                        {formik.errors.inputValue}
-                     </div>
-                  ) : null}
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
@@ -76,7 +74,9 @@ const SelectImage = ({ handleClose }) => {
       </Container>
    )
 }
-
+const Boxerror = styled('div')({
+   color: 'red',
+})
 const InputTextAnswer = styled(InputLabel)(() => ({
    fontFamily: 'Poppins',
    fontStyle: 'normal',
