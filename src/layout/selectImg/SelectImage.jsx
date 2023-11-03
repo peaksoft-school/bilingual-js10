@@ -7,8 +7,6 @@ import UpploadFile from './UpploadFile'
 
 const SelectImage = ({ handleClose }) => {
    const [selectedImage, setSelectedImage] = useState(null)
-
-   console.log(selectedImage)
    const formik = useFormik({
       initialValues: {
          inputValue: '',

@@ -19,7 +19,6 @@ const UpploadFile = ({ setSelectedImage, selectedImage }) => {
    const handleChange = (event) => {
       const file = event.target.files[0]
       setSelectedImage(file)
-      console.log(file)
       setImageName(file)
    }
 
