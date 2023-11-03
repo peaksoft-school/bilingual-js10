@@ -5,8 +5,12 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
+<<<<<<< HEAD
+import { HighlightTheAnswer } from '../../test/HighlightTheAnswer'
+=======
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
+>>>>>>> b0438feda155ac9a9e6b0ff77f1dc17a4a173c59
 import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
@@ -38,7 +42,7 @@ const renderedContent = {
    },
    'Highlight the answer': {
       placeholder: 'Highlight the answer',
-      content: <div>Highlight the answer</div>,
+      content: <HighlightTheAnswer />,
    },
    'Select the main idea': {
       placeholder: 'Select the main idea',
@@ -87,8 +91,8 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                   fullWidth
                />
             </ContainerInputSecond>
+            {renderedContent[selectedOption]?.content}
          </FormSubmit>
-         {renderedContent[selectedOption]?.content}
       </Background>
    )
 }
