@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import Button from '../UI/Buttons/Button'
-import { TestListIcon } from '../../assets'
+import Button from '../../UI/Buttons/Button'
+import { TestListIcon } from '../../../assets'
 
 export const TestListPage = ({ onClickTryTest }) => {
    return (
