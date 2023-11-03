@@ -10,7 +10,7 @@ import SignUp from '../components/authForm/SignUp'
 import Header from '../layout/Header'
 
 export const AppRoutes = () => {
-   const { isAuth } = useSelector((state) => state.authLogin)
+   const { isAuth, role } = useSelector((state) => state.authLogin)
    return (
       <Routes>
          <Route path="/" element={<Header />} />
@@ -19,13 +19,21 @@ export const AppRoutes = () => {
          <Route
             path={routes.ADMIN.path}
             element={
-               <PrivateRoutes Component={<AdminRoutes />} isAuth={isAuth} />
+               <PrivateRoutes
+                  Component={AdminRoutes}
+                  isAuth={isAuth}
+                  userRole={role}
+               />
             }
          />
          <Route
             path={routes.USER.path}
             element={
-               <PrivateRoutes Component={<UserRoutes />} isAuth={isAuth} />
+               <PrivateRoutes
+                  Component={UserRoutes}
+                  isAuth={isAuth}
+                  userRole={role}
+               />
             }
          />
       </Routes>

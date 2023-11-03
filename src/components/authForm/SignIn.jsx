@@ -21,8 +21,6 @@ const SignIn = () => {
          const token = 'your_token_here'
          const data = { email, role, token }
 
-         localStorage.setItem('userData', JSON.stringify(data))
-
          dispatch(login({ data, navigate }))
       } else {
          console.log('Неверный логин или пароль')

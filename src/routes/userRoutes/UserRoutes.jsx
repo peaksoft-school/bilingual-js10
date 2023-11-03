@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../store/auth/authSlice'
-import { USER_KEY } from '../../utils/constants/constants'
 import Button from '../../components/UI/Buttons/Button'
 
 export const UserRoutes = () => {
@@ -11,7 +10,6 @@ export const UserRoutes = () => {
 
    const handleLogout = () => {
       dispatch(logout())
-      localStorage.clear(USER_KEY)
       navigate('/signin')
    }
 

@@ -1,10 +1,14 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 
 const Header = ({ role = 'guest' }) => {
+   const navigate = useNavigate()
+   const handleRegisterClick = () => {
+      navigate('/signin')
+   }
    return (
       <MyHeader>
          <LogoBox>
@@ -19,6 +23,7 @@ const Header = ({ role = 'guest' }) => {
                   defaultStyle="white"
                   hoverStyle="#F0EDED"
                   className="registerButton"
+                  onClick={handleRegisterClick}
                >
                   register
                </Button>

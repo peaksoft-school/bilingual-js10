@@ -5,7 +5,7 @@ const initialState = {
    isAuth: null,
    email: null,
    token: null,
-   role: null,
+   role: false,
 }
 const storedUserData = localStorage.getItem(USER_KEY)
 const storedUser = storedUserData ? JSON.parse(storedUserData) : null
@@ -31,7 +31,7 @@ export const authSlice = createSlice({
       logout: () => {
          const newState = initialState
 
-         //  localStorage.removeItem(USER_KEY)
+         localStorage.removeItem(USER_KEY)
          return newState
       },
    },
