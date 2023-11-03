@@ -9,6 +9,7 @@ import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../TypeWhatYouHear'
+import { HighlightTheAnswer } from '../../test/highlightTheAnswer/HighlightTheAnswer'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 
@@ -39,7 +40,7 @@ const renderedContent = {
    },
    'Highlight the answer': {
       placeholder: 'Highlight the answer',
-      content: <div>Highlight the answer</div>,
+      content: <HighlightTheAnswer />,
    },
    'Select the main idea': {
       placeholder: 'Select the main idea',
