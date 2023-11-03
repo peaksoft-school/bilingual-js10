@@ -38,6 +38,9 @@ import { ReactComponent as VolumeForEnglishWord } from './icons/volumeForEnglish
 import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
 import { ReactComponent as Check } from './icons/check.svg'
+import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
+import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
+
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
@@ -45,6 +48,8 @@ import Ulan from './images/ Ulan.jpg'
 import Aijan from './images/Aijan.png'
 
 export {
+   TestListIcon,
+   BilingualLogo,
    EnglishBook,
    AccessibleIcon,
    ExtensiveIcon,
