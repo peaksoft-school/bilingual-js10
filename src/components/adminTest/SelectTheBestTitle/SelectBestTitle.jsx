@@ -9,13 +9,19 @@ import TextArea from '../../UI/textarea/TextArea'
 export const SelectBestTitle = () => {
    const formik = useFormik({
       initialValues: {
+         // titleValues: '',
+         // options: [],
+         // checkboxValue: false,
+         // passage: '',
+         passage: '',
          titleValues: '',
          options: [],
          checkboxValue: false,
-         passage: '',
+         openModal: false,
       },
       onSubmit: (values) => {
-         console.log(values)
+         const dataArray = [{ passage: values.text }, ...values.options]
+         console.log(dataArray)
       },
    })
    const handleCheckboxChange = (id) => {
@@ -50,12 +56,17 @@ export const SelectBestTitle = () => {
          text: formik.values.titleValues,
          checked: formik.values.checkboxValue,
       }
+      const dataArray = [
+         { passage: formik.values.passage },
+         ...formik.values.options,
+      ]
+      console.log(dataArray)
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
       formik.setFieldValue('checkboxValue', false)
-      console.log(newOption)
       handleClose()
    }
+
    return (
       <Formik onSubmit={formik.handleSubmit}>
          {() => (
@@ -122,7 +133,7 @@ export const SelectBestTitle = () => {
                            hoverStyle="#31CF38"
                            className="saveButton"
                            variant="contained"
-                           type="submit"
+                           type="onSubmit"
                            onClick={(e) => {
                               e.preventDefault()
                               console.log(formik.values.options)

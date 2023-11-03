@@ -158,7 +158,7 @@ const ContainerInputSecond = styled('div')(() => ({
 const FieldTime = styled(TimeField)(() => ({
    width: '6rem',
    '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input ': {
-      height: '0.5rem',
+      height: '0.55rem',
       borderRadius: ' 0.5rem',
       border: '1.53px solid #D4D0D0',
       textAlign: 'center',
