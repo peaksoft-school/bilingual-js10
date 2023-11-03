@@ -8,7 +8,7 @@ import { Background } from '../../../layout/Background'
 import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
-import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import { TypeWhatYouHear } from '../TypeWhatYouHear'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 

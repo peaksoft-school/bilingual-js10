@@ -1,4 +1,4 @@
-import { useFormik, Formik } from 'formik'
+import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
@@ -16,10 +16,11 @@ export const SelectBestTitle = () => {
          openModal: false,
       },
       onSubmit: (values) => {
-         const dataArray = [{ passage: values.text }, ...values.options]
+         const dataArray = [{ passage: values.passage }, ...values.options]
          console.log(dataArray)
       },
    })
+   console.log(formik.values)
    const handleCheckboxChange = (id) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
@@ -52,11 +53,6 @@ export const SelectBestTitle = () => {
          text: formik.values.titleValues,
          checked: formik.values.checkboxValue,
       }
-      const dataArray = [
-         { passage: formik.values.passage },
-         ...formik.values.options,
-      ]
-      console.log(dataArray)
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
       formik.setFieldValue('checkboxValue', false)
@@ -129,10 +125,13 @@ export const SelectBestTitle = () => {
                            hoverStyle="#31CF38"
                            className="saveButton"
                            variant="contained"
-                           type="onSubmit"
+                           type="submit"
                            onClick={(e) => {
                               e.preventDefault()
-                              console.log(formik.values.options)
+                              console.log(
+                                 formik.values.passage,
+                                 formik.values.options
+                              )
                            }}
                         >
                            SAVE
