@@ -4,6 +4,7 @@ import { Modal } from '../../UI/UiModal'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { CloseIcon } from '../../../assets'
+import Input from '../../UI/Input'
 
 export const SelectBestModal = ({
    openModal,
@@ -17,12 +18,7 @@ export const SelectBestModal = ({
 }) => {
    const trueOption = options.find((el) => el.checked === true)
    return (
-      <Modal
-         open={openModal}
-         handleClose={handleClose}
-         width="40rem"
-         height="24rem"
-      >
+      <Modal open={openModal} handleClose={handleClose} width="40rem">
          <ContainClose>
             <CloseIcon onClick={handleClose} />
          </ContainClose>
@@ -81,29 +77,15 @@ export const SelectBestModal = ({
 const ContainButtons = styled('div')({
    display: 'flex',
    alignItems: 'end',
-   height: '26vh',
 })
-const InputTitle = styled('input')(() => ({
-   width: '32.3rem',
-   height: '3rem',
-   borderRadius: '8px',
-   border: '1.53px solid #D4D0D0',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
+const InputTitle = styled(Input)(() => ({
+   width: '33.3rem',
+   height: '2.5rem',
    lineHeight: '18px',
    color: '#4C4859',
-   paddingLeft: '16px',
    marginTop: '1rem',
    outline: 'none',
    display: 'flex',
-   ':hover': {
-      border: '1.53px solid blue',
-   },
-   ':focus': {
-      border: '1.53px solid blue',
-   },
 }))
 const ModalList = styled('div')(() => ({
    display: 'flex',
@@ -117,7 +99,7 @@ const ModalList = styled('div')(() => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      gap: '1.5rem',
+      gap: '5rem',
       flexDirection: 'column',
       fontFamly: 'Poppins',
    },

@@ -9,10 +9,6 @@ import TextArea from '../../UI/textarea/TextArea'
 export const SelectBestTitle = () => {
    const formik = useFormik({
       initialValues: {
-         // titleValues: '',
-         // options: [],
-         // checkboxValue: false,
-         // passage: '',
          passage: '',
          titleValues: '',
          options: [],
