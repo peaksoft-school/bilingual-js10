@@ -1,12 +1,35 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { validationAuthSignIn } from '../../utils/helpers/validate/authValidate'
 import AuthContainer from '../authContainer/authContainer'
+import { users } from '../../utils/constants/constants'
+import { login } from '../../store/auth/authSlice'
 
-const SignIn = ({ toggleSignUp }) => {
+const SignIn = () => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+
    const handleSignInClick = (values) => {
-      console.log('Данные формы:', values)
+      const user = users.find(
+         (user) =>
+            user.email === values.email && user.password === values.password
+      )
+
+      if (user) {
+         const { email, role } = user
+         const token = 'your_token_here'
+         const data = { email, role, token }
+
+         dispatch(login({ data, navigate }))
+      } else {
+         console.log('Неверный логин или пароль')
+      }
    }
 
+   const handleRegisterClick = () => {
+      navigate('/signup')
+   }
    return (
       <AuthContainer
          title="Sign in"
@@ -22,8 +45,8 @@ const SignIn = ({ toggleSignUp }) => {
          }}
          validationSchema={validationAuthSignIn}
          onSubmit={handleSignInClick}
+         toggleLinkClick={handleRegisterClick}
          toggleLinkText="Register"
-         toggleLinkClick={toggleSignUp}
          googleButtonText="Sign In with Google"
       />
    )
