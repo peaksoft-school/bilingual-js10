@@ -36,6 +36,13 @@ export const CreateSelectMainIdea = () => {
 
    const handleSaveOption = (newOption, isTrue) => {
       const { options } = formik.values
+      const existingTrueOption = options.find((option) => option.isTrue)
+
+      if (isTrue) {
+         if (existingTrueOption) {
+            existingTrueOption.isTrue = false
+         }
+      }
       if (!options.some((option) => option.text === newOption)) {
          const optionId = Math.random()
          const option = { id: optionId, text: newOption, isTrue }
@@ -56,10 +63,16 @@ export const CreateSelectMainIdea = () => {
    const handleCheckboxChange = (index) => {
       const { options } = formik.values
       const updatedOptions = [...options]
+      updatedOptions.forEach((option, i) => {
+         if (i !== index) {
+            option.isTrue = false
+         }
+      })
+
       updatedOptions[index].isTrue = !updatedOptions[index].isTrue
+
       formik.setFieldValue('options', updatedOptions)
    }
-
    const handleDeleteOption = (optionId) => {
       const { options } = formik.values
       const updatedOptions = options.filter((option) => option.id !== optionId)
