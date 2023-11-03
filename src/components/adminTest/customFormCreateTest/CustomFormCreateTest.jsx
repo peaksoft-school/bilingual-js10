@@ -9,6 +9,7 @@ import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
 import StatementInput from '../statement/StatementInput'
+import SelectImage from '../../../layout/selectImg/SelectImage'
 
 const renderedContent = {
    'Select real English words': {
@@ -33,7 +34,7 @@ const renderedContent = {
    },
    'Describe image': {
       placeholder: 'Take a free practice test and estimate your score',
-      content: <div>Describe image</div>,
+      content: <SelectImage />,
    },
    'Highlight the answer': {
       placeholder: 'Highlight the answer',
