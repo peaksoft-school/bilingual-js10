@@ -12,6 +12,8 @@ import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
 >>>>>>> b0438feda155ac9a9e6b0ff77f1dc17a4a173c59
 import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import StatementInput from '../statement/StatementInput'
+import SelectImage from '../../../layout/selectImg/SelectImage'
 
 const renderedContent = {
    'Select real English words': {
@@ -28,7 +30,7 @@ const renderedContent = {
    },
    'Record saying statement': {
       placeholder: 'My uncle is at work',
-      content: <div>Record saying statement</div>,
+      content: <StatementInput />,
    },
    'Respond in at least N words': {
       placeholder: 'Respond in at least N words',
@@ -36,7 +38,7 @@ const renderedContent = {
    },
    'Describe image': {
       placeholder: 'Take a free practice test and estimate your score',
-      content: <div>Describe image</div>,
+      content: <SelectImage />,
    },
    'Highlight the answer': {
       placeholder: 'Highlight the answer',
