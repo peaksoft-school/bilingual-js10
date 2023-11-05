@@ -94,10 +94,19 @@ const AuthContainer = ({
                </ButtonContainer>
 
                <StyledText>
-                  {toggleLinkText === ' Register'
+                  {toggleLinkText === 'Register'
                      ? 'ALREADY HAVE AN ACCOUNT?'
                      : "DON'T HAVE AN ACCOUNT?"}
-                  <StyledRegister onClick={toggleLinkClick}>
+                  {/* <StyledRegister onClick={toggleLinkClick}>
+                     {toggleLinkText === ' Register' ? 'LOG IN' : 'REGISTER'}
+                  </StyledRegister> */}
+                  <StyledRegister
+                     onClick={() =>
+                        toggleLinkText === 'Register'
+                           ? toggleLinkClick()
+                           : toggleLinkClick('Register')
+                     }
+                  >
                      {toggleLinkText === ' Register' ? 'LOG IN' : 'REGISTER'}
                   </StyledRegister>
                </StyledText>

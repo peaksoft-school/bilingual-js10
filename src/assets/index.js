@@ -42,6 +42,8 @@ import { ReactComponent as Check } from './icons/check.svg'
 import { ReactComponent as SpeakIcon } from './icons/speakIcon.svg'
 import { ReactComponent as WaveIcon } from './icons/wave.svg'
 import { ReactComponent as CircleIcon } from './icons/circle.svg'
+import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
+import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -53,6 +55,8 @@ export {
    CircleIcon,
    WaveIcon,
    SpeakIcon,
+   TestListIcon,
+   BilingualLogo,
    EnglishBook,
    AccessibleIcon,
    ExtensiveIcon,
