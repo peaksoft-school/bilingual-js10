@@ -41,7 +41,6 @@ const ButtonStyled = styled(MuiButton)(({
    variant,
    defaultStyle,
    hoverStyle,
-   disabled,
    activeStyle,
    padding,
 }) => {
@@ -106,9 +105,10 @@ const ButtonStyled = styled(MuiButton)(({
       '&:active': {
          backgroundColor: `${activeStyle}`,
       },
+
       '&:disabled': {
-         backgroundColor: disabled,
-         border: `3px solid #C4C4C4`,
+         backgroundColor: `${className === 'nextButton' ? '#C4C4C4' : 'white'}`,
+         border: `${className === 'nextButton' ? 'none' : '3px solid #C4C4C4'}`,
          color: `${className === 'nextButton' ? '#fff' : '#C4C4C4'}`,
       },
    }
