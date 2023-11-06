@@ -21,6 +21,7 @@ export const InputRadio = ({
                type="radio"
                value={valueRadio}
                name="Gender"
+               checked={checkedSwitch}
             />
          )
       case 'SWITCH':

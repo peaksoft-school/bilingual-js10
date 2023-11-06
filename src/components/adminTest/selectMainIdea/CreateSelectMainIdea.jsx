@@ -1,229 +1,242 @@
+import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
-import React from 'react'
-import { useFormik } from 'formik'
 import Button from '../../UI/Buttons/Button'
-import OptionModal from '../addOptionModal/AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
-import { DeleteRealEnglishWord } from '../../../assets'
-import TextArea from '../../UI/textarea/TextArea'
+import { Delete } from '../../../assets'
 
-export const CreateSelectMainIdea = () => {
+import TextArea from '../../UI/textarea/TextArea'
+import { SelectMainModal } from './SelectMainIdeaModal'
+
+export const SelectMainIdea = () => {
    const formik = useFormik({
       initialValues: {
-         isModalOpen: false,
+         passage: '',
+         titleValues: '',
          options: [],
-         text: '',
-      },
-      onSubmit: (values) => {
-         const dataArray = [{ Passage: values.text }, ...values.options]
-         console.log(dataArray)
+         checkboxValue: false,
+         isModalOpen: false,
       },
    })
-
-   const handleOpenModal = () => {
-      formik.setFieldValue('isModalOpen', true)
-      const url = new URL(window.location)
-      url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', url)
+   const handleCheckboxChange = (id) => {
+      const updatedOptions = formik.values.options.map((option) => {
+         if (option.id === id) {
+            return {
+               ...option,
+               checked: !option.checked,
+            }
+         }
+         return {
+            ...option,
+            checked: false,
+         }
+      })
+      formik.setFieldValue('options', updatedOptions)
+      const anyChecked = updatedOptions.some((option) => option.checked)
+      formik.setFieldValue('checkboxValue', anyChecked)
    }
-
-   const handleCloseModal = () => {
+   const removeElement = (id) => {
+      formik.setFieldValue(
+         'options',
+         formik.values.options.filter((option) => option.id !== id)
+      )
+   }
+   const handleClose = () => {
       formik.setFieldValue('isModalOpen', false)
       const url = new URL(window.location)
       url.searchParams.delete('modal')
       window.history.pushState({}, '', url)
    }
-
-   const handleSaveOption = (newOption, isTrue) => {
-      const { options } = formik.values
-      const existingTrueOption = options.find((option) => option.isTrue)
-
-      if (isTrue) {
-         if (existingTrueOption) {
-            existingTrueOption.isTrue = false
-         }
+   const openModal = () => {
+      formik.setFieldValue('isModalOpen', true)
+      const url = new URL(window.location)
+      url.searchParams.set('modal', 'true')
+      window.history.pushState({}, '', url)
+   }
+   const handleSave = (e) => {
+      e.preventDefault()
+      const newOption = {
+         id: Math.random(),
+         text: formik.values.titleValues,
+         checked: formik.values.checkboxValue,
       }
-      if (!options.some((option) => option.text === newOption)) {
-         const optionId = Math.random()
-         const option = { id: optionId, text: newOption, isTrue }
-         if (options.length < 6) {
-            formik.setFieldValue('options', [...options, option])
-         }
-      }
-      handleCloseModal()
-   }
-   const handleSave = (event) => {
-      event.preventDefault()
-      const dataArray = [
-         { Passage: formik.values.text },
-         ...formik.values.options,
-      ]
-      console.log(dataArray)
-   }
-   const handleCheckboxChange = (index) => {
-      const { options } = formik.values
-      const updatedOptions = [...options]
-      updatedOptions.forEach((option, i) => {
-         if (i !== index) {
-            option.isTrue = false
-         }
-      })
-
-      updatedOptions[index].isTrue = !updatedOptions[index].isTrue
-
-      formik.setFieldValue('options', updatedOptions)
-   }
-   const handleDeleteOption = (optionId) => {
-      const { options } = formik.values
-      const updatedOptions = options.filter((option) => option.id !== optionId)
-      formik.setFieldValue('options', updatedOptions)
+      formik.setFieldValue('titleValues', '')
+      formik.setFieldValue('options', [...formik.values.options, newOption])
+      formik.setFieldValue('checkboxValue', false)
+      handleClose()
    }
 
    return (
-      <form onSubmit={formik.handleSubmit}>
-         <Container>
-            <Text>Passage</Text>
-            <TextAreaStyled
-               name="text"
-               value={formik.values.text}
-               onChange={formik.handleChange}
-               fullWidth
-               multiline
-            />
-
-            <MiniContainerButton>
-               <Button
-                  defaultStyle="#3A10E5"
-                  className="addNewTestButton"
-                  hoverStyle="#3A10E5E5"
-                  variant="contained"
-                  onClick={handleOpenModal}
-               >
-                  add options
-               </Button>
-            </MiniContainerButton>
-            {formik.values.isModalOpen && (
-               <OptionModal
-                  open={formik.values.isModalOpen}
-                  handleCloseModal={handleCloseModal}
-                  onSaveOption={handleSaveOption}
-                  titleInput="Select the main idea"
-               />
-            )}
-            <ContainerCreateTest>
-               {formik.values.options.map((option, index) => (
-                  <CreateTest key={option.id}>
-                     <div style={{ width: '1rem' }}>
-                        <MainContainer>
-                           <span className="Number-Words">{index + 1}</span>
-                           <div className="NumberText">
-                              <OptionText>{option.text}</OptionText>
+      <Formik onSubmit={formik.handleSubmit}>
+         {() => (
+            <Container>
+               <WidthContainer>
+                  <div className="ContainTextArea">
+                     <span className="ContainSpan">Passage</span>
+                     <TextArea
+                        name="passage"
+                        value={formik.values.passage}
+                        onChange={formik.handleChange}
+                        className="TextArea"
+                        variant="outlined"
+                        multiline
+                        fullWidth
+                     />
+                  </div>
+                  <div className="ContainButton">
+                     <Button
+                        hoverStyle="#3A10E5E5"
+                        defaultStyle="#3A10E5"
+                        className="addNewTestButton"
+                        variant="contained"
+                        onClick={openModal}
+                     >
+                        ADD OPTIONS
+                     </Button>
+                  </div>
+                  <div className="ContainerCreateTests">
+                     {formik.values?.options.map((el, index) => (
+                        <div
+                           key={el.id}
+                           style={{ width: '51.25rem' }}
+                           className="ContainCreatTest"
+                        >
+                           <p className="Number">{index + 1}</p>
+                           <p>{el.text}</p>
+                           <div className="RadioDelete">
+                              <CheckedRadio
+                                 variant="RADIO"
+                                 checkedSwitch={el.checked}
+                                 onChange={() => handleCheckboxChange(el.id)}
+                              />
+                              <Delete
+                                 onClick={() => removeElement(el.id)}
+                                 className="DeleteIcon"
+                              />
                            </div>
-                        </MainContainer>
+                        </div>
+                     ))}
+                  </div>
+                  {formik.values.options.length > 0 ? (
+                     <div className="ControlButton">
+                        <Button
+                           variant="outlined"
+                           hoverStyle="#3A10E5"
+                           onClick={handleClose}
+                           className="Button"
+                        >
+                           GO BACK
+                        </Button>
+                        <Button
+                           defaultStyle="#2AB930"
+                           hoverStyle="#31CF38"
+                           className="saveButton"
+                           variant="contained"
+                           type="submit"
+                           onClick={(e) => {
+                              e.preventDefault()
+                              const dataArray = [
+                                 { Passage: formik.values.passage },
+                                 ...formik.values.options,
+                              ]
+                              console.log(dataArray)
+                           }}
+                        >
+                           SAVE
+                        </Button>
                      </div>
-                     <div className="InputDelete">
-                        <InputRadio
-                           variant="RADIO"
-                           checked={option.isTrue}
-                           onChange={() => handleCheckboxChange(index)}
-                        />
-                        <DeleteIcon
-                           onClick={() => handleDeleteOption(option.id)}
-                        />
-                     </div>
-                  </CreateTest>
-               ))}
-            </ContainerCreateTest>
-            {formik.values.options.length > 0 && (
-               <ContainerButtons>
-                  <Button
-                     variant="outlined"
-                     hoverStyle="#3A10E5"
-                     onClick={handleCloseModal}
-                  >
-                     GO BACK
-                  </Button>
-                  <Button
-                     defaultStyle="#2AB930"
-                     hoverStyle="#31CF38"
-                     type="submit"
-                     onClick={handleSave}
-                  >
-                     Save
-                  </Button>
-               </ContainerButtons>
-            )}
-         </Container>
-      </form>
+                  ) : null}
+                  {formik.values.isModalOpen && (
+                     <SelectMainModal
+                        handleClose={handleClose}
+                        openModal={openModal}
+                        titleValues={formik.values.titleValues}
+                        setTitleValues={(value) =>
+                           formik.setFieldValue('titleValues', value)
+                        }
+                        handleSave={handleSave}
+                        checkboxValue={formik.values.checkboxValue}
+                        setCheckboxValue={(value) =>
+                           formik.setFieldValue('checkboxValue', value)
+                        }
+                        options={formik.values.options}
+                        formik={formik}
+                     />
+                  )}
+               </WidthContainer>
+            </Container>
+         )}
+      </Formik>
    )
 }
-
-const Text = styled('span')(() => ({
-   color: '#4C4859',
-   fontfamily: 'DINNextRoundedLTW04-Medium',
-   fontSize: '1rem',
-   fontWeight: '500',
-   lineHeight: '1rem',
-}))
-const OptionText = styled('span')(() => ({
-   wordBreak: 'break-word',
-   width: '42rem',
-}))
-const TextAreaStyled = styled(TextArea)(() => ({
-   marginTop: '1rem',
-}))
-const MiniContainerButton = styled('div')(() => ({
-   marginTop: '2rem',
-   display: 'flex',
-   justifyContent: 'end',
-}))
-
-const Container = styled('div')(() => ({
-   marginTop: '1.7rem',
-}))
-const DeleteIcon = styled(DeleteRealEnglishWord)(() => ({
+const CheckedRadio = styled(InputRadio)({
    cursor: 'pointer',
-}))
-const ContainerCreateTest = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'center',
-   gap: '10px',
-   marginTop: '9px',
-   flexWrap: 'wrap',
-   paddingTop: '20px',
-}))
-
-const CreateTest = styled('div')(() => ({
-   border: 'solid 1.53px #D4D0D0',
-   display: 'flex',
-   justifyContent: 'space-between',
-   width: '100%',
-   borderRadius: '0.5rem',
-   padding: '0.88rem 1rem 0.81rem 1rem ',
-   '.NumberText': {
+})
+const WidthContainer = styled('div')({
+   width: '50rem',
+   color: '#4C4859',
+})
+const Container = styled('div')(() => ({
+   '.DeleteIcon': {
+      width: '1.25rem',
+      height: '1.25rem',
+   },
+   '.ContainButton': {
       display: 'flex',
-      span: {
+      justifyContent: 'end',
+      alignItems: 'center',
+      marginTop: '2rem',
+      fontFamly: 'Poppins',
+      fontWeight: '800',
+   },
+   '.ControlButton': {
+      display: 'flex',
+      gap: '1rem',
+      justifyContent: 'end',
+      alignItems: 'center',
+      marginTop: '2rem',
+      fontFamly: 'Poppins',
+   },
+   '.ContainCreatTest': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'start',
+      borderRadius: '0.5rem',
+      border: '1.53px solid #D4D0D0',
+      background: '#fff',
+      columnGap: '2rem',
+      padding: '0.88rem',
+      widht: '100%',
+   },
+   '.ContainerCreateTests': {
+      display: 'flex',
+      justifyContent: '',
+      rowGap: '1rem',
+      flexWrap: 'wrap',
+      marginTop: '1.35rem',
+      fontFamly: 'Poppins',
+      wordBreak: 'break-word',
+      ul: {
+         fontSize: '16px',
+         fontStyle: 'normal',
+         fontWeight: '400',
+         lineHeight: 'normal',
          color: '#4C4859',
       },
    },
-   '.InputDelete': {
-      gap: '1rem',
+   '.ContainTextArea': {
       display: 'flex',
+      flexDirection: 'column',
+      rowGap: '1rem',
+      marginTop: '1.5rem',
+   },
+   '.Number': { paddingBottom: '1.3rem', cursor: 'pointer' },
+   '.RadioDelete': {
+      display: 'flex',
+      gap: '1rem',
       justifyContent: 'center',
       alignItems: 'center',
+      paddingBottom: '1.3rem',
+      cursor: 'pointer',
    },
-}))
-const MainContainer = styled('div')(() => ({
-   display: 'flex',
-   gap: '10px',
-   '.Number-Words': {
-      color: '#4C4859',
-   },
-}))
-
-const ContainerButtons = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'end',
-   marginTop: '1rem',
-   gap: '1rem',
+   '.ContainSpan': { fontSize: '1rem', fontWeight: '500' },
 }))

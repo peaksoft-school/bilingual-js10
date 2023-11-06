@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from './components/components/table/Table'
+// import { Table } from './components/components/table/Table'
 import { Check, Eye, TrashCan } from './assets'
 import { styled } from '@mui/material'
 
@@ -77,11 +77,11 @@ const columns = [
    },
 ]
 
-return (
+// return (
    <div>
       <Table data={data} columns={columns} />
    </div>
-)
+// )
 
 const Container = styled('div')`
    display: flex;

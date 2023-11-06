@@ -5,10 +5,13 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
-import { CreateSelectMainIdea } from '../selectMainIdea/CreateSelectMainIdea'
+import { HighlightTheAnswer } from '../../test/highlightTheAnswer/HighlightTheAnswer'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
-import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import { TypeWhatYouHear } from '../TypeWhatYouHear'
+import StatementInput from '../statement/StatementInput'
+import SelectImage from '../../../layout/selectImg/SelectImage'
+import { SelectMainIdea } from '../selectMainIdea/CreateSelectMainIdea'
 
 const renderedContent = {
    'Select real English words': {
@@ -25,7 +28,7 @@ const renderedContent = {
    },
    'Record saying statement': {
       placeholder: 'My uncle is at work',
-      content: <div>Record saying statement</div>,
+      content: <StatementInput />,
    },
    'Respond in at least N words': {
       placeholder: 'Respond in at least N words',
@@ -33,15 +36,15 @@ const renderedContent = {
    },
    'Describe image': {
       placeholder: 'Take a free practice test and estimate your score',
-      content: <div>Describe image</div>,
+      content: <SelectImage />,
    },
    'Highlight the answer': {
       placeholder: 'Highlight the answer',
-      content: <div>Highlight the answer</div>,
+      content: <HighlightTheAnswer />,
    },
    'Select the main idea': {
       placeholder: 'Select the main idea',
-      content: <CreateSelectMainIdea />,
+      content: <SelectMainIdea />,
    },
    'Select best title': {
       placeholder: 'Select best title',

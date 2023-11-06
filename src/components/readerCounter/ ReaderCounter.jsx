@@ -5,7 +5,7 @@ import Jet from '../../assets/icons/Jet.svg'
 import Pig from '../../assets/icons/Pig.svg'
 import Earth from '../../assets/icons/Earth.svg'
 
-const MainCounter = () => {
+const ReaderCounter = () => {
    const [jetCounter, setJetCounter] = useState(0)
    const [earthCounter, setEarthCounter] = useState(0)
 
@@ -100,7 +100,7 @@ const MainCounter = () => {
    )
 }
 
-export default MainCounter
+export default ReaderCounter
 
 const Container = styled('div')`
    background-color: #fef5e8;
