@@ -16,11 +16,16 @@ export const SelectBestTitle = () => {
          openModal: false,
       },
       onSubmit: (values) => {
-         const dataArray = [{ passage: values.passage }, ...values.options]
+         const dataArray = [{ Passage: values.passage }, ...values.options]
          console.log(dataArray)
       },
    })
-   console.log(formik.values)
+   const OptionsModal = () => {
+      formik.setFieldValue('openModal', true)
+      const Url = new URL(window.location)
+      Url.searchParams.set('modal', 'true')
+      window.history.pushState({}, '', Url)
+   }
    const handleCheckboxChange = (id) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
@@ -46,8 +51,12 @@ export const SelectBestTitle = () => {
    }
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
+      const Url = new URL(window.location)
+      Url.searchParams.delete('modal')
+      window.history.pushState({}, '', Url)
    }
-   const handleSave = () => {
+   const handleSave = (e) => {
+      e.preventDefault()
       const newOption = {
          id: Math.random(),
          text: formik.values.titleValues,
@@ -82,7 +91,7 @@ export const SelectBestTitle = () => {
                         defaultStyle="#3A10E5"
                         className="addNewTestButton"
                         variant="contained"
-                        onClick={() => formik.setFieldValue('openModal', true)}
+                        onClick={OptionsModal}
                      >
                         ADD OPTIONS
                      </Button>
@@ -128,31 +137,33 @@ export const SelectBestTitle = () => {
                            type="submit"
                            onClick={(e) => {
                               e.preventDefault()
-                              console.log(
-                                 formik.values.passage,
-                                 formik.values.options
-                              )
+                              const dataArray = [
+                                 { Passage: formik.values.passage },
+                                 ...formik.values.options,
+                              ]
+                              console.log(dataArray)
                            }}
                         >
                            SAVE
                         </Button>
                      </div>
                   ) : null}
-                  <SelectBestModal
-                     handleClose={handleClose}
-                     openModal={formik.values.openModal}
-                     titleValues={formik.values.titleValues}
-                     setTitleValues={(value) =>
-                        formik.setFieldValue('titleValues', value)
-                     }
-                     handleSave={handleSave}
-                     checkboxValue={formik.values.checkboxValue}
-                     setCheckboxValue={(value) =>
-                        formik.setFieldValue('checkboxValue', value)
-                     }
-                     options={formik.values.options}
-                     formik={formik}
-                  />
+                  {formik.values.openModal && (
+                     <SelectBestModal
+                        handleClose={handleClose}
+                        openModal={formik.values.openModal}
+                        titleValues={formik.values.titleValues}
+                        setTitleValues={(value) =>
+                           formik.setFieldValue('titleValues', value)
+                        }
+                        handleSave={handleSave}
+                        checkboxValue={formik.values.checkboxValue}
+                        setCheckboxValue={(value) =>
+                           formik.setFieldValue('checkboxValue', value)
+                        }
+                        options={formik.values.options}
+                     />
+                  )}
                </WidthContainer>
             </Container>
          )}

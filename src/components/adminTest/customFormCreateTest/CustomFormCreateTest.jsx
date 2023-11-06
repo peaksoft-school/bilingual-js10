@@ -9,7 +9,7 @@ import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../TypeWhatYouHear'
-import { HighlightTheAnswer } from '../../test/highlightTheAnswer/HighlightTheAnswer'
+import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 
