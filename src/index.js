@@ -8,8 +8,8 @@ import { ToastContainer } from 'react-toastify'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { theme } from './assets/theme/globalTheme'
 import './index.css'
-import reportWebVitals from './reportWebVitals'
 import App from './App'
+import reportWebVitals from './reportWebVitals'
 import { store } from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
