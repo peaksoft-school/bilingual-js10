@@ -38,6 +38,9 @@ import { ReactComponent as VolumeForEnglishWord } from './icons/volumeForEnglish
 import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
 import { ReactComponent as Check } from './icons/check.svg'
+import { ReactComponent as SpeakIcon } from './icons/speakIcon.svg'
+import { ReactComponent as WaveIcon } from './icons/wave.svg'
+import { ReactComponent as CircleIcon } from './icons/circle.svg'
 import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
 import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
 
@@ -48,6 +51,9 @@ import Ulan from './images/ Ulan.jpg'
 import Aijan from './images/Aijan.png'
 
 export {
+   CircleIcon,
+   WaveIcon,
+   SpeakIcon,
    TestListIcon,
    BilingualLogo,
    EnglishBook,
