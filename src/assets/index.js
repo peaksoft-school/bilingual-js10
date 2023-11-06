@@ -35,6 +35,15 @@ import { ReactComponent as StickRed } from './icons/StickRed.svg'
 import { ReactComponent as CancelModal } from './icons/cancelModal.svg'
 import { ReactComponent as DeleteRealEnglishWord } from './icons/deleteForRealEnglishWord.svg'
 import { ReactComponent as PlusIcon } from './icons/plus-icon.svg'
+import { ReactComponent as VolumeForEnglishWord } from './icons/volumeForEnglishWord.svg'
+import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
+import { ReactComponent as TrashCan } from './icons/trashCan.svg'
+import { ReactComponent as Check } from './icons/check.svg'
+import { ReactComponent as SpeakIcon } from './icons/speakIcon.svg'
+import { ReactComponent as WaveIcon } from './icons/wave.svg'
+import { ReactComponent as CircleIcon } from './icons/circle.svg'
+import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
+import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -43,6 +52,11 @@ import Ulan from './images/ Ulan.jpg'
 import Aijan from './images/Aijan.png'
 
 export {
+   CircleIcon,
+   WaveIcon,
+   SpeakIcon,
+   TestListIcon,
+   BilingualLogo,
    EnglishBook,
    AccessibleIcon,
    ExtensiveIcon,
@@ -73,6 +87,8 @@ export {
    Aijan,
    RoundLeftBlue,
    RoundRightBlue,
+   TrashCan,
+   Check,
    StickRed,
    CancelModal,
    DeleteRealEnglishWord,
@@ -83,4 +99,6 @@ export {
    EyeClosed,
    ErrorIcon,
    PlusIcon,
+   VolumeForEnglishWord,
+   PlayAudioIcon,
 }

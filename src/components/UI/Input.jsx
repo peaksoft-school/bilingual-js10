@@ -13,12 +13,14 @@ const Input = forwardRef(
             inputRef={ref}
             fullWidth={fullWidth}
             {...rest}
+            InputProps={{ inputProps: { min: 0, max: 1000 } }}
          >
             {children}
          </MyStyledInput>
       )
    }
 )
+
 const MyStyledInput = styled(TextField)((props) => ({
    '.css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
       border: 'none',

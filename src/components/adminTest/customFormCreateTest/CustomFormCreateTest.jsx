@@ -5,6 +5,15 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
+<<<<<<< HEAD
+import { HighlightTheAnswer } from '../../test/HighlightTheAnswer'
+=======
+import { RespondLeast } from '../../respondLeast/RespondLeast'
+import { ListenSelect } from '../ListenSelect/ListenSelect'
+>>>>>>> b0438feda155ac9a9e6b0ff77f1dc17a4a173c59
+import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import StatementInput from '../statement/StatementInput'
+import SelectImage from '../../../layout/selectImg/SelectImage'
 
 const renderedContent = {
    'Select real English words': {
@@ -13,27 +22,27 @@ const renderedContent = {
    },
    'Listen and select English word': {
       placeholder: 'Listen and select English word',
-      content: <div>Listen and select English word</div>,
+      content: <ListenSelect />,
    },
    'Type what you hear': {
       placeholder: 'Take a free practice test and estimate your score',
-      content: <div>Type what you hear</div>,
+      content: <TypeWhatYouHear />,
    },
    'Record saying statement': {
       placeholder: 'My uncle is at work',
-      content: <div>Record saying statement</div>,
+      content: <StatementInput />,
    },
    'Respond in at least N words': {
       placeholder: 'Respond in at least N words',
-      content: <div>Respond in at least N words</div>,
+      content: <RespondLeast />,
    },
    'Describe image': {
       placeholder: 'Take a free practice test and estimate your score',
-      content: <div>Describe image</div>,
+      content: <SelectImage />,
    },
    'Highlight the answer': {
       placeholder: 'Highlight the answer',
-      content: <div>Highlight the answer</div>,
+      content: <HighlightTheAnswer />,
    },
    'Select the main idea': {
       placeholder: 'Select the main idea',
@@ -82,8 +91,8 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                   fullWidth
                />
             </ContainerInputSecond>
+            {renderedContent[selectedOption]?.content}
          </FormSubmit>
-         {renderedContent[selectedOption]?.content}
       </Background>
    )
 }

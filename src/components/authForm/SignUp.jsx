@@ -1,10 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { validationAuthSignUp } from '../../utils/helpers/validate/authValidate'
 import AuthContainer from '../authContainer/authContainer'
 
-const SignUp = ({ toggleSignIn }) => {
+const SignUp = () => {
+   const navigate = useNavigate()
    const handleSignUpClick = (values) => {
       console.log('Данные формы:', values)
+   }
+   const handleRegisterClick = () => {
+      navigate('/signin')
    }
    return (
       <AuthContainer
@@ -26,7 +31,7 @@ const SignUp = ({ toggleSignIn }) => {
          validationSchema={validationAuthSignUp}
          onSubmit={handleSignUpClick}
          toggleLinkText="LOG IN"
-         toggleLinkClick={toggleSignIn}
+         toggleLinkClick={handleRegisterClick}
          googleButtonText="Sign Up with Google"
       />
    )
