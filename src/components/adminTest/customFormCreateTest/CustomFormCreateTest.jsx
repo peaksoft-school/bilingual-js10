@@ -5,13 +5,11 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
-<<<<<<< HEAD
-import { HighlightTheAnswer } from '../../test/HighlightTheAnswer'
-=======
+import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
->>>>>>> b0438feda155ac9a9e6b0ff77f1dc17a4a173c59
-import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import { TypeWhatYouHear } from '../TypeWhatYouHear'
+import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 
@@ -50,7 +48,7 @@ const renderedContent = {
    },
    'Select best title': {
       placeholder: 'Select best title',
-      content: <div>Select best title</div>,
+      content: <SelectBestTitle />,
    },
 }
 
@@ -163,7 +161,7 @@ const ContainerInputSecond = styled('div')(() => ({
 const FieldTime = styled(TimeField)(() => ({
    width: '6rem',
    '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input ': {
-      height: '0.5rem',
+      height: '0.55rem',
       borderRadius: ' 0.5rem',
       border: '1.53px solid #D4D0D0',
       textAlign: 'center',
