@@ -22,6 +22,7 @@ export const InputRadio = ({
                value={valueRadio}
                name="Gender"
                checked={checkedSwitch}
+               style={{ cursor: 'pointer' }}
             />
          )
       case 'SWITCH':

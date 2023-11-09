@@ -49,8 +49,6 @@ export const ListenSelect = () => {
          handleClose()
       }
    }
-   console.log(formik.values.selectedFile)
-   console.log(formik.values.titleValues)
    const fileInputRef = useRef(null)
    const handleClick = () => {
       if (fileInputRef.current) {
