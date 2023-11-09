@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { AppRoutes } from './routes/AppRoutes'
-import { authActions } from './store/auth/authSlice'
+import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 
 function App() {
