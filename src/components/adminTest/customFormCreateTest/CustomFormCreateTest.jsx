@@ -5,13 +5,10 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
-<<<<<<< HEAD
-import { HighlightTheAnswer } from '../../test/HighlightTheAnswer'
-=======
+import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
->>>>>>> b0438feda155ac9a9e6b0ff77f1dc17a4a173c59
-import { TypeWhatYouHear } from '../../test/TypeWhatYouHear'
+import { TypeWhatYouHear } from '../TypeWhatYouHear'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 

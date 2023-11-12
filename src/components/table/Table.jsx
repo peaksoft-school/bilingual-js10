@@ -13,7 +13,7 @@ import {
 export const Table = ({ data, columns }) => {
    return (
       <Container>
-         <TableContainer component={Paper}>
+         <TableContainerStyled component={Paper}>
             <MuiTableStyled>
                <TableHead>
                   <TableRowColumns>
@@ -22,37 +22,42 @@ export const Table = ({ data, columns }) => {
                      ))}
                   </TableRowColumns>
                </TableHead>
-               <TableBody>
+               <TableBodyStyled>
                   <MainContainerStyled>
-                     {data?.map((row) => (
-                        <TableRowData key={row.id}>
-                           {columns?.map((column) => {
-                              if (column.render) {
-                                 return column.render(row)
-                              }
-                              return (
-                                 <TableCell
-                                    key={column.id}
-                                    title={String(row[column.id])}
-                                    className="tableCell"
-                                 >
-                                    {row[column.id]?.length > 10
-                                       ? `${row[column.id].substring(0, 10)}...`
-                                       : row[column.id]}
-                                 </TableCell>
-                              )
-                           })}
-                        </TableRowData>
-                     ))}
+                     {Array.isArray(data) &&
+                        data.map((row) => (
+                           <TableRowData key={row.id}>
+                              {columns?.map((column) => {
+                                 if (column.render) {
+                                    return column.render(row)
+                                 }
+                                 return (
+                                    <TableCell
+                                       key={column.id}
+                                       title={String(row[column.id])}
+                                       className="tableCell"
+                                    >
+                                       {row[column.id]?.length > 10
+                                          ? `${row[column.id].substring(
+                                               0,
+                                               10
+                                            )}...`
+                                          : row[column.id]}
+                                    </TableCell>
+                                 )
+                              })}
+                           </TableRowData>
+                        ))}
                   </MainContainerStyled>
-               </TableBody>
+               </TableBodyStyled>
             </MuiTableStyled>
-         </TableContainer>
+         </TableContainerStyled>
       </Container>
    )
 }
-
 const Container = styled('div')`
+   border: none;
+   box-shadow: none;
    .css-ly6ca0-MuiTableCell-root {
       border-bottom: none;
       font-size: none;
@@ -60,21 +65,34 @@ const Container = styled('div')`
    padding: 0;
    margin: 0;
 `
-
+const TableBodyStyled = styled(TableBody)(() => ({
+   '&& .css-ecxqme-MuiTableRow-root': {
+      borderBottom: '0.1px solid grey',
+      // boxShadow: 'none',
+   },
+}))
 const MainContainerStyled = styled('div')`
    display: flex;
    align-items: center;
    justify-content: space-around;
    flex-direction: column;
    gap: 1rem;
-   .css-txc5l5-MuiTableCell-root {
-      border-bottom: none;
+   && .css-txc5l5-MuiTableCell-root {
+      border: none;
    }
 `
+const TableContainerStyled = styled(TableContainer)(() => ({
+   marginBottom: 'none',
+   boxShadow: 'none',
+   '&.css-lhr19p-MuiTable-root': {
+      border: 'none',
+      boxShadow: 'none',
+   },
+}))
 const MuiTableStyled = styled(MuiTable)(() => ({
    display: 'flex',
    alignItems: 'center',
-   justifyContent: 'flex-start',
+   justifyContent: 'space-around',
    flexDirection: 'column',
 }))
 const TableRowColumns = styled(TableRow)(() => ({
@@ -85,7 +103,6 @@ const TableRowColumns = styled(TableRow)(() => ({
    justifyContent: 'space-around',
    columnGap: '60px',
 }))
-
 const TableRowData = styled(TableRow)(() => ({
    boxShadow:
       '0px 4px 10px 0px rgba(0, 0, 0, 0.06),0px -4px 10px 0px rgba(0, 0, 0, 0.06)',

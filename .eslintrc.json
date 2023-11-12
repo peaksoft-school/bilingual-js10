@@ -12,7 +12,7 @@
 
    "plugins": ["react", "react-hooks"],
    "rules": {
-      "import/no-cycle": "off",
+      // "import/no-cycle": "off",
       "react/prop-types": "off",
       "react/jsx-no-bind": "off",
       "no-param-reassign": "off",
@@ -26,7 +26,7 @@
       "react/display-name": "off",
       "no-shadow": "off",
       "react-hooks/exhaustive-deps": "off",
-      "import/no-unresolved": "off",
+      // "import/no-unresolved": "off",
       "react/function-component-definition": "off",
       "jsx-a11y/click-events-have-key-events": "off",
       "import/no-extraneous-dependencies": "off",

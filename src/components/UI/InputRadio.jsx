@@ -12,7 +12,6 @@ export const InputRadio = ({
    ...other
 }) => {
    const [clicked, setClicked] = useState(false)
-
    switch (variant) {
       case 'RADIO':
          return (
@@ -63,12 +62,10 @@ export const InputRadio = ({
                </div>
             </ButtonContainer>
          )
-
       default:
          return <h1>напиши variant=</h1>
    }
 }
-
 const ButtonContainer = styled('div')`
    border-radius: 99%;
    min-width: 0;
@@ -84,18 +81,16 @@ const ButtonContainer = styled('div')`
       margin-top: 3px;
    }
 `
-
 const RadioInput = styled('input')`
    height: 1rem;
    width: 1rem;
    accent-color: #3a10e5;
 `
-
 const IOSSwitch = styled((props) => (
    <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
-   width: 42,
-   height: 26,
+   width: 36,
+   height: 20,
    padding: 0,
    '& .MuiSwitch-switchBase': {
       padding: 0,
@@ -130,8 +125,8 @@ const IOSSwitch = styled((props) => (
    },
    '& .MuiSwitch-thumb': {
       boxSizing: 'border-box',
-      width: 22,
-      height: 22,
+      width: 16,
+      height: 16,
    },
    '& .MuiSwitch-track': {
       borderRadius: 26 / 2,

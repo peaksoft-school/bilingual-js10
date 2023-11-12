@@ -1,20 +1,57 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { InputRadio } from '../InputRadio'
 import Edits from '../../../assets/icons/edit.svg'
 import Delete from '../../../assets/icons/delete.svg'
+import { createTestActions } from '../../../store/admin/createTestSlice'
 
-export const TestItem = ({ text, onDelete, onEdit, checked }) => {
+export const TestItem = ({ onDelete, test, enableHandler }) => {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const enableTest = useSelector((state) =>
+      state.createTestSlice.tests.find((t) => t.id === test.id)
+   )
+
+   const updateFn = (id) => {
+      dispatch(createTestActions.updatedTestId(id))
+      navigate('/admin/update-test')
+   }
+
+   const testQuestionsHandler = (id) => {
+      dispatch(createTestActions.testID(id))
+      navigate('/admin/QuestionsPage')
+   }
+
    return (
       <ContainerItems>
-         <p>{text}</p>
+         <div
+            style={{
+               width: '100%',
+               height: '100%',
+               padding: '22px',
+               cursor: 'pointer',
+            }}
+            onClick={() => testQuestionsHandler(test.id)}
+         >
+            <p>{test.title}</p>
+         </div>
          <div className="radio">
-            <InputRadio variant="SWITCH" checkedSwitch={checked} />
-            <Button onClick={onEdit}>
+            <InputRadio
+               checkedSwitch={enableTest.enable}
+               variant="SWITCH"
+               onChange={(e) =>
+                  enableHandler(e, test.id).then((response) =>
+                     console.log(response)
+                  )
+               }
+            />
+            <Button onClick={() => updateFn(test.id)}>
                <img src={Edits} alt="Изменения" />
             </Button>
-            <Button onClick={onDelete}>
+            <Button onClick={() => onDelete(test.id)}>
                <img src={Delete} alt="Удаления" />
             </Button>
          </div>
@@ -31,7 +68,6 @@ const ContainerItems = styled('div')(() => ({
    borderRadius: '8px',
    background: '#fff',
    border: 'none',
-   padding: '22px',
    boxShadow:
       ' 0px 4px 10px 0px rgba(0, 0, 0, 0.066), 0px -4px 10px 0px rgba(0, 0, 0, 0.06)',
    '& .Buttons': {
@@ -47,6 +83,7 @@ const ContainerItems = styled('div')(() => ({
       display: 'flex',
       alignItems: 'center',
       gap: '0.5rem',
+      padding: '22px',
    },
    '& .MuiButtonBase-root': {
       minWidth: '0',
