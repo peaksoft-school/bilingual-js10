@@ -1,7 +1,6 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { useState } from 'react'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { signInWithPopup } from 'firebase/auth'
@@ -20,7 +19,6 @@ import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
 import { InputRadio } from '../UI/InputRadio'
 import { authActions } from '../../store/auth/authSlice'
-import Notify from '../UI/Notifay'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
@@ -31,18 +29,6 @@ const SigninPage = () => {
       signInWithPopup(auth, provider)
          .then((data) => {
             const userToken = data.user.accessToken
-            Notify(
-               {
-                  sucessTitle: 'Logged in',
-                  successMessage: 'You have successfully logged in with Google',
-                  errorTitle: 'Error',
-               },
-               function wait() {
-                  return new Promise((resolve) => {
-                     setTimeout(resolve, 100)
-                  })
-               }
-            )
             return userToken
          })
          .then((token) => {
@@ -64,22 +50,6 @@ const SigninPage = () => {
    const submitHandler = (values) => {
       dispatch(signIn({ userData: values, navigate, login: authActions.login }))
    }
-   const getAllPosts = async () => {
-      try {
-         const response = await Notify(
-            {
-               sucessTitle: 'Logged in',
-               successMessage: 'Logged in Successfully',
-               errorTitle: 'Error',
-            },
-            axios.get('https://jsonplaceholder.typicode.com/posts')
-         )
-         console.log(response.data)
-      } catch (error) {
-         console.log(error)
-      }
-   }
-
    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
       initialValues: {
          email: '',
@@ -134,11 +104,7 @@ const SigninPage = () => {
                      <Error />
                   </ErrorMessage>
                )}
-               <StyledButton
-                  variant="contained"
-                  type="submit"
-                  onClick={getAllPosts}
-               >
+               <StyledButton variant="contained" type="submit">
                   sign in
                </StyledButton>
                <ButtonContainer

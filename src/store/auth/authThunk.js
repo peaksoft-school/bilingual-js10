@@ -4,21 +4,6 @@ import { USER_KEY } from '../../utils/constants/constants'
 import { authActions } from './authSlice'
 import { instanse } from '../../config/axiosInstanse'
 
-// const getAllPosts = async () => {
-//    try {
-//       const response = await Notify(
-//          {
-//             sucessTitle: 'Logged in',
-//             successMessage: 'Logged in Successfully',
-//             errorTitle: 'Error',
-//          },
-//          axios.get('https://jsonplaceholder.typicode.com/posts')
-//       )
-//       console.log(response.data)
-//    } catch (error) {
-//       console.log(error)
-//    }
-// }
 export const signIn = createAsyncThunk(
    'auth/signIn',
    async ({ userData, navigate, login }, { rejectWithValue, dispatch }) => {
@@ -26,6 +11,11 @@ export const signIn = createAsyncThunk(
          const { data } = await authService.signIn(userData)
          localStorage.setItem(USER_KEY.BILINGUAL_USER_KEY, JSON.stringify(data))
          dispatch(login({ data, navigate }))
+         // Notify({
+         //    sucessTitle: 'File saved ',
+         //    successMessage: 'Successfully saved',
+         //    errorTitle: 'Error',
+         // })
          return data
       } catch (error) {
          return rejectWithValue(error.response?.data.message)

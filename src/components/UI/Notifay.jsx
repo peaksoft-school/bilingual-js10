@@ -26,7 +26,7 @@ const Notify = (messages, promise) => {
             return (
                <ErrorToast>
                   <h4>{errorTitle}</h4>
-                  <p>{data.message}</p>
+                  <p>{data.response.data.message}</p>
                </ErrorToast>
             )
          },

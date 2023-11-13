@@ -1,6 +1,5 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
-// import axios from 'axios'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -64,21 +63,7 @@ const SignupPage = () => {
    const submitHandler = (values) => {
       dispatch(signUp({ userData: values, navigate, login: authActions.login }))
    }
-   const getAllPosts = async () => {
-      try {
-         const response = await Notify(
-            {
-               sucessTitle: 'File saved',
-               successMessage: 'Successfully saved',
-               errorTitle: 'Error',
-            }
-            // axios.get('https://jsonplaceholder.typicode.com/posts')
-         )
-         console.log(response.data)
-      } catch (error) {
-         console.log(error)
-      }
-   }
+
    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
       initialValues: {
          firstName: '',
@@ -127,11 +112,7 @@ const SignupPage = () => {
                      <Error />
                   </ErrorMessage>
                )}
-               <StyledButton
-                  variant="contained"
-                  type="submit"
-                  onClick={getAllPosts}
-               >
+               <StyledButton variant="contained" type="submit">
                   sign up
                </StyledButton>
                <ButtonContainer
