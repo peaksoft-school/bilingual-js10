@@ -1,16 +1,12 @@
 import { styled } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import { Form, FormikProvider, useFormik } from 'formik'
 import React, { useRef } from 'react'
 import { Delete, VolumeForEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
-import { SaveHandlers } from '../../../store/listenSelect/listenSelectThunk'
 
 export const ListenSelect = () => {
-   const dispatch = useDispatch()
-
    const formik = useFormik({
       initialValues: {
          titleValues: '',
@@ -63,15 +59,15 @@ export const ListenSelect = () => {
    const handleFile = (event) => {
       const file = event.target.files[0]
       if (file) {
-         const audioUrl = URL.createObjectURL(file)
          formik.setValues({
             ...formik.values,
-            fileUrl: String(...formik.values.fileUrl, audioUrl),
+            fileUrl: file,
          })
       }
    }
    const handlePlayAudio = (index, id) => {
-      if (formik.values.fileUrl) {
+      const audioFile = formik.values.fileUrl
+      if (audioFile) {
          if (
             formik.values.audioPlaying ||
             (formik.values.audioPlaying && formik.values.audioPlaying.id !== id)
@@ -85,11 +81,12 @@ export const ListenSelect = () => {
                return
             }
          }
-         const audio = new Audio(formik.values.fileUrl[index])
+         const audio = new Audio(URL.createObjectURL(audioFile))
          audio.play()
          audio.addEventListener('ended', () => {
             formik.setValues({ ...formik.values, audioPlaying: null })
          })
+
          formik.setValues({ ...formik.values, audioPlaying: { audio, id } })
       }
    }
@@ -155,7 +152,6 @@ export const ListenSelect = () => {
                         hoverStyle="#31CF38"
                         className="saveButton"
                         variant="contained"
-                        onClick={SaveHandlers()}
                      >
                         SAVE
                      </Button>
