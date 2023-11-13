@@ -5,18 +5,11 @@ import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
-<<<<<<< HEAD
-import { HighlightTheAnswer } from '../../test/highlightTheAnswer/HighlightTheAnswer'
-import { RespondLeast } from '../../respondLeast/RespondLeast'
-import { ListenSelect } from '../ListenSelect/ListenSelect'
-import { TypeWhatYouHear } from '../TypeWhatYouHear'
-=======
 import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../TypeWhatYouHear'
 import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
->>>>>>> 8c73f129775a17499d043364668743ed0051b66e
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 import { SelectMainIdea } from '../selectMainIdea/CreateSelectMainIdea'

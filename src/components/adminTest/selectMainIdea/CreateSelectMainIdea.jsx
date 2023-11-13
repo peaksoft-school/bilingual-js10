@@ -3,7 +3,6 @@ import { styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
-
 import TextArea from '../../UI/textarea/TextArea'
 import { SelectMainModal } from './SelectMainIdeaModal'
 

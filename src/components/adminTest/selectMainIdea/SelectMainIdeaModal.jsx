@@ -29,7 +29,7 @@ export const SelectMainModal = ({
                      <span>Title</span>
                      <InputTitle
                         type="text"
-                        placeholder="Select Best title"
+                        placeholder="Select Main Idea"
                         value={titleValues}
                         onChange={(e) => setTitleValues(e.target.value)}
                      />
