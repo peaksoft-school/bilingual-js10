@@ -34,9 +34,6 @@ const TestList = ({ onClickTryTest }) => {
                </Background>
             )
          })}
-         <br />
-         <br />
-         <br />
          <FooterStyle>
             <BilingualLogo />
             <p>© 2022 Peaksoft</p>
