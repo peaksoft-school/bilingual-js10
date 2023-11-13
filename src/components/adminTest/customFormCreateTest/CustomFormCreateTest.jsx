@@ -12,7 +12,7 @@ import { TypeWhatYouHear } from '../TypeWhatYouHear'
 import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
-import { SelectMainIdea } from '../selectMainIdea/CreateSelectMainIdea'
+import { SelectMainIdea } from '../selectMainIdea/SelectMainIdea'
 
 const renderedContent = {
    'Select real English words': {

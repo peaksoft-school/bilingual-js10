@@ -3,8 +3,9 @@ import { styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
+
 import TextArea from '../../UI/textarea/TextArea'
-import { SelectMainModal } from './SelectMainIdeaModal'
+import { SelectBestModal } from '../SelectTheBestTitle/SelectBestModal'
 
 export const SelectMainIdea = () => {
    const formik = useFormik({
@@ -13,9 +14,19 @@ export const SelectMainIdea = () => {
          titleValues: '',
          options: [],
          checkboxValue: false,
-         isModalOpen: false,
+         openModal: false,
+      },
+      onSubmit: (values) => {
+         const dataArray = [{ Passage: values.passage }, ...values.options]
+         console.log(dataArray)
       },
    })
+   const OptionsModal = () => {
+      formik.setFieldValue('openModal', true)
+      const Url = new URL(window.location)
+      Url.searchParams.set('modal', 'true')
+      window.history.pushState({}, '', Url)
+   }
    const handleCheckboxChange = (id) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
@@ -40,16 +51,10 @@ export const SelectMainIdea = () => {
       )
    }
    const handleClose = () => {
-      formik.setFieldValue('isModalOpen', false)
-      const url = new URL(window.location)
-      url.searchParams.delete('modal')
-      window.history.pushState({}, '', url)
-   }
-   const openModal = () => {
-      formik.setFieldValue('isModalOpen', true)
-      const url = new URL(window.location)
-      url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', url)
+      formik.setFieldValue('openModal', false)
+      const Url = new URL(window.location)
+      Url.searchParams.delete('modal')
+      window.history.pushState({}, '', Url)
    }
    const handleSave = (e) => {
       e.preventDefault()
@@ -87,7 +92,7 @@ export const SelectMainIdea = () => {
                         defaultStyle="#3A10E5"
                         className="addNewTestButton"
                         variant="contained"
-                        onClick={openModal}
+                        onClick={OptionsModal}
                      >
                         ADD OPTIONS
                      </Button>
@@ -144,10 +149,11 @@ export const SelectMainIdea = () => {
                         </Button>
                      </div>
                   ) : null}
-                  {formik.values.isModalOpen && (
-                     <SelectMainModal
+                  {formik.values.openModal && (
+                     <SelectBestModal
+                        titlePlaceholder="Select Main Idea"
                         handleClose={handleClose}
-                        openModal={openModal}
+                        openModal={formik.values.openModal}
                         titleValues={formik.values.titleValues}
                         setTitleValues={(value) =>
                            formik.setFieldValue('titleValues', value)
@@ -158,7 +164,6 @@ export const SelectMainIdea = () => {
                            formik.setFieldValue('checkboxValue', value)
                         }
                         options={formik.values.options}
-                        formik={formik}
                      />
                   )}
                </WidthContainer>
