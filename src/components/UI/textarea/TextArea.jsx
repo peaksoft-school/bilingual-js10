@@ -23,7 +23,6 @@ const TextArea = forwardRef(
       )
    }
 )
-
 const StyledTextArea = styled(MuiTextArea)({
    backgroundColor: 'white',
    '& .MuiOutlinedInput-root': {
@@ -48,5 +47,4 @@ const StyledTextArea = styled(MuiTextArea)({
       },
    },
 })
-
 export default TextArea
