@@ -15,6 +15,7 @@ export const SelectBestModal = ({
    setCheckboxValue,
    checkboxValue,
    options,
+   titlePlaceholder = 'Select Best title',
 }) => {
    const trueOption = options.find((el) => el.checked === true)
    return (
@@ -29,7 +30,7 @@ export const SelectBestModal = ({
                      <span>Title</span>
                      <InputTitle
                         type="text"
-                        placeholder="Select Best title"
+                        placeholder={titlePlaceholder}
                         value={titleValues}
                         onChange={(e) => setTitleValues(e.target.value)}
                      />
