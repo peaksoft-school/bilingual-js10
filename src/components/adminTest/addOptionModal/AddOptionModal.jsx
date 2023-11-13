@@ -5,7 +5,7 @@ import { InputRadio } from '../../UI/InputRadio'
 import Button from '../../UI/Buttons/Button'
 import { CancelModal } from '../../../assets'
 
-const OptionModal = ({ open, handleCloseModal, onSaveOption }) => {
+const OptionModal = ({ open, handleCloseModal, onSaveOption, titleInput }) => {
    const [isTrueOption, setIsTrueOption] = useState(false)
    const [title, setTitle] = useState('')
 
@@ -26,17 +26,17 @@ const OptionModal = ({ open, handleCloseModal, onSaveOption }) => {
          width="40rem"
          height="25rem"
          backgroundColor="#FFF"
+         titleInput={titleInput}
       >
          <>
             <CancelIcon onClick={handleCloseModal} />
             <ContainerFirstInput>
                <TextTitle>Title</TextTitle>
                <FirstInput
-                  placeholder="Select real English words"
+                  placeholder={titleInput}
                   name="title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value.slice(0, 12))}
-                  maxLength={12}
+                  onChange={(e) => setTitle(e.target.value)}
                />
             </ContainerFirstInput>
             <Container>

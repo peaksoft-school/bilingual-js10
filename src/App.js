@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { login } from './store/auth/authSlice'
-import { AppRoutes } from './routes/AppRoutes'
+import CustomFormCreateTest from './components/adminTest/customFormCreateTest/CustomFormCreateTest'
+// import { Ap pRoutes } from './routes/AppRoutes'
 
 function App() {
    const dispatch = useDispatch()
@@ -18,7 +19,8 @@ function App() {
    return (
       <div>
          <h1>Billingual-10</h1>
-         <AppRoutes />
+         {/* <AppRoutes /> */}
+         <CustomFormCreateTest />
       </div>
    )
 }

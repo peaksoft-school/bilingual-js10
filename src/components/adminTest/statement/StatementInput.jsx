@@ -9,15 +9,15 @@ const StatementInput = ({ handleClose }) => {
       initialValues: {
          inputValue: '',
       },
-      validate: (values) => {
-         const errors = {}
-         if (!values.inputValue) {
-            errors.inputValue = 'Required'
-         } else if (values.inputValue.length > 50) {
-            errors.inputValue = 'Must be 50 characters or less'
-         }
-         return errors
-      },
+      // validate: (values) => {
+      //    const errors = {}
+      //    if (!values.inputValue) {
+      //       errors.inputValue = 'Required'
+      //    } else if (values.inputValue.length > 50) {
+      //       errors.inputValue = 'Must be 50 characters or less'
+      //    }
+      //    return errors
+      // },
       onSubmit: (values) => {
          console.log('Form submitted with values:', values)
       },
@@ -53,7 +53,6 @@ const StatementInput = ({ handleClose }) => {
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
                      variant="contained"
-                     type="submit"
                   >
                      SAVE
                   </Button>
