@@ -13,7 +13,8 @@ export const RespondLeast = () => {
       },
       validationSchema: validationAuthSignUp,
       onSubmit: (values) => {
-         console.log(values)
+         console.log('Formik State:', formik)
+         console.log(json.stringify(values, null, 2))
       },
    })
 
@@ -24,8 +25,8 @@ export const RespondLeast = () => {
             <Input
                className="Input replaceInput"
                id="questionStatement"
+               type="questionStatement"
                name="questionStatement"
-               type="text"
                value={formik.values.questionStatement}
                onChange={formik.handleChange}
                placeholder="“describe a time you were surprised. what happened?”"
@@ -36,10 +37,10 @@ export const RespondLeast = () => {
          </Container>
          <AudioContainer>
             <div>
-               <p className="LabelTop">Number of</p>
+               <p className="LabelTop">numberReplays of</p>
                <p className="LabelBottom">Replays</p>
                <Input
-                  type="number"
+                  type="numberReplays"
                   id="numberReplays"
                   name="numberReplays"
                   value={formik.values.numberReplays}
