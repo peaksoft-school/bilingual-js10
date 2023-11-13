@@ -1,6 +1,6 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
-import axios from 'axios'
+// import axios from 'axios'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -71,8 +71,8 @@ const SignupPage = () => {
                sucessTitle: 'File saved',
                successMessage: 'Successfully saved',
                errorTitle: 'Error',
-            },
-            axios.get('https://jsonplaceholder.typicode.com/posts')
+            }
+            // axios.get('https://jsonplaceholder.typicode.com/posts')
          )
          console.log(response.data)
       } catch (error) {
@@ -171,7 +171,7 @@ const Background = styled(Grid)(() => ({
 
 const SignUpForm = styled('form')(() => ({
    width: '38.5rem',
-   height: 'auto',
+   // height: '38rem',
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',

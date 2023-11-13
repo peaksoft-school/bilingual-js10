@@ -176,7 +176,7 @@ const Background = styled(Grid)(() => ({
 
 const SignInForm = styled('form')(() => ({
    width: '38.5rem',
-   height: 'auto',
+
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
