@@ -9,6 +9,7 @@ import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
 import { RespondLeast } from '../../respondLeast/RespondLeast'
 import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../TypeWhatYouHear'
+import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 
@@ -47,7 +48,7 @@ const renderedContent = {
    },
    'Select best title': {
       placeholder: 'Select best title',
-      content: <div>Select best title</div>,
+      content: <SelectBestTitle />,
    },
 }
 
@@ -96,7 +97,7 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
 
 export default CustomFormCreateTest
 
-const FormSubmit = styled('form')(() => ({
+const FormSubmit = styled('div')(() => ({
    width: '50rem',
    marginTop: '30px',
    display: 'flex',
@@ -160,7 +161,7 @@ const ContainerInputSecond = styled('div')(() => ({
 const FieldTime = styled(TimeField)(() => ({
    width: '6rem',
    '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input ': {
-      height: '0.5rem',
+      height: '0.55rem',
       borderRadius: ' 0.5rem',
       border: '1.53px solid #D4D0D0',
       textAlign: 'center',

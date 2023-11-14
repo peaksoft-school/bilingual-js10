@@ -9,7 +9,6 @@ import { Modal } from '../../components/UI/UiModal'
 import { Table } from '../../components/table/Table'
 import { axiosInstance } from '../../config/axiosInstance'
 import { deleteQuestion, getTestThunk } from '../../store/admin/QuestionsSlice'
-import { Background } from '../../layout/Background'
 
 export const Questions = ({ testID }) => {
    const dispatch = useDispatch()
@@ -51,7 +50,7 @@ export const Questions = ({ testID }) => {
    `
    const navigate = useNavigate()
    const goToCustomForm = () => {
-      navigate('admin/customForm')
+      navigate('/admin/custom-form')
    }
    const columns = [
       { id: 'row_number', label: '#' },
@@ -87,8 +86,8 @@ export const Questions = ({ testID }) => {
       },
    ]
    return (
-      <Background maxWidth="1200px">
-         <div>
+      <div>
+         <MiniContainer>
             <Button
                hoverStyle="#4E28E8"
                defaultStyle="#3A10E5"
@@ -96,9 +95,10 @@ export const Questions = ({ testID }) => {
             >
                + ADD MORE QUESTIONS
             </Button>
-         </div>
+         </MiniContainer>
+         <hr />
          <Table data={questions} columns={columns} />
-         <div>
+         <MiniContainer2>
             <Button
                onClick={() => navigate(-1)}
                variant="outlined"
@@ -106,7 +106,7 @@ export const Questions = ({ testID }) => {
             >
                Go back
             </Button>
-         </div>
+         </MiniContainer2>
          <Modal
             open={openModal}
             handleCloseModal={handleCloseModal}
@@ -144,28 +144,29 @@ export const Questions = ({ testID }) => {
                </ModalContainer>
             </div>
          </Modal>
-      </Background>
+      </div>
    )
 }
+
 const Container = styled('div')`
    display: flex;
    align-items: center;
    justify-content: center;
    gap: 0.5rem;
 `
-// const MiniContainer = styled('div')`
-//    width: 80rem;
-//    height: 31.25rem;
-//    background-color: #fff;
-//    div {
-//       display: flex;
-//       justify-content: flex-end;
-//       button {
-//          margin-right: 9rem;
-//          margin-top: 1rem;
-//       }
-//    }
-// `
+const MiniContainer = styled('div')`
+   width: 100%;
+   height: 70px;
+   display: flex;
+   justify-content: end;
+   margin-top: 40px;
+`
+const MiniContainer2 = styled('div')`
+   width: 100%;
+   display: flex;
+   justify-content: end;
+   margin-top: 31px;
+`
 const ModalDeleteStyled = styled('div')`
    display: flex;
    align-items: center;
