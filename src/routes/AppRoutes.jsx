@@ -1,38 +1,43 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Routes } from 'react-router'
-import { routes } from '../utils/constants/constants'
-import { PrivateRoutes } from './privateRoutes/PrivateRoutes'
-import { AdminRoutes } from './adminRoutes/AdminRoutes'
-import { UserRoutes } from './userRoutes/UserRoutes'
+import { Route, Routes } from 'react-router-dom'
 import SignIn from '../components/authForm/SignIn'
 import SignUp from '../components/authForm/SignUp'
 import Header from '../layout/Header'
+import { ROUTES } from '../utils/constants/constants'
+import { AdminRoutes } from './adminRoutes/AdminRoutes'
+import PrivateRoutes from './privateRoutes/PrivateRoutes'
+import { UserRoutes } from './userRoutes/UserRoutes'
 
 export const AppRoutes = () => {
-   const { isAuth, role } = useSelector((state) => state.authLogin)
+   const { isAuthorized } = useSelector((state) => state.auth)
    return (
       <Routes>
+         {/* Guest */}
          <Route path="/" element={<Header />} />
          <Route path="/signin" element={<SignIn />} />
          <Route path="/signup" element={<SignUp />} />
+
+         {/* User */}
          <Route
-            path={routes.ADMIN.path}
+            path={`${ROUTES.USER.index}/*`}
             element={
                <PrivateRoutes
-                  Component={AdminRoutes}
-                  isAuth={isAuth}
-                  userRole={role}
+                  component={<UserRoutes />}
+                  fallbackPath="/"
+                  isAuthorized={isAuthorized}
                />
             }
          />
+
+         {/* Admin */}
          <Route
-            path={routes.USER.path}
+            path={`${ROUTES.ADMIN.index}/*`}
             element={
                <PrivateRoutes
-                  Component={UserRoutes}
-                  isAuth={isAuth}
-                  userRole={role}
+                  component={<AdminRoutes />}
+                  fallbackPath="/"
+                  isAuthorized={isAuthorized}
                />
             }
          />
