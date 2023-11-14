@@ -19,7 +19,7 @@ import { authWithGoogle, signUp } from '../../store/auth/authThunk'
 import { validationAuthSignUp } from '../../utils/helpers/validate/authValidate'
 import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
-import Notify from '../UI/Notifay'
+// import Notify from '../UI/Notifay'
 
 const SignupPage = () => {
    const dispatch = useDispatch()
@@ -32,18 +32,18 @@ const SignupPage = () => {
       signInWithPopup(auth, provider)
          .then((data) => {
             const userToken = data.user.accessToken
-            Notify(
-               {
-                  sucessTitle: 'Logged in',
-                  successMessage: 'You have successfully logged in with Google',
-                  errorTitle: 'Error',
-               },
-               function wait() {
-                  return new Promise((resolve) => {
-                     setTimeout(resolve, 100)
-                  })
-               }
-            )
+            // Notify(
+            //    {
+            //       sucessTitle: 'Logged in',
+            //       successMessage: 'You have successfully logged in with Google',
+            //       errorTitle: 'Error',
+            //    },
+            //    function wait() {
+            //       return new Promise((resolve) => {
+            //          setTimeout(resolve, 100)
+            //       })
+            //    }
+            // )
             return userToken
          })
          .then((token) => {
@@ -152,7 +152,6 @@ const Background = styled(Grid)(() => ({
 
 const SignUpForm = styled('form')(() => ({
    width: '38.5rem',
-   // height: '38rem',
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
