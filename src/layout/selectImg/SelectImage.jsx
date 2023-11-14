@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import Button from '../../components/UI/Buttons/Button'
 import Input from '../../components/UI/Input'
 import UpploadFile from './UpploadFile'
+import { postDescribeImage } from '../../store/s3file/thunk'
 
 const SelectImage = ({ handleClose }) => {
    const [selectedImage, setSelectedImage] = useState(null)
+   const dispatch = useDispatch()
+
+   const handleSave = (values) => {
+      dispatch(postDescribeImage({ selectedImage, values: values.inputValue }))
+   }
+
    const formik = useFormik({
       initialValues: {
          inputValue: '',
@@ -21,6 +29,7 @@ const SelectImage = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
+         handleSave(values)
          console.log('Form submitted with values:', values, selectedImage)
       },
    })

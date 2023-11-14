@@ -3,13 +3,13 @@ import { store } from '../store'
 
 export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
-export const axiosInstance = axios.create({
+export const axiosFile = axios.create({
    baseURL: BASE_URL,
    headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
    },
 })
-axiosInstance.interceptors.request.use((config) => {
+axiosFile.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
    //  const { token } = store.getState().authLogin
    const token =
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use((config) => {
    return updatedConfig
 })
 
-axiosInstance.interceptors.response.use(
+axiosFile.interceptors.response.use(
    (response) => {
       return Promise.resolve(response)
    },
