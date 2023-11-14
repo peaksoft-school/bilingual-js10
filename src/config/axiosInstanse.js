@@ -2,8 +2,7 @@ import axios from 'axios'
 import { store } from '../store'
 import { authActions } from '../store/auth/authSlice'
 
-export const BASE_URL =
-   'http://ec2-18-153-48-98.eu-central-1.compute.amazonaws.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com'
 
 export const instanse = axios.create({
    baseURL: BASE_URL,
