@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { login } from './store/auth/authSlice'
-import { Ap pRoutes } from './routes/AppRoutes'
+import { AppRoutes } from './routes/AppRoutes'
 
 function App() {
    const dispatch = useDispatch()
