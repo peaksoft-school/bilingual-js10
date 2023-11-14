@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { store } from '../store'
 
-export const BASE_URL =
-   'http://ec2-18-153-48-98.eu-central-1.compute.amazonaws.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
 export const axiosInstance = axios.create({
    baseURL: BASE_URL,
@@ -12,7 +11,9 @@ export const axiosInstance = axios.create({
 })
 axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const { token } = store.getState().authLogin
+   //  const { token } = store.getState().authLogin
+   const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDA1NjI4NzQsImlhdCI6MTY5OTk1ODA3NCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.g0lr-GMkQi5WqB5RE5xy-geIxw2C0LEcHnAlVVF0vYc'
    if (token) {
       updatedConfig.headers.Authorization = `Bearer ${token}`
    }

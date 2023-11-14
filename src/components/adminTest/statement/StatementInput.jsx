@@ -1,10 +1,28 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import { InputLabel, styled } from '@mui/material'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 const StatementInput = ({ handleClose }) => {
+   const postStatement = createAsyncThunk(
+      'post/statement',
+      async ({ values }, { rejectWithValue }) => {
+         try {
+            await axiosInstance.post(
+               '/questions?testId=1&questionType=RECORD_SAYING_STATEMENT',
+               {
+                  statement: values,
+               }
+            )
+            return data
+         } catch (error) {
+            return rejectWithValue(error)
+         }
+      }
+   )
    const formik = useFormik({
       initialValues: {
          inputValue: '',
@@ -19,6 +37,7 @@ const StatementInput = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
+         postStatement(values)
          console.log('Form submitted with values:', values)
       },
    })
