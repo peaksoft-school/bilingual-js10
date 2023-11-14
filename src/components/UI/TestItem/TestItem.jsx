@@ -27,17 +27,9 @@ export const TestItem = ({ onDelete, test, enableHandler }) => {
 
    return (
       <ContainerItems>
-         <div
-            style={{
-               width: '100%',
-               height: '100%',
-               padding: '22px',
-               cursor: 'pointer',
-            }}
-            onClick={() => testQuestionsHandler(test.id)}
-         >
+         <TextBox onClick={() => testQuestionsHandler(test.id)}>
             <p>{test.title}</p>
-         </div>
+         </TextBox>
          <div className="radio">
             <InputRadio
                checkedSwitch={enableTest.enable}
@@ -90,3 +82,10 @@ const ContainerItems = styled('div')(() => ({
       color: '#fff',
    },
 }))
+
+const TextBox = styled('div')({
+   width: '100%',
+   height: '100%',
+   padding: '22px',
+   cursor: 'pointer',
+})
