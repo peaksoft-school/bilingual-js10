@@ -30,6 +30,7 @@
       "react/function-component-definition": "off",
       "jsx-a11y/click-events-have-key-events": "off",
       "import/no-extraneous-dependencies": "off",
+      "react/jsx-boolean-value": "off",
       "max-len": [
          "error",
          {
@@ -40,7 +41,7 @@
          }
       ],
       "no-undef": "off",
-      "no-console": ["off", { "allow": ["warn", "error"] }],
+      "no-console": ["warn", { "allow": ["warn", "error"] }],
       "jsx-a11y/label-has-associated-control": [
          "error",
          {

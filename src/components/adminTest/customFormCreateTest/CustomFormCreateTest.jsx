@@ -12,6 +12,7 @@ import { TypeWhatYouHear } from '../TypeWhatYouHear'
 import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
+import { SelectMainIdea } from '../selectMainIdea/SelectMainIdea'
 
 const renderedContent = {
    'Select real English words': {
@@ -44,7 +45,7 @@ const renderedContent = {
    },
    'Select the main idea': {
       placeholder: 'Select the main idea',
-      content: <div>Select the main idea</div>,
+      content: <SelectMainIdea />,
    },
    'Select best title': {
       placeholder: 'Select best title',

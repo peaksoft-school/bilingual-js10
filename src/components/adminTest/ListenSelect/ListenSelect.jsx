@@ -13,13 +13,14 @@ export const ListenSelect = () => {
          selectedFile: '',
          isModalOpen: false,
          options: [],
-         audioFile: [],
+         fileUrl: '',
          audioPlaying: null,
       },
       onSubmit: (values) => {
          console.log(values)
       },
    })
+
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)
       const Url = new URL(window.location)
@@ -34,10 +35,10 @@ export const ListenSelect = () => {
    }
    const handleSave = () => {
       const newOption = {
-         id: Math.random(),
-         text: formik.values.titleValues,
-         checked: false,
-         checkedMusic: false,
+         id: new Date(),
+         audioUrl: formik.values.fileUrl,
+         title: formik.values.titleValues,
+         isTrue: false,
       }
       if (formik.values) {
          formik.setValues({
@@ -57,13 +58,16 @@ export const ListenSelect = () => {
    }
    const handleFile = (event) => {
       const file = event.target.files[0]
-      formik.setValues({
-         ...formik.values,
-         audioFile: [...formik.values.audioFile, file],
-      })
+      if (file) {
+         formik.setValues({
+            ...formik.values,
+            fileUrl: file,
+         })
+      }
    }
    const handlePlayAudio = (index, id) => {
-      if (formik.values.audioFile) {
+      const audioFile = formik.values.fileUrl
+      if (audioFile) {
          if (
             formik.values.audioPlaying ||
             (formik.values.audioPlaying && formik.values.audioPlaying.id !== id)
@@ -77,13 +81,12 @@ export const ListenSelect = () => {
                return
             }
          }
-         const audio = new Audio(
-            URL.createObjectURL(formik.values.audioFile[index])
-         )
+         const audio = new Audio(URL.createObjectURL(audioFile))
          audio.play()
          audio.addEventListener('ended', () => {
             formik.setValues({ ...formik.values, audioPlaying: null })
          })
+
          formik.setValues({ ...formik.values, audioPlaying: { audio, id } })
       }
    }
@@ -123,7 +126,7 @@ export const ListenSelect = () => {
                                        : '#655F5F ',
                               }}
                            />
-                           <p>{el.text}</p>
+                           <p>{el.title}</p>
                         </AudioContainer>
                         <ContainDeleteChek>
                            <InputRadio variant="CHECKBOX" />
