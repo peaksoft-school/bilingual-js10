@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
 import PauseIcon from '@mui/icons-material/Pause'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
+import { postFileThunk } from '../../store/questions/questionsThunk'
 
-export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
+export const TypeWhatYouHear = ({ onGoBack }) => {
    const [audioFile, setAudioFile] = useState(null)
    const [isAudioTrue, setIsAudioTrue] = useState(false)
    const [audio, setAudio] = useState(null)
+   const dispatch = useDispatch()
 
    const formik = useFormik({
       initialValues: {
          quantityInputValue: 0,
          correctAnswer: '',
       },
-      onSubmit: (values) => {
-         console.log(values.quantityInputValue, values.correctAnswer, audioFile)
-      },
    })
+
+   const saveHandler = (e) => {
+      e.preventDefault()
+      dispatch(postFileThunk({ file: audioFile }))
+   }
 
    const playAudio = () => {
       setIsAudioTrue((prev) => !prev)
@@ -111,12 +116,11 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                      Go back
                   </Button>
                   <Button
-                     type="submit"
                      variant="contained"
                      className="saveButton"
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={onSave}
+                     onClick={(e) => saveHandler(e)}
                   >
                      Save
                   </Button>
