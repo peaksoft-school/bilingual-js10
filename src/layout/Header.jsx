@@ -6,8 +6,12 @@ import Button from '../components/UI/Buttons/Button'
 
 const Header = ({ role = 'guest' }) => {
    const navigate = useNavigate()
-   const handleRegisterClick = () => {
+   const handleComeInClick = () => {
       navigate('/signin')
+   }
+
+   const handleLoginClick = () => {
+      navigate('/signup')
    }
    return (
       <MyHeader>
@@ -16,16 +20,20 @@ const Header = ({ role = 'guest' }) => {
          </LogoBox>
          {role === 'guest' ? (
             <ButtonsContainer>
-               <Button defaultStyle="#3A10E5" hoverStyle="#4E28E8">
+               <Button
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#4E28E8"
+                  onClick={handleComeInClick}
+               >
                   to come in
                </Button>
                <Button
                   defaultStyle="white"
                   hoverStyle="#F0EDED"
                   className="registerButton"
-                  onClick={handleRegisterClick}
+                  onClick={handleLoginClick}
                >
-                  register
+                  Registration
                </Button>
             </ButtonsContainer>
          ) : (

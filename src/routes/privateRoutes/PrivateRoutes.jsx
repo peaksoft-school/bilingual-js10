@@ -1,18 +1,11 @@
-import React from 'react'
-import { Navigate } from 'react-router'
-import { UserRoutes } from '../userRoutes/UserRoutes'
-import { AdminRoutes } from '../adminRoutes/AdminRoutes'
-import { routes } from '../../utils/constants/constants'
+import { Navigate } from 'react-router-dom'
 
-export const PrivateRoutes = ({ Component, isAuth, userRole }) => {
-   if (isAuth) {
-      if (userRole === 'ADMIN' && Component === UserRoutes) {
-         return <Navigate to={routes.ADMIN.path} replace />
-      }
-      if (userRole === 'USER' && Component === AdminRoutes) {
-         return <Navigate to={routes.USER.path} replace />
-      }
-      return <Component />
+const PrivateRoutes = ({ component, fallbackPath, isAuthorized }) => {
+   if (isAuthorized) {
+      return component
    }
-   return <Navigate to={routes.LOGIN} replace />
+
+   return <Navigate to={fallbackPath} replace />
 }
+
+export default PrivateRoutes
