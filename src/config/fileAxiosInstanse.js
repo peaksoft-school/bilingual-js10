@@ -1,24 +1,22 @@
 import axios from 'axios'
 import { store } from '../store'
-import { authActions } from '../store/auth/authSlice'
 
 export const BASE_URL = 'http://billingual.peaksoftprojects.com'
 
-export const axiosInstance = axios.create({
+export const fileAxiosInstance = axios.create({
    baseURL: BASE_URL,
    headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
    },
 })
 
-axiosInstance.interceptors.request.use(
+fileAxiosInstanse.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
-      const { token } = store.getState().auth.token
+      const { token } = store.getState().auth
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }
-
       return configUpdate
    },
    (error) => {
@@ -26,14 +24,14 @@ axiosInstance.interceptors.request.use(
    }
 )
 
-axiosInstance.interceptors.response.use(
+fileAxiosInstanse.interceptors.response.use(
    (response) => {
       return Promise.resolve(response)
    },
    (error) => {
-      if (error?.code === 403) {
-         store.dispatch(authActions.logout())
-         throw new Error('Unauthotized!')
+      if (error.response?.status === 401) {
+         store.dispatch(postFiles())
+         throw new Error('401 unauthotized')
       }
       return Promise.reject(error)
    }

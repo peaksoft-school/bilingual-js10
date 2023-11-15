@@ -1,40 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { USER_KEY, routes } from '../../utils/constants/constants'
+import { ROUTES, USER_KEY } from '../../utils/constants/constants'
 
 const initialState = {
-   isAuth: null,
-   email: null,
-   token: null,
-   role: false,
+   isAuthorized: false,
+   token: '',
+   email: '',
+   role: '',
 }
-const storedUserData = localStorage.getItem(USER_KEY)
-const storedUser = storedUserData ? JSON.parse(storedUserData) : null
 
-const initialStateWithStoredData = {
-   ...initialState,
-   ...storedUser,
-}
 export const authSlice = createSlice({
-   name: 'authLogin',
-   initialState: initialStateWithStoredData,
+   name: 'auth',
+   initialState,
    reducers: {
       login: (state, { payload: { data, navigate } }) => {
-         localStorage.setItem(USER_KEY, JSON.stringify(data))
-         const newState = state
-         newState.email = data.email
-         newState.role = data.role
-         newState.token = data.token
-         newState.isAuth = true
-         navigate(routes[data.role].path)
-         return newState
+         state.token = data.token
+         state.role = data.role
+         state.email = data.email
+         state.isAuthorized = true
+         navigate(ROUTES[data.role].index)
       },
-      logout: () => {
-         const newState = initialState
 
-         localStorage.removeItem(USER_KEY)
+      logout: () => {
+         localStorage.removeItem(USER_KEY.BILINGUAL_USER_KEY)
+         const newState = initialState
          return newState
       },
    },
 })
 
-export const { login, logout } = authSlice.actions
+export const authActions = authSlice.actions

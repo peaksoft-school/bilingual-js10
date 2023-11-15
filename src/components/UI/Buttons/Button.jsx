@@ -12,6 +12,7 @@ const Button = ({
    className,
    fullWidth,
    onClick,
+   type = 'submit',
    ...rest
 }) => {
    return (
@@ -25,6 +26,7 @@ const Button = ({
          hoverStyle={hoverStyle}
          activeStyle={activeStyle}
          onClick={onClick}
+         type={type}
          {...rest}
       >
          {children}
