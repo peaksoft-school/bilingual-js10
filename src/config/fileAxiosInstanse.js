@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { store } from '../store'
 
-export const BASE_URL = 'http://billingual.peaksoftprojects.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
 export const fileAxiosInstance = axios.create({
    baseURL: BASE_URL,
