@@ -1,29 +1,37 @@
-export const USER_KEY = 'BILINGUAL_USER_KEY'
-
-export const routes = {
-   LOGIN: '/signin',
-   ADMIN: {
-      path: '/admin',
-   },
-   USER: {
-      path: '/user',
-   },
-   //    // GUEST: {
-   //    //    index: '/guest',
-   //    // },
+export const USER_KEY = {
+   BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
 }
 
-export const users = [
+export const signUpInput = [
    {
-      email: 'user@gmail.com',
-      password: 'user123',
-      role: 'USER',
-      token: 'token',
+      name: 'firstName',
+      label: 'First name',
+      type: 'text',
    },
    {
-      email: 'admin@gmail.com',
-      password: 'admin123',
-      role: 'ADMIN',
-      token: 'token',
+      name: 'lastName',
+      label: 'Last name',
+      type: 'text',
+   },
+   {
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+   },
+   {
+      name: 'password',
+      label: 'Password',
+      type: 'password',
    },
 ]
+
+export const ROUTES = {
+   LOGIN: '/signin',
+   REGISTRATION: '/signup',
+   ADMIN: {
+      index: '/admin',
+   },
+   USER: {
+      index: '/user',
+   },
+}

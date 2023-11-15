@@ -1,19 +1,18 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, Outlet } from 'react-router-dom'
 import Button from '../../components/UI/Buttons/Button'
 import { CreateTest } from '../../components/adminTest/createTest'
 import { TestItems } from '../../components/adminTest/testItems/TestItems'
-import { logout } from '../../store/auth/authSlice'
 import CustomFormCreateTest from '../../components/adminTest/customFormCreateTest/CustomFormCreateTest'
 import QuestionsPage from '../../components/UI/TestItem/QuestionsPage'
+import { authActions } from '../../store/auth/authSlice'
 
 export const AdminRoutes = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const handleLogout = () => {
-      dispatch(logout())
-      navigate('/signin')
+      dispatch(authActions.logout(navigate))
    }
    return (
       <div>
@@ -27,6 +26,7 @@ export const AdminRoutes = () => {
             <Route path="/custom-form" element={<CustomFormCreateTest />} />
             <Route path="/QuestionsPage" element={<QuestionsPage />} />
          </Routes>
+         <Outlet />
       </div>
    )
 }
