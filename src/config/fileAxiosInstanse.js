@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { store } from '../store'
 
-export const BASE_URL =
-   'http://ec2-18-153-48-98.eu-central-1.compute.amazonaws.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com'
 
-export const fileAxiosInstanse = axios.create({
+export const fileAxiosInstance = axios.create({
    baseURL: BASE_URL,
    headers: {
       'Content-Type': 'multipart/form-data',
@@ -18,7 +17,6 @@ fileAxiosInstanse.interceptors.request.use(
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }
-
       return configUpdate
    },
    (error) => {
