@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import authService from '../../api/authService'
 import { USER_KEY } from '../../utils/constants/constants'
 import { authActions } from './authSlice'
-import { instanse } from '../../config/axiosInstanse'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const signIn = createAsyncThunk(
    'auth/signIn',
@@ -40,8 +40,8 @@ export const authWithGoogle = createAsyncThunk(
    'auth/signInWithGoogle',
    async ({ token, navigate }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await instanse.post(
-            '/api/auth/signInWithGoogle',
+         const { data } = await axiosInstance.post(
+            '/auth/signInWithGoogle',
             null,
             {
                params: { token },

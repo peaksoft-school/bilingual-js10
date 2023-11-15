@@ -4,14 +4,14 @@ import { InputLabel, styled } from '@mui/material'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
-import { axiosInstance } from '../../../config/axiosInstance'
+import { axiosMyInstance } from '../../../config/axiosInstanceMy'
 
 const StatementInput = ({ handleClose }) => {
    const postStatement = createAsyncThunk(
       'post/statement',
       async ({ values }, { rejectWithValue }) => {
          try {
-            await axiosInstance.post(
+            await axiosMyInstance.post(
                '/questions?testId=1&questionType=RECORD_SAYING_STATEMENT',
                {
                   statement: values,
