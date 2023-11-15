@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
 import PauseIcon from '@mui/icons-material/Pause'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
-import { postFileThunk } from '../../store/questions/questionsThunk'
+import { TypeWhatYouHearThunk } from '../../store/questions/questionsThunk'
 
 export const TypeWhatYouHear = ({ onGoBack }) => {
    const [audioFile, setAudioFile] = useState(null)
    const [isAudioTrue, setIsAudioTrue] = useState(false)
    const [audio, setAudio] = useState(null)
    const dispatch = useDispatch()
+   const { title, questionDuration } = useSelector((state) => state.questions)
 
    const formik = useFormik({
       initialValues: {
@@ -23,7 +24,15 @@ export const TypeWhatYouHear = ({ onGoBack }) => {
 
    const saveHandler = (e) => {
       e.preventDefault()
-      dispatch(postFileThunk({ file: audioFile }))
+      const data = {
+         title,
+         duration: questionDuration,
+         numberOffReplays: formik.values.quantityInputValue,
+         correctAnswer: formik.values.correctAnswer,
+         audioFile,
+      }
+      console.log(data)
+      dispatch(TypeWhatYouHearThunk(data))
    }
 
    const playAudio = () => {
