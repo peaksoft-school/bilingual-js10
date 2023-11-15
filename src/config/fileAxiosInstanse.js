@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { store } from '../store'
 
-export const BASE_URL = 'http://billingual.peaksoftprojects.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
 export const fileAxiosInstance = axios.create({
    baseURL: BASE_URL,
@@ -10,7 +10,7 @@ export const fileAxiosInstance = axios.create({
    },
 })
 
-fileAxiosInstanse.interceptors.request.use(
+fileAxiosInstance.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
       const { token } = store.getState().auth
@@ -24,7 +24,7 @@ fileAxiosInstanse.interceptors.request.use(
    }
 )
 
-fileAxiosInstanse.interceptors.response.use(
+fileAxiosInstance.interceptors.response.use(
    (response) => {
       return Promise.resolve(response)
    },
