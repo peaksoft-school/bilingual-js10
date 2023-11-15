@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from '../store'
 import { authActions } from '../store/auth/authSlice'
 
-export const BASE_URL = 'http://billingual.peaksoftprojects.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
 export const axiosInstance = axios.create({
    baseURL: BASE_URL,
