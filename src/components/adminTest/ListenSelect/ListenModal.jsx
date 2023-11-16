@@ -1,5 +1,5 @@
-import { styled } from '@mui/material'
 import React from 'react'
+import { styled } from '@mui/material'
 import { CancelModal } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { Modal } from '../../UI/UiModal'
@@ -44,6 +44,7 @@ export const ListenModal = ({
                   ref={fileInputRef}
                   type="file"
                   id="myFileInput"
+                  // name="file"
                   onChange={(e) => {
                      handleFile(e)
                      formik.setFieldValue('selectedFile', e.target.files[0])

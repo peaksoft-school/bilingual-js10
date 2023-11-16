@@ -1,12 +1,24 @@
 import { styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { Form, FormikProvider, useFormik } from 'formik'
 import React, { useRef } from 'react'
+import { postListenSelect } from '../../../store/ListenSelect/listenSelectThunk'
 import { Delete, VolumeForEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
 
 export const ListenSelect = () => {
+   const dispatch = useDispatch()
+   const SaveFile = (values) => {
+      dispatch(
+         postListenSelect({
+            values: values.titleValues,
+            file: values.fileUrl,
+            isTrue: values.isTrue,
+         })
+      )
+   }
    const formik = useFormik({
       initialValues: {
          titleValues: '',
@@ -15,12 +27,13 @@ export const ListenSelect = () => {
          options: [],
          fileUrl: '',
          audioPlaying: null,
+         isTrue: false,
       },
       onSubmit: (values) => {
-         console.log(values)
+         console.log('Dastan', values)
+         SaveFile(values)
       },
    })
-
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)
       const Url = new URL(window.location)
@@ -65,7 +78,7 @@ export const ListenSelect = () => {
          })
       }
    }
-   const handlePlayAudio = (index, id) => {
+   const handlePlayAudio = (id) => {
       const audioFile = formik.values.fileUrl
       if (audioFile) {
          if (
@@ -86,7 +99,6 @@ export const ListenSelect = () => {
          audio.addEventListener('ended', () => {
             formik.setValues({ ...formik.values, audioPlaying: null })
          })
-
          formik.setValues({ ...formik.values, audioPlaying: { audio, id } })
       }
    }
@@ -118,7 +130,7 @@ export const ListenSelect = () => {
                         <AudioContainer>
                            <p>{index + 1}</p>
                            <VolumeForEnglishWord
-                              onClick={() => handlePlayAudio(index, el.id)}
+                              onClick={() => handlePlayAudio(el.id)}
                               style={{
                                  fill:
                                     formik.values.audioPlaying?.id === el.id
@@ -129,7 +141,12 @@ export const ListenSelect = () => {
                            <p>{el.title}</p>
                         </AudioContainer>
                         <ContainDeleteChek>
-                           <InputRadio variant="CHECKBOX" />
+                           <InputRadio
+                              variant="CHECKBOX"
+                              onChange={(e) =>
+                                 formik.values.isTrue(e.target.value)
+                              }
+                           />
                            <Delete
                               onClick={() => removeElement(el.id)}
                               className="DeleteIcon"
@@ -144,6 +161,7 @@ export const ListenSelect = () => {
                         variant="outlined"
                         hoverStyle="#3A10E5"
                         className="Button"
+                        onClick={handleClose}
                      >
                         GO BACK
                      </Button>
@@ -152,6 +170,7 @@ export const ListenSelect = () => {
                         hoverStyle="#31CF38"
                         className="saveButton"
                         variant="contained"
+                        type="submit"
                      >
                         SAVE
                      </Button>
