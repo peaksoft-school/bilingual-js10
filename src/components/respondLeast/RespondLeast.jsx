@@ -4,7 +4,6 @@ import { Typography, styled } from '@mui/material'
 import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
 import { validationAuthSignUp } from '../../helpers/validation'
-import { axiosInstance } from '../../config/axiosInstanceses'
 
 export const RespondLeast = () => {
    const formik = useFormik({
