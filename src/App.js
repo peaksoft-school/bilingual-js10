@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { AppRoutes } from './routes/AppRoutes'
 import { authActions } from './store/auth/authSlice'
+import CustomFormCreateTest from './components/adminTest/customFormCreateTest/CustomFormCreateTest'
 
 function App() {
    const dispatch = useDispatch()
@@ -28,6 +29,7 @@ function App() {
       <div>
          {/* <h1>Billingual-10</h1>{' '} */}
          <AppRoutes />
+         <CustomFormCreateTest />
       </div>
    )
 }
