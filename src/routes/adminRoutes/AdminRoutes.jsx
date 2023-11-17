@@ -1,15 +1,15 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../store/auth/authSlice'
+import { Outlet, useNavigate } from 'react-router-dom'
+
 import Button from '../../components/UI/Buttons/Button'
+import { authActions } from '../../store/auth/authSlice'
 
 export const AdminRoutes = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const handleLogout = () => {
-      dispatch(logout())
-      navigate('/signin')
+      dispatch(authActions.logout(navigate))
    }
    return (
       <div>
@@ -17,6 +17,7 @@ export const AdminRoutes = () => {
          <Button type="button" onClick={handleLogout}>
             logout
          </Button>
+         <Outlet />
       </div>
    )
 }
