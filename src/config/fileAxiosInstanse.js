@@ -1,24 +1,22 @@
 import axios from 'axios'
 import { store } from '../store'
 
-export const BASE_URL =
-   'http://ec2-18-153-48-98.eu-central-1.compute.amazonaws.com'
+export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
-export const fileAxiosInstanse = axios.create({
+export const fileAxiosInstance = axios.create({
    baseURL: BASE_URL,
    headers: {
       'Content-Type': 'multipart/form-data',
    },
 })
 
-fileAxiosInstanse.interceptors.request.use(
+fileAxiosInstance.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
       const { token } = store.getState().auth
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }
-
       return configUpdate
    },
    (error) => {
@@ -26,7 +24,7 @@ fileAxiosInstanse.interceptors.request.use(
    }
 )
 
-fileAxiosInstanse.interceptors.response.use(
+fileAxiosInstance.interceptors.response.use(
    (response) => {
       return Promise.resolve(response)
    },

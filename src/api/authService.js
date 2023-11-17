@@ -1,11 +1,11 @@
-import { instanse } from '../config/axiosInstanse'
+import { axiosInstance } from '../config/axiosInstance'
 
 const signIn = (userData) => {
-   return instanse.post('/api/auth/signIn', userData)
+   return axiosInstance.post('/auth/signIn', userData)
 }
 
 const signUp = (userData) => {
-   return instanse.post('/api/auth/signUp', userData)
+   return axiosInstance.post('/auth/signUp', userData)
 }
 
 export default { signIn, signUp }
