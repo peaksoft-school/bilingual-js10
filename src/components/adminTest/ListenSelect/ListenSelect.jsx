@@ -7,6 +7,7 @@ import { Delete, VolumeForEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
+// import { axiosFile } from '../../../config/axiosfile'
 
 export const ListenSelect = () => {
    const dispatch = useDispatch()
@@ -19,6 +20,7 @@ export const ListenSelect = () => {
          })
       )
    }
+
    const formik = useFormik({
       initialValues: {
          titleValues: '',
@@ -27,13 +29,27 @@ export const ListenSelect = () => {
          options: [],
          fileUrl: '',
          audioPlaying: null,
-         isTrue: false,
+         isTrue: (value) => {
+            console.log(value)
+         },
       },
       onSubmit: (values) => {
          console.log('Dastan', values)
          SaveFile(values)
       },
    })
+
+   // const getFiles = createAsyncThunk('files/getFiles', async () => {
+   //    try {
+   //       const response = await axiosFile.get(
+   //          '/api/questions/getOptionsByQuestionId?questionId=97'
+   //       )
+   //       setOptions(response.data)
+   //    } catch (error) {
+   //       console.error(error)
+   //    }
+   // })
+
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)
       const Url = new URL(window.location)
@@ -144,7 +160,10 @@ export const ListenSelect = () => {
                            <InputRadio
                               variant="CHECKBOX"
                               onChange={(e) =>
-                                 formik.values.isTrue(e.target.value)
+                                 formik.setValues({
+                                    ...formik.values,
+                                    isTrue: e.target.value === 'true',
+                                 })
                               }
                            />
                            <Delete

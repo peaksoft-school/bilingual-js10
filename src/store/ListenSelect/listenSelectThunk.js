@@ -2,16 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosFile } from '../../config/axiosfile'
 import { axiosInstance } from '../../config/axiosInstance'
 
-// const getFiles = createAsyncThunk('files/getFiles', async () => {
-//    try {
-//       const response = await axiosFile.get(
-//          '/api/questions/getOptionsByQuestionId?questionId=1'
-//       )
-//       setOptions(response.data)
-//    } catch (error) {
-//       console.error(error)
-//    }
-// })
 // export const deleteQuestion = createAsyncThunk(
 //    'listenSelectSlice/deleteQuestion',
 //    async (questionId, { rejectWithValue, dispatch }) => {
@@ -34,10 +24,10 @@ import { axiosInstance } from '../../config/axiosInstance'
 // )
 export const postFileS3 = createAsyncThunk(
    'file/postFileS3',
-   async (file, { rejectWithValue }) => {
+   async ({ rejectWithValue }) => {
       try {
          const formData = new FormData()
-         formData.append('file', file)
+         formData.append()
          const response = await axiosFile.post('/api/s3file', formData)
          const { data } = response
          return data
@@ -51,20 +41,18 @@ export const postFileS3 = createAsyncThunk(
 
 export const postListenSelect = createAsyncThunk(
    'File/audio',
-   async ({ values, file }, { rejectWithValue, dispatch }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const testId = 8
-         const link = await dispatch(postFileS3(file))
+         // const link = await dispatch(postFileS3(file))
          const response = await axiosInstance.post(
             `/api/questions?testId=${testId}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
             {
-               title: values.titleValues,
-               fileUrl: values.fileUrl,
                options: [
                   {
-                     title: values.titleValues,
-                     isTrue: values.isTrue,
-                     audioUrl: link,
+                     title: 'string',
+                     isTrue: true,
+                     audioUrl: 'string',
                   },
                ],
             }
