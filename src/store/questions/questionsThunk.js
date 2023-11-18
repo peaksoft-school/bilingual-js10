@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstanceS3File } from '../../config/axiosInsatanceS3File'
 import { axiosInstance } from '../../config/axiosInstance'
+import Notify from '../../components/UI/Notifay'
 
 export const postFileThunk = createAsyncThunk(
    'postFileThunk',
@@ -19,21 +20,23 @@ export const postFileThunk = createAsyncThunk(
 export const TypeWhatYouHearThunk = createAsyncThunk(
    'TypeWhatYouHearThunk',
    async (data, { dispatch }) => {
-      try {
-         const link = dispatch(postFileThunk({ file: data.audioFile }))
-         console.log(link.link, 'kdjfklsjfsafj')
-         await axiosInstance.post(
-            `/questions?testId=1&questionType=TYPE_WHAT_YOU_HEAR`,
+      const fileUrl = await dispatch(postFileThunk({ file: data.audioFile }))
+      Notify(
+         {
+            sucessTitle: 'Question saved ',
+            successMessage: 'Successfully saved',
+            errorTitle: 'Error',
+         },
+         axiosInstance.post(
+            `/questions?testId=18&questionType=TYPE_WHAT_YOU_HEAR`,
             {
                title: data.title,
                duration: data.duration,
                attempts: data.numberOffReplays,
                correctAnswer: data.correctAnswer,
-               fileUrl: link,
+               fileUrl: fileUrl.payload.data.link,
             }
          )
-      } catch (error) {
-         console.log(error)
-      }
+      )
    }
 )

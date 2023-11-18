@@ -54,7 +54,7 @@ export const TypeWhatYouHear = ({ onGoBack }) => {
 
    return (
       <MainContainer>
-         <form onSubmit={formik.handleSubmit}>
+         <formik>
             <div className="widthContainer">
                <div className="audioContainer">
                   <div>
@@ -135,7 +135,7 @@ export const TypeWhatYouHear = ({ onGoBack }) => {
                   </Button>
                </div>
             </div>
-         </form>
+         </formik>
       </MainContainer>
    )
 }
