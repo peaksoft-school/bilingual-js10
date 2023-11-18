@@ -38,68 +38,53 @@ export const CreateTest = () => {
 
          return errors
       },
-      onSubmit: (values) => {
-         console.log(values)
-      },
    })
    const saveHandler = async (e) => {
       e.preventDefault()
       if (obj[0] === 'create-test') {
-         try {
-            Notify(
-               {
-                  sucessTitle: 'Test saved ',
-                  successMessage: 'Successfully saved',
-                  errorTitle: 'Error',
-               },
-               axiosInstance.post('/tests', {
-                  title: formik.values.title,
-                  description: formik.values.description,
-               })
-            )
-         } catch (error) {
-            console.log(error)
-         }
+         Notify(
+            {
+               sucessTitle: 'Test saved ',
+               successMessage: 'Successfully saved',
+               errorTitle: 'Error',
+            },
+            axiosInstance.post('/tests', {
+               title: formik.values.title,
+               description: formik.values.description,
+            })
+         )
       } else {
-         try {
-            Notify(
-               {
-                  sucessTitle: 'Test updated ',
-                  successMessage: 'Successfully updated',
-                  errorTitle: 'Error',
-               },
-               axiosInstance.put(`/tests?testId=${testId.id}`, {
-                  title: formik.values.title,
-                  description: formik.values.description,
-                  enable: formik.values.enable,
-               })
-            )
-         } catch (error) {
-            console.log(error)
-         }
+         Notify(
+            {
+               sucessTitle: 'Test updated ',
+               successMessage: 'Successfully updated',
+               errorTitle: 'Error',
+            },
+            axiosInstance.put(`/tests?testId=${testId.id}`, {
+               title: formik.values.title,
+               description: formik.values.description,
+               enable: formik.values.enable,
+            })
+         )
       }
       navigate('/admin')
    }
 
    const addQuestionHandler = async (e) => {
       e.preventDefault()
-      try {
-         axiosInstance
-            .post('/tests', {
-               title: formik.values.title,
-               description: formik.values.description,
-            })
-            .then((response) => {
-               const { message } = response.data
-               const regex = /id: (\d+)/
-               const match = regex.exec(message)
-               const id = match[1]
-               dispatch(createTestActions.testID(Number(id)))
-            })
-         navigate('/admin/custom-form')
-      } catch (error) {
-         console.log(error)
-      }
+      axiosInstance
+         .post('/tests', {
+            title: formik.values.title,
+            description: formik.values.description,
+         })
+         .then((response) => {
+            const { message } = response.data
+            const regex = /id: (\d+)/
+            const match = regex.exec(message)
+            const id = match[1]
+            dispatch(createTestActions.testID(Number(id)))
+         })
+      navigate('/admin/custom-form')
    }
 
    return (

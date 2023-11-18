@@ -9,8 +9,10 @@ import {
    Paper,
    styled,
 } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 export const Table = ({ data, columns }) => {
+   const { questions } = useSelector((state) => state.questionSlice)
    return (
       <Container>
          <TableContainerStyled component={Paper}>

@@ -8,7 +8,7 @@ import Edits from '../../../assets/icons/edit.svg'
 import Delete from '../../../assets/icons/delete.svg'
 import { createTestActions } from '../../../store/admin/createTestSlice'
 
-export const TestItem = ({ onDelete, test, enableHandler }) => {
+export const TestItem = ({ setOpen, test, enableHandler }) => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const enableTest = useSelector((state) =>
@@ -39,7 +39,7 @@ export const TestItem = ({ onDelete, test, enableHandler }) => {
             <Button onClick={() => updateFn(test.id)}>
                <img src={Edits} alt="Изменения" />
             </Button>
-            <Button onClick={() => onDelete(test.id)}>
+            <Button onClick={() => setOpen(Boolean(true))}>
                <img src={Delete} alt="Удаления" />
             </Button>
          </div>
