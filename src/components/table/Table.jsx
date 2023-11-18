@@ -17,9 +17,13 @@ export const Table = ({ data, columns }) => {
             <MuiTableStyled>
                <TableHead>
                   <TableRowColumns>
-                     {columns?.map((column) => (
-                        <TableCell key={column.id}>{column.label}</TableCell>
-                     ))}
+                     {questions.length === 0 ? (
+                        <p>There s no one here yet</p>
+                     ) : (
+                        columns?.map((column) => (
+                           <TableCell key={column.id}>{column.label}</TableCell>
+                        ))
+                     )}
                   </TableRowColumns>
                </TableHead>
                <TableBodyStyled>

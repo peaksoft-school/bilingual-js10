@@ -20,14 +20,14 @@ const QuestionsPage = () => {
          <Background maxWidth="1200px">
             {curtest.map((test) => {
                return (
-                  <Title key={test.id}>
+                  <Title key={test?.id}>
                      <Typography>
                         <span className="title">Title:</span>
-                        <span>{test.title}</span>
+                        <span>{test?.title}</span>
                      </Typography>
                      <Typography>
                         <span className="Description">Description: </span>
-                        <span>{test.description}</span>
+                        <span>{test?.description}</span>
                      </Typography>
                      <Typography>
                         <span className="Duration">Duration: </span>

@@ -1,6 +1,6 @@
 import axios from 'axios'
+import { store } from '../store/index'
 import { authActions } from '../store/auth/authSlice'
-import { store } from '../store'
 
 export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
@@ -14,7 +14,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
-      const { token } = store.getState().auth.token
+      const { token } = store.getState().auth
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }

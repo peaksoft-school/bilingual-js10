@@ -34,11 +34,7 @@ export const TestItem = ({ onDelete, test, enableHandler }) => {
             <InputRadio
                checkedSwitch={enableTest.enable}
                variant="SWITCH"
-               onChange={(e) =>
-                  enableHandler(e, test.id).then((response) =>
-                     console.log(response)
-                  )
-               }
+               onChange={(e) => enableHandler(e, test.id)}
             />
             <Button onClick={() => updateFn(test.id)}>
                <img src={Edits} alt="Изменения" />

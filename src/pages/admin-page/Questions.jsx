@@ -11,6 +11,7 @@ import { axiosInstance } from '../../config/axiosInstance'
 import { deleteQuestion, getTestThunk } from '../../store/admin/QuestionsSlice'
 
 export const Questions = ({ testID }) => {
+   const navigate = useNavigate()
    const dispatch = useDispatch()
    const [getId, setGetId] = useState()
    const [openModal, setOpenModal] = useState(false)
@@ -21,22 +22,16 @@ export const Questions = ({ testID }) => {
    }, [])
 
    const handleRadioChange = async (item) => {
-      try {
-         console.log(item.id)
-         await axiosInstance.put(
-            `/questions/updateEnable?questionId=${item.id}`,
-            !item.enable
-         )
-         dispatch(getTestThunk(testID))
-      } catch (error) {
-         console.log(error)
-      }
+      await axiosInstance.put(
+         `/questions/updateEnable?questionId=${item.id}`,
+         !item.enable
+      )
+      dispatch(getTestThunk(testID))
    }
    const handleDeleteItem = () => {
       dispatch(deleteQuestion(getId))
       setOpenModal(false)
       setTimeout(() => dispatch(getTestThunk(testID)), 300)
-      dispatch(getTestThunk(testID))
    }
    const handleOpenModal = (id) => {
       setOpenModal(true)
@@ -48,7 +43,6 @@ export const Questions = ({ testID }) => {
    const StyledLabel = styled('span')`
       color: #fff;
    `
-   const navigate = useNavigate()
    const goToCustomForm = () => {
       navigate('/admin/custom-form')
    }
@@ -132,7 +126,7 @@ export const Questions = ({ testID }) => {
                      hoverStyle="#3A10E5"
                      onClick={handleCloseModal}
                   >
-                     Cencel
+                     Cancel
                   </Button>
                   <Button
                      hoverStyle="#4E28E8"

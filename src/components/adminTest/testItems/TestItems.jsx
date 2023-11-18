@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Background } from '../../../layout/Background'
 import { TestItem } from '../../UI/TestItem/TestItem'
 import Button from '../../UI/Buttons/Button'
-import { routes } from '../../../utils/constants/constants'
 import { axiosInstance } from '../../../config/axiosInstance'
 import { createTestActions } from '../../../store/admin/createTestSlice'
 import Notify from '../../UI/Notifay'
@@ -16,48 +15,35 @@ export const TestItems = () => {
    const navigate = useNavigate()
 
    const AddNewTestHandler = () => {
-      navigate(`${routes.ADMIN.path}/create-test`)
+      navigate(`/admin/create-test`)
    }
 
    const getData = async () => {
-      try {
-         const response = await axiosInstance.get('/tests')
-         const result = response.data
-         dispatch(createTestActions.tests(result))
-      } catch (error) {
-         console.log(error)
-      }
+      const response = await axiosInstance.get('/tests')
+      const result = response.data
+      dispatch(createTestActions.tests(result))
    }
 
    const deleteTestHandler = async (testID) => {
-      try {
-         Notify(
-            {
-               sucessTitle: 'Test deleted ',
-               successMessage: 'Successfully deleted',
-               errorTitle: 'Error',
-            },
-            axiosInstance.delete(`/tests?testId=${testID}`)
-         )
-         setTimeout(() => {
-            getData()
-         }, 500)
-      } catch (error) {
-         console.log(error)
-      }
+      Notify(
+         {
+            sucessTitle: 'Test deleted ',
+            successMessage: 'Successfully deleted',
+            errorTitle: 'Error',
+         },
+         axiosInstance.delete(`/tests?testId=${testID}`)
+      )
+      setTimeout(() => {
+         getData()
+      }, 500)
    }
 
    const enableHandler = async (e, id) => {
-      try {
-         const response = await axiosInstance.put(
-            `/tests/updateEnable?testId=${id}`,
-            e.target.checked
-         )
-         console.log(response)
-         getData()
-      } catch (error) {
-         console.log(error)
-      }
+      await axiosInstance.put(
+         `/tests/updateEnable?testId=${id}`,
+         e.target.checked
+      )
+      getData()
    }
 
    useEffect(() => {

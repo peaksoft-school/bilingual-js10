@@ -14,16 +14,19 @@ const getTestThunk = createAsyncThunk('getTestThunk', async (testID) => {
 })
 export const deleteQuestion = createAsyncThunk(
    'questionSlice/deleteQuestion',
-   async (questionId, { rejectWithValue }) => {
+   async (questionId, { rejectWithValue, dispatch }) => {
       try {
          Notifay(
             {
-               sucessTitle: 'File saved ',
-               successMessage: 'Successfully saved',
+               sucessTitle: 'File deleted ',
+               successMessage: 'Successfully deleted',
                errorTitle: 'Error',
             },
             axiosInstance.delete(`/questions?questionId=${questionId}`)
          )
+         setTimeout(() => {
+            dispatch(getTestThunk())
+         }, 400)
       } catch (error) {
          rejectWithValue(error)
       }
