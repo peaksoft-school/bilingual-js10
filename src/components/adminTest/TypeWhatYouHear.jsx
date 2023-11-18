@@ -31,7 +31,6 @@ export const TypeWhatYouHear = ({ onGoBack }) => {
          correctAnswer: formik.values.correctAnswer,
          audioFile,
       }
-      console.log(data)
       dispatch(TypeWhatYouHearThunk(data))
    }
 
