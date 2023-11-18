@@ -4,6 +4,7 @@ import { Typography, styled } from '@mui/material'
 import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
 import { validationAuthSignUp } from '../../helpers/validation'
+import { axiosInstance } from '../../config/axiosInstanceses'
 
 export const RespondLeast = () => {
    const formik = useFormik({
@@ -12,11 +13,23 @@ export const RespondLeast = () => {
          numberReplays: '',
       },
       validationSchema: validationAuthSignUp,
-      onSubmit: (values) => {
-         console.log(JSON.stringify(values, null, 2))
+      onSubmit: async (values) => {
+         try {
+            const testId = 1
+            const response = await axiosInstance.post(
+               `questions?testId=${testId}&questionType=RESPOND_AT_LEAST_N_WORDS`,
+               {
+                  statement: values.questionStatement,
+                  attempts: values.numberReplays,
+                  options: [{}],
+               }
+            )
+            console.log(response.data)
+         } catch (error) {
+            console.error('Error:', error)
+         }
       },
    })
-
    return (
       <form onSubmit={formik.handleSubmit}>
          <Container>
@@ -24,8 +37,8 @@ export const RespondLeast = () => {
             <Input
                className="Input replaceInput"
                id="questionStatement"
+               type="questionStatement"
                name="questionStatement"
-               type="text"
                value={formik.values.questionStatement}
                onChange={formik.handleChange}
                placeholder="“describe a time you were surprised. what happened?”"
@@ -36,7 +49,7 @@ export const RespondLeast = () => {
          </Container>
          <AudioContainer>
             <div>
-               <p className="LabelTop">Number of</p>
+               <p className="LabelTop">numberReplays of</p>
                <p className="LabelBottom">Replays</p>
                <Input
                   type="number"

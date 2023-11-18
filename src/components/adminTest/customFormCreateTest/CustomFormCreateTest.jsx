@@ -117,7 +117,7 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
 
 export default CustomFormCreateTest
 
-const FormSubmit = styled('form')(() => ({
+const FormSubmit = styled('div')(() => ({
    width: '50rem',
    marginTop: '30px',
    display: 'flex',
