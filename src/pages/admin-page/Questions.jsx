@@ -72,8 +72,11 @@ export const Questions = ({ testID }) => {
                      value={item.score}
                      onChange={() => handleRadioChange(item)}
                   />
-                  <Edits />
-                  <TrashCan onClick={() => handleOpenModal(item.id)} />
+                  <Edits className="Edits" />
+                  <TrashCan
+                     onClick={() => handleOpenModal(item.id)}
+                     className="TrashCan"
+                  />
                </Container>
             )
          },
@@ -147,6 +150,12 @@ const Container = styled('div')`
    align-items: center;
    justify-content: center;
    gap: 0.5rem;
+   .TrashCan {
+      cursor: pointer;
+   }
+   .Edits {
+      cursor: pointer;
+   }
 `
 const MiniContainer = styled('div')`
    width: 100%;
