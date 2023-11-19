@@ -5,6 +5,7 @@ import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
 import { SelectBestModal } from './SelectBestModal'
 import TextArea from '../../UI/textarea/TextArea'
+import { axiosInstance } from '../../../config/axiosInstancese'
 
 export const SelectBestTitle = () => {
    const formik = useFormik({
@@ -15,17 +16,45 @@ export const SelectBestTitle = () => {
          checkboxValue: false,
          openModal: false,
       },
-      onSubmit: (values) => {
+      onSubmit: async (values) => {
          const dataArray = [{ Passage: values.passage }, ...values.options]
          console.log(dataArray)
+         try {
+            const testId = 1
+            const response = await axiosInstance.post(
+               `/api/questions?testId=${testId}&questionType=SELECT_THE_BEST_TITLE`,
+               {
+                  title: 'string',
+                  statement: 'string',
+                  correctAnswer: 'string',
+                  duration: 0,
+                  attempts: 0,
+                  fileUrl: 'string',
+                  fileType: 'IMAGE',
+                  passage: values.passage,
+                  options: [
+                     {
+                        title: values.options,
+                        isTrue: true,
+                        audioUrl: 'string',
+                     },
+                  ],
+               }
+            )
+            console.log(response)
+         } catch (error) {
+            console.error('Error:', error)
+         }
       },
    })
+
    const OptionsModal = () => {
       formik.setFieldValue('openModal', true)
       const Url = new URL(window.location)
       Url.searchParams.set('modal', 'true')
       window.history.pushState({}, '', Url)
    }
+
    const handleCheckboxChange = (id) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
@@ -130,19 +159,19 @@ export const SelectBestTitle = () => {
                            GO BACK
                         </Button>
                         <Button
+                           type="submit"
                            defaultStyle="#2AB930"
                            hoverStyle="#31CF38"
                            className="saveButton"
                            variant="contained"
-                           type="submit"
-                           onClick={(e) => {
-                              e.preventDefault()
-                              const dataArray = [
-                                 { Passage: formik.values.passage },
-                                 ...formik.values.options,
-                              ]
-                              console.log(dataArray)
-                           }}
+                           // onClick={(e) => {
+                           //    e.preventDefault()
+                           //    const dataArray = [
+                           //       { Passage: formik.values.passage },
+                           //       ...formik.values.options,
+                           //    ]
+                           //    console.log(dataArray)
+                           // }}
                         >
                            SAVE
                         </Button>
