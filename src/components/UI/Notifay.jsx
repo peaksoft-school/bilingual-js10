@@ -1,7 +1,8 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { styled } from '@mui/material'
-import StickRed from '../../assets/icons/StickRed.svg'
+import { StickRed } from '../../assets'
+// import StickRed from '../../assets/icons/StickRed.svg'
 
 const Notify = (messages, promise) => {
    const { sucessTitle, successMessage, errorTitle } = messages
