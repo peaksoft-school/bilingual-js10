@@ -6,7 +6,6 @@ import { Delete } from '../../../assets'
 
 import TextArea from '../../UI/textarea/TextArea'
 import { SelectBestModal } from '../SelectTheBestTitle/SelectBestModal'
-import { axiosInstance } from '../../../config/axiosInstance'
 
 export const SelectMainIdea = () => {
    const formik = useFormik({
@@ -61,30 +60,7 @@ export const SelectMainIdea = () => {
          text: formik.values.titleValues,
          checked: formik.values.checkboxValue,
       }
-      const updatedOptions = [...formik.values.options, newOption]
 
-      const dataToSend = {
-         title: '',
-         correctAnswer: '',
-         duration: 0,
-         passage: formik.values.passage,
-         options: updatedOptions.map((option) => ({
-            title: option.text,
-            isTrue: option.checked,
-         })),
-      }
-
-      try {
-         const testId = 3
-         const response = await axiosInstance.post(
-            `questions?testId=${testId}&questionType=SELECT_THE_MAIN_IDEA`,
-            dataToSend
-         )
-
-         console.log('Ответ от сервера:', response.data)
-      } catch (error) {
-         console.error('Ошибка при отправке данных на сервер:', error)
-      }
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
       formik.setFieldValue('checkboxValue', false)
