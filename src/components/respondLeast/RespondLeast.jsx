@@ -1,12 +1,16 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
 import { validationAuthSignUp } from '../../helpers/validation'
-// import { axiosInstance } from '../../config/axiosInstanceses'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const RespondLeast = () => {
+   const { testID } = useSelector((state) => state.createTestSlice)
+   const navigate = useNavigate()
    const formik = useFormik({
       initialValues: {
          questionStatement: '',
@@ -15,9 +19,8 @@ export const RespondLeast = () => {
       validationSchema: validationAuthSignUp,
       onSubmit: async (values) => {
          try {
-            const testId = 1
             const response = await axiosInstance.post(
-               `questions?testId=${testId}&questionType=RESPOND_AT_LEAST_N_WORDS`,
+               `questions?testId=${testID}&questionType=RESPOND_AT_LEAST_N_WORDS`,
                {
                   statement: values.questionStatement,
                   attempts: values.numberReplays,
@@ -68,7 +71,11 @@ export const RespondLeast = () => {
             </div>
          </AudioContainer>
          <Buttons>
-            <Button variant="outlined" hoverStyle="#3A10E5">
+            <Button
+               onClick={() => navigate('/admin')}
+               variant="outlined"
+               hoverStyle="#3A10E5"
+            >
                Go back
             </Button>
             <Button

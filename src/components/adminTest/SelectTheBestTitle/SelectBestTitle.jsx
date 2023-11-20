@@ -1,5 +1,6 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
@@ -8,6 +9,7 @@ import TextArea from '../../UI/textarea/TextArea'
 import { axiosInstance } from '../../../config/axiosInstancese'
 
 export const SelectBestTitle = () => {
+   const navigate = useNavigate()
    const formik = useFormik({
       initialValues: {
          passage: '',
@@ -141,9 +143,10 @@ export const SelectBestTitle = () => {
                   {formik.values.options.length > 0 ? (
                      <div className="ControlButton">
                         <Button
+                           onClick={() => navigate('/admin')}
                            variant="outlined"
                            hoverStyle="#3A10E5"
-                           onClick={handleClose}
+                           // onClick={handleClose}
                            className="Button"
                         >
                            GO BACK
