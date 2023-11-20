@@ -3,11 +3,14 @@ import { axiosInstance } from '../../config/axiosInstance'
 
 export const postHighlightAnswer = createAsyncThunk(
    'post/highlightAnswer',
-   async (result, { rejectWithValue }) => {
+   async (result, { rejectWithValue, getState }) => {
       try {
+         const testId = getState().createTestSlice?.testID
          const response = axiosInstance.post(
-            `/questions?testId=1&questionType=HIGHLIGHT_THE_ANSWER`,
+            `/questions?testId=${testId}&questionType=HIGHLIGHT_THE_ANSWER`,
             {
+               title: 'title',
+               duration: 99,
                statement: result.statement,
                correctAnswer: result.correctAnswer,
                passage: result.passage,
