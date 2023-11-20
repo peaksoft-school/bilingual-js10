@@ -48,7 +48,6 @@ export const authWithGoogle = createAsyncThunk(
             }
          )
          localStorage.setItem(USER_KEY.BILINGUAL_USER_KEY, JSON.stringify(data))
-         console.log('Вход через Google успешно выполнен')
          return dispatch(authActions.login({ data, navigate }))
       } catch (error) {
          return rejectWithValue(error)

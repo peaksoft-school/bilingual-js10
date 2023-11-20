@@ -6,6 +6,7 @@ import { Delete } from '../../../assets'
 
 import TextArea from '../../UI/textarea/TextArea'
 import { SelectBestModal } from '../SelectTheBestTitle/SelectBestModal'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 export const SelectMainIdea = () => {
    const formik = useFormik({
@@ -16,10 +17,7 @@ export const SelectMainIdea = () => {
          checkboxValue: false,
          openModal: false,
       },
-      onSubmit: (values) => {
-         const dataArray = [{ Passage: values.passage }, ...values.options]
-         console.log(dataArray)
-      },
+      onSubmit: () => {},
    })
    const OptionsModal = () => {
       formik.setFieldValue('openModal', true)
@@ -56,12 +54,36 @@ export const SelectMainIdea = () => {
       Url.searchParams.delete('modal')
       window.history.pushState({}, '', Url)
    }
-   const handleSave = (e) => {
+   const handleSave = async (e) => {
       e.preventDefault()
       const newOption = {
          id: Math.random(),
          text: formik.values.titleValues,
          checked: formik.values.checkboxValue,
+      }
+      const updatedOptions = [...formik.values.options, newOption]
+
+      const dataToSend = {
+         title: '',
+         correctAnswer: '',
+         duration: 0,
+         passage: formik.values.passage,
+         options: updatedOptions.map((option) => ({
+            title: option.text,
+            isTrue: option.checked,
+         })),
+      }
+
+      try {
+         const testId = 3
+         const response = await axiosInstance.post(
+            `questions?testId=${testId}&questionType=SELECT_THE_MAIN_IDEA`,
+            dataToSend
+         )
+
+         console.log('Ответ от сервера:', response.data)
+      } catch (error) {
+         console.error('Ошибка при отправке данных на сервер:', error)
       }
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
@@ -136,14 +158,15 @@ export const SelectMainIdea = () => {
                            className="saveButton"
                            variant="contained"
                            type="submit"
-                           onClick={(e) => {
-                              e.preventDefault()
-                              const dataArray = [
-                                 { Passage: formik.values.passage },
-                                 ...formik.values.options,
-                              ]
-                              console.log(dataArray)
-                           }}
+                           // onClick={(e) => {
+                           //    e.preventDefault()
+                           //    const dataArray = [
+                           //       { Passage: formik.values.passage },
+                           //       ...formik.values.options,
+                           //    ]
+                           //    console.log(dataArray)
+                           // }}
+                           onClick={handleSave}
                         >
                            SAVE
                         </Button>
