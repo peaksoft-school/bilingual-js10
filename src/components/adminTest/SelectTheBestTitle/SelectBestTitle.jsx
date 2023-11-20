@@ -18,9 +18,8 @@ export const SelectBestTitle = () => {
       },
       onSubmit: async (values) => {
          const dataArray = [{ Passage: values.passage }, ...values.options]
-         console.log(dataArray)
          try {
-            const testId = 38
+            const testId = 1
             const response = await axiosInstance.post(
                `/api/questions?testId=${testId}&questionType=SELECT_THE_BEST_TITLE`,
                {
@@ -28,6 +27,7 @@ export const SelectBestTitle = () => {
                   options: values.options,
                }
             )
+            console.log(dataArray)
             console.log(response)
          } catch (error) {
             console.error('Error:', error)
@@ -47,7 +47,7 @@ export const SelectBestTitle = () => {
          if (option.id === id) {
             return {
                ...option,
-               isTrue: !option.isTrue,
+               isTrue: !option.checked,
             }
          }
          return {
@@ -56,7 +56,7 @@ export const SelectBestTitle = () => {
          }
       })
       formik.setFieldValue('options', updatedOptions)
-      const anyChecked = updatedOptions.some((option) => option.isTrue)
+      const anyChecked = updatedOptions.some((option) => option.checked)
       formik.setFieldValue('checkboxValue', anyChecked)
    }
 
@@ -154,14 +154,6 @@ export const SelectBestTitle = () => {
                            className="saveButton"
                            variant="contained"
                            onClick={formik.handleSubmit}
-                           // onClick={(e) => {
-                           //    e.preventDefault()
-                           //    const dataArray = [
-                           //       { Passage: formik.values.passage },
-                           //       ...formik.values.options,
-                           //    ]
-                           //    console.log(dataArray)
-                           // }}
                         >
                            SAVE
                         </Button>
