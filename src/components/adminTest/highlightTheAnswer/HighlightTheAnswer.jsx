@@ -1,13 +1,19 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import Input from '../../UI/Input'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
 import { schemaHighlight } from './validationYup'
+import { postHighlightAnswer } from '../../../store/question/questionsThunk'
 
 export const HighlightTheAnswer = () => {
    const [answerValue, setAnswerValue] = useState('')
+   const dispatch = useDispatch()
+   const handleSave = (result) => {
+      dispatch(postHighlightAnswer(result))
+   }
 
    const formik = useFormik({
       initialValues: {
@@ -21,7 +27,7 @@ export const HighlightTheAnswer = () => {
             Passage: values.text,
             'Highlight correct answer': answerValue,
          }
-         console.log(result)
+         handleSave(result)
       },
    })
 

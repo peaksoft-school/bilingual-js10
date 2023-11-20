@@ -16,6 +16,7 @@ export const TestItems = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [open, setOpen] = useState(false)
+   const [delID, setDelID] = useState(null)
 
    const AddNewTestHandler = () => {
       navigate(`/admin/create-test`)
@@ -27,14 +28,14 @@ export const TestItems = () => {
       dispatch(createTestActions.tests(result))
    }
 
-   const deleteTestHandler = async (testID) => {
+   const deleteTestHandler = async () => {
       Notify(
          {
             sucessTitle: 'Test deleted ',
             successMessage: 'Successfully deleted',
             errorTitle: 'Error',
          },
-         axiosInstance.delete(`/tests?testId=${testID}`)
+         axiosInstance.delete(`/tests?testId=${delID}`)
       )
       setOpen(false)
       setTimeout(() => {
@@ -75,6 +76,7 @@ export const TestItems = () => {
                               key={test.id}
                               test={test}
                               setOpen={setOpen}
+                              setDelID={setDelID}
                               enableHandler={enableHandler}
                            />
                            {open && (
@@ -108,9 +110,7 @@ export const TestItems = () => {
                                     </Button>
                                     <Button
                                        hoverStyle="#3A10E5E5"
-                                       onClick={() =>
-                                          deleteTestHandler(test.id)
-                                       }
+                                       onClick={() => deleteTestHandler()}
                                     >
                                        Delete
                                     </Button>

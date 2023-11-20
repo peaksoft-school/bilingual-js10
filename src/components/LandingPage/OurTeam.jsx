@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import { developers } from '../../utils/helpers/Developers'
+import { developers } from '../../utils/helpers/developers'
 
 const borderRadiuses = [
    '0px 0px 0px 40px',
