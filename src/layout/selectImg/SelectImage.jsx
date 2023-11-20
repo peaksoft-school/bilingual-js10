@@ -30,7 +30,6 @@ const SelectImage = ({ handleClose }) => {
       },
       onSubmit: (values) => {
          handleSave(values)
-         console.log('Form submitted with values:', values, selectedImage)
       },
    })
 
