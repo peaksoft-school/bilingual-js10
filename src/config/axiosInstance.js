@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { store } from '../store'
+import { store } from '../store/index'
 
 export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
@@ -9,16 +9,21 @@ export const axiosInstance = axios.create({
       'Content-Type': 'application/json',
    },
 })
-axiosInstance.interceptors.request.use((config) => {
-   const updatedConfig = { ...config }
-   //  const { token } = store.getState().authLogin
-   const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDA4MTkzNDAsImlhdCI6MTcwMDIxNDU0MCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.jq3RVlYPEmAghM8gCJIRei2sspLrGrJzJtwUFtTje1o'
-   if (token) {
-      updatedConfig.headers.Authorization = `Bearer ${token}`
+
+axiosInstance.interceptors.request.use(
+   (config) => {
+      const configUpdate = { ...config }
+      const { token } = store.getState().auth
+      if (token) {
+         configUpdate.headers.Authorization = `Bearer ${token}`
+      }
+
+      return configUpdate
+   },
+   (error) => {
+      return Promise.reject(error)
    }
-   return updatedConfig
-})
+)
 
 axiosInstance.interceptors.response.use(
    (response) => {
