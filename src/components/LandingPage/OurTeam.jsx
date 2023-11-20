@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import { developers } from '../../utils/helpers/Developers'
+import { developers } from '../../utils/helpers/developers'
 
 const borderRadiuses = [
    '0px 0px 0px 40px',
@@ -9,16 +9,19 @@ const borderRadiuses = [
    '40px 0px 0px 0px',
    '40px 0px 40px 0px',
    '0px 40px 0px 0px',
+   '0px 40px 0px 0px',
    '0px 0px 40px 0px',
 ]
 
 export const OurTeam = () => {
+   console.log(developers)
    return (
       <MainTeamContainer>
          <h1>Our Team</h1>
          <div className="ImageContainer">
             {developers.map((developer, index) => (
                <div className="nameAndImageDiv" key={developer.id}>
+                  {console.log(developer)}
                   <div
                      className="imageDiv"
                      style={{

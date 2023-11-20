@@ -5,6 +5,7 @@ import Gulaiym from '../../assets/images/gulaiym.png'
 import Ayzada from '../../assets/images/ayzada.png'
 import Nurlan from '../../assets/images/nurlanBayke.jpg'
 import Daniel from '../../assets/images/daniel.png'
+import turdugulEje from '../../assets/images/turdugulEje.jpg'
 
 export const developers = [
    {
@@ -38,15 +39,21 @@ export const developers = [
       id: 5,
    },
    {
+      image: turdugulEje,
+      name: 'Турдугүл Өкөнбаева',
+      profession: 'Frontend Dev',
+      id: 6,
+   },
+   {
       image: Daniel,
       name: 'Даниэл Гафуров',
       profession: 'Backend Dev',
-      id: 6,
+      id: 7,
    },
    {
       image: Nurlan,
       name: 'Нурлан Абдуллаев',
       profession: 'Frontend Dev',
-      id: 7,
+      id: 8,
    },
 ]
