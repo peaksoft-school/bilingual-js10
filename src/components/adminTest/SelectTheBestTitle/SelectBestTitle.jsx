@@ -20,25 +20,12 @@ export const SelectBestTitle = () => {
          const dataArray = [{ Passage: values.passage }, ...values.options]
          console.log(dataArray)
          try {
-            const testId = 1
+            const testId = 38
             const response = await axiosInstance.post(
                `/api/questions?testId=${testId}&questionType=SELECT_THE_BEST_TITLE`,
                {
-                  title: 'string',
-                  statement: 'string',
-                  correctAnswer: 'string',
-                  duration: 0,
-                  attempts: 0,
-                  fileUrl: 'string',
-                  fileType: 'IMAGE',
                   passage: values.passage,
-                  options: [
-                     {
-                        title: values.options,
-                        isTrue: true,
-                        audioUrl: 'string',
-                     },
-                  ],
+                  options: values.options,
                }
             )
             console.log(response)
@@ -60,36 +47,39 @@ export const SelectBestTitle = () => {
          if (option.id === id) {
             return {
                ...option,
-               checked: !option.checked,
+               isTrue: !option.isTrue,
             }
          }
          return {
             ...option,
-            checked: false,
+            isTrue: false,
          }
       })
       formik.setFieldValue('options', updatedOptions)
-      const anyChecked = updatedOptions.some((option) => option.checked)
+      const anyChecked = updatedOptions.some((option) => option.isTrue)
       formik.setFieldValue('checkboxValue', anyChecked)
    }
+
    const removeElement = (id) => {
       formik.setFieldValue(
          'options',
          formik.values.options.filter((option) => option.id !== id)
       )
    }
+
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
       const Url = new URL(window.location)
       Url.searchParams.delete('modal')
       window.history.pushState({}, '', Url)
    }
+
    const handleSave = (e) => {
       e.preventDefault()
       const newOption = {
          id: Math.random(),
-         text: formik.values.titleValues,
-         checked: formik.values.checkboxValue,
+         title: formik.values.titleValues,
+         isTrue: formik.values.checkboxValue,
       }
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
@@ -98,7 +88,7 @@ export const SelectBestTitle = () => {
    }
 
    return (
-      <Formik onSubmit={formik.handleSubmit}>
+      <Formik>
          {() => (
             <Container>
                <WidthContainer>
@@ -133,7 +123,7 @@ export const SelectBestTitle = () => {
                            className="ContainCreatTest"
                         >
                            <p className="Number">{index + 1}</p>
-                           <p>{el.text}</p>
+                           <p>{el.title}</p>
                            <div className="RadioDelete">
                               <CheckedRadio
                                  variant="RADIO"
@@ -159,11 +149,11 @@ export const SelectBestTitle = () => {
                            GO BACK
                         </Button>
                         <Button
-                           type="submit"
                            defaultStyle="#2AB930"
                            hoverStyle="#31CF38"
                            className="saveButton"
                            variant="contained"
+                           onClick={formik.handleSubmit}
                            // onClick={(e) => {
                            //    e.preventDefault()
                            //    const dataArray = [
