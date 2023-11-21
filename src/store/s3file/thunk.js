@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosFile } from '../../config/axiosFile'
+import { fileAxiosInstance } from '../../config/fileAxiosInstanse'
 import { axiosInstance } from '../../config/axiosInstance'
 
 export const postImageS3 = createAsyncThunk(
@@ -8,7 +8,7 @@ export const postImageS3 = createAsyncThunk(
       try {
          const formData = new FormData()
          formData.append('multipartFile', fil)
-         const response = await axiosFile.post('/s3file', formData, {})
+         const response = await fileAxiosInstance.post('/s3file', formData, {})
          const data = Object.values(response.data)
          return data[0]
       } catch (error) {
@@ -27,14 +27,14 @@ export const postDescribeImage = createAsyncThunk(
    ) => {
       try {
          await dispatch(postImageS3(selectedImage))
-         await axiosInstance.post(
+         const response = await axiosInstance.post(
             '/questions?testId=1&questionType=DESCRIBE_IMAGE',
             {
                correctAnswer: values,
                fileUrl: getState().file.file,
             }
          )
-         return data
+         return response
       } catch (error) {
          return rejectWithValue(error)
       }
