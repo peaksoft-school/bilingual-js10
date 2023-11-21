@@ -43,6 +43,7 @@ import { ReactComponent as WaveIcon } from './icons/wave.svg'
 import { ReactComponent as CircleIcon } from './icons/circle.svg'
 import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
 import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
+import { ReactComponent as ModalDeleteIcon } from './icons/modal-delete-icon.svg'
 import { ReactComponent as EyePassword } from './icons/eyePassword.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
@@ -52,6 +53,7 @@ import Ulan from './images/ Ulan.jpg'
 import Aijan from './images/Aijan.png'
 
 export {
+   ModalDeleteIcon,
    CircleIcon,
    WaveIcon,
    SpeakIcon,
