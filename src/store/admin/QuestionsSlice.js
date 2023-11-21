@@ -7,6 +7,7 @@ const getTestThunk = createAsyncThunk('getTestThunk', async (testID) => {
       const response = await axiosInstance.get(
          `/tests/getById?testId=${testID}`
       )
+      console.log(testID)
       return response.data
    } catch (error) {
       return error

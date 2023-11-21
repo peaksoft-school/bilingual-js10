@@ -1,14 +1,19 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
 import { SelectBestModal } from './SelectBestModal'
 import TextArea from '../../UI/textarea/TextArea'
-import { axiosInstance } from '../../../config/axiosInstancese'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 export const SelectBestTitle = () => {
+   const { testID } = useSelector((state) => state.createTestSlice)
+   const [error, setError] = useState(null)
+
    const navigate = useNavigate()
    const formik = useFormik({
       initialValues: {
@@ -19,20 +24,21 @@ export const SelectBestTitle = () => {
          openModal: false,
       },
       onSubmit: async (values) => {
-         const dataArray = [{ Passage: values.passage }, ...values.options]
          try {
-            const testId = 1
-            const response = await axiosInstance.post(
-               `/api/questions?testId=${testId}&questionType=SELECT_THE_BEST_TITLE`,
+            await axiosInstance.post(
+               `/questions?testId=${testID}&questionType=SELECT_THE_BEST_TITLE`,
                {
                   passage: values.passage,
-                  options: values.options,
+                  options: values.options.map((el) => {
+                     return {
+                        title: el.title,
+                        isTrue: el.checked,
+                     }
+                  }),
                }
             )
-            console.log(dataArray)
-            console.log(response)
          } catch (error) {
-            console.error('Error:', error)
+            setError(error)
          }
       },
    })
@@ -49,12 +55,12 @@ export const SelectBestTitle = () => {
          if (option.id === id) {
             return {
                ...option,
-               isTrue: !option.checked,
+               checked: !option.checked,
             }
          }
          return {
             ...option,
-            isTrue: false,
+            checked: false,
          }
       })
       formik.setFieldValue('options', updatedOptions)
@@ -81,7 +87,7 @@ export const SelectBestTitle = () => {
       const newOption = {
          id: Math.random(),
          title: formik.values.titleValues,
-         isTrue: formik.values.checkboxValue,
+         checked: formik.values.checkboxValue,
       }
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
@@ -140,17 +146,22 @@ export const SelectBestTitle = () => {
                         </div>
                      ))}
                   </div>
+                  {error && (
+                     <div style={{ color: 'red', marginTop: '10px' }}>
+                        An error occurred: {error.message || 'Unknown error'}
+                     </div>
+                  )}
                   {formik.values.options.length > 0 ? (
                      <div className="ControlButton">
                         <Button
                            onClick={() => navigate('/admin')}
                            variant="outlined"
                            hoverStyle="#3A10E5"
-                           // onClick={handleClose}
                            className="Button"
                         >
                            GO BACK
                         </Button>
+
                         <Button
                            defaultStyle="#2AB930"
                            hoverStyle="#31CF38"
