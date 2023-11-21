@@ -6,11 +6,11 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { LocalizationProvider } from '@mui/x-date-pickers'
+import { store } from './store'
 import { theme } from './assets/theme/globalTheme'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { store } from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
