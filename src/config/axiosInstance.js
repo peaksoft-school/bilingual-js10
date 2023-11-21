@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { store } from '../store/index'
-import { authActions } from '../store/auth/authSlice'
 
 export const BASE_URL = 'http://billingual.peaksoftprojects.com/api'
 
@@ -31,9 +30,8 @@ axiosInstance.interceptors.response.use(
       return Promise.resolve(response)
    },
    (error) => {
-      if (error?.code === 403) {
-         store.dispatch(authActions.logout())
-         throw new Error('Unauthotized!')
+      if (error.response.status === 401) {
+         store.dispatch(logoutAction())
       }
       return Promise.reject(error)
    }
