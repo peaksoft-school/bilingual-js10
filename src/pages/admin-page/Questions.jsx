@@ -13,7 +13,7 @@ import { deleteQuestion, getTestThunk } from '../../store/admin/QuestionsSlice'
 export const Questions = ({ testID }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
-   const [getId, setGetId] = useState()
+   const [getId, setGetId] = useState(null)
    const [openModal, setOpenModal] = useState(false)
    const { questions } = useSelector((state) => state.questionSlice)
 
@@ -31,11 +31,13 @@ export const Questions = ({ testID }) => {
    const handleDeleteItem = () => {
       dispatch(deleteQuestion(getId))
       setOpenModal(false)
-      setTimeout(() => dispatch(getTestThunk(testID)), 300)
+      setTimeout(() => {
+         dispatch(getTestThunk(testID))
+      }, 400)
    }
    const handleOpenModal = (id) => {
-      setOpenModal(true)
       setGetId(id)
+      setOpenModal(true)
    }
    const handleCloseModal = () => {
       setOpenModal(false)
