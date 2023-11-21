@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
-import { postRecordStatement } from '../../../store/questions/questionsThunk'
+import { postRecordStatement } from '../../../store/question/questionsThunk'
 
 const StatementInput = ({ handleClose }) => {
    const dispatch = useDispatch()
    const handleSave = (values) => {
       console.log(values)
-      dispatch(postRecordStatement(values))
+      dispatch(postRecordStatement({ values: values.inputValue }))
    }
    const formik = useFormik({
       initialValues: {
