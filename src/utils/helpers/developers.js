@@ -5,7 +5,7 @@ import Gulaiym from '../../assets/images/gulaiym.png'
 import Ayzada from '../../assets/images/ayzada.png'
 import Nurlan from '../../assets/images/nurlanBayke.jpg'
 import Daniel from '../../assets/images/daniel.png'
-import turdugulEje from '../../assets/images/turdugulEje.jpg'
+import turdugulEje from '../../assets/images/Turdugul2Best.png'
 
 export const developers = [
    {

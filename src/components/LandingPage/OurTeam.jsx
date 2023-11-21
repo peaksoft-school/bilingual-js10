@@ -8,20 +8,18 @@ const borderRadiuses = [
    '0px 0px 40px 0px',
    '40px 0px 0px 0px',
    '40px 0px 40px 0px',
-   '0px 40px 0px 0px',
+   '0px 40px 40px 0px',
    '0px 40px 0px 0px',
    '0px 0px 40px 0px',
 ]
 
 export const OurTeam = () => {
-   console.log(developers)
    return (
       <MainTeamContainer>
          <h1>Our Team</h1>
          <div className="ImageContainer">
             {developers.map((developer, index) => (
                <div className="nameAndImageDiv" key={developer.id}>
-                  {console.log(developer)}
                   <div
                      className="imageDiv"
                      style={{
@@ -41,7 +39,6 @@ export const OurTeam = () => {
 
 const MainTeamContainer = styled('div')(() => {
    return {
-      padding: '7.5rem 6.4rem',
       '& img': {
          width: '11.25rem',
          height: '11.25rem',
