@@ -25,13 +25,13 @@ export const postHighlightAnswer = createAsyncThunk(
 
 export const postRecordStatement = createAsyncThunk(
    'post/statement',
-   async (values, { rejectWithValue, getState }) => {
+   async (result, { rejectWithValue, getState }) => {
       try {
          const testId = getState().createTestSlice?.testID
          const response = axiosInstance.post(
             `/questions?testId=${testId}&questionType=RECORD_SAYING_STATEMENT`,
             {
-               statement: values.inputValue,
+               statement: result.statement,
             }
          )
          return response.data

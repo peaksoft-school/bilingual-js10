@@ -8,9 +8,8 @@ import { postRecordStatement } from '../../../store/question/questionsThunk'
 
 const StatementInput = ({ handleClose }) => {
    const dispatch = useDispatch()
-   const handleSave = (values) => {
-      console.log(values)
-      dispatch(postRecordStatement({ values: values.inputValue }))
+   const handleSave = (result) => {
+      dispatch(postRecordStatement(result))
    }
    const formik = useFormik({
       initialValues: {
@@ -26,7 +25,10 @@ const StatementInput = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
-         handleSave(values)
+         const result = {
+            statement: values.inputValue,
+         }
+         handleSave(result)
       },
    })
    return (
