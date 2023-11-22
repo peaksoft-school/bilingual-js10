@@ -6,6 +6,7 @@ import { ToBeginButton } from '../UI/Buttons/ToBeginButton'
 export const ProveYourEnglish = () => {
    return (
       <div>
+         {/* <div style={{ width: '79rem' }}> */}
          <HeaderContinersss>
             <HeaderContiners>
                <div>
@@ -25,7 +26,6 @@ export const ProveYourEnglish = () => {
                </ButtonContinersss>
             </HeaderContiners>
          </HeaderContinersss>
-
          <TextContiners>
             <h2>Prove your English </h2>
             <h2>proficiency today with</h2>
@@ -35,8 +35,10 @@ export const ProveYourEnglish = () => {
                build the fluency
             </p>
             <span>and confidence they need to speak new languages.</span>
-            <ToBeginButton className="Buttonsssss">TO BEGIN</ToBeginButton>
+            <ToBeginButton className="Buttons">TO BEGIN</ToBeginButton>
          </TextContiners>
+         {/* </div> */}
+
          <ContainerBackground />
       </div>
    )
@@ -52,7 +54,6 @@ const TextContiners = styled('div')({
    h1: {
       fontSize: '3rem',
       color: '#cd4a85',
-      marginTop: '1rem',
    },
    h2: {
       fontSize: '2.5rem',
@@ -60,10 +61,10 @@ const TextContiners = styled('div')({
    },
    p: {
       color: '#23212a',
-      marginTop: '2rem',
+      marginTop: '1.3rem',
    },
-   '.Buttonsssss': {
-      marginTop: '2.8rem',
+   '.Buttons': {
+      marginTop: '2rem',
    },
 })
 const HeaderContiners = styled('div')({
