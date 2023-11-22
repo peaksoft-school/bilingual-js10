@@ -178,6 +178,7 @@ export const SelectBestTitle = () => {
                               className="saveButton"
                               variant="contained"
                               type="submit"
+                              onClick={() => navigate('/admin')}
                            >
                               SAVE
                            </Button>
