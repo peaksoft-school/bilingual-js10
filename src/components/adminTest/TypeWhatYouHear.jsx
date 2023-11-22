@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
 import PauseIcon from '@mui/icons-material/Pause'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
 import { TypeWhatYouHearThunk } from '../../store/questions/questionsThunk'
 
-export const TypeWhatYouHear = ({ onGoBack }) => {
+export const TypeWhatYouHear = () => {
    const [audioFile, setAudioFile] = useState(null)
    const [isAudioTrue, setIsAudioTrue] = useState(false)
    const [audio, setAudio] = useState(null)
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { title, questionDuration } = useSelector((state) => state.questions)
+   const { testID } = useSelector((state) => state.createTestSlice)
 
    const formik = useFormik({
       initialValues: {
@@ -30,6 +33,7 @@ export const TypeWhatYouHear = ({ onGoBack }) => {
          numberOffReplays: formik.values.quantityInputValue,
          correctAnswer: formik.values.correctAnswer,
          audioFile,
+         testID,
       }
       dispatch(TypeWhatYouHearThunk(data))
    }
@@ -119,7 +123,7 @@ export const TypeWhatYouHear = ({ onGoBack }) => {
                      variant="outlined"
                      className="goBackButton"
                      hoverStyle="#3A10E5"
-                     onClick={onGoBack}
+                     onClick={() => navigate(-1)}
                   >
                      Go back
                   </Button>

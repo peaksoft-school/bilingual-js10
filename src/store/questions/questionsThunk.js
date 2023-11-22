@@ -28,7 +28,7 @@ export const TypeWhatYouHearThunk = createAsyncThunk(
             errorTitle: 'Error',
          },
          axiosInstance.post(
-            `/questions?testId=18&questionType=TYPE_WHAT_YOU_HEAR`,
+            `/questions?testId=${data.testID}&questionType=TYPE_WHAT_YOU_HEAR`,
             {
                title: data.title,
                duration: data.duration,

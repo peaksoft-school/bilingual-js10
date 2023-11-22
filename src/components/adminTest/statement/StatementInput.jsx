@@ -1,10 +1,16 @@
 import React from 'react'
 import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
+import { postRecordStatement } from '../../../store/question/questionsThunk'
 
 const StatementInput = ({ handleClose }) => {
+   const dispatch = useDispatch()
+   const handleSave = (result) => {
+      dispatch(postRecordStatement(result))
+   }
    const formik = useFormik({
       initialValues: {
          inputValue: '',
@@ -19,7 +25,10 @@ const StatementInput = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
-         console.log('Form submitted with values:', values)
+         const result = {
+            statement: values.inputValue,
+         }
+         handleSave(result)
       },
    })
    return (

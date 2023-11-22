@@ -9,6 +9,7 @@ export const Modal = ({
    width,
    height,
    padding,
+   borderRadius,
    ...rest
 }) => {
    const style = {
@@ -18,7 +19,7 @@ export const Modal = ({
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      borderRadius: '10px',
+      borderRadius: borderRadius || '10px',
       backgroundColor: '#FFF',
       boxShadow: '0px 4px 39px -5px rgba(196, 196, 196, 0.60)',
       padding: `${padding}`,
