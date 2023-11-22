@@ -39,6 +39,7 @@ export const SelectBestTitle = () => {
                   }),
                }
             )
+            navigate('/admin')
          } catch (error) {
             setError(error)
          }
@@ -178,7 +179,6 @@ export const SelectBestTitle = () => {
                               className="saveButton"
                               variant="contained"
                               type="submit"
-                              onClick={() => navigate('/admin')}
                            >
                               SAVE
                            </Button>
