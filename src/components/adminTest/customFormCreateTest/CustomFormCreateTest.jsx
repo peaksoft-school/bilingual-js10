@@ -1,6 +1,7 @@
 import React from 'react'
 import { InputLabel, styled } from '@mui/material'
 import { TimeField } from '@mui/x-date-pickers/TimeField'
+import { useDispatch, useSelector } from 'react-redux'
 import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
 import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
@@ -13,6 +14,7 @@ import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 import { SelectMainIdea } from '../selectMainIdea/SelectMainIdea'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
 
 const renderedContent = {
    'Select real English words': {
@@ -58,6 +60,10 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
       'Select real English words'
    )
 
+   const dispatch = useDispatch()
+   const { /* questionDuration, */ title } = useSelector(
+      (state) => state.questions
+   )
    const handleChange = (event) => {
       setSelectedOption(event.target.value)
    }
@@ -72,6 +78,12 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                      padding="0.6rem 1rem"
                      placeholder={renderedContent[selectedOption]?.placeholder}
                      name="title"
+                     onChange={(event) =>
+                        dispatch(
+                           questionsSlice.actions.addTitle(event.target.value)
+                        )
+                     }
+                     value={title}
                   />
                </Container>
                <ContainerTimerInput>
@@ -79,7 +91,14 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                      Duration
                      <span>(in minutes)</span>
                   </TimeText>
-                  <FieldTime format="mm:ss" />
+                  <FieldTime
+                     onChange={(event) => {
+                        return dispatch(
+                           questionsSlice.actions.addTime(event?.$m)
+                        )
+                     }}
+                     format="mm:00"
+                  />
                </ContainerTimerInput>
             </ContainerTitleInput>
             <ContainerInputSecond>

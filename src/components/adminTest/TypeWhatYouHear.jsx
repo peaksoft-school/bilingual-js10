@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
 import PauseIcon from '@mui/icons-material/Pause'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
+import { TypeWhatYouHearThunk } from '../../store/questions/questionsThunk'
 
-export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
+export const TypeWhatYouHear = () => {
    const [audioFile, setAudioFile] = useState(null)
    const [isAudioTrue, setIsAudioTrue] = useState(false)
    const [audio, setAudio] = useState(null)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { testID } = useSelector((state) => state.createTestSlice)
 
    const formik = useFormik({
       initialValues: {
          quantityInputValue: 0,
          correctAnswer: '',
       },
-      onSubmit: (values) => {
-         console.log(values.quantityInputValue, values.correctAnswer, audioFile)
-      },
    })
+
+   const saveHandler = (e) => {
+      e.preventDefault()
+      const data = {
+         title,
+         duration: questionDuration,
+         numberOffReplays: formik.values.quantityInputValue,
+         correctAnswer: formik.values.correctAnswer,
+         audioFile,
+         testID,
+      }
+      dispatch(TypeWhatYouHearThunk(data))
+   }
 
    const playAudio = () => {
       setIsAudioTrue((prev) => !prev)
@@ -40,7 +57,7 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
 
    return (
       <MainContainer>
-         <form onSubmit={formik.handleSubmit}>
+         <formik>
             <div className="widthContainer">
                <div className="audioContainer">
                   <div>
@@ -106,23 +123,22 @@ export const TypeWhatYouHear = ({ onSave, onGoBack }) => {
                      variant="outlined"
                      className="goBackButton"
                      hoverStyle="#3A10E5"
-                     onClick={onGoBack}
+                     onClick={() => navigate(-1)}
                   >
                      Go back
                   </Button>
                   <Button
-                     type="submit"
                      variant="contained"
                      className="saveButton"
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={onSave}
+                     onClick={(e) => saveHandler(e)}
                   >
                      Save
                   </Button>
                </div>
             </div>
-         </form>
+         </formik>
       </MainContainer>
    )
 }
