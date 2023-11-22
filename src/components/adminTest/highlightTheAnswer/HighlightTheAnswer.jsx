@@ -5,8 +5,8 @@ import { useFormik } from 'formik'
 import Input from '../../UI/Input'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
-import { schemaHighlight } from './validationYup'
 import { postHighlightAnswer } from '../../../store/question/questionsThunk'
+import { schemaHighlight } from '../../../utils/helpers/validate/authValidate'
 
 export const HighlightTheAnswer = () => {
    const [answerValue, setAnswerValue] = useState('')

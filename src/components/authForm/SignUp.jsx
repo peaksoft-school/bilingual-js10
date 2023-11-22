@@ -112,7 +112,12 @@ const SignupPage = () => {
                      <Error />
                   </ErrorMessage>
                )}
-               <StyledButton variant="contained" type="submit">
+               <StyledButton
+                  variant="contained"
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#3A10E5E5"
+                  type="submit"
+               >
                   sign up
                </StyledButton>
                <ButtonContainer
