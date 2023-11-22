@@ -2,24 +2,17 @@ import { styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { Form, FormikProvider, useFormik } from 'formik'
 import React, { useRef } from 'react'
-import { postListenSelect } from '../../../store/ListenSelect/listenSelectThunk'
+import {
+   postFileS3,
+   postListenSelect,
+} from '../../../store/ListenSelect/listenSelectThunk'
 import { Delete, VolumeForEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
-// import { axiosFile } from '../../../config/axiosfile'
 
 export const ListenSelect = () => {
    const dispatch = useDispatch()
-   const SaveFile = (values) => {
-      dispatch(
-         postListenSelect({
-            values: values.titleValues,
-            file: values.fileUrl,
-            isTrue: values.isTrue,
-         })
-      )
-   }
 
    const formik = useFormik({
       initialValues: {
@@ -29,26 +22,17 @@ export const ListenSelect = () => {
          options: [],
          fileUrl: '',
          audioPlaying: null,
-         isTrue: (value) => {
-            console.log(value)
-         },
+         isTrue: false,
       },
       onSubmit: (values) => {
          console.log('Dastan', values)
-         SaveFile(values)
       },
    })
+   console.log(formik.values.isTrue)
 
-   // const getFiles = createAsyncThunk('files/getFiles', async () => {
-   //    try {
-   //       const response = await axiosFile.get(
-   //          '/api/questions/getOptionsByQuestionId?questionId=97'
-   //       )
-   //       setOptions(response.data)
-   //    } catch (error) {
-   //       console.error(error)
-   //    }
-   // })
+   const SaveFile = () => {
+      dispatch(postListenSelect(formik))
+   }
 
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)
@@ -62,18 +46,19 @@ export const ListenSelect = () => {
       Url.searchParams.delete('modal')
       window.history.pushState({}, '', Url)
    }
-   const handleSave = () => {
+   const handleSave = async () => {
+      console.log(formik.values.isTrue, 'fdkljsafldsa;')
+      const link = await dispatch(postFileS3(formik.values.fileUrl))
       const newOption = {
-         id: new Date(),
-         audioUrl: formik.values.fileUrl,
+         id: Date.now(),
+         audioUrl: link.payload.data.link,
          title: formik.values.titleValues,
-         isTrue: false,
+         isTrue: formik.values.isTrue,
       }
       if (formik.values) {
          formik.setValues({
             ...formik.values,
             options: [...formik.values.options, newOption],
-            titleValues: '',
             selectedFile: '',
          })
          handleClose()
@@ -85,6 +70,7 @@ export const ListenSelect = () => {
          fileInputRef.current.click()
       }
    }
+
    const handleFile = (event) => {
       const file = event.target.files[0]
       if (file) {
@@ -94,6 +80,7 @@ export const ListenSelect = () => {
          })
       }
    }
+
    const handlePlayAudio = (id) => {
       const audioFile = formik.values.fileUrl
       if (audioFile) {
@@ -159,12 +146,9 @@ export const ListenSelect = () => {
                         <ContainDeleteChek>
                            <InputRadio
                               variant="CHECKBOX"
-                              onChange={(e) =>
-                                 formik.setValues({
-                                    ...formik.values,
-                                    isTrue: e.target.value === 'true',
-                                 })
-                              }
+                              name="isTrue"
+                              onChange={formik.handleChange}
+                              checkedSwitch={formik.values.isTrue}
                            />
                            <Delete
                               onClick={() => removeElement(el.id)}
@@ -189,7 +173,7 @@ export const ListenSelect = () => {
                         hoverStyle="#31CF38"
                         className="saveButton"
                         variant="contained"
-                        type="submit"
+                        onClick={SaveFile}
                      >
                         SAVE
                      </Button>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosFile } from '../../config/axiosfile'
 import { axiosInstance } from '../../config/axiosInstance'
+import { fileAxiosInstance } from '../../config/fileAxiosInstanse'
 
 // export const deleteQuestion = createAsyncThunk(
 //    'listenSelectSlice/deleteQuestion',
@@ -22,15 +22,15 @@ import { axiosInstance } from '../../config/axiosInstance'
 //       }
 //    }
 // )
+
 export const postFileS3 = createAsyncThunk(
    'file/postFileS3',
-   async ({ rejectWithValue }) => {
+   async (file, { rejectWithValue }) => {
       try {
          const formData = new FormData()
-         formData.append()
-         const response = await axiosFile.post('/api/s3file', formData)
-         const { data } = response
-         return data
+         formData.append('multipartFile', file)
+         const response = await fileAxiosInstance.post('/s3file', formData)
+         return response
       } catch (error) {
          return rejectWithValue(
             error.response ? error.response.data : error.message
@@ -41,20 +41,19 @@ export const postFileS3 = createAsyncThunk(
 
 export const postListenSelect = createAsyncThunk(
    'File/audio',
-   async (_, { rejectWithValue }) => {
+   async (formik, { rejectWithValue }) => {
       try {
-         const testId = 8
-         // const link = await dispatch(postFileS3(file))
+         const testId = 5
          const response = await axiosInstance.post(
-            `/api/questions?testId=${testId}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
+            `/questions?testId=${testId}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
             {
-               options: [
-                  {
-                     title: 'string',
-                     isTrue: true,
-                     audioUrl: 'string',
-                  },
-               ],
+               options: formik.values.options.map((el) => {
+                  return {
+                     title: el.title,
+                     isTrue: el.isTrue,
+                     audioUrl: el.audioUrl,
+                  }
+               }),
             }
          )
          const { data } = response
