@@ -5,13 +5,18 @@ import { InputRadio } from '../../UI/InputRadio'
 import Button from '../../UI/Buttons/Button'
 import { CancelModal } from '../../../assets'
 
-const OptionModal = ({ open, handleCloseModal, onSaveOption, titleInput }) => {
-   const [isTrueOption, setIsTrueOption] = useState(false)
+const OptionModal = ({
+   open,
+   handleCloseModal,
+   handleSaveOption,
+   titleInput,
+}) => {
+   const [checked, setIsTrueOption] = useState(false)
    const [title, setTitle] = useState('')
 
-   const handleSaveOption = () => {
+   const handleSave = () => {
       if (title) {
-         onSaveOption(title, isTrueOption)
+         handleSaveOption(title, checked)
          setTitle('')
          setIsTrueOption(false)
          handleCloseModal()
@@ -22,7 +27,6 @@ const OptionModal = ({ open, handleCloseModal, onSaveOption, titleInput }) => {
       <Modal
          open={open}
          onClose={handleCloseModal}
-         onSaveOption={handleSaveOption}
          width="40rem"
          height="25rem"
          backgroundColor="#FFF"
@@ -43,8 +47,8 @@ const OptionModal = ({ open, handleCloseModal, onSaveOption, titleInput }) => {
                <TextOption> Is true option?</TextOption>
                <Radio
                   variant="CHECKBOX"
-                  checked={isTrueOption}
-                  onChange={() => setIsTrueOption(!isTrueOption)}
+                  checkedSwitch={checked}
+                  onChange={() => setIsTrueOption(!checked)}
                />
             </Container>
             <ContainerForButtons>
@@ -59,7 +63,7 @@ const OptionModal = ({ open, handleCloseModal, onSaveOption, titleInput }) => {
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={handleSaveOption}
+                     onClick={handleSave}
                   >
                      Save
                   </Button>
@@ -89,6 +93,7 @@ const FirstInput = styled('input')(() => ({
       border: '1.53px solid #3A10E5',
    },
 }))
+
 const TextTitle = styled('h1')(() => ({
    display: 'flex',
    marginRight: '30rem',
@@ -99,10 +104,12 @@ const TextTitle = styled('h1')(() => ({
    lineHeight: '18px',
    color: '#4B4759',
 }))
+
 const Container = styled('div')(() => ({
    display: 'flex',
    marginLeft: '4rem',
 }))
+
 const CancelIcon = styled(CancelModal)(() => ({
    display: 'flex',
    cursor: 'pointer',
@@ -110,6 +117,7 @@ const CancelIcon = styled(CancelModal)(() => ({
    position: 'absolute',
    marginTop: '1rem',
 }))
+
 const ContainerForButtons = styled('div')(() => ({
    marginTop: '5.7rem',
    borderRadius: ' 0px 0px 9px 9px',
@@ -119,11 +127,13 @@ const ContainerForButtons = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
 }))
+
 const FAM = styled('div')(() => ({
    display: 'flex',
    gap: '1rem',
    marginLeft: '24rem',
 }))
+
 const Radio = styled(InputRadio)(() => ({
    marginTop: '-0.6rem',
 }))
@@ -136,6 +146,7 @@ const TextOption = styled('h1')(() => ({
    lineHeight: 'normal',
    color: '#4C4859',
 }))
+
 const ContainerFirstInput = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',

@@ -1,39 +1,82 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
-import OptionModal from '../addOptionModal/AddOptionModal'
+import OptionModal from './AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 export const CreateRealEnglishWord = () => {
-   const [isModalOpen, setModalOpen] = useState(false)
-   const [options, setOptions] = useState([])
-
-   const handleOpenModal = () => {
-      setModalOpen(true)
-   }
-   const handleCloseModal = () => {
-      setModalOpen(false)
-   }
-   const handleSaveOption = (newOption, isTrue) => {
-      if (!options.some((option) => option.text === newOption)) {
-         const optionId = Math.random().toString(36).substring(7)
-         const option = { id: optionId, text: newOption, isTrue }
-         if (options.length < 6) {
-            setOptions([...options, option])
+   const { testID } = useSelector((state) => state.createTestSlice)
+   const navigate = useNavigate()
+   const formik = useFormik({
+      initialValues: {
+         titleValues: '',
+         options: [],
+         checkboxValue: true,
+         openModal: false,
+      },
+      onSubmit: async (values) => {
+         try {
+            await axiosInstance.post(
+               `/questions?testId=${testID}&questionType=SELECT_REAL_ENGLISH_WORD`,
+               {
+                  options: values.options.map((el) => ({
+                     title: el.title,
+                     isTrue: el.checked,
+                  })),
+               }
+            )
+            navigate('/admin/QuestionsPage')
+         } catch (error) {
+            setError(error)
          }
-      }
-      handleCloseModal()
-   }
-   const handleCheckboxChange = (index) => {
-      const updatedOptions = [...options]
-      updatedOptions[index].isTrue = !updatedOptions[index].isTrue
-      setOptions(updatedOptions)
+      },
+   })
+   const handleOpenModal = () => {
+      formik.setFieldValue('openModal', true)
    }
 
-   const handleDeleteOption = (optionId) => {
-      const updatedOptions = options.filter((option) => option.id !== optionId)
-      setOptions(updatedOptions)
+   const handleCloseModal = () => {
+      formik.setFieldValue('openModal', false)
+   }
+   const handleSaveOption = (title, checked) => {
+      const newOption = {
+         id: Math.random(),
+         title,
+         checked,
+      }
+      formik.setFieldValue('titleValues', title)
+      formik.setFieldValue('options', [...formik.values.options, newOption])
+      formik.setFieldValue('checkboxValue', checked)
+   }
+
+   const handleCheckboxChange = (id) => {
+      const updatedOptions = formik.values.options.map((option) => {
+         if (option.id === id) {
+            return {
+               ...option,
+               checked: !option.checked,
+            }
+         }
+         return {
+            ...option,
+            checked: false,
+         }
+      })
+      formik.setFieldValue('options', updatedOptions)
+      const anyChecked = updatedOptions.some((option) => option.checked)
+      formik.setFieldValue('checkboxValue', anyChecked)
+   }
+
+   const handleDeleteOption = (id) => {
+      formik.setFieldValue(
+         'options',
+         formik.values.options.filter((option) => option.id !== id)
+      )
    }
 
    return (
@@ -51,21 +94,21 @@ export const CreateRealEnglishWord = () => {
                </Button>
             </MiniContainerButton>
             <ContainerCreateTest>
-               {options.map((option, index) => (
+               {formik.values?.options.map((option, index) => (
                   <CreateTest key={option.id}>
                      <div style={{ width: '1rem' }}>
                         <MainContainer>
                            <p className="Number-Words">{index + 1}</p>
                            <div className="NumberText">
-                              <span>{option.text}</span>
+                              <span>{option.title}</span>
                            </div>
                         </MainContainer>
                      </div>
                      <div className="InputDelete">
                         <InputRadio
                            variant="CHECKBOX"
-                           checked={option.isTrue}
-                           onChange={() => handleCheckboxChange(index)}
+                           checkedSwitch={option.checked}
+                           onChange={() => handleCheckboxChange(option.id)}
                         />
                         <DeleteIcon
                            onClick={() => handleDeleteOption(option.id)}
@@ -75,15 +118,20 @@ export const CreateRealEnglishWord = () => {
                ))}
             </ContainerCreateTest>
          </Container>
-         {isModalOpen && (
+         {formik.values.openModal && (
             <OptionModal
-               open={isModalOpen}
+               open={formik.values.openModal}
+               titleValues={formik.values.titleValues}
+               setTitleValues={(value) =>
+                  formik.setFieldValue('titleValues', value)
+               }
                handleCloseModal={handleCloseModal}
-               onSaveOption={handleSaveOption}
+               handleSaveOption={handleSaveOption}
                title="Select real English words"
+               options={formik.values.options}
             />
          )}
-         {options.length > 0 && (
+         {formik.values.options.length > 0 && (
             <ContainerButtons>
                <Button
                   variant="outlined"
@@ -92,7 +140,11 @@ export const CreateRealEnglishWord = () => {
                >
                   GO BACK
                </Button>
-               <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+               <Button
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+                  onClick={formik.handleSubmit}
+               >
                   Save
                </Button>
             </ContainerButtons>
