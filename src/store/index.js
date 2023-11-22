@@ -9,7 +9,6 @@ export const store = configureStore({
    reducer: {
       [authSlice.name]: authSlice.reducer,
       [s3fileSlice.name]: s3fileSlice.reducer,
-
       // [ListenSelectSlice.name]: ListenSelectSlice.reducer,
       [createTestSlice.name]: createTestSlice.reducer,
       [questionSlice.name]: questionSlice.reducer,

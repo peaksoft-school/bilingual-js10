@@ -136,7 +136,7 @@ export const CreateRealEnglishWord = () => {
                <Button
                   variant="outlined"
                   hoverStyle="#3A10E5"
-                  onClick={handleCloseModal}
+                  onClick={() => navigate(-1)}
                >
                   GO BACK
                </Button>

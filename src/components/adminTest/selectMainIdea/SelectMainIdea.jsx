@@ -157,8 +157,8 @@ export const SelectMainIdea = () => {
                         <Button
                            variant="outlined"
                            hoverStyle="#3A10E5"
-                           onClick={handleClose}
                            className="Button"
+                           onClick={() => navigate(-1)}
                         >
                            GO BACK
                         </Button>
