@@ -48,9 +48,6 @@ export const SelectBestTitle = () => {
 
    const optionsModal = () => {
       formik.setFieldValue('openModal', true)
-      const Url = new URL(window.location)
-      Url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', Url)
    }
 
    const handleCheckboxChange = (id) => {
@@ -80,9 +77,6 @@ export const SelectBestTitle = () => {
 
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
-      const Url = new URL(window.location)
-      Url.searchParams.delete('modal')
-      window.history.pushState({}, '', Url)
    }
 
    const handleSave = (e) => {
@@ -130,6 +124,7 @@ export const SelectBestTitle = () => {
                            className="addNewTestButton"
                            variant="contained"
                            onClick={optionsModal}
+                           type="button"
                         >
                            ADD OPTIONS
                         </Button>
