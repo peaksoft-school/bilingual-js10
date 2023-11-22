@@ -6,7 +6,6 @@ import { ToBeginButton } from '../UI/Buttons/ToBeginButton'
 export const ProveYourEnglish = () => {
    return (
       <div>
-         {/* <div style={{ width: '79rem' }}> */}
          <HeaderContinersss>
             <HeaderContiners>
                <div>
@@ -37,7 +36,6 @@ export const ProveYourEnglish = () => {
             <span>and confidence they need to speak new languages.</span>
             <ToBeginButton className="Buttons">TO BEGIN</ToBeginButton>
          </TextContiners>
-         {/* </div> */}
 
          <ContainerBackground />
       </div>
