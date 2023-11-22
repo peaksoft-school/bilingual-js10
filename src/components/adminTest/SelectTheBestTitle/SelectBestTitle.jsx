@@ -1,7 +1,7 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
@@ -9,12 +9,13 @@ import { Delete } from '../../../assets'
 import { SelectBestModal } from './SelectBestModal'
 import TextArea from '../../UI/textarea/TextArea'
 import { axiosInstance } from '../../../config/axiosInstance'
+import { validationPassage } from '../../../utils/helpers/validate/validation'
 
 export const SelectBestTitle = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
    const [error, setError] = useState(null)
-
    const navigate = useNavigate()
+
    const formik = useFormik({
       initialValues: {
          passage: '',
@@ -23,6 +24,7 @@ export const SelectBestTitle = () => {
          checkboxValue: false,
          openModal: false,
       },
+      validationSchema: validationPassage,
       onSubmit: async (values) => {
          try {
             await axiosInstance.post(
@@ -37,17 +39,15 @@ export const SelectBestTitle = () => {
                   }),
                }
             )
+            navigate('/admin')
          } catch (error) {
             setError(error)
          }
       },
    })
 
-   const OptionsModal = () => {
+   const optionsModal = () => {
       formik.setFieldValue('openModal', true)
-      const Url = new URL(window.location)
-      Url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', Url)
    }
 
    const handleCheckboxChange = (id) => {
@@ -77,9 +77,6 @@ export const SelectBestTitle = () => {
 
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
-      const Url = new URL(window.location)
-      Url.searchParams.delete('modal')
-      window.history.pushState({}, '', Url)
    }
 
    const handleSave = (e) => {
@@ -96,108 +93,120 @@ export const SelectBestTitle = () => {
    }
 
    return (
-      <Formik>
-         {() => (
-            <Container>
-               <WidthContainer>
-                  <div className="ContainTextArea">
-                     <span className="ContainSpan">Passage</span>
-                     <TextArea
-                        name="passage"
-                        value={formik.values.passage}
-                        onChange={formik.handleChange}
-                        className="TextArea"
-                        variant="outlined"
-                        multiline
-                        fullWidth
-                     />
-                  </div>
-                  <div className="ContainButton">
-                     <Button
-                        hoverStyle="#3A10E5E5"
-                        defaultStyle="#3A10E5"
-                        className="addNewTestButton"
-                        variant="contained"
-                        onClick={OptionsModal}
-                     >
-                        ADD OPTIONS
-                     </Button>
-                  </div>
-                  <div className="ContainerCreateTests">
-                     {formik.values?.options.map((el, index) => (
-                        <div
-                           key={el.id}
-                           style={{ width: '51.25rem' }}
-                           className="ContainCreatTest"
-                        >
-                           <p className="Number">{index + 1}</p>
-                           <p>{el.title}</p>
-                           <div className="RadioDelete">
-                              <CheckedRadio
-                                 variant="RADIO"
-                                 checkedSwitch={el.checked}
-                                 onChange={() => handleCheckboxChange(el.id)}
-                              />
-                              <Delete
-                                 onClick={() => removeElement(el.id)}
-                                 className="DeleteIcon"
-                              />
-                           </div>
-                        </div>
-                     ))}
-                  </div>
-                  {error && (
-                     <div style={{ color: 'red', marginTop: '10px' }}>
-                        An error occurred: {error.message || 'Unknown error'}
-                     </div>
-                  )}
-                  {formik.values.options.length > 0 ? (
-                     <div className="ControlButton">
-                        <Button
-                           onClick={() => navigate('/admin')}
+      <form onSubmit={formik.handleSubmit}>
+         <Formik>
+            {() => (
+               <Container>
+                  <WidthContainer>
+                     <div className="ContainTextArea">
+                        <span className="ContainSpan">Passage</span>
+                        <TextArea
+                           name="passage"
+                           value={formik.values.passage}
+                           onChange={formik.handleChange}
+                           className="TextArea"
                            variant="outlined"
-                           hoverStyle="#3A10E5"
-                           className="Button"
-                        >
-                           GO BACK
-                        </Button>
-
+                           multiline
+                           fullWidth
+                           error={
+                              formik.touched.passage &&
+                              Boolean(formik.errors.passage)
+                           }
+                           helperText={
+                              formik.touched.passage && formik.errors.passage
+                           }
+                        />
+                     </div>
+                     <div className="ContainButton">
                         <Button
-                           defaultStyle="#2AB930"
-                           hoverStyle="#31CF38"
-                           className="saveButton"
+                           hoverStyle="#3A10E5E5"
+                           defaultStyle="#3A10E5"
+                           className="addNewTestButton"
                            variant="contained"
-                           onClick={formik.handleSubmit}
+                           onClick={optionsModal}
+                           type="button"
                         >
-                           SAVE
+                           ADD OPTIONS
                         </Button>
                      </div>
-                  ) : null}
-                  {formik.values.openModal && (
-                     <SelectBestModal
-                        handleClose={handleClose}
-                        openModal={formik.values.openModal}
-                        titleValues={formik.values.titleValues}
-                        setTitleValues={(value) =>
-                           formik.setFieldValue('titleValues', value)
-                        }
-                        handleSave={handleSave}
-                        checkboxValue={formik.values.checkboxValue}
-                        setCheckboxValue={(value) =>
-                           formik.setFieldValue('checkboxValue', value)
-                        }
-                        options={formik.values.options}
-                     />
-                  )}
-               </WidthContainer>
-            </Container>
-         )}
-      </Formik>
+                     <div className="ContainerCreateTests">
+                        {formik.values?.options.map((el, index) => (
+                           <div
+                              key={el.id}
+                              style={{ width: '51.25rem' }}
+                              className="ContainCreatTest"
+                           >
+                              <p className="Number">{index + 1}</p>
+                              <p>{el.title}</p>
+                              <div className="RadioDelete">
+                                 <CheckedRadio
+                                    variant="RADIO"
+                                    checkedSwitch={el.checked}
+                                    onChange={() => handleCheckboxChange(el.id)}
+                                 />
+                                 <Delete
+                                    onClick={() => removeElement(el.id)}
+                                    className="DeleteIcon"
+                                 />
+                              </div>
+                           </div>
+                        ))}
+                     </div>
+                     {error && (
+                        <div style={{ color: 'red', marginTop: '10px' }}>
+                           An error occurred: {error.message || 'Unknown error'}
+                        </div>
+                     )}
+                     {formik.values.options.length > 0 ? (
+                        <div className="ControlButton">
+                           <Button
+                              onClick={() => navigate('/admin')}
+                              variant="outlined"
+                              hoverStyle="#3A10E5"
+                              className="Button"
+                           >
+                              GO BACK
+                           </Button>
+
+                           <Button
+                              defaultStyle="#2AB930"
+                              hoverStyle="#31CF38"
+                              className="saveButton"
+                              variant="contained"
+                              type="submit"
+                           >
+                              SAVE
+                           </Button>
+                        </div>
+                     ) : null}
+                     {formik.values.openModal && (
+                        <SelectBestModal
+                           handleClose={handleClose}
+                           openModal={formik.values.openModal}
+                           titleValues={formik.values.titleValues}
+                           setTitleValues={(value) =>
+                              formik.setFieldValue('titleValues', value)
+                           }
+                           handleSave={handleSave}
+                           checkboxValue={formik.values.checkboxValue}
+                           setCheckboxValue={(value) =>
+                              formik.setFieldValue('checkboxValue', value)
+                           }
+                           options={formik.values.options}
+                        />
+                     )}
+                  </WidthContainer>
+               </Container>
+            )}
+         </Formik>
+      </form>
    )
 }
+
 const CheckedRadio = styled(InputRadio)({
    cursor: 'pointer',
 })
+
 const WidthContainer = styled('div')({
    width: '50rem',
    color: '#4C4859',

@@ -3,10 +3,10 @@ import { useFormik } from 'formik'
 import { Typography, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Button from '../../UI/Buttons/Button'
-import Input from '../../UI/Input'
-import { validationAuthSignUp } from '../../../helpers/validation'
-import { axiosInstance } from '../../../config/axiosInstance'
+import Button from '../UI/Buttons/Button'
+import Input from '../UI/Input'
+import { validationAuthSignUp } from '../../utils/helpers/validate/validation'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const RespondLeast = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
@@ -19,7 +19,7 @@ export const RespondLeast = () => {
       validationSchema: validationAuthSignUp,
       onSubmit: async (values) => {
          try {
-            const response = await axiosInstance.post(
+            await axiosInstance.post(
                `questions?testId=${testID}&questionType=RESPOND_AT_LEAST_N_WORDS`,
                {
                   statement: values.questionStatement,
@@ -27,7 +27,6 @@ export const RespondLeast = () => {
                   options: [{}],
                }
             )
-            console.log(response.data)
          } catch (error) {
             console.error('Error:', error)
          }
