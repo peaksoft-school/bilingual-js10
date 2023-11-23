@@ -45,6 +45,7 @@ import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
 import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
 import { ReactComponent as ModalDeleteIcon } from './icons/modal-delete-icon.svg'
 import { ReactComponent as EyePassword } from './icons/eyePassword.svg'
+import { ReactComponent as YellowBackground } from './icons/yellowBackground.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -105,4 +106,5 @@ export {
    VolumeForEnglishWord,
    PlayAudioIcon,
    EyePassword,
+   YellowBackground,
 }

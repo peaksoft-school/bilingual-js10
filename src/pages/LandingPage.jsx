@@ -9,11 +9,13 @@ import UserFulVideo from '../components/LandingPage/UsefulVideo'
 import SliderPartner from '../components/LandingPage/SliderPartner'
 import { LearnMap } from '../components/LandingPage/MianMap/LearnMap'
 import { FooterAccordions } from '../components/LandingPage/Footer/Footer'
+import { ProveYourEnglish } from '../components/LandingPage/ProveYourEnglish'
 
 const LandingPage = () => {
    return (
       <div>
          <Bg>
+            <ProveYourEnglish />
             <ReaderCounter />
             <UserExperience />
             <OurTeam />
