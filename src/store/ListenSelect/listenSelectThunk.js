@@ -22,7 +22,7 @@ export const postListenSelect = createAsyncThunk(
    'File/audio',
    async ({ formik, testID, title, questionDuration }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post(
+         await axiosInstance.post(
             `/questions?testId=${testID}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
             {
                title,
@@ -36,7 +36,6 @@ export const postListenSelect = createAsyncThunk(
                }),
             }
          )
-         const { data } = response
          return data
       } catch (error) {
          return rejectWithValue(error)

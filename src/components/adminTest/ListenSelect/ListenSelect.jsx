@@ -150,7 +150,7 @@ export const ListenSelect = () => {
                         <ContainDeleteChek>
                            <InputRadio
                               variant="CHECKBOX"
-                              name={`isTrue_${el.id}`} // Use a unique name for each checkbox
+                              name={`isTrue_${el.id}`}
                               onChange={() => handleCheckboxChange(el.id)}
                               checkedSwitch={el.isTrue}
                            />
