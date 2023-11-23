@@ -37,11 +37,6 @@ const SigninPage = () => {
          .catch((error) => {
             if (error.code === 'auth/cancelled-popup-request') {
                console.log('Вы отменили запрос на всплывающее окно', 'error')
-            } else {
-               console.log(
-                  'Произошла ошибка при аутентификации с Google',
-                  'error'
-               )
             }
          })
    }

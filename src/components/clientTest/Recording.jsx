@@ -4,12 +4,14 @@ import { styled } from '@mui/material'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { CircleIcon, SpeakIcon, WaveIcon } from '../../assets'
+import { useProgressBar } from '../UI/progressBar/useProgressBar'
+import ProgressBar from '../UI/progressBar/ProgressBar'
 
 function Recording() {
-   const [record, setRecord] = useState(false)
    const [file, setFile] = useState(null)
-   const [isButtonStop, setIsButtonStop] = useState(false)
+   const [record, setRecord] = useState(false)
    const [disabled, setDisabled] = useState(false)
+   const [isButtonStop, setIsButtonStop] = useState(false)
 
    const onStop = (blob) => {
       const audioFile = new File([blob], 'recording.webm', {
@@ -35,9 +37,18 @@ function Recording() {
       console.log(res)
    }
 
+   const duration = 20
+   function handleTimeUp() {
+      // setTimeout(() => {
+      //    console.log('nextPage')
+      // }, 10000)
+   }
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
    return (
       <div>
          <BackgroundStyle marginTop="100px">
+            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
             <MainRecordingContainer>
                <div>
                   <div>
@@ -154,6 +165,7 @@ const ButtonContainer = styled('div')({
 
 const MainRecordingContainer = styled('div')({
    width: '56rem',
+   marginTop: '3rem',
 })
 
 const BackgroundStyle = styled(Background)({
