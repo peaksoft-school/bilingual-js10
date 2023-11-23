@@ -9,6 +9,7 @@ import TextArea from '../../UI/textarea/TextArea'
 import { validationPassage } from '../../../utils/helpers/validate/authValidate'
 import { SelectBestModal } from '../SelectTheBestTitle/SelectBestModal'
 import { axiosInstance } from '../../../config/axiosInstance'
+import Notify from '../../UI/Notifay'
 
 export const SelectMainIdea = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
@@ -25,17 +26,24 @@ export const SelectMainIdea = () => {
       validationSchema: validationPassage,
       onSubmit: async (values) => {
          try {
-            await axiosInstance.post(
-               `/questions?testId=${testID}&questionType=SELECT_THE_MAIN_IDEA`,
+            Notify(
                {
-                  passage: values.passage,
-                  options: values.options.map((el) => {
-                     return {
-                        title: el.title,
-                        isTrue: el.checked,
-                     }
-                  }),
-               }
+                  sucessTitle: 'These offers have been saved!',
+                  successMessage: 'Successfully these offers have been saved!',
+                  errorTitle: 'Error',
+               },
+               axiosInstance.post(
+                  `/questions?testId=${testID}&questionType=SELECT_THE_MAIN_IDEA`,
+                  {
+                     passage: values.passage,
+                     options: values.options.map((el) => {
+                        return {
+                           title: el.title,
+                           isTrue: el.checked,
+                        }
+                     }),
+                  }
+               )
             )
             navigate('/admin/QuestionsPage')
          } catch (error) {

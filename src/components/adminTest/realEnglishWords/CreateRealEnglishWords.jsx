@@ -8,6 +8,7 @@ import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { axiosInstance } from '../../../config/axiosInstance'
+import Notify from '../../UI/Notifay'
 
 export const CreateRealEnglishWord = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
@@ -21,14 +22,21 @@ export const CreateRealEnglishWord = () => {
       },
       onSubmit: async (values) => {
          try {
-            await axiosInstance.post(
-               `/questions?testId=${testID}&questionType=SELECT_REAL_ENGLISH_WORD`,
+            Notify(
                {
-                  options: values.options.map((el) => ({
-                     title: el.title,
-                     isTrue: el.checked,
-                  })),
-               }
+                  sucessTitle: 'The words have been preserved!',
+                  successMessage: 'Successfully these words were saved!',
+                  errorTitle: 'Error',
+               },
+               axiosInstance.post(
+                  `/questions?testId=${testID}&questionType=SELECT_REAL_ENGLISH_WORD`,
+                  {
+                     options: values.options.map((el) => ({
+                        title: el.title,
+                        isTrue: el.checked,
+                     })),
+                  }
+               )
             )
             navigate('/admin/QuestionsPage')
          } catch (error) {
