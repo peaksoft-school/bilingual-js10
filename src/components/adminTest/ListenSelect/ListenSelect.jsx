@@ -52,6 +52,7 @@ export const ListenSelect = () => {
             ...formik.values,
             options: [...formik.values.options, newOption],
             selectedFile: '',
+            titleValues: '',
          })
          handleClose()
       }

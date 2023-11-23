@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
 import { fileAxiosInstance } from '../../config/fileAxiosInstanse'
+import Notify from '../../components/UI/Notifay'
 
 export const postFileS3 = createAsyncThunk(
    'file/postFileS3',
@@ -22,19 +23,26 @@ export const postListenSelect = createAsyncThunk(
    'File/audio',
    async ({ formik, testID, title, questionDuration }, { rejectWithValue }) => {
       try {
-         await axiosInstance.post(
-            `/questions?testId=${testID}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
+         Notify(
             {
-               title,
-               questionDuration,
-               options: formik.values.options.map((el) => {
-                  return {
-                     title: el.title,
-                     isTrue: el.isTrue,
-                     audioUrl: el.audioUrl,
-                  }
-               }),
-            }
+               sucessTitle: 'File saved ',
+               successMessage: 'Successfully saved',
+               errorTitle: 'Error',
+            },
+            axiosInstance.post(
+               `/questions?testId=${testID}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
+               {
+                  title,
+                  questionDuration,
+                  options: formik.values.options.map((el) => {
+                     return {
+                        title: el.title,
+                        isTrue: el.isTrue,
+                        audioUrl: el.audioUrl,
+                     }
+                  }),
+               }
+            )
          )
          return data
       } catch (error) {
