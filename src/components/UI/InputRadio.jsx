@@ -35,6 +35,7 @@ export const InputRadio = ({
          return (
             <Checkbox
                value={value}
+               checked={checkedSwitch}
                {...other}
                onChange={onChange}
                color="default"

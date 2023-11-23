@@ -104,7 +104,12 @@ const SigninPage = () => {
                      <Error />
                   </ErrorMessage>
                )}
-               <StyledButton variant="contained" type="submit">
+               <StyledButton
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#3A10E5E5"
+                  variant="contained"
+                  type="submit"
+               >
                   sign in
                </StyledButton>
                <ButtonContainer
