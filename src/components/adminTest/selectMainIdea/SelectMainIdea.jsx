@@ -1,13 +1,19 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
-
 import TextArea from '../../UI/textarea/TextArea'
+import { validationPassage } from '../../../utils/helpers/validate/authValidate'
 import { SelectBestModal } from '../SelectTheBestTitle/SelectBestModal'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 export const SelectMainIdea = () => {
+   const { testID } = useSelector((state) => state.createTestSlice)
+   const navigate = useNavigate()
+
    const formik = useFormik({
       initialValues: {
          passage: '',
@@ -16,12 +22,28 @@ export const SelectMainIdea = () => {
          checkboxValue: false,
          openModal: false,
       },
-      onSubmit: (values) => {
-         const dataArray = [{ Passage: values.passage }, ...values.options]
-         console.log(dataArray)
+      validationSchema: validationPassage,
+      onSubmit: async (values) => {
+         try {
+            await axiosInstance.post(
+               `/questions?testId=${testID}&questionType=SELECT_THE_MAIN_IDEA`,
+               {
+                  passage: values.passage,
+                  options: values.options.map((el) => {
+                     return {
+                        title: el.title,
+                        isTrue: el.checked,
+                     }
+                  }),
+               }
+            )
+            navigate('/admin/QuestionsPage')
+         } catch (error) {
+            setError(error)
+         }
       },
    })
-   const OptionsModal = () => {
+   const handleOpenModal = () => {
       formik.setFieldValue('openModal', true)
       const Url = new URL(window.location)
       Url.searchParams.set('modal', 'true')
@@ -50,19 +72,21 @@ export const SelectMainIdea = () => {
          formik.values.options.filter((option) => option.id !== id)
       )
    }
+
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
       const Url = new URL(window.location)
       Url.searchParams.delete('modal')
       window.history.pushState({}, '', Url)
    }
-   const handleSave = (e) => {
+   const handleSave = async (e) => {
       e.preventDefault()
       const newOption = {
          id: Math.random(),
-         text: formik.values.titleValues,
+         title: formik.values.titleValues,
          checked: formik.values.checkboxValue,
       }
+
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
       formik.setFieldValue('checkboxValue', false)
@@ -84,15 +108,23 @@ export const SelectMainIdea = () => {
                         variant="outlined"
                         multiline
                         fullWidth
+                        error={
+                           formik.touched.passage &&
+                           Boolean(formik.errors.passage)
+                        }
+                        helperText={
+                           formik.touched.passage && formik.errors.passage
+                        }
                      />
                   </div>
+
                   <div className="ContainButton">
                      <Button
                         hoverStyle="#3A10E5E5"
                         defaultStyle="#3A10E5"
                         className="addNewTestButton"
                         variant="contained"
-                        onClick={OptionsModal}
+                        onClick={handleOpenModal}
                      >
                         ADD OPTIONS
                      </Button>
@@ -105,7 +137,7 @@ export const SelectMainIdea = () => {
                            className="ContainCreatTest"
                         >
                            <p className="Number">{index + 1}</p>
-                           <p>{el.text}</p>
+                           <p>{el.title}</p>
                            <div className="RadioDelete">
                               <CheckedRadio
                                  variant="RADIO"
@@ -125,8 +157,8 @@ export const SelectMainIdea = () => {
                         <Button
                            variant="outlined"
                            hoverStyle="#3A10E5"
-                           onClick={handleClose}
                            className="Button"
+                           onClick={() => navigate(-1)}
                         >
                            GO BACK
                         </Button>
@@ -135,15 +167,8 @@ export const SelectMainIdea = () => {
                            hoverStyle="#31CF38"
                            className="saveButton"
                            variant="contained"
+                           onClick={formik.handleSubmit}
                            type="submit"
-                           onClick={(e) => {
-                              e.preventDefault()
-                              const dataArray = [
-                                 { Passage: formik.values.passage },
-                                 ...formik.values.options,
-                              ]
-                              console.log(dataArray)
-                           }}
                         >
                            SAVE
                         </Button>

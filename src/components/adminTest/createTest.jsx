@@ -29,11 +29,11 @@ export const CreateTest = () => {
          const errors = {}
 
          if (!values.title) {
-            errors.title = 'Заголовок обязателен'
+            errors.title = 'The title is required!'
          }
 
          if (!values.description) {
-            errors.description = 'Краткое описание обязательно'
+            errors.description = 'A brief description is required!'
          }
 
          return errors
