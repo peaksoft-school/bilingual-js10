@@ -1,6 +1,6 @@
 import Dastan from '../../assets/images/dasi012.jpg'
 import Rinat from '../../assets/images/rinat.jpg'
-import Bael from '../../assets/images/bael.png'
+import Bael from '../../assets/images/baelBack.png'
 import Gulaiym from '../../assets/images/gulaiym.png'
 import Ayzada from '../../assets/images/AyzadaBack.jpg'
 import Nurlan from '../../assets/images/nurlanBayke.jpg'
