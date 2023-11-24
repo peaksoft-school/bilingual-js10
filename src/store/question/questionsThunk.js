@@ -24,9 +24,7 @@ export const postRecordStatement = createAsyncThunk(
          const testId = getState().createTestSlice?.testID
          const response = axiosInstance.post(
             `/questions?testId=${testId}&questionType=RECORD_SAYING_STATEMENT`,
-            {
-               statement: result.statement,
-            }
+            result
          )
          return response.data
       } catch (error) {
