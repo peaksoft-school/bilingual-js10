@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import Button from '../../components/UI/Buttons/Button'
@@ -9,10 +9,11 @@ import { postDescribeImage } from '../../store/s3file/thunk'
 
 const SelectImage = ({ handleClose }) => {
    const [selectedImage, setSelectedImage] = useState(null)
+   const { title, questionDuration } = useSelector((state) => state.questions)
    const dispatch = useDispatch()
 
-   const handleSave = (values) => {
-      dispatch(postDescribeImage({ selectedImage, values: values.inputValue }))
+   const handleSave = (data) => {
+      dispatch(postDescribeImage({ selectedImage, data }))
    }
 
    const formik = useFormik({
@@ -29,7 +30,12 @@ const SelectImage = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
-         handleSave(values)
+         const data = {
+            title,
+            duration: questionDuration,
+            correctAnswer: values.inputValue,
+         }
+         handleSave(data)
       },
    })
 

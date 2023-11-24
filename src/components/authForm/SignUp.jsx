@@ -32,18 +32,6 @@ const SignupPage = () => {
       signInWithPopup(auth, provider)
          .then((data) => {
             const userToken = data.user.accessToken
-            // Notify(
-            //    {
-            //       sucessTitle: 'Logged in',
-            //       successMessage: 'You have successfully logged in with Google',
-            //       errorTitle: 'Error',
-            //    },
-            //    function wait() {
-            //       return new Promise((resolve) => {
-            //          setTimeout(resolve, 100)
-            //       })
-            //    }
-            // )
             return userToken
          })
          .then((token) => {
@@ -52,11 +40,6 @@ const SignupPage = () => {
          .catch((error) => {
             if (error.code === 'auth/cancelled-popup-request') {
                console.log('Вы отменили запрос на всплывающее окно', 'error')
-            } else {
-               console.log(
-                  'Произошла ошибка при аутентификации с Google',
-                  'error'
-               )
             }
          })
    }
