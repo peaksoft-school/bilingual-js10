@@ -1,7 +1,7 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
 import { Background } from '../../../layout/Background'
-import Button from '../../UI/Buttons/Button'
+import Button from '../Buttons/Button'
 
 export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
    const [movedItems, setMovedItems] = useState([])

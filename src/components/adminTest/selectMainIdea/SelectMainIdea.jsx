@@ -13,6 +13,7 @@ import Notify from '../../UI/Notifay'
 
 export const SelectMainIdea = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
+   const { title, questionDuration } = useSelector((state) => state.questions)
    const navigate = useNavigate()
 
    const formik = useFormik({
@@ -36,6 +37,8 @@ export const SelectMainIdea = () => {
                   `/questions?testId=${testID}&questionType=SELECT_THE_MAIN_IDEA`,
                   {
                      passage: values.passage,
+                     title,
+                     questionDuration,
                      options: values.options.map((el) => {
                         return {
                            title: el.title,

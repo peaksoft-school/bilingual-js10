@@ -54,7 +54,7 @@ function Recording() {
 
    return (
       <div>
-         <BackgroundStyle marginTop="100px">
+         <BackgroundStyle marginTop="6.25rem">
             <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
             <MainRecordingContainer>
                <div>
@@ -137,7 +137,7 @@ export default Recording
 const Container = styled('div')`
    display: flex;
    align-items: center;
-   height: 50px;
+   height: 3.1rem;
 
    .stroka {
       display: block;
@@ -145,7 +145,7 @@ const Container = styled('div')`
       background: #3a10e5;
       height: 100%;
       width: 6px;
-      border-radius: 50px;
+      border-radius: 3.1rem;
       margin: 0 1px;
       animation: animate 1.3s linear infinite;
    }
@@ -217,11 +217,11 @@ const Title = styled('div')({
 const SpeakContainer = styled('div')({
    display: 'flex',
    justifyContent: 'center',
-   columnGap: '17px',
-   marginTop: '50px',
-   marginBottom: '120px',
+   columnGap: '1.1rem',
+   marginTop: '3.1rem',
+   marginBottom: '7.5rem',
    '& :nth-child(2)': {
-      marginTop: '28px',
+      marginTop: '1.75rem',
       color: '#4C4859',
       fontSize: '20px',
       fontWeight: '500',
@@ -233,7 +233,7 @@ const RecordingContainer = styled('div')({
    columnGap: '11px',
    '& :nth-child(2)': {
       color: '#3A10E5',
-      fontSize: '16px',
+      fontSize: '1rem',
       fontWeight: '500',
       lineHeight: '124%',
    },
@@ -244,7 +244,7 @@ const ActiveContainer = styled('div')({
    height: '47px',
    alignItems: 'center',
    justifyContent: 'end',
-   marginTop: '30px',
+   marginTop: '2rem',
    '.wave': {
       marginLeft: '15.3vw',
       marginRight: '7vw',

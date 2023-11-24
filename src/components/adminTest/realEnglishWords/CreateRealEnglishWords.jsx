@@ -12,6 +12,7 @@ import Notify from '../../UI/Notifay'
 
 export const CreateRealEnglishWord = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
+   const { title, questionDuration } = useSelector((state) => state.questions)
    const navigate = useNavigate()
    const formik = useFormik({
       initialValues: {
@@ -31,6 +32,8 @@ export const CreateRealEnglishWord = () => {
                axiosInstance.post(
                   `/questions?testId=${testID}&questionType=SELECT_REAL_ENGLISH_WORD`,
                   {
+                     title,
+                     questionDuration,
                      options: values.options.map((el) => ({
                         title: el.title,
                         isTrue: el.checked,
