@@ -1,44 +1,47 @@
 import React from 'react'
 import { styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { Background } from '../../../layout/Background'
-import { testListArr } from '../../../utils/helpers/testListArr'
-import { BilingualLogo, TestListIcon } from '../../../assets'
+import { TestListIcon } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
+import { testListArr } from '../../../utils/helpers/testListArr'
+import Header from '../../../layout/Header'
 
-const TestList = ({ onClickTryTest }) => {
+const TestList = () => {
+   const navigate = useNavigate()
    return (
-      <PurpleBackground>
-         {testListArr.map((test) => {
-            return (
-               <Background
-                  marginTop={testListArr.length > 2 ? '20px' : '80px'}
-                  key={test.id}
-               >
-                  <ListContainerStyle>
-                     <div className="mainContainer">
-                        <TestListIcon />
-                        <div className="description">
-                           <p>{test.minutes} MINUTES</p>
-                           <p>{test.title}</p>
-                           <p>Train as much as you like.</p>
+      <div>
+         <Header roles="user" />
+         <PurpleBackground>
+            {testListArr.map((test) => {
+               return (
+                  <Background
+                     marginTop={testListArr.length > 2 ? '20px' : '80px'}
+                     key={test.id}
+                  >
+                     <ListContainerStyle>
+                        <div className="mainContainer">
+                           <TestListIcon />
+                           <div className="description">
+                              <p>{test.minutes} MINUTES</p>
+                              <p>{test.title}</p>
+                              <p>Train as much as you like.</p>
+                           </div>
                         </div>
-                     </div>
-                     <Button
-                        onClick={onClickTryTest}
-                        variant="outlined"
-                        hoverStyle="#3A10E5"
-                     >
-                        try test
-                     </Button>
-                  </ListContainerStyle>
-               </Background>
-            )
-         })}
-         <FooterStyle>
-            <BilingualLogo />
-            <p>© 2022 Peaksoft</p>
-         </FooterStyle>
-      </PurpleBackground>
+                        <Button
+                           onClick={() => navigate('/user/test-two')}
+                           variant="outlined"
+                           hoverStyle="#3A10E5"
+                        >
+                           try test
+                           {/* <Link to={id}>try test</Link> */}
+                        </Button>
+                     </ListContainerStyle>
+                  </Background>
+               )
+            })}
+         </PurpleBackground>
+      </div>
    )
 }
 
@@ -50,21 +53,6 @@ const PurpleBackground = styled('div')({
    width: '100vw',
    display: 'flex',
    flexDirection: 'column',
-})
-
-const FooterStyle = styled('div')({
-   position: 'fixed',
-   width: '100vw',
-   bottom: '0',
-   padding: '14px 0 14px 0',
-   display: 'flex',
-   alignItems: 'end',
-   backgroundColor: 'white',
-   justifyContent: 'center',
-   columnGap: '12px',
-   p: {
-      color: '#98A2B3',
-   },
 })
 
 const ListContainerStyle = styled('div')({

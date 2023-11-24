@@ -1,26 +1,32 @@
 export const testListArr = [
    {
-      minutes: 435,
+      id: 1,
+      minutes: 15,
       title: 'English beginner test',
    },
-   {
-      minutes: 1325,
-      title: 'English advanced test',
-   },
-   {
-      minutes: 43457,
-      title: 'English advanced test',
-   },
-   {
-      minutes: 1,
-      title: 'English advanced test',
-   },
-   {
-      minutes: 199,
-      title: 'English advanced test',
-   },
-   {
-      minutes: 5315,
-      title: 'English advanced test',
-   },
+   // {
+   //    id: 2,
+   //    minutes: 1325,
+   //    title: 'English advanced test',
+   // },
+   // {
+   //    id: 3,
+   //    minutes: 43457,
+   //    title: 'English advanced test',
+   // },
+   // {
+   //    id: 4,
+   //    minutes: 1,
+   //    title: 'English advanced test',
+   // },
+   // {
+   //    id: 5,
+   //    minutes: 199,
+   //    title: 'English advanced test',
+   // },
+   // {
+   //    id: 6,
+   //    minutes: 55,
+   //    title: 'English advanced test',
+   // },
 ]
