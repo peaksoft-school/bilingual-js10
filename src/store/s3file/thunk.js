@@ -21,16 +21,15 @@ export const postImageS3 = createAsyncThunk(
 
 export const postDescribeImage = createAsyncThunk(
    'post/img',
-   async (
-      { selectedImage, values },
-      { rejectWithValue, dispatch, getState }
-   ) => {
+   async ({ data, selectedImage }, { rejectWithValue, dispatch, getState }) => {
       try {
          await dispatch(postImageS3(selectedImage))
          const response = await axiosInstance.post(
             '/questions?testId=1&questionType=DESCRIBE_IMAGE',
             {
-               correctAnswer: values,
+               title: data.title,
+               duration: data.duration,
+               correctAnswer: data.correctAnswer,
                fileUrl: getState().file.file,
             }
          )

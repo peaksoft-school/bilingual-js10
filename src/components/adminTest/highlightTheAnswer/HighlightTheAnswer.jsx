@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import Input from '../../UI/Input'
 import Button from '../../UI/Buttons/Button'
@@ -10,6 +10,7 @@ import { schemaHighlight } from '../../../utils/helpers/validate/authValidate'
 
 export const HighlightTheAnswer = () => {
    const [answerValue, setAnswerValue] = useState('')
+   const { title, questionDuration } = useSelector((state) => state.questions)
    const dispatch = useDispatch()
    const handleSave = (result) => {
       dispatch(postHighlightAnswer(result))
@@ -23,9 +24,11 @@ export const HighlightTheAnswer = () => {
       validationSchema: schemaHighlight,
       onSubmit: (values) => {
          const result = {
-            'PassageQuestions to the Passage': values.question,
-            Passage: values.text,
-            'Highlight correct answer': answerValue,
+            title,
+            duration: questionDuration,
+            statement: values.question,
+            passage: values.text,
+            correctAnswer: answerValue,
          }
          handleSave(result)
       },
