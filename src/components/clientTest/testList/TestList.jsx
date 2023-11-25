@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Background } from '../../../layout/Background'
 import { TestListIcon } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
@@ -8,34 +8,46 @@ import { testListArr } from '../../../utils/helpers/testListArr'
 import Header from '../../../layout/Header'
 
 const TestList = () => {
+   const navigate = useNavigate()
+
    return (
       <div>
          <Header roles="user" />
          <PurpleBackground>
-            {testListArr.map((test) => {
-               return (
-                  <Background
-                     marginTop={testListArr.length > 2 ? '20px' : '80px'}
-                     key={test.id}
-                  >
-                     <ListContainerStyle>
-                        <div className="mainContainer">
-                           <TestListIcon />
-                           <div className="description">
-                              <p>{test.minutes} MINUTES</p>
-                              <p>{test.title}</p>
-                              <p>Train as much as you like.</p>
+            {testListArr.length === 0 ? (
+               <h1>there s nothing here yet</h1>
+            ) : (
+               testListArr.map((test) => {
+                  return (
+                     <Background
+                        marginTop={testListArr.length > 2 ? '20px' : '80px'}
+                        key={test.id}
+                     >
+                        <ListContainerStyle>
+                           <div className="mainContainer">
+                              <TestListIcon />
+                              <div className="description">
+                                 <p>{test.minutes} MINUTES</p>
+                                 <p>{test.title}</p>
+                                 <p>Train as much as you like.</p>
+                              </div>
                            </div>
-                        </div>
-                        <Button variant="outlined" hoverStyle="#3A10E5">
-                           <Link to={`/user/test-two/${test.id}`}>
-                              try test
-                           </Link>
-                        </Button>
-                     </ListContainerStyle>
-                  </Background>
-               )
-            })}
+                           <ContainerStyle>
+                              <Button
+                                 onClick={() =>
+                                    navigate(`/user/test/${test.id}`)
+                                 }
+                                 variant="outlined"
+                                 hoverStyle="#3A10E5"
+                              >
+                                 try test
+                              </Button>
+                           </ContainerStyle>
+                        </ListContainerStyle>
+                     </Background>
+                  )
+               })
+            )}
          </PurpleBackground>
       </div>
    )
@@ -43,6 +55,13 @@ const TestList = () => {
 
 export default TestList
 
+const ContainerStyle = styled('div')`
+   .Link {
+      text-decoration: none;
+
+      color: ${(color) => (color ? '#3A10E5' : '#fff')};
+   }
+`
 const PurpleBackground = styled('div')({
    backgroundColor: '#D7E1F8',
    height: '100vh',
@@ -55,6 +74,7 @@ const ListContainerStyle = styled('div')({
    display: 'flex',
    alignItems: 'end',
    columnGap: '16rem',
+
    '.mainContainer': {
       display: 'flex',
       alignItems: 'center',
