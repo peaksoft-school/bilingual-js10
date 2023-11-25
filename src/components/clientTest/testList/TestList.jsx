@@ -32,17 +32,13 @@ const TestList = () => {
                                  <p>Train as much as you like.</p>
                               </div>
                            </div>
-                           <ContainerStyle>
-                              <Button
-                                 onClick={() =>
-                                    navigate(`/user/test/${test.id}`)
-                                 }
-                                 variant="outlined"
-                                 hoverStyle="#3A10E5"
-                              >
-                                 try test
-                              </Button>
-                           </ContainerStyle>
+                           <Button
+                              onClick={() => navigate(`/user/test/${test.id}`)}
+                              variant="outlined"
+                              hoverStyle="#3A10E5"
+                           >
+                              try test
+                           </Button>
                         </ListContainerStyle>
                      </Background>
                   )
@@ -55,13 +51,6 @@ const TestList = () => {
 
 export default TestList
 
-const ContainerStyle = styled('div')`
-   .Link {
-      text-decoration: none;
-
-      color: ${(color) => (color ? '#3A10E5' : '#fff')};
-   }
-`
 const PurpleBackground = styled('div')({
    backgroundColor: '#D7E1F8',
    height: '100vh',
