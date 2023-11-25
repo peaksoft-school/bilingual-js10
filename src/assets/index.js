@@ -39,12 +39,12 @@ import { ReactComponent as PlayAudioIcon } from './icons/playAudioIcon.svg'
 import { ReactComponent as TrashCan } from './icons/trashCan.svg'
 import { ReactComponent as Check } from './icons/check.svg'
 import { ReactComponent as SpeakIcon } from './icons/speakIcon.svg'
-import { ReactComponent as WaveIcon } from './icons/wave.svg'
 import { ReactComponent as CircleIcon } from './icons/circle.svg'
 import { ReactComponent as TestListIcon } from './icons/testListIcon.svg'
 import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
 import { ReactComponent as ModalDeleteIcon } from './icons/modal-delete-icon.svg'
 import { ReactComponent as EyePassword } from './icons/eyePassword.svg'
+import { ReactComponent as YellowBackground } from './icons/yellowBackground.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -55,7 +55,6 @@ import Aijan from './images/Aijan.png'
 export {
    ModalDeleteIcon,
    CircleIcon,
-   WaveIcon,
    SpeakIcon,
    TestListIcon,
    BilingualLogo,
@@ -105,4 +104,5 @@ export {
    VolumeForEnglishWord,
    PlayAudioIcon,
    EyePassword,
+   YellowBackground,
 }

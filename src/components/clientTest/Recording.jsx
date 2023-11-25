@@ -1,21 +1,25 @@
+/* eslint-disable react/self-closing-comp */
 import React, { useState } from 'react'
 import { ReactMic } from 'react-mic'
+import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
-import { CircleIcon, SpeakIcon, WaveIcon } from '../../assets'
+import { CircleIcon, SpeakIcon } from '../../assets'
+import { useProgressBar } from '../UI/progressBar/useProgressBar'
+import ProgressBar from '../UI/progressBar/ProgressBar'
+import { postFileThunk } from '../../store/questions/questionsThunk'
+import { addTest } from '../../store/userTest/global-test-slice'
 
 function Recording() {
-   const [record, setRecord] = useState(false)
    const [file, setFile] = useState(null)
-   const [isButtonStop, setIsButtonStop] = useState(false)
+   const [record, setRecord] = useState(false)
    const [disabled, setDisabled] = useState(false)
+   const [isButtonStop, setIsButtonStop] = useState(false)
+   const dispatch = useDispatch()
 
-   const onStop = (blob) => {
-      const audioFile = new File([blob], 'recording.webm', {
-         type: 'audio/webm',
-      })
-      setFile(audioFile)
+   const onStop = (blobFile) => {
+      setFile(blobFile.blob)
    }
 
    const PlayHandler = () => {
@@ -28,16 +32,30 @@ function Recording() {
       }
    }
 
-   const nextButtonHandler = () => {
-      const res = {
-         file,
+   const AddLink = (link) => {
+      const audioUrl = {
+         audioUrl: link.payload.data.link,
       }
-      console.log(res)
+      dispatch(addTest(audioUrl))
    }
+
+   const nextButtonHandler = async () => {
+      const links = await dispatch(postFileThunk({ file }))
+      AddLink(links)
+   }
+
+   const duration = 40
+   function handleTimeUp() {
+      // setTimeout(() => {
+      //    console.log('nextPage')
+      // }, 10000)
+   }
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    return (
       <div>
-         <BackgroundStyle marginTop="100px">
+         <BackgroundStyle marginTop="6.25rem">
+            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
             <MainRecordingContainer>
                <div>
                   <div>
@@ -58,7 +76,25 @@ function Recording() {
                            <CircleIcon />
                            <div>RECORDING...</div>
                         </RecordingContainer>
-                        <WaveIcon className="wave" />
+
+                        <Container className="wave">
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                           <span className="stroka"></span>
+                        </Container>
                      </>
                   ) : null}
                   <ButtonContainer>
@@ -98,6 +134,78 @@ function Recording() {
 }
 
 export default Recording
+const Container = styled('div')`
+   display: flex;
+   align-items: center;
+   height: 3.1rem;
+
+   .stroka {
+      display: block;
+      position: relative;
+      background: #3a10e5;
+      height: 100%;
+      width: 6px;
+      border-radius: 3.1rem;
+      margin: 0 1px;
+      animation: animate 1.3s linear infinite;
+   }
+   @keyframes animate {
+      50% {
+         height: 30%;
+      }
+      100% {
+         height: 100%;
+      }
+   }
+   .stroka:nth-child(1) {
+      animation-delay: 0s;
+   }
+   .stroka:nth-child(2) {
+      animation-delay: 0.2s;
+   }
+   .stroka:nth-child(3) {
+      animation-delay: 0.4s;
+   }
+   .stroka:nth-child(4) {
+      animation-delay: 0.6s;
+   }
+   .stroka:nth-child(5) {
+      animation-delay: 0.8s;
+   }
+   .stroka:nth-child(6) {
+      animation-delay: 0.6s;
+   }
+   .stroka:nth-child(7) {
+      animation-delay: 0.4s;
+   }
+   .stroka:nth-child(8) {
+      animation-delay: 0.2s;
+   }
+   .stroka:nth-child(9) {
+      animation-delay: 0s;
+   }
+   .stroka:nth-child(10) {
+      animation-delay: 0.2s;
+   }
+   .stroka:nth-child(11) {
+      animation-delay: 0.4s;
+   }
+   .stroka:nth-child(12) {
+      animation-delay: 0.6s;
+   }
+   .stroka:nth-child(13) {
+      animation-delay: 0.8s;
+   }
+   .stroka:nth-child(14) {
+      animation-delay: 0.6s;
+   }
+   .stroka:nth-child(15) {
+      animation-delay: 0.4s;
+   }
+   .stroka:nth-child(16) {
+      animation-delay: 0.2s;
+   }
+`
 
 const Title = styled('div')({
    color: ' #4C4859',
@@ -109,11 +217,11 @@ const Title = styled('div')({
 const SpeakContainer = styled('div')({
    display: 'flex',
    justifyContent: 'center',
-   columnGap: '17px',
-   marginTop: '50px',
-   marginBottom: '120px',
+   columnGap: '1.1rem',
+   marginTop: '3.1rem',
+   marginBottom: '7.5rem',
    '& :nth-child(2)': {
-      marginTop: '28px',
+      marginTop: '1.75rem',
       color: '#4C4859',
       fontSize: '20px',
       fontWeight: '500',
@@ -125,7 +233,7 @@ const RecordingContainer = styled('div')({
    columnGap: '11px',
    '& :nth-child(2)': {
       color: '#3A10E5',
-      fontSize: '16px',
+      fontSize: '1rem',
       fontWeight: '500',
       lineHeight: '124%',
    },
@@ -136,7 +244,7 @@ const ActiveContainer = styled('div')({
    height: '47px',
    alignItems: 'center',
    justifyContent: 'end',
-   marginTop: '30px',
+   marginTop: '2rem',
    '.wave': {
       marginLeft: '15.3vw',
       marginRight: '7vw',
@@ -154,6 +262,7 @@ const ButtonContainer = styled('div')({
 
 const MainRecordingContainer = styled('div')({
    width: '56rem',
+   marginTop: '3rem',
 })
 
 const BackgroundStyle = styled(Background)({
