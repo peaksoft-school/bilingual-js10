@@ -1,15 +1,32 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
+import { postFileS3 } from '../../../store/ListenSelect/listenSelectThunk'
+import { addOptions } from '../../../store/userTest/global-test-slice'
 
 export const ListenSelectEnglish = ({
    words = ['nurlan', 'dastan', 'rena'],
 }) => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+   const dispatch = useDispatch()
+
+   const AddAudioLink = (link) => {
+      const audioUrl = {
+         audioUrl: link.payload.data.link,
+      }
+      dispatch(addOptions(audioUrl))
+   }
+
+   const addOptionTest = async () => {
+      const optionTest = await dispatch(postFileS3())
+      AddAudioLink(optionTest)
+   }
+   // console.log(addOptionTest(), 'ListenSelectTestUser')
 
    function handleOptionSelect() {
       setIsButtonDisabled(false)
@@ -41,6 +58,7 @@ export const ListenSelectEnglish = ({
                   defaultStyle="#3A10E5"
                   hoverStyle="#4E28E8"
                   disabled={isButtonDisabled}
+                  onClick={addOptionTest}
                >
                   NEXT
                </Button>

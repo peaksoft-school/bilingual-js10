@@ -101,7 +101,6 @@ const Main = styled('div')`
    flex-direction: column;
    justify-content: center;
    gap: 3rem;
-   background: #fef5e8;
    background-image: url(${Road});
    background-position: center;
    background-repeat: no-repeat;

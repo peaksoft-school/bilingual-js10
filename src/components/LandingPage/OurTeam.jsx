@@ -8,6 +8,7 @@ const borderRadiuses = [
    '0px 0px 40px 0px',
    '40px 0px 0px 0px',
    '40px 0px 40px 0px',
+   '0px 40px 40px 0px',
    '0px 40px 0px 0px',
    '0px 0px 40px 0px',
 ]
@@ -38,7 +39,6 @@ export const OurTeam = () => {
 
 const MainTeamContainer = styled('div')(() => {
    return {
-      padding: '7.5rem 6.4rem',
       '& img': {
          width: '11.25rem',
          height: '11.25rem',

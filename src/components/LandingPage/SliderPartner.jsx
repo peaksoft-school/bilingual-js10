@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, styled } from '@mui/material'
-import { partnersIcons } from '../../utils/helpers/PartnersIcons'
+import { partnersIcons } from '../../utils/helpers/partnersIcons'
 
 const SliderPartner = () => {
    return (
@@ -28,14 +28,14 @@ const SliderPartner = () => {
 
 export default SliderPartner
 const Container = styled('div')({
-   backgroundColor: '#FEF5E8',
    position: 'relative',
-   width: '100vw',
+   overflow: 'hidden',
    height: '214px',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
    gap: '2.4rem',
+   marginBottom: '120px',
 })
 const Slider = styled('div')({
    position: 'relative',
