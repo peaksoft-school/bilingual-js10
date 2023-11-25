@@ -3,38 +3,31 @@ import { VolumeUp } from '@mui/icons-material'
 import CheckIcon from '@mui/icons-material/Check'
 import { SelectEnglishWord } from './SelectEnglishWord'
 
-export const MultiplySelect = () => {
+export const MultiplySelect = ({ words, onSelect, setIsButtonDisabled }) => {
    const [selectedWords, setSelectedWords] = useState([])
 
    const handleSelectWord = (word) => {
-      if (selectedWords.includes(word)) {
-         setSelectedWords(
-            selectedWords.filter((selectedWord) => selectedWord !== word)
-         )
-      } else {
-         setSelectedWords([...selectedWords, word])
-      }
-   }
+      setSelectedWords((prevSelectedWords) => {
+         const updatedSelectedWords = prevSelectedWords.includes(word)
+            ? prevSelectedWords.filter((selectedWord) => selectedWord !== word)
+            : [...prevSelectedWords, word]
 
-   const allWords = [
-      'Word 1',
-      'Word 2',
-      'Word 3',
-      'Word 4',
-      'Word 5',
-      'Word 6',
-      'Word 7',
-      'Word 8',
-      'Word 9',
-   ]
+         if (setIsButtonDisabled) {
+            setIsButtonDisabled(updatedSelectedWords.length === 0)
+         }
+
+         return updatedSelectedWords
+      })
+   }
 
    return (
       <SelectEnglishWord
-         words={allWords}
+         words={words}
          selectedWords={selectedWords}
          handleSelectWord={handleSelectWord}
-         VolumeUp={<VolumeUp />}
-         CheckIcon={<CheckIcon />}
+         onSelect={onSelect}
+         VolumeUp={VolumeUp}
+         CheckIcon={CheckIcon}
       />
    )
 }

@@ -1,15 +1,21 @@
-import React from 'react'
-import { styled } from '@mui/material'
+import styled from 'styled-components'
 
 export const SelectEnglishWord = ({
    words,
    selectedWords,
    handleSelectWord,
+   onSelect,
    CheckIcon,
    VolumeUp,
 }) => {
+   const handleOptionSelect = () => {
+      if (onSelect && typeof onSelect === 'function') {
+         onSelect()
+      }
+   }
+
    return (
-      <Container>
+      <Container onClick={handleOptionSelect}>
          {words.map((word) => (
             <div
                key={word}
@@ -18,7 +24,7 @@ export const SelectEnglishWord = ({
                }`}
             >
                <div className="textCon">
-                  {VolumeUp}
+                  {VolumeUp && <VolumeUp />}
                   <p>{word}</p>
                </div>
                <div className="InputCheckBox">
@@ -28,7 +34,7 @@ export const SelectEnglishWord = ({
                      }`}
                      onClick={() => handleSelectWord(word)}
                   >
-                     {CheckIcon}
+                     {CheckIcon && <CheckIcon />}
                   </button>
                </div>
             </div>
@@ -39,9 +45,10 @@ export const SelectEnglishWord = ({
 
 const Container = styled('div')(() => ({
    display: 'flex',
+   justifyContent: 'center',
    width: '800px',
    flexWrap: 'wrap',
-   columnGap: '100px',
+   columnGap: '70px',
    rowGap: '20px',
    '.ContainerMultiply': {
       display: 'flex',
@@ -58,7 +65,7 @@ const Container = styled('div')(() => ({
    },
    ' .textCon': {
       display: 'flex',
-      justifyContent: 'spase-between',
+      justifyContent: 'space-between',
       gap: '0.7rem',
       alignItems: 'center',
    },
