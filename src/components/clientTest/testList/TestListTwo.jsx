@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ALaptop, Contacts, Search, Time } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import Header from '../../../layout/Header'
@@ -8,6 +8,9 @@ import { testListArr } from '../../../utils/helpers/testListArr'
 
 export const TestListTwo = () => {
    const navigate = useNavigate()
+   const { id } = useParams()
+
+   const findTest = testListArr.find((test) => Number(id) === test.id)
    return (
       <div>
          <Header roles="user" />
@@ -16,26 +19,23 @@ export const TestListTwo = () => {
                <h2>Take a free practice test and estimate your score</h2>
                <ContainerIkons>
                   <Search className="Search" />
-                  {testListArr.map((test) => {
-                     return (
-                        <MiniContainer key={test.id}>
-                           <div className="divALaptop">
-                              <ALaptop />
-                              <span>{test.title}</span>
-                           </div>
-                           <div className="divTime">
-                              <Time />
-                              <span>
-                                 Practice takes just {test.minutes} minutes
-                              </span>
-                           </div>
-                           <div className="divContacts">
-                              <Contacts />
-                              <span>get an unofficial score estimate</span>
-                           </div>
-                        </MiniContainer>
-                     )
-                  })}
+
+                  <MiniContainer>
+                     <div className="divALaptop">
+                        <ALaptop />
+                        <span>{findTest.title}</span>
+                     </div>
+                     <div className="divTime">
+                        <Time />
+                        <span>
+                           Practice takes just {findTest.minutes} minutes
+                        </span>
+                     </div>
+                     <div className="divContacts">
+                        <Contacts />
+                        <span>get an unofficial score estimate</span>
+                     </div>
+                  </MiniContainer>
                </ContainerIkons>
                <p>
                   * The practice test may include question types that may not

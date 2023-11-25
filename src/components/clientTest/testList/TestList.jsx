@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Background } from '../../../layout/Background'
 import { TestListIcon } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
@@ -8,7 +8,6 @@ import { testListArr } from '../../../utils/helpers/testListArr'
 import Header from '../../../layout/Header'
 
 const TestList = () => {
-   const navigate = useNavigate()
    return (
       <div>
          <Header roles="user" />
@@ -28,13 +27,10 @@ const TestList = () => {
                               <p>Train as much as you like.</p>
                            </div>
                         </div>
-                        <Button
-                           onClick={() => navigate('/user/test-two')}
-                           variant="outlined"
-                           hoverStyle="#3A10E5"
-                        >
-                           try test
-                           {/* <Link to={id}>try test</Link> */}
+                        <Button variant="outlined" hoverStyle="#3A10E5">
+                           <Link to={`/user/test-two/${test.id}`}>
+                              try test
+                           </Link>
                         </Button>
                      </ListContainerStyle>
                   </Background>
