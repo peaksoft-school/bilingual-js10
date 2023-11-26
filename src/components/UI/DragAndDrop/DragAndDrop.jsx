@@ -28,20 +28,6 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
 
    const [boards, setBoards] = useState(initialState)
 
-   // useEffect(() => {
-   //    const getData = async () => {
-   //       const response = await fetch(
-   //          'https://jsonplaceholder.typicode.com/todos'
-   //       )
-   //       const data = await response.json()
-   //       const updatedBoards = [...boards]
-   //       const sliceData = data.slice(80, 86)
-   //       updatedBoards[0].items = sliceData
-   //       setBoards(updatedBoards)
-   //    }
-   //    getData()
-   // }, [])
-
    const [currentBoard, setCurrentBoard] = useState(null)
    const [currentItem, setCurrentItem] = useState(null)
 
