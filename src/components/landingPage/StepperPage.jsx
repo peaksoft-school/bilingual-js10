@@ -70,7 +70,6 @@ const Container = styled(Grid)(() => ({
    gap: '50px',
    overflow: 'hidden',
    height: '660px',
-   marginBottom: '120px',
    marginTop: '30px',
    width: '100%',
 }))

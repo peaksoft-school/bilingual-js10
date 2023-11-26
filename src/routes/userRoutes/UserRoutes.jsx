@@ -1,23 +1,14 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import Button from '../../components/UI/Buttons/Button'
-import { authActions } from '../../store/auth/authSlice'
+import { Route, Routes } from 'react-router-dom'
+import TestList from '../../components/clientTest/testList/TestList'
+import { TestListTwo } from '../../components/clientTest/testList/TestListTwo'
+import { TestterComponent } from '../../utils/helpers/TestterComponent'
 
 export const UserRoutes = () => {
-   const dispatch = useDispatch()
-   const navigate = useNavigate()
-
-   const handleLogout = () => {
-      dispatch(authActions.logout(navigate))
-   }
-
    return (
-      <div>
-         UserRoutes
-         <Button type="button" onClick={handleLogout}>
-            Logout
-         </Button>
-      </div>
+      <Routes>
+         <Route path="/" element={<TestList />} />
+         <Route path="/test/:id" element={<TestListTwo />} />
+         <Route path="/testing" element={<TestterComponent />} />
+      </Routes>
    )
 }
