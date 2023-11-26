@@ -1,12 +1,23 @@
 import { styled } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form, FormikProvider, useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import React, { useRef } from 'react'
+import {
+   postFileS3,
+   postListenSelect,
+} from '../../../store/ListenSelect/listenSelectThunk'
 import { Delete, VolumeForEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
 
 export const ListenSelect = () => {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const { testID } = useSelector((state) => state.createTestSlice)
+   const { title, questionDuration } = useSelector((state) => state.questions)
+
    const formik = useFormik({
       initialValues: {
          titleValues: '',
@@ -15,37 +26,33 @@ export const ListenSelect = () => {
          options: [],
          fileUrl: '',
          audioPlaying: null,
-      },
-      onSubmit: (values) => {
-         console.log(values)
+         isTrue: false,
       },
    })
-
+   const SaveFile = () => {
+      dispatch(postListenSelect({ formik, testID, title, questionDuration }))
+      navigate('/admin')
+   }
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)
-      const Url = new URL(window.location)
-      Url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', Url)
    }
    const handleClose = () => {
       formik.setFieldValue('isModalOpen', false)
-      const Url = new URL(window.location)
-      Url.searchParams.delete('modal')
-      window.history.pushState({}, '', Url)
    }
-   const handleSave = () => {
+   const handleSave = async () => {
+      const link = await dispatch(postFileS3(formik.values.fileUrl))
       const newOption = {
          id: new Date(),
-         audioUrl: formik.values.fileUrl,
+         audioUrl: link.payload.data.link,
          title: formik.values.titleValues,
-         isTrue: false,
+         isTrue: formik.values.isTrue,
       }
       if (formik.values) {
          formik.setValues({
             ...formik.values,
             options: [...formik.values.options, newOption],
-            titleValues: '',
             selectedFile: '',
+            titleValues: '',
          })
          handleClose()
       }
@@ -65,29 +72,43 @@ export const ListenSelect = () => {
          })
       }
    }
-   const handlePlayAudio = (index, id) => {
-      const audioFile = formik.values.fileUrl
-      if (audioFile) {
-         if (
-            formik.values.audioPlaying ||
-            (formik.values.audioPlaying && formik.values.audioPlaying.id !== id)
-         ) {
-            formik.values.audioPlaying.audio.pause()
-            formik.setValues({ ...formik.values, audioPlaying: null })
-            if (
-               formik.values.audioPlaying &&
-               formik.values.audioPlaying.id === id
-            ) {
-               return
-            }
+   const handleCheckboxChange = (id) => {
+      const updatedOptions = formik.values.options.map((option) => {
+         if (option.id === id) {
+            return { ...option, isTrue: !option.isTrue }
          }
-         const audio = new Audio(URL.createObjectURL(audioFile))
+         return option
+      })
+      formik.setValues({
+         ...formik.values,
+         options: updatedOptions,
+      })
+   }
+   const handlePlayAudio = (id) => {
+      const audioFile = formik.values.options.find(
+         (option) => option.id === id
+      )?.audioUrl
+      if (audioFile) {
+         if (formik.values.audioPlaying && formik.values.audioPlaying[id]) {
+            formik.values.audioPlaying[id].pause()
+            formik.setValues({
+               ...formik.values,
+               audioPlaying: { ...formik.values.audioPlaying, [id]: null },
+            })
+            return
+         }
+         const audio = new Audio(audioFile)
          audio.play()
          audio.addEventListener('ended', () => {
-            formik.setValues({ ...formik.values, audioPlaying: null })
+            formik.setValues({
+               ...formik.values,
+               audioPlaying: { ...formik.values.audioPlaying, [id]: null },
+            })
          })
-
-         formik.setValues({ ...formik.values, audioPlaying: { audio, id } })
+         formik.setValues({
+            ...formik.values,
+            audioPlaying: { ...formik.values.audioPlaying, [id]: audio },
+         })
       }
    }
    const removeElement = (id) => {
@@ -118,18 +139,22 @@ export const ListenSelect = () => {
                         <AudioContainer>
                            <p>{index + 1}</p>
                            <VolumeForEnglishWord
-                              onClick={() => handlePlayAudio(index, el.id)}
+                              onClick={() => handlePlayAudio(el.id)}
                               style={{
-                                 fill:
-                                    formik.values.audioPlaying?.id === el.id
-                                       ? '#3A10E5 '
-                                       : '#655F5F ',
+                                 fill: formik.values.audioPlaying?.[el.id]
+                                    ? '#3A10E5'
+                                    : '#655F5F',
                               }}
                            />
                            <p>{el.title}</p>
                         </AudioContainer>
                         <ContainDeleteChek>
-                           <InputRadio variant="CHECKBOX" />
+                           <InputRadio
+                              variant="CHECKBOX"
+                              name={`isTrue_${el.id}`}
+                              onChange={() => handleCheckboxChange(el.id)}
+                              checkedSwitch={el.isTrue}
+                           />
                            <Delete
                               onClick={() => removeElement(el.id)}
                               className="DeleteIcon"
@@ -144,6 +169,7 @@ export const ListenSelect = () => {
                         variant="outlined"
                         hoverStyle="#3A10E5"
                         className="Button"
+                        onClick={() => navigate(-1)}
                      >
                         GO BACK
                      </Button>
@@ -152,6 +178,7 @@ export const ListenSelect = () => {
                         hoverStyle="#31CF38"
                         className="saveButton"
                         variant="contained"
+                        onClick={SaveFile}
                      >
                         SAVE
                      </Button>

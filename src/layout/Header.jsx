@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 
-const Header = ({ role = 'guest' }) => {
+const Header = ({ roles = 'guest' }) => {
    const navigate = useNavigate()
    const handleComeInClick = () => {
       navigate('/signin')
@@ -18,7 +18,7 @@ const Header = ({ role = 'guest' }) => {
          <LogoBox>
             <Logo />
          </LogoBox>
-         {role === 'guest' ? (
+         {roles === 'guest' ? (
             <ButtonsContainer>
                <Button
                   defaultStyle="#3A10E5"
@@ -44,7 +44,7 @@ const Header = ({ role = 'guest' }) => {
                   </HeaderLink>
                </OptionsBlock>
                <OptionsBlock>
-                  {role ? (
+                  {roles === 'user' ? (
                      <HeaderLink to="/">
                         <MyText>My Results</MyText>
                      </HeaderLink>
@@ -80,6 +80,7 @@ const MyHeader = styled('header')({
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
+   backgroundColor: '#ffff',
 })
 const LogoBox = styled('div')({
    position: 'sticky',

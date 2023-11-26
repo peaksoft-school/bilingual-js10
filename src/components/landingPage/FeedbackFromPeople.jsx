@@ -125,7 +125,6 @@ export const FeedbackFromPeople = () => {
                )
             )}
          </div>
-         <h1>Partners</h1>
       </GobalContainer>
    )
 }
