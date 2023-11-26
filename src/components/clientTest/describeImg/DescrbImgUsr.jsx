@@ -38,7 +38,7 @@ const DescrbImgUsr = ({ img }) => {
                </div>
                <BlockImg>
                   <BoxImg>
-                     <img src={img} alt="img" />
+                     <img src={img} alt="img comes with props" />
                   </BoxImg>
                   <Input onChange={handleInputChange} value={value} />
                </BlockImg>
@@ -80,7 +80,7 @@ const BlockImg = styled('div')({
    alignItems: 'center',
 })
 const BoxImg = styled('div')({
-   backgroundColor: 'green',
+   border: '1px green solid',
    width: '11.37rem',
    height: '11rem',
    textAlign: 'center',
