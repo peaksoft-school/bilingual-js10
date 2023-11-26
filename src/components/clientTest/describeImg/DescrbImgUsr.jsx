@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Typography, styled } from '@mui/material'
 import { Background } from '../../../layout/Background'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
 const DescrbImgUsr = ({ img }) => {
    const [value, setValue] = useState()
+   const dispatch = useDispatch()
    const duration = 20
    function handleTimeUp() {
       // setTimeout(() => {
@@ -18,8 +21,11 @@ const DescrbImgUsr = ({ img }) => {
    const handleInputChange = (e) => {
       setValue(e.target.value)
    }
-   const onSave = () => {
-      console.log(value)
+   const handleAddTest = () => {
+      const testPayload = {
+         describeImg: value,
+      }
+      dispatch(addTest(testPayload))
    }
    return (
       <div>
@@ -45,7 +51,7 @@ const DescrbImgUsr = ({ img }) => {
                <BlockBottom>
                   <hr />
                   <ButtonBox>
-                     <Button padding="0.8rem 2.5rem" onClick={onSave}>
+                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
                         Next
                      </Button>
                   </ButtonBox>
@@ -109,5 +115,4 @@ const DescribeText = styled(Typography)({
    fontSize: '1.5rem',
    fontWeight: '400',
    lineHeight: 'normal',
-   //    textTransform: 'lowercase',  // font-family: DINNextRoundedLTW01-Regular;
 })
