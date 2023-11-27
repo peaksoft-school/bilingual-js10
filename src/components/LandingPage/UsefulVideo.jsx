@@ -28,8 +28,6 @@ const Container = styled('div')({
    fontfamily: 'Gilroy',
    fontStyle: 'normal',
    position: 'relative',
-   left: '3rem',
-   width: '79rem',
    height: '28rem',
    display: 'flex',
    flexDirection: 'column',
