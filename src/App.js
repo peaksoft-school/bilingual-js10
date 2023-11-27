@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-import DescrbImgUsr from './components/clientTest/describeImg/DescrbImgUsr'
+import { AppRoutes } from './routes/AppRoutes'
 
 // import LandingPage from './pages/LandingPage'
 
@@ -29,8 +29,8 @@ function App() {
 
    return (
       <div>
-         {/* <AppRoutes /> */}
-         <DescrbImgUsr />
+         <AppRoutes />
+         {/* <DescrbImgUsr /> */}
       </div>
    )
 }
