@@ -25,17 +25,20 @@ export const TypeWhatYouHear = () => {
       },
    })
 
-   const saveHandler = (e) => {
-      e.preventDefault()
-      const data = {
-         title,
-         duration: questionDuration,
-         numberOffReplays: formik.values.quantityInputValue,
-         correctAnswer: formik.values.correctAnswer,
-         audioFile,
-         testID,
+   const saveHandler = async (e) => {
+      if (title && questionDuration) {
+         e.preventDefault()
+         const data = {
+            title,
+            duration: questionDuration,
+            numberOffReplays: formik.values.quantityInputValue,
+            correctAnswer: formik.values.correctAnswer,
+            audioFile,
+            testID,
+         }
+         await dispatch(TypeWhatYouHearThunk(data))
+         navigate(`/admin/questions/${testID}`)
       }
-      dispatch(TypeWhatYouHearThunk(data))
    }
 
    const playAudio = () => {

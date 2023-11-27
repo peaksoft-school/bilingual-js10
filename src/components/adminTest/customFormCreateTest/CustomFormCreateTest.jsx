@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { InputLabel, styled } from '@mui/material'
 import { TimeField } from '@mui/x-date-pickers/TimeField'
 import { useDispatch, useSelector } from 'react-redux'
@@ -49,26 +49,29 @@ const renderedContent = {
       placeholder: 'Select the main idea',
       content: <SelectMainIdea />,
    },
-   'Select best title': {
+   'Select the best title': {
       placeholder: 'Select best title',
       content: <SelectBestTitle />,
    },
 }
 
 const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
-   const [selectedOption, setSelectedOption] = React.useState(
-      'Select real English words'
-   )
-
    const dispatch = useDispatch()
+   const { selectedOption } = useSelector((state) => state.questions)
+
+   useEffect(() => {
+      dispatch(questionsSlice.actions.addTitle(''))
+   }, [])
+
    const { /* questionDuration, */ title } = useSelector(
       (state) => state.questions
    )
    const handleChange = (event) => {
-      setSelectedOption(event.target.value)
+      dispatch(questionsSlice.actions.selectedOption(event.target.value))
    }
+
    return (
-      <Background marginTop="4rem">
+      <Background>
          <FormSubmit style={formStyles}>
             <ContainerTitleInput>
                <Container>

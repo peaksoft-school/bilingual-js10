@@ -1,7 +1,7 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
 import ReactPlayer from 'react-player'
-import { usefulVideosList } from '../../utils/helpers/UseVideList'
+import { usefulVideosList } from '../../utils/helpers/useVideoList'
 
 const UsefulVideo = () => {
    return (

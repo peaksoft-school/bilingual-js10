@@ -1,16 +1,17 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
 import { validationAuthSignUp } from '../../../utils/helpers/validate/validation'
-import { axiosInstance } from '../../../config/axiosInstance'
+import { postQuestion } from '../../../api/postQuestionApi'
 
 export const RespondLeast = () => {
-   const { testID } = useSelector((state) => state.createTestSlice)
+   const { title, questionDuration } = useSelector((state) => state.questions)
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const formik = useFormik({
       initialValues: {
          questionStatement: '',
@@ -18,17 +19,16 @@ export const RespondLeast = () => {
       },
       validationSchema: validationAuthSignUp,
       onSubmit: async (values) => {
-         try {
-            await axiosInstance.post(
-               `questions?testId=${testID}&questionType=RESPOND_AT_LEAST_N_WORDS`,
-               {
-                  statement: values.questionStatement,
-                  attempts: values.numberReplays,
-                  options: [{}],
-               }
-            )
-         } catch (error) {
-            console.error('Error:', error)
+         if (title && questionDuration) {
+            const data = {
+               title,
+               duration: questionDuration,
+               statement: values.questionStatement,
+               attempts: values.numberReplays,
+            }
+
+            dispatch(postQuestion(data))
+            navigate(-1)
          }
       },
    })
@@ -52,8 +52,8 @@ export const RespondLeast = () => {
          </Container>
          <AudioContainer>
             <div>
-               <p className="LabelTop">numberReplays of</p>
-               <p className="LabelBottom">Replays</p>
+               <p className="LabelTop">Number off</p>
+               <p className="LabelBottom">Words</p>
                <Input
                   type="number"
                   id="numberReplays"

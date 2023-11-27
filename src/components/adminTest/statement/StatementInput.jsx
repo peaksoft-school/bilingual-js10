@@ -1,5 +1,6 @@
 import React from 'react'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
@@ -9,8 +10,10 @@ import { postRecordStatement } from '../../../store/question/questionsThunk'
 const StatementInput = ({ handleClose }) => {
    const dispatch = useDispatch()
    const { title, questionDuration } = useSelector((state) => state.questions)
-   const handleSave = (result) => {
-      dispatch(postRecordStatement(result))
+   const navigate = useNavigate()
+   const handleSave = async (result) => {
+      await dispatch(postRecordStatement(result))
+      navigate(-1)
    }
    const formik = useFormik({
       initialValues: {
@@ -26,12 +29,14 @@ const StatementInput = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
-         const result = {
-            title,
-            questionDuration,
-            statement: values.inputValue,
+         if (title && questionDuration) {
+            const result = {
+               title,
+               duration: questionDuration,
+               statement: values.inputValue,
+            }
+            handleSave(result)
          }
-         handleSave(result)
       },
    })
    return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../components/UI/Buttons/Button'
 import Input from '../../components/UI/Input'
 import UpploadFile from './UpploadFile'
@@ -10,10 +11,13 @@ import { postDescribeImage } from '../../store/s3file/thunk'
 const SelectImage = ({ handleClose }) => {
    const [selectedImage, setSelectedImage] = useState(null)
    const { title, questionDuration } = useSelector((state) => state.questions)
+   const { testID } = useSelector((state) => state.createTestSlice)
    const dispatch = useDispatch()
+   const navigate = useNavigate()
 
-   const handleSave = (data) => {
-      dispatch(postDescribeImage({ selectedImage, data }))
+   const handleSave = async (data) => {
+      await dispatch(postDescribeImage({ selectedImage, data, testID }))
+      navigate(-1)
    }
 
    const formik = useFormik({
@@ -30,12 +34,14 @@ const SelectImage = ({ handleClose }) => {
          return errors
       },
       onSubmit: (values) => {
-         const data = {
-            title,
-            duration: questionDuration,
-            correctAnswer: values.inputValue,
+         if (title && questionDuration) {
+            const data = {
+               title,
+               duration: questionDuration,
+               correctAnswer: values.inputValue,
+            }
+            handleSave(data)
          }
-         handleSave(data)
       },
    })
 

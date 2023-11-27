@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
@@ -7,13 +7,12 @@ import OptionModal from './AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
-import { axiosInstance } from '../../../config/axiosInstance'
-import Notify from '../../UI/Notifay'
+import { postQuestion } from '../../../api/postQuestionApi'
 
 export const CreateRealEnglishWord = () => {
-   const { testID } = useSelector((state) => state.createTestSlice)
    const { title, questionDuration } = useSelector((state) => state.questions)
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const formik = useFormik({
       initialValues: {
          titleValues: '',
@@ -21,32 +20,23 @@ export const CreateRealEnglishWord = () => {
          checkboxValue: true,
          openModal: false,
       },
-      onSubmit: async (values) => {
-         try {
-            Notify(
-               {
-                  sucessTitle: 'The words have been preserved!',
-                  successMessage: 'Successfully these words were saved!',
-                  errorTitle: 'Error',
-               },
-               axiosInstance.post(
-                  `/questions?testId=${testID}&questionType=SELECT_REAL_ENGLISH_WORD`,
-                  {
-                     title,
-                     questionDuration,
-                     options: values.options.map((el) => ({
-                        title: el.title,
-                        isTrue: el.checked,
-                     })),
-                  }
-               )
-            )
-            navigate('/admin/QuestionsPage')
-         } catch (error) {
-            setError(error)
-         }
-      },
    })
+
+   const handleSave = async () => {
+      if (title && questionDuration) {
+         const data = {
+            title,
+            duration: questionDuration,
+            options: formik.values.options.map((el) => ({
+               title: el.title,
+               isTrue: el.checked,
+            })),
+         }
+         await dispatch(postQuestion(data))
+         navigate(-1)
+      }
+   }
+
    const handleOpenModal = () => {
       formik.setFieldValue('openModal', true)
    }
@@ -154,7 +144,7 @@ export const CreateRealEnglishWord = () => {
                <Button
                   defaultStyle="#2AB930"
                   hoverStyle="#31CF38"
-                  onClick={formik.handleSubmit}
+                  onClick={handleSave}
                >
                   Save
                </Button>

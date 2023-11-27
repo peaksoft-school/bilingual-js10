@@ -1,6 +1,6 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
@@ -8,13 +8,13 @@ import { Delete } from '../../../assets'
 import TextArea from '../../UI/textarea/TextArea'
 import { validationPassage } from '../../../utils/helpers/validate/authValidate'
 import { SelectBestModal } from '../SelectTheBestTitle/SelectBestModal'
-import { axiosInstance } from '../../../config/axiosInstance'
-import Notify from '../../UI/Notifay'
+import { postQuestion } from '../../../api/postQuestionApi'
 
 export const SelectMainIdea = () => {
-   const { testID } = useSelector((state) => state.createTestSlice)
    const { title, questionDuration } = useSelector((state) => state.questions)
+   const { testID } = useSelector((state) => state.createTestSlice)
    const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const formik = useFormik({
       initialValues: {
@@ -26,34 +26,24 @@ export const SelectMainIdea = () => {
       },
       validationSchema: validationPassage,
       onSubmit: async (values) => {
-         try {
-            Notify(
-               {
-                  sucessTitle: 'These offers have been saved!',
-                  successMessage: 'Successfully these offers have been saved!',
-                  errorTitle: 'Error',
-               },
-               axiosInstance.post(
-                  `/questions?testId=${testID}&questionType=SELECT_THE_MAIN_IDEA`,
-                  {
-                     passage: values.passage,
-                     title,
-                     questionDuration,
-                     options: values.options.map((el) => {
-                        return {
-                           title: el.title,
-                           isTrue: el.checked,
-                        }
-                     }),
+         if (title && questionDuration) {
+            const data = {
+               passage: values.passage,
+               title,
+               duration: questionDuration,
+               options: values.options.map((el) => {
+                  return {
+                     title: el.title,
+                     isTrue: el.checked,
                   }
-               )
-            )
-            navigate('/admin/QuestionsPage')
-         } catch (error) {
-            setError(error)
+               }),
+            }
+            await dispatch(postQuestion(data))
+            navigate(`/admin/questions/${testID}`)
          }
       },
    })
+
    const handleOpenModal = () => {
       formik.setFieldValue('openModal', true)
       const Url = new URL(window.location)

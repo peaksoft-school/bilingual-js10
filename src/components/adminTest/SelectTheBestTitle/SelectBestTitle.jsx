@@ -1,20 +1,20 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { Delete } from '../../../assets'
 import { SelectBestModal } from './SelectBestModal'
 import TextArea from '../../UI/textarea/TextArea'
-import { axiosInstance } from '../../../config/axiosInstance'
 import { validationPassage } from '../../../utils/helpers/validate/validation'
+import { postQuestion } from '../../../api/postQuestionApi'
 
 export const SelectBestTitle = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
-   const [error, setError] = useState(null)
+   const { title, questionDuration } = useSelector((state) => state.questions)
    const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const formik = useFormik({
       initialValues: {
@@ -26,22 +26,20 @@ export const SelectBestTitle = () => {
       },
       validationSchema: validationPassage,
       onSubmit: async (values) => {
-         try {
-            await axiosInstance.post(
-               `/questions?testId=${testID}&questionType=SELECT_THE_BEST_TITLE`,
-               {
-                  passage: values.passage,
-                  options: values.options.map((el) => {
-                     return {
-                        title: el.title,
-                        isTrue: el.checked,
-                     }
-                  }),
-               }
-            )
-            navigate('/admin')
-         } catch (error) {
-            setError(error)
+         if (title && questionDuration) {
+            const data = {
+               title,
+               duration: questionDuration,
+               passage: values.passage,
+               options: values.options.map((el) => {
+                  return {
+                     title: el.title,
+                     isTrue: el.checked,
+                  }
+               }),
+            }
+            await dispatch(postQuestion(data))
+            navigate(`/admin/questions/${testID}`)
          }
       },
    })
@@ -152,11 +150,7 @@ export const SelectBestTitle = () => {
                            </div>
                         ))}
                      </div>
-                     {error && (
-                        <div style={{ color: 'red', marginTop: '10px' }}>
-                           An error occurred: {error.message || 'Unknown error'}
-                        </div>
-                     )}
+
                      {formik.values.options.length > 0 ? (
                         <div className="ControlButton">
                            <Button

@@ -30,8 +30,10 @@ export const ListenSelect = () => {
       },
    })
    const SaveFile = () => {
-      dispatch(postListenSelect({ formik, testID, title, questionDuration }))
-      navigate('/admin')
+      if (title && questionDuration) {
+         dispatch(postListenSelect({ formik, testID, title, questionDuration }))
+         navigate(-1)
+      }
    }
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)

@@ -1,5 +1,6 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import Input from '../../UI/Input'
@@ -12,8 +13,11 @@ export const HighlightTheAnswer = () => {
    const [answerValue, setAnswerValue] = useState('')
    const { title, questionDuration } = useSelector((state) => state.questions)
    const dispatch = useDispatch()
-   const handleSave = (result) => {
-      dispatch(postHighlightAnswer(result))
+   const navigate = useNavigate()
+
+   const handleSave = async (result) => {
+      await dispatch(postHighlightAnswer(result))
+      navigate(-1)
    }
 
    const formik = useFormik({
@@ -23,14 +27,16 @@ export const HighlightTheAnswer = () => {
       },
       validationSchema: schemaHighlight,
       onSubmit: (values) => {
-         const result = {
-            title,
-            duration: questionDuration,
-            statement: values.question,
-            passage: values.text,
-            correctAnswer: answerValue,
+         if (title && questionDuration) {
+            const result = {
+               title,
+               duration: questionDuration,
+               statement: values.question,
+               passage: values.text,
+               correctAnswer: answerValue,
+            }
+            handleSave(result)
          }
-         handleSave(result)
       },
    })
 
@@ -75,7 +81,11 @@ export const HighlightTheAnswer = () => {
                </Pstyle>
             </CorrectAnswerBlock>
             <ButtonContainer>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  onClick={() => navigate('/admin/')}
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+               >
                   go back
                </Button>
                <Button

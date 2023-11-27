@@ -44,9 +44,13 @@ export const TestItems = () => {
    }
 
    const enableHandler = async (e, id) => {
-      await axiosInstance.put(
-         `/tests/updateEnable?testId=${id}`,
-         e.target.checked
+      await Notify(
+         {
+            sucessTitle: 'Test updated ',
+            successMessage: 'Successfully updated',
+            errorTitle: 'Error',
+         },
+         axiosInstance.put(`/tests/updateEnable?testId=${id}`, e.target.checked)
       )
       getData()
    }
@@ -71,59 +75,57 @@ export const TestItems = () => {
                {tests.length > 0 ? (
                   tests.map((test) => {
                      return (
-                        <>
-                           <TestItem
-                              key={test.id}
-                              test={test}
-                              setOpen={setOpen}
-                              setDelID={setDelID}
-                              enableHandler={enableHandler}
-                           />
-                           {open && (
-                              <ModalStyle
-                                 open={open}
-                                 width="519px"
-                                 height="368px"
-                                 borderRadius="20px"
-                              >
-                                 <div className="closeIconContainer">
-                                    <CloseIcon onClick={() => setOpen(false)} />
-                                 </div>
-                                 <div className="deleteText">
-                                    <div>
-                                       <ModalDeleteIcon />
-                                    </div>
-                                    <div>
-                                       <div className="doYouWantDelete">
-                                          Do you want delete?{' '}
-                                       </div>
-                                       <div>You can not restore this file </div>
-                                    </div>
-                                 </div>
-                                 <div className="buttonBlock">
-                                    <Button
-                                       variant="outlined"
-                                       hoverStyle="#3A10E5E5"
-                                       onClick={() => setOpen(false)}
-                                    >
-                                       Cancel
-                                    </Button>
-                                    <Button
-                                       hoverStyle="#3A10E5E5"
-                                       onClick={() => deleteTestHandler()}
-                                    >
-                                       Delete
-                                    </Button>
-                                 </div>
-                              </ModalStyle>
-                           )}
-                        </>
+                        <TestItem
+                           key={test.id}
+                           test={test}
+                           setOpen={setOpen}
+                           setDelID={setDelID}
+                           enableHandler={enableHandler}
+                        />
                      )
                   })
                ) : (
                   <div>There is nothing here yet</div>
                )}
             </TestItemsContainer>
+            {open && (
+               <ModalStyle
+                  open={open}
+                  width="519px"
+                  height="368px"
+                  borderRadius="20px"
+               >
+                  <div className="closeIconContainer">
+                     <CloseIcon onClick={() => setOpen(false)} />
+                  </div>
+                  <div className="deleteText">
+                     <div>
+                        <ModalDeleteIcon />
+                     </div>
+                     <div>
+                        <div className="doYouWantDelete">
+                           Do you want delete?{' '}
+                        </div>
+                        <div>You can not restore this file </div>
+                     </div>
+                  </div>
+                  <div className="buttonBlock">
+                     <Button
+                        variant="outlined"
+                        hoverStyle="#3A10E5E5"
+                        onClick={() => setOpen(false)}
+                     >
+                        Cancel
+                     </Button>
+                     <Button
+                        hoverStyle="#3A10E5E5"
+                        onClick={() => deleteTestHandler()}
+                     >
+                        Delete
+                     </Button>
+                  </div>
+               </ModalStyle>
+            )}
          </Background>
       </div>
    )

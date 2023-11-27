@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { styled } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -31,7 +32,7 @@ export const Questions = ({ testID }) => {
    const handleDeleteItem = () => {
       dispatch(deleteQuestion(getId))
       setOpenModal(false)
-      setTimeout(() => dispatch(getTestThunk(testID)), 300)
+      setTimeout(() => dispatch(getTestThunk(testID)), 600)
    }
    const handleOpenModal = (id) => {
       setOpenModal(true)
@@ -44,7 +45,7 @@ export const Questions = ({ testID }) => {
       color: #fff;
    `
    const goToCustomForm = () => {
-      navigate('/admin/custom-form')
+      navigate('/admin/create-question')
    }
    const columns = [
       { id: 'row_number', label: '#' },
@@ -97,7 +98,7 @@ export const Questions = ({ testID }) => {
          <Table data={questions} columns={columns} />
          <MiniContainer2>
             <Button
-               onClick={() => navigate(-1)}
+               onClick={() => navigate('/admin')}
                variant="outlined"
                hoverStyle="#3A10E5"
             >

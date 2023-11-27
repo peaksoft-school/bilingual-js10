@@ -22,8 +22,8 @@ const QuestionsPage = () => {
                return (
                   <Title key={test?.id}>
                      <Typography>
-                        <span className="title">Title:</span>
-                        <span>{test?.title}</span>
+                        <span className="title">Title: </span>
+                        <span> {test?.title}</span>
                      </Typography>
                      <Typography>
                         <span className="Description">Description: </span>
@@ -60,6 +60,14 @@ const Title = styled('div')`
       font-size: 16px;
    }
    & .Description + span {
+      color: #4c4859;
+   }
+   & .Duration {
+      color: #3752b4;
+      font-weight: 500;
+      font-size: 16px;
+   }
+   & .Duration + span {
       color: #4c4859;
    }
 `
