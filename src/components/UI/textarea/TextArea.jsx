@@ -2,7 +2,7 @@ import { TextField as MuiTextArea, styled } from '@mui/material'
 import React, { forwardRef } from 'react'
 
 const TextArea = forwardRef(
-   ({ onChange, value, label, error, fullWidth, ...rest }, ref) => {
+   ({ onChange, value, label, error, fullWidth, disabled, ...rest }, ref) => {
       return (
          <div>
             <StyledTextArea
@@ -17,17 +17,19 @@ const TextArea = forwardRef(
                onChange={onChange}
                error={error}
                inputRef={ref}
+               disabled={disabled}
                {...rest}
             />
          </div>
       )
    }
 )
+
 const StyledTextArea = styled(MuiTextArea)({
-   backgroundColor: 'white',
    '& .MuiOutlinedInput-root': {
-      fontFamily: 'Poppins',
       borderRadius: '0.5rem',
+      backgroundColor: 'white',
+      fontFamily: 'Poppins',
       color: ' #4C4859',
       padding: '0.88rem 1rem 2.83rem 1rem',
       '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': {

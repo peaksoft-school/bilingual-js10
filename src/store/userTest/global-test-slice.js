@@ -9,6 +9,7 @@ export const globalTestSlice = createSlice({
    initialState,
    reducers: {
       addTest: (state, action) => {
+         console.log(action.payload)
          state.tests = [...state.tests, action.payload]
       },
    },

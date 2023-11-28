@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
 import HighLightAnswerUser from './components/clientTest/highlightAns/HighLightAnswerUser'
+// import { HighlightTheAnswer } from './components/adminTest/highlightTheAnswer/HighlightTheAnswer'
 // import LandingPage from './pages/LandingPage'
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <div>
          {/* <AppRoutes /> */}
          <HighLightAnswerUser />
+         {/* <HighlightTheAnswer /> */}
       </div>
    )
 }
