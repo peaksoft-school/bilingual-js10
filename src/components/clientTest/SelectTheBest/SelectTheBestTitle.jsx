@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
 export const SelectTheBestTitle = () => {
    const passege = ` Sed ut perspiciatis unde omnis iste natus error sit
@@ -40,13 +42,14 @@ export const SelectTheBestTitle = () => {
    ]
 
    const [selectedRadio, setSelectedRadio] = useState(null)
+   const dispatch = useDispatch()
 
    const formik = useFormik({
       initialValues: {
          options: [],
       },
       onSubmit: (values) => {
-         console.log(values.options)
+         console.log(values)
       },
    })
 
@@ -69,7 +72,7 @@ export const SelectTheBestTitle = () => {
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
-            <Background className="ContainerBackground">
+            <Background maxWidth="1098px" className="ContainerBackground">
                <ProgressBar
                   timeObject={timeObject}
                   timeProgress={chartPercent}
@@ -87,46 +90,54 @@ export const SelectTheBestTitle = () => {
                      <p className="passageBestTitle">
                         Select the best title for the passage
                      </p>
-                     {arr.map((el) => (
-                        <div key={el.id} className="ContainerCreateUserTest">
-                           <div
-                              className="ContainCreatTest"
-                              style={{
-                                 border:
-                                    selectedRadio === el.id
-                                       ? '2px solid #3A10E5'
-                                       : '1px solid #D4D0D0',
-                                 background:
-                                    selectedRadio === el.id
-                                       ? '#EAF4FF'
-                                       : 'transparent',
-                              }}
-                           >
-                              <div className="ContainerRadio">
-                                 <InputRadio
-                                    variant="RADIO"
-                                    checkedSwitch={selectedRadio === el.id}
-                                    onChange={() => handleRadioChange(el.id)}
-                                 />
-                                 <p>{el.title}</p>
+                     <div className="ContainerCreateUserTest">
+                        {arr.map((el) => (
+                           <div key={el.id}>
+                              <div
+                                 className="ContainCreatTest"
+                                 style={{
+                                    border:
+                                       selectedRadio === el.id
+                                          ? '2px solid #3A10E5'
+                                          : '1px solid #D4D0D0',
+                                    background:
+                                       selectedRadio === el.id
+                                          ? '#EAF4FF'
+                                          : 'transparent',
+                                 }}
+                              >
+                                 <div className="ContainerRadio">
+                                    <InputRadio
+                                       variant="RADIO"
+                                       checkedSwitch={selectedRadio === el.id}
+                                       onChange={() => handleRadioChange(el.id)}
+                                    />
+                                    <p className="NameTitle">{el.title}</p>
+                                 </div>
                               </div>
                            </div>
-                        </div>
-                     ))}
+                        ))}
+                     </div>
                      <Button
                         disabled={isNextButtonDisabled}
                         defaultStyle="#3A10E5"
                         hoverStyle="#4E28E8"
-                        className="NextButton"
+                        className="nextButton"
                         variant="contained"
                         type="submit"
+                        style={{
+                           padding: '0.81rem 3.5rem',
+                           marginTop: '1rem',
+                        }}
                         onClick={() => {
-                           console.log(
-                              arr.map((el) => ({
-                                 title: el.title,
-                                 selected: formik.values.options[el.id - 1],
-                              }))
+                           const newTest = arr.map((el) => ({
+                              title: el.title,
+                              isTrue: formik.values.options[el.id - 1],
+                           }))
+                           const answer = newTest.find(
+                              (el) => el.isTrue === true
                            )
+                           dispatch(addTest(answer))
                         }}
                      >
                         NEXT
@@ -150,11 +161,15 @@ const ContainerUserTest = styled('div')({
       height: '2.62rem',
       marginTop: '2rem',
    },
+   '.ContainerCreateUserTest': {
+      marginTop: '10px',
+      '& > div': {
+         marginTop: '11px',
+      },
+   },
 })
 const ContainerSelectTest = styled('div')({
    '.ContainerBackground': {
-      width: '100%',
-      height: '100%',
       padding: '2.69rem',
    },
    '.ContainCreatTest': {
@@ -188,7 +203,7 @@ const ContainerTextArea = styled('div')({
       borderBottom: '1px solid #D4D0D0',
       padding: '1rem 29rem 1rem 1.13rem',
       color: ' #4C4859',
-      fontSize: '1rem',
+      fontSize: '1.1rem',
       fontWeight: 500,
    },
 })
@@ -196,12 +211,12 @@ const ContainerSelectRadio = styled('div')({
    display: 'flex',
    flexDirection: 'column',
    gap: '0.88rem',
-   justifyContent: 'end',
+   justifyContent: 'center',
    alignItems: 'end',
    '.passageBestTitle': {
       color: '#4C4859',
       fontSize: '1.45rem',
       fontWeight: 400,
-      lineHeight: '3.63rem',
+      lineHeight: '1.63rem',
    },
 })
