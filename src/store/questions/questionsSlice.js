@@ -5,6 +5,7 @@ const initialState = {
    questionDuration: 0,
    title: '',
    link: '',
+   options: [],
 }
 
 export const questionsSlice = createSlice({
@@ -16,6 +17,9 @@ export const questionsSlice = createSlice({
       },
       addTime: (state, action) => {
          state.questionDuration = action.payload
+      },
+      addOption: (state, action) => {
+         state.options.push(action.payload)
       },
    },
    extraReducers: (builder) => {
