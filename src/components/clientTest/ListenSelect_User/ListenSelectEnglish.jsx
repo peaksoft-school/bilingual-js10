@@ -1,39 +1,37 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
-import { postFileS3 } from '../../../store/ListenSelect/listenSelectThunk'
-import { addOptions } from '../../../store/userTest/global-test-slice'
+// import { postFileS3 } from '../../../store/ListenSelect/listenSelectThunk'
+// import { addOptions } from '../../../store/userTest/global-test-slice'
 
 export const ListenSelectEnglish = ({
-   words = ['nurlan', 'dastan', 'rena'],
+   words = ['nurlan', 'dastan', 'renat', 'nurlan', 'afdsdsd', 'renat'],
 }) => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-   const dispatch = useDispatch()
+   // const dispatch = useDispatch()
 
-   const AddAudioLink = (link) => {
-      const audioUrl = {
-         audioUrl: link.payload.data.link,
-      }
-      dispatch(addOptions(audioUrl))
-   }
+   // const AddAudioLink = (link) => {
+   //    const audioUrl = {
+   //       audioUrl: link.payload.data.link,
+   //    }
+   //    dispatch(addOptions(audioUrl))
+   // }
 
-   const addOptionTest = async () => {
-      const optionTest = await dispatch(postFileS3())
-      AddAudioLink(optionTest)
-   }
-   // console.log(addOptionTest(), 'ListenSelectTestUser')
+   // const addOptionTest = async () => {
+   //    const optionTest = await dispatch(postFileS3())
+   //    AddAudioLink(optionTest)
+   // }
 
-   function handleOptionSelect() {
+   const handleOptionSelect = () => {
       setIsButtonDisabled(false)
    }
-
-   const duration = 60
-   function handleTimeUp() {
+   const duration = 240
+   const handleTimeUp = () => {
       setIsButtonDisabled(true)
    }
 
@@ -58,7 +56,7 @@ export const ListenSelectEnglish = ({
                   defaultStyle="#3A10E5"
                   hoverStyle="#4E28E8"
                   disabled={isButtonDisabled}
-                  onClick={addOptionTest}
+                  // onClick={addOptionTest}
                >
                   NEXT
                </Button>
