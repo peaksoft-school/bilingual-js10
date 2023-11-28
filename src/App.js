@@ -3,9 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-import HighLightAnswerUser from './components/clientTest/highlightAns/HighLightAnswerUser'
-// import { HighlightTheAnswer } from './components/adminTest/highlightTheAnswer/HighlightTheAnswer'
-// import LandingPage from './pages/LandingPage'
+import { AppRoutes } from './routes/AppRoutes'
 
 function App() {
    const dispatch = useDispatch()
@@ -29,9 +27,7 @@ function App() {
 
    return (
       <div>
-         {/* <AppRoutes /> */}
-         <HighLightAnswerUser />
-         {/* <HighlightTheAnswer /> */}
+         <AppRoutes />
       </div>
    )
 }
