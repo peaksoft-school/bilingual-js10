@@ -5,8 +5,6 @@ import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
 import { AppRoutes } from './routes/AppRoutes'
 
-// import LandingPage from './pages/LandingPage'
-
 function App() {
    const dispatch = useDispatch()
    const navigate = useNavigate()
@@ -30,7 +28,6 @@ function App() {
    return (
       <div>
          <AppRoutes />
-         {/* <DescrbImgUsr /> */}
       </div>
    )
 }

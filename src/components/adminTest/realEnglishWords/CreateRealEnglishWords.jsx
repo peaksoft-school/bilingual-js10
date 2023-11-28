@@ -10,7 +10,7 @@ import Button from '../../UI/Buttons/Button'
 import { axiosInstance } from '../../../config/axiosInstance'
 import Notify from '../../UI/Notifay'
 
-export const CreateRealEnglishWord = () => {
+export const AdminCreateRealEnglishWord = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
    const { title, questionDuration } = useSelector((state) => state.questions)
    const navigate = useNavigate()
