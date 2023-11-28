@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
 export const UserMainIdea = () => {
    const passage = `Sed ut perspiciatis unde omnis iste natus error sit
@@ -40,7 +42,7 @@ export const UserMainIdea = () => {
    ]
 
    const [selectedRadio, setSelectedRadio] = useState(null)
-
+   const dispatch = useDispatch()
    const formik = useFormik({
       initialValues: {
          options: [],
@@ -66,6 +68,16 @@ export const UserMainIdea = () => {
    }
    const isNextButtonDisabled = !selectedRadio
 
+   const handleNextButtonClick = () => {
+      const selectedOption = arr.find((el) => el.id === selectedRadio)
+      dispatch(
+         addTest({
+            passage,
+            title: selectedOption.title,
+            isTrue: formik.values.options[selectedOption.id - 1],
+         })
+      )
+   }
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
@@ -121,12 +133,7 @@ export const UserMainIdea = () => {
                         variant="contained"
                         type="submit"
                         onClick={() => {
-                           console.log(
-                              arr.map((el) => ({
-                                 title: el.title,
-                                 selected: formik.values.options[el.id - 1],
-                              }))
-                           )
+                           handleNextButtonClick()
                         }}
                      >
                         NEXT

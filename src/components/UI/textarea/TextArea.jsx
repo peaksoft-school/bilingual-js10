@@ -11,6 +11,8 @@ const TextArea = forwardRef(
                placeholder="Your response"
                variant="outlined"
                id="outlined-basic"
+               minRows={5}
+               maxRows={5}
                multiline
                label={label}
                value={value}
@@ -23,11 +25,12 @@ const TextArea = forwardRef(
       )
    }
 )
+
 const StyledTextArea = styled(MuiTextArea)({
-   backgroundColor: 'white',
    '& .MuiOutlinedInput-root': {
-      fontFamily: 'Poppins',
       borderRadius: '0.5rem',
+      backgroundColor: 'white',
+      fontFamily: 'Poppins',
       color: ' #4C4859',
       padding: '0.88rem 1rem 2.83rem 1rem',
       '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
