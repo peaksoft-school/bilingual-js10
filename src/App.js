@@ -2,10 +2,8 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
-// import { AppRoutes } from './routes/AppRoutes'
 import { authActions } from './store/auth/authSlice'
-import { SelectTheBestTitle } from './components/clientTest/SelectTheBest/SelectTheBestTitle'
-// import { InputRadio } from './components/UI/InputRadio'
+import { AppRoutes } from './routes/AppRoutes'
 // import LandingPage from './pages/LandingPage'
 
 function App() {
@@ -30,10 +28,7 @@ function App() {
 
    return (
       <div>
-         {/* <AppRoutes /> */}
-         {/* <LandingPage /> */}
-         {/* <CustomFormCreateTest /> */}
-         <SelectTheBestTitle />
+         <AppRoutes />
       </div>
    )
 }
