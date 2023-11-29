@@ -46,7 +46,12 @@ const DescrbImgUsr = ({ img }) => {
                   <BoxImg>
                      <img src={img} alt="img comes with props" />
                   </BoxImg>
-                  <Input onChange={handleInputChange} value={value} />
+                  <Input
+                     minRows={5}
+                     maxRows={5}
+                     onChange={handleInputChange}
+                     value={value}
+                  />
                </BlockImg>
                <BlockBottom>
                   <hr />
@@ -96,6 +101,7 @@ const Input = styled(TextArea)({
    height: '11.43rem',
    padding: '0.3rem',
 })
+
 const BlockBottom = styled('div')({
    width: '50rem',
    height: '8rem',
