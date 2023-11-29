@@ -45,6 +45,10 @@ import { ReactComponent as BilingualLogo } from './icons/billingualLogo.svg'
 import { ReactComponent as ModalDeleteIcon } from './icons/modal-delete-icon.svg'
 import { ReactComponent as EyePassword } from './icons/eyePassword.svg'
 import { ReactComponent as YellowBackground } from './icons/yellowBackground.svg'
+import { ReactComponent as ALaptop } from './icons/aLaptop.svg'
+import { ReactComponent as Time } from './icons/time.svg'
+import { ReactComponent as Search } from './icons/search.svg'
+import { ReactComponent as Contacts } from './icons/contacts.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -105,4 +109,8 @@ export {
    PlayAudioIcon,
    EyePassword,
    YellowBackground,
+   ALaptop,
+   Time,
+   Search,
+   Contacts,
 }
