@@ -1,28 +1,19 @@
-import { useRef } from 'react'
 import styled from 'styled-components'
 import { VolumeForEnglishWord } from '../../../assets'
 
 export const SelectEnglishWord = ({
    words,
-   selectedWords,
+   answer,
    handleSelectWord,
    CheckIcon,
+   onVolumeUpClick,
+   isPlaying,
 }) => {
-   const audioRef = useRef(null)
-
-   const handleVolumeUpClick = (audioUrl) => {
-      if (audioRef.current) {
-         if (audioRef.current.paused) {
-            audioRef.current.play()
-         } else {
-            audioRef.current.pause()
-         }
-      } else {
-         const newAudio = new Audio(audioUrl)
-         audioRef.current = newAudio
-         newAudio.play()
-      }
-   }
+   // const handleOptionSelect = () => {
+   //    if (onSelect && typeof onSelect === 'function') {
+   //       onSelect()
+   //    }
+   // }
 
    return (
       <Container>
@@ -30,24 +21,24 @@ export const SelectEnglishWord = ({
             <div
                key={word.id}
                className={`ContainerMultiply ${
-                  selectedWords.includes(word) ? 'checked' : ''
+                  answer.includes(word) ? 'checked' : ''
                }`}
             >
                <div className="textCon">
                   <VolumeForEnglishWord
-                     onClick={() =>
-                        handleVolumeUpClick(selectedWords[0]?.audioUrl)
-                     }
-                     style={{
-                        fill: audioRef?.[word.id] ? '#3A10E5' : '#655F5F',
-                     }}
+                     className={`volumeIcon ${
+                        isPlaying ? 'playing' : 'paused'
+                     }`}
+                     onClick={() => onVolumeUpClick(word.audioUrl)}
                   />
+
                   <p>{word.title}</p>
                </div>
                <div className="InputCheckBox">
                   <button
+                     type="button"
                      className={`IconValue ${
-                        selectedWords.includes(word) ? 'checked' : ''
+                        answer.includes(word) ? 'checked' : ''
                      }`}
                      onClick={() => handleSelectWord(word)}
                   >
@@ -59,7 +50,6 @@ export const SelectEnglishWord = ({
       </Container>
    )
 }
-
 const Container = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',
@@ -83,6 +73,7 @@ const Container = styled('div')(() => ({
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      gap: '15px',
    },
    ' .InputCheckBox': {
       display: 'flex',

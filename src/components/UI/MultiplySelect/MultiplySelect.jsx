@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import CheckIcon from '@mui/icons-material/Check'
 import { SelectEnglishWord } from './SelectEnglishWord'
 
-export const MultiplySelect = ({ words, setIsButtonDisabled }) => {
-   const [selectedWords, setSelectedWords] = useState([])
+export const MultiplySelect = ({
+   words,
+   setIsButtonDisabled,
+   answer,
+   setAnswer,
+}) => {
+   const audioRef = useRef(new Audio())
+   const isButtonDisabled = answer.length === 0
 
    const handleSelectWord = (word) => {
-      setSelectedWords((prevSelectedWords) => {
+      setAnswer((prevSelectedWords) => {
          const isWordSelected = prevSelectedWords.some(
             (selectedWord) => selectedWord.id === word.id
          )
@@ -16,23 +22,30 @@ export const MultiplySelect = ({ words, setIsButtonDisabled }) => {
                  (selectedWord) => selectedWord.id !== word.id
               )
             : [...prevSelectedWords, word]
-
-         if (setIsButtonDisabled) {
-            setIsButtonDisabled(updatedSelectedWords.length === 0)
-         }
-
          return updatedSelectedWords
       })
    }
 
+   const handleVolumeUpClick = (audioUrl) => {
+      if (audioRef.current.paused) {
+         audioRef.current.src = audioUrl
+         audioRef.current.play()
+      } else {
+         audioRef.current.pause()
+      }
+   }
+
+   useEffect(() => {
+      setIsButtonDisabled(isButtonDisabled)
+   }, [isButtonDisabled, setIsButtonDisabled])
+
    return (
-      <div>
-         <SelectEnglishWord
-            words={words}
-            selectedWords={selectedWords}
-            handleSelectWord={handleSelectWord}
-            CheckIcon={CheckIcon}
-         />
-      </div>
+      <SelectEnglishWord
+         words={words}
+         answer={answer}
+         handleSelectWord={handleSelectWord}
+         CheckIcon={CheckIcon}
+         onVolumeUpClick={(audioUrl) => handleVolumeUpClick(audioUrl)}
+      />
    )
 }

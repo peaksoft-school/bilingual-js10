@@ -1,61 +1,59 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
 export const ListenSelectEnglish = ({
    words = [
       {
          id: 1,
          title: 'LASEW',
-         isTrue: false,
          audioUrl:
             'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
       },
       {
          id: 2,
          title: 'LASEW ',
-         isTrue: false,
          audioUrl:
             'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
       },
       {
          id: 3,
          title: 'LASEW',
-         isTrue: false,
          audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
-      },
-      {
-         id: 4,
-         title: 'LASEW',
-         isTrue: false,
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
+            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701253795142Violin.mp3',
       },
    ],
 }) => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
    const [selectedWords, setSelectedWords] = useState([...words])
+   const [answer, setAnswer] = useState([])
 
-   const handleOptionSelect = (selectedWordId, isChecked) => {
+   const dispatch = useDispatch()
+   const handleOptionSelect = (selectedWordId) => {
       setSelectedWords((prevWords) =>
          prevWords.map((word) =>
-            word.id === selectedWordId ? { ...word, isTrue: isChecked } : word
+            word.id === selectedWordId ? { ...word } : word
          )
       )
    }
 
    const duration = 240
+
    const handleTimeUp = () => {
       setIsButtonDisabled(true)
    }
 
    const handleNextButtonClick = () => {
-      console.log(selectedWords)
+      const data = answer.map((el) => {
+         return el.id
+      })
+      dispatch(addTest({ options: data }))
    }
 
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
@@ -68,6 +66,8 @@ export const ListenSelectEnglish = ({
             <ContainerMultiplySelect>
                <MultiplySelect
                   words={selectedWords}
+                  answer={answer}
+                  setAnswer={setAnswer}
                   onSelect={handleOptionSelect}
                   setIsButtonDisabled={setIsButtonDisabled}
                />
