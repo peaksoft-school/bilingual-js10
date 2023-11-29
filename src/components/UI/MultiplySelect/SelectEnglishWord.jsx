@@ -1,31 +1,48 @@
+import { useRef } from 'react'
 import styled from 'styled-components'
+import { VolumeForEnglishWord } from '../../../assets'
 
 export const SelectEnglishWord = ({
    words,
    selectedWords,
    handleSelectWord,
-   onSelect,
    CheckIcon,
-   VolumeUp,
 }) => {
-   const handleOptionSelect = () => {
-      if (onSelect && typeof onSelect === 'function') {
-         onSelect()
+   const audioRef = useRef(null)
+
+   const handleVolumeUpClick = (audioUrl) => {
+      if (audioRef.current) {
+         if (audioRef.current.paused) {
+            audioRef.current.play()
+         } else {
+            audioRef.current.pause()
+         }
+      } else {
+         const newAudio = new Audio(audioUrl)
+         audioRef.current = newAudio
+         newAudio.play()
       }
    }
 
    return (
-      <Container onClick={handleOptionSelect}>
+      <Container>
          {words.map((word) => (
             <div
-               key={word}
+               key={word.id}
                className={`ContainerMultiply ${
                   selectedWords.includes(word) ? 'checked' : ''
                }`}
             >
                <div className="textCon">
-                  {VolumeUp && <VolumeUp />}
-                  <p>{word}</p>
+                  <VolumeForEnglishWord
+                     onClick={() =>
+                        handleVolumeUpClick(selectedWords[0]?.audioUrl)
+                     }
+                     style={{
+                        fill: audioRef?.[word.id] ? '#3A10E5' : '#655F5F',
+                     }}
+                  />
+                  <p>{word.title}</p>
                </div>
                <div className="InputCheckBox">
                   <button
@@ -52,12 +69,11 @@ const Container = styled('div')(() => ({
    rowGap: '20px',
    '.ContainerMultiply': {
       display: 'flex',
-      gap: '2rem',
       justifyContent: 'space-between',
       alignItems: 'center',
       border: '1.5px solid #D4D0D0',
       borderRadius: '0.5rem',
-      width: '12.3rem',
+      width: '12.7rem',
       height: '2.6rem',
       paddingLeft: '10px',
       color: '#4C4859',
@@ -66,7 +82,6 @@ const Container = styled('div')(() => ({
    ' .textCon': {
       display: 'flex',
       justifyContent: 'space-between',
-      gap: '0.7rem',
       alignItems: 'center',
    },
    ' .InputCheckBox': {

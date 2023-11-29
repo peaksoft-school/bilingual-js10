@@ -1,38 +1,61 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-// import { useDispatch } from 'react-redux'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
 import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
-// import { postFileS3 } from '../../../store/ListenSelect/listenSelectThunk'
-// import { addOptions } from '../../../store/userTest/global-test-slice'
 
 export const ListenSelectEnglish = ({
-   words = ['nurlan', 'dastan', 'renat', 'nurlan', 'afdsdsd', 'renat'],
+   words = [
+      {
+         id: 1,
+         title: 'LASEW',
+         isTrue: false,
+         audioUrl:
+            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
+      },
+      {
+         id: 2,
+         title: 'LASEW ',
+         isTrue: false,
+         audioUrl:
+            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
+      },
+      {
+         id: 3,
+         title: 'LASEW',
+         isTrue: false,
+         audioUrl:
+            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
+      },
+      {
+         id: 4,
+         title: 'LASEW',
+         isTrue: false,
+         audioUrl:
+            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
+      },
+   ],
 }) => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-   // const dispatch = useDispatch()
+   const [selectedWords, setSelectedWords] = useState([...words])
 
-   // const AddAudioLink = (link) => {
-   //    const audioUrl = {
-   //       audioUrl: link.payload.data.link,
-   //    }
-   //    dispatch(addOptions(audioUrl))
-   // }
-
-   // const addOptionTest = async () => {
-   //    const optionTest = await dispatch(postFileS3())
-   //    AddAudioLink(optionTest)
-   // }
-
-   const handleOptionSelect = () => {
-      setIsButtonDisabled(false)
+   const handleOptionSelect = (selectedWordId, isChecked) => {
+      setSelectedWords((prevWords) =>
+         prevWords.map((word) =>
+            word.id === selectedWordId ? { ...word, isTrue: isChecked } : word
+         )
+      )
    }
+
    const duration = 240
    const handleTimeUp = () => {
       setIsButtonDisabled(true)
+   }
+
+   const handleNextButtonClick = () => {
+      console.log(selectedWords)
    }
 
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
@@ -44,7 +67,7 @@ export const ListenSelectEnglish = ({
             <h2>Select the Real English words in this list</h2>
             <ContainerMultiplySelect>
                <MultiplySelect
-                  words={words}
+                  words={selectedWords}
                   onSelect={handleOptionSelect}
                   setIsButtonDisabled={setIsButtonDisabled}
                />
@@ -56,7 +79,7 @@ export const ListenSelectEnglish = ({
                   defaultStyle="#3A10E5"
                   hoverStyle="#4E28E8"
                   disabled={isButtonDisabled}
-                  // onClick={addOptionTest}
+                  onClick={handleNextButtonClick}
                >
                   NEXT
                </Button>

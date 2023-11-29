@@ -1,47 +1,37 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Background } from '../../../layout/Background'
-import Button from '../Buttons/Button'
+import Button from '../../UI/Buttons/Button'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
-export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
-   const [movedItems, setMovedItems] = useState([])
-   const timer = 30
-
+export const UserRealEnglishWord = ({ onClickQuitTest }) => {
+   const dispatch = useDispatch()
    const initialState = [
       {
          id: 1,
-         items: [
-            { id: 1, title: 'hello' },
+         options: [
+            { id: 1, title: 'twall' },
             { id: 1, title: 'world' },
-            { id: 1, title: 'get' },
-            { id: 1, title: 'post' },
-            { id: 1, title: 'delete' },
-            { id: 1, title: 'put' },
+            { id: 1, title: 'greesey' },
+            { id: 1, title: 'cability' },
+            { id: 1, title: 'advantage' },
+            { id: 1, title: 'uncove' },
          ],
       },
       {
          id: 2,
          title: 'select words and drag here',
-         items: [],
+         options: [],
       },
    ]
-
+   const duration = 40
+   function handleTimeUp() {}
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+   const [movedItems, setMovedItems] = useState([])
    const [boards, setBoards] = useState(initialState)
-
-   // useEffect(() => {
-   //    const getData = async () => {
-   //       const response = await fetch(
-   //          'https://jsonplaceholder.typicode.com/todos'
-   //       )
-   //       const data = await response.json()
-   //       const updatedBoards = [...boards]
-   //       const sliceData = data.slice(80, 86)
-   //       updatedBoards[0].items = sliceData
-   //       setBoards(updatedBoards)
-   //    }
-   //    getData()
-   // }, [])
-
    const [currentBoard, setCurrentBoard] = useState(null)
    const [currentItem, setCurrentItem] = useState(null)
 
@@ -73,18 +63,26 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
          e.target.style.backgroundColor = '#fff'
       }
    }
+   const handleNext = () => {
+      const newTest = {
+         id: 3,
+         title: 'Next Test Title',
+         options: movedItems,
+      }
 
+      dispatch(addTest(newTest))
+   }
    function dropHandler(e, targetBoard, targetItem) {
       e.preventDefault()
       if (currentBoard === targetBoard) {
-         const newItems = [...currentBoard.items]
+         const newItems = [...currentBoard.options]
          const currentIndex = newItems.indexOf(currentItem)
          newItems.splice(currentIndex, 1)
          newItems.splice(newItems.indexOf(targetItem), 0, currentItem)
 
          const newBoards = boards.map((board) => {
             if (board.id === currentBoard.id) {
-               board.items = newItems
+               board.options = newItems
             }
             return board
          })
@@ -93,23 +91,22 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
          const sourceBoard = currentBoard
          const sourceItem = currentItem
 
-         const newSourceItems = [...sourceBoard.items]
+         const newSourceItems = [...sourceBoard.options]
          const sourceIndex = newSourceItems.indexOf(sourceItem)
          newSourceItems.splice(sourceIndex, 1)
 
-         const newTargetItems = [...targetBoard.items]
+         const newTargetItems = [...targetBoard.options]
          const targetIndex = newTargetItems.indexOf(targetItem)
          newTargetItems.splice(targetIndex + 1, 0, sourceItem)
 
          const newBoards = boards.map((board) => {
             if (board.id === sourceBoard.id) {
-               board.items = newSourceItems
+               board.options = newSourceItems
             } else if (board.id === targetBoard.id) {
-               board.items = newTargetItems
+               board.options = newTargetItems
             }
             return board
          })
-
          setBoards(newBoards)
          if (sourceBoard.id === 1 && targetBoard.id === 2) {
             setMovedItems([...movedItems, sourceItem])
@@ -135,9 +132,9 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
             </Button>
          </div>
          <BackgroundStyle marginTop="10px">
-            <div className="timer">0:{timer}</div>
+            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
             <div className="title">
-               select the real English words in this list
+               Select the real English words in this list
             </div>
             <Container>
                {boards.map((board) => (
@@ -151,9 +148,9 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
                      onDragLeave={(e) => dragLeaveHandler(e)}
                   >
                      <BoardTitle>
-                        {board.items.length === 0 ? board.title : ''}
+                        {board.options.length === 0 ? board.title : ''}
                      </BoardTitle>
-                     {board.items?.map((item) => (
+                     {board.options?.map((item) => (
                         <Item
                            key={item.id}
                            onDragStart={(e) => dragStartHandler(e, board, item)}
@@ -174,7 +171,7 @@ export const DragAndDrop = ({ onClickNext, onClickQuitTest }) => {
                      defaultStyle="#3A10E5"
                      hoverStyle="#4E28E8"
                      className="nextButton"
-                     onClick={onClickNext}
+                     onClick={handleNext}
                   >
                      next
                   </Button>
@@ -248,7 +245,6 @@ const BackgroundStyle = styled(Background)(() => ({
       height: '70px',
       borderRadius: '3px',
       alignItems: 'end',
-      borderTop: '8px solid var(--Grey-INPUT, #D4D0D0)',
       justifyContent: 'center',
       display: 'flex',
       color: '#4C4859',

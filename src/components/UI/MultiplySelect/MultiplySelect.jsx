@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
-import { VolumeUp } from '@mui/icons-material'
 import CheckIcon from '@mui/icons-material/Check'
 import { SelectEnglishWord } from './SelectEnglishWord'
 
-export const MultiplySelect = ({ words, onSelect, setIsButtonDisabled }) => {
+export const MultiplySelect = ({ words, setIsButtonDisabled }) => {
    const [selectedWords, setSelectedWords] = useState([])
 
    const handleSelectWord = (word) => {
       setSelectedWords((prevSelectedWords) => {
-         const updatedSelectedWords = prevSelectedWords.includes(word)
-            ? prevSelectedWords.filter((selectedWord) => selectedWord !== word)
+         const isWordSelected = prevSelectedWords.some(
+            (selectedWord) => selectedWord.id === word.id
+         )
+
+         const updatedSelectedWords = isWordSelected
+            ? prevSelectedWords.filter(
+                 (selectedWord) => selectedWord.id !== word.id
+              )
             : [...prevSelectedWords, word]
 
          if (setIsButtonDisabled) {
@@ -21,13 +26,13 @@ export const MultiplySelect = ({ words, onSelect, setIsButtonDisabled }) => {
    }
 
    return (
-      <SelectEnglishWord
-         words={words}
-         selectedWords={selectedWords}
-         handleSelectWord={handleSelectWord}
-         onSelect={onSelect}
-         VolumeUp={VolumeUp}
-         CheckIcon={CheckIcon}
-      />
+      <div>
+         <SelectEnglishWord
+            words={words}
+            selectedWords={selectedWords}
+            handleSelectWord={handleSelectWord}
+            CheckIcon={CheckIcon}
+         />
+      </div>
    )
 }
