@@ -2,7 +2,7 @@ import { TextField as MuiTextArea, styled } from '@mui/material'
 import React, { forwardRef } from 'react'
 
 const TextArea = forwardRef(
-   ({ onChange, value, label, error, fullWidth, ...rest }, ref) => {
+   ({ onChange, value, label, error, fullWidth, disabled, ...rest }, ref) => {
       return (
          <div>
             <StyledTextArea
@@ -11,14 +11,13 @@ const TextArea = forwardRef(
                placeholder="Your response"
                variant="outlined"
                id="outlined-basic"
-               minRows={5}
-               maxRows={5}
                multiline
                label={label}
                value={value}
                onChange={onChange}
                error={error}
                inputRef={ref}
+               disabled={disabled}
                {...rest}
             />
          </div>
