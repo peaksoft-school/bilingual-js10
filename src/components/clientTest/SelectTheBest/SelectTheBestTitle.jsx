@@ -10,7 +10,7 @@ import { InputRadio } from '../../UI/InputRadio'
 import { addTest } from '../../../store/userTest/global-test-slice'
 
 export const SelectTheBestTitle = () => {
-   const passege = ` Sed ut perspiciatis unde omnis iste natus error sit
+   const passage = ` Sed ut perspiciatis unde omnis iste natus error sit
                            voluptatem accusantium doloremque laudantium, totam
                            rem aperiam, eaque ipsa quae ab illo inventore
                            veritatis et quasi architecto beatae vitae dicta sunt
@@ -59,6 +59,17 @@ export const SelectTheBestTitle = () => {
       //    console.log('nextPage')
       // }, 10000)
    }
+
+   const SendingToTheServer = () => {
+      const newTest = arr.map((el) => ({
+         passage,
+         title: el.title,
+         isTrue: formik.values.options[el.id - 1],
+      }))
+      const answer = newTest.find((el) => el.isTrue === true)
+      dispatch(addTest(answer))
+   }
+
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
    const handleRadioChange = (id) => {
       formik.setFieldValue(
@@ -83,7 +94,7 @@ export const SelectTheBestTitle = () => {
                         <span>PASSAGE</span>
                      </div>
                      <div className="ContainerParagraf">
-                        <p>{passege}</p>
+                        <p>{passage}</p>
                      </div>
                   </ContainerTextArea>
                   <ContainerSelectRadio>
@@ -125,19 +136,9 @@ export const SelectTheBestTitle = () => {
                         className="nextButton"
                         variant="contained"
                         type="submit"
-                        style={{
-                           padding: '0.81rem 3.5rem',
-                           marginTop: '1rem',
-                        }}
+                        padding="0.81rem 3.5rem"
                         onClick={() => {
-                           const newTest = arr.map((el) => ({
-                              title: el.title,
-                              isTrue: formik.values.options[el.id - 1],
-                           }))
-                           const answer = newTest.find(
-                              (el) => el.isTrue === true
-                           )
-                           dispatch(addTest(answer))
+                           SendingToTheServer()
                         }}
                      >
                         NEXT
@@ -166,6 +167,9 @@ const ContainerUserTest = styled('div')({
       '& > div': {
          marginTop: '11px',
       },
+   },
+   button: {
+      marginTop: '2rem',
    },
 })
 const ContainerSelectTest = styled('div')({
