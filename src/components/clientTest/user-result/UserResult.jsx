@@ -46,7 +46,7 @@ const UserResult = () => {
 
    const deleteData = async () => {
       try {
-         await axiosInstanceS3File.delete(`/result/?userId=1&testId=4`)
+         await axiosInstanceS3File.delete(`/result/?userId=1&testId=1`)
          getDATA()
       } catch (error) {
          console.error(error)
