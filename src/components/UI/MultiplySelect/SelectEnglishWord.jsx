@@ -1,19 +1,25 @@
 import styled from 'styled-components'
-import { VolumeForEnglishWord } from '../../../assets'
+import { useRef, useState } from 'react'
+import { VolumeEnglishWord } from '../../../assets'
 
 export const SelectEnglishWord = ({
    words,
    answer,
    handleSelectWord,
    CheckIcon,
-   onVolumeUpClick,
-   isPlaying,
 }) => {
-   // const handleOptionSelect = () => {
-   //    if (onSelect && typeof onSelect === 'function') {
-   //       onSelect()
-   //    }
-   // }
+   const audioRef = useRef(new Audio())
+   const [isPlaying, setIsPlaying] = useState(false)
+
+   const handleVolumeUpClick = (audioUrl) => {
+      if (audioRef.current.paused) {
+         audioRef.current.src = audioUrl
+         audioRef.current.play()
+      } else {
+         audioRef.current.pause()
+      }
+      setIsPlaying(!isPlaying)
+   }
 
    return (
       <Container>
@@ -25,13 +31,15 @@ export const SelectEnglishWord = ({
                }`}
             >
                <div className="textCon">
-                  <VolumeForEnglishWord
+                  <VolumeEnglishWord
                      className={`volumeIcon ${
                         isPlaying ? 'playing' : 'paused'
                      }`}
-                     onClick={() => onVolumeUpClick(word.audioUrl)}
+                     style={{
+                        fill: isPlaying ? '#3A10E5' : '#655F5F',
+                     }}
+                     onClick={() => handleVolumeUpClick(word.audioUrl)}
                   />
-
                   <p>{word.title}</p>
                </div>
                <div className="InputCheckBox">
@@ -95,10 +103,13 @@ const Container = styled('div')(() => ({
       borderRight: 'none',
       color: '#D4D0D0',
       background: 'white',
+      cursor: 'pointer',
    },
    ' .IconValue.checked': {
       color: 'white',
       background: '#3A10E5',
       border: ' 1.5px solid #3A10E5',
+      cursor: 'pointer',
    },
+   '.volumeIcon': { cursor: 'pointer' },
 }))
