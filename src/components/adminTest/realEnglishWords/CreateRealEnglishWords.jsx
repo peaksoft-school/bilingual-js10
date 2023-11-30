@@ -1,22 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import OptionModal from './AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { postQuestion } from '../../../api/postQuestionApi'
+import { getOptionByQuestionId } from '../../../store/questions/questionsThunk'
 
 export const CreateRealEnglishWord = () => {
    const { title, questionDuration } = useSelector((state) => state.questions)
+   const [getOptions, setGetOptions] = useState([])
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   const { pathname } = useLocation()
+   const getDataOption = async () => {
+      const { payload } = await dispatch(getOptionByQuestionId())
+      setGetOptions(payload.data)
+      setTimeout(() => {
+         console.log(getOptions)
+      }, 3000)
+   }
+
+   useEffect(() => {
+      getDataOption()
+   }, [])
+
    const formik = useFormik({
       initialValues: {
          titleValues: '',
-         options: [],
+         options: pathname === '/admin/update-question' ? getOptions : [],
          checkboxValue: true,
          openModal: false,
       },

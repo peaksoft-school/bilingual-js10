@@ -91,6 +91,7 @@ const Header = ({ roles = 'guest' }) => {
       </MyHeader>
    )
 }
+
 const ButtonsContainer = styled('div')(() => ({
    paddingRight: '80px',
    display: 'flex',

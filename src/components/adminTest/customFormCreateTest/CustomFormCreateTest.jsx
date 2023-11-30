@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { InputLabel, styled } from '@mui/material'
+import { useLocation } from 'react-router-dom'
 import { TimeField } from '@mui/x-date-pickers/TimeField'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from '../../UI/select/Select'
@@ -15,6 +16,7 @@ import StatementInput from '../statement/StatementInput'
 import SelectImage from '../../../layout/selectImg/SelectImage'
 import { SelectMainIdea } from '../selectMainIdea/SelectMainIdea'
 import { questionsSlice } from '../../../store/questions/questionsSlice'
+import { getQuestionThunk } from '../../../store/questions/questionsThunk'
 
 const renderedContent = {
    'Select real English words': {
@@ -50,18 +52,15 @@ const renderedContent = {
       content: <SelectMainIdea />,
    },
    'Select the best title': {
-      placeholder: 'Select best title',
+      placeholder: 'Select the best title',
       content: <SelectBestTitle />,
    },
 }
 
 const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
    const dispatch = useDispatch()
+   const { pathname } = useLocation()
    const { selectedOption } = useSelector((state) => state.questions)
-
-   useEffect(() => {
-      dispatch(questionsSlice.actions.addTitle(''))
-   }, [])
 
    const { /* questionDuration, */ title } = useSelector(
       (state) => state.questions
@@ -69,6 +68,9 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
    const handleChange = (event) => {
       dispatch(questionsSlice.actions.selectedOption(event.target.value))
    }
+   useEffect(() => {
+      dispatch(getQuestionThunk())
+   }, [])
 
    return (
       <Background>
@@ -104,14 +106,16 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                   />
                </ContainerTimerInput>
             </ContainerTitleInput>
-            <ContainerInputSecond>
-               <InputLabelTextType>{selectLabel}Type</InputLabelTextType>{' '}
-               <Select
-                  selectedOption={selectedOption}
-                  handleChange={handleChange}
-                  fullWidth
-               />
-            </ContainerInputSecond>
+            {pathname === '/admin/update-question' ? null : (
+               <ContainerInputSecond>
+                  <InputLabelTextType>{selectLabel}Type</InputLabelTextType>
+                  <Select
+                     selectedOption={selectedOption}
+                     handleChange={handleChange}
+                     fullWidth
+                  />
+               </ContainerInputSecond>
+            )}
             {renderedContent[selectedOption]?.content}
          </FormSubmit>
       </Background>

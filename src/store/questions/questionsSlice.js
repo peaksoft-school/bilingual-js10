@@ -6,6 +6,7 @@ const initialState = {
    title: '',
    link: '',
    selectedOption: 'Select real English words',
+   questionID: null,
 }
 
 export const questionsSlice = createSlice({
@@ -20,6 +21,9 @@ export const questionsSlice = createSlice({
       },
       selectedOption: (state, action) => {
          state.selectedOption = action.payload
+      },
+      setQuestionID: (state, action) => {
+         state.questionID = action.payload
       },
    },
    extraReducers: (builder) => {

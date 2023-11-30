@@ -17,6 +17,35 @@ export const postFileThunk = createAsyncThunk(
    }
 )
 
+export const getQuestionThunk = createAsyncThunk(
+   'getQuestionThunk',
+   async (_, { rejectWithValue, getState }) => {
+      try {
+         const { questionID } = getState().questions
+         const response = await axiosInstance.get(
+            `/questions?questionId=${questionID}`
+         )
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+export const getOptionByQuestionId = createAsyncThunk(
+   'getOptionByQuestionId',
+   async (_, { rejectWithValue, getState }) => {
+      try {
+         const { questionID } = getState().questions
+         const response = await axiosInstance.get(
+            `/questions/getOptionsByQuestionId?questionId=${questionID}`
+         )
+         return response
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
 export const TypeWhatYouHearThunk = createAsyncThunk(
    'TypeWhatYouHearThunk',
    async (data, { dispatch }) => {

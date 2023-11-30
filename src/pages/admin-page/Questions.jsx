@@ -10,6 +10,7 @@ import { Modal } from '../../components/UI/UiModal'
 import { Table } from '../../components/table/Table'
 import { axiosInstance } from '../../config/axiosInstance'
 import { deleteQuestion, getTestThunk } from '../../store/admin/QuestionsSlice'
+import { questionsSlice } from '../../store/questions/questionsSlice'
 
 export const Questions = ({ testID }) => {
    const navigate = useNavigate()
@@ -20,6 +21,9 @@ export const Questions = ({ testID }) => {
 
    useEffect(() => {
       dispatch(getTestThunk(testID))
+      dispatch(
+         questionsSlice.actions.selectedOption('Select real English words')
+      )
    }, [])
 
    const handleRadioChange = async (item) => {
@@ -47,6 +51,26 @@ export const Questions = ({ testID }) => {
    const goToCustomForm = () => {
       navigate('/admin/create-question')
    }
+
+   const qestionTypes = {
+      RECORD_SAYING_STATEMENT: 'Record saying statement',
+      SELECT_REAL_ENGLISH_WORD: 'Select real English words',
+      LISTEN_AND_SELECT_ENGLISH_WORDS: 'Listen and select English word',
+      TYPE_WHAT_YOU_HEAR: 'Type what you hear',
+      DESCRIBE_IMAGE: 'Describe image',
+      RESPOND_AT_LEAST_N_WORDS: 'Respond in at least N words',
+      HIGHLIGHT_THE_ANSWER: 'Highlight the answer',
+      SELECT_THE_MAIN_IDEA: 'Select the main idea',
+      SELECT_THE_BEST_TITLE: 'Select the best title',
+   }
+
+   const editQuestionHandler = (item) => {
+      const select = qestionTypes[item.questionType]
+      dispatch(questionsSlice.actions.selectedOption(select))
+      dispatch(questionsSlice.actions.setQuestionID(item.id))
+      navigate('/admin/update-question')
+   }
+
    const columns = [
       { id: 'row_number', label: '#' },
       {
@@ -73,7 +97,10 @@ export const Questions = ({ testID }) => {
                      value={item.score}
                      onChange={() => handleRadioChange(item)}
                   />
-                  <Edits className="Edits" />
+                  <Edits
+                     className="Edits"
+                     onClick={() => editQuestionHandler(item)}
+                  />
                   <TrashCan
                      onClick={() => handleOpenModal(item.id)}
                      className="TrashCan"

@@ -12,6 +12,7 @@ const getTestThunk = createAsyncThunk('getTestThunk', async (testID) => {
       return error
    }
 })
+
 export const deleteQuestion = createAsyncThunk(
    'questionSlice/deleteQuestion',
    async (questionId, { rejectWithValue }) => {
@@ -46,4 +47,5 @@ export const questionSlice = createSlice({
       })
    },
 })
+
 export { getTestThunk }
