@@ -9,23 +9,17 @@ import {
    Paper,
    styled,
 } from '@mui/material'
-import { useSelector } from 'react-redux'
 
 export const Table = ({ data, columns }) => {
-   const { questions } = useSelector((state) => state.questionSlice)
    return (
       <Container>
          <TableContainerStyled component={Paper}>
             <MuiTableStyled>
                <TableHead>
                   <TableRowColumns>
-                     {questions.length === 0 ? (
-                        <p>There s no one here yet</p>
-                     ) : (
-                        columns?.map((column) => (
-                           <TableCell key={column.id}>{column.label}</TableCell>
-                        ))
-                     )}
+                     {columns?.map((column) => (
+                        <TableCell key={column.id}>{column.label}</TableCell>
+                     ))}
                   </TableRowColumns>
                </TableHead>
                <TableBodyStyled>
