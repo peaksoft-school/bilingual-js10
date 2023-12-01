@@ -10,7 +10,7 @@ import Button from '../../UI/Buttons/Button'
 import { postQuestion } from '../../../api/postQuestionApi'
 import { getOptionByQuestionId } from '../../../store/questions/questionsThunk'
 
-export const CreateRealEnglishWord = () => {
+export const AdminCreateRealEnglishWord = () => {
    const { title, questionDuration } = useSelector((state) => state.questions)
    const [getOptions, setGetOptions] = useState([])
    const navigate = useNavigate()

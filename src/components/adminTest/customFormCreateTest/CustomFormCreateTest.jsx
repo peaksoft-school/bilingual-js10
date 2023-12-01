@@ -5,7 +5,7 @@ import { TimeField } from '@mui/x-date-pickers/TimeField'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
-import { CreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
+import { AdminCreateRealEnglishWord } from '../realEnglishWords/CreateRealEnglishWords'
 import { Background } from '../../../layout/Background'
 import { HighlightTheAnswer } from '../highlightTheAnswer/HighlightTheAnswer'
 import { RespondLeast } from '../respondLeast/RespondLeast'
@@ -21,7 +21,7 @@ import { getQuestionThunk } from '../../../store/questions/questionsThunk'
 const renderedContent = {
    'Select real English words': {
       placeholder: 'Select real English words',
-      content: <CreateRealEnglishWord />,
+      content: <AdminCreateRealEnglishWord />,
    },
    'Listen and select English word': {
       placeholder: 'Listen and select English word',
