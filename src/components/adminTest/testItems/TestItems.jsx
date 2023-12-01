@@ -95,7 +95,7 @@ export const TestItems = () => {
                                     </div>
                                     <div>
                                        <div className="doYouWantDelete">
-                                          Do you want delete?{' '}
+                                          Do you want delete?
                                        </div>
                                        <div>You can not restore this file </div>
                                     </div>

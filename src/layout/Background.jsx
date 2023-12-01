@@ -22,7 +22,7 @@ const BackgroundBox = styled(Box)(() => {
 const StyleBackground = styled('div')(({ marginTop, maxWidth }) => {
    return {
       marginTop: `${marginTop}`,
-      maxWidth: `${maxWidth || '1060px'}`,
+      maxWidth: `${maxWidth || '1200px'}`,
       padding: '3.125rem 5rem',
       backgroundColor: '#fff',
       borderRadius: '25px',
