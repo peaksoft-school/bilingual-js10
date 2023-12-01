@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Typography, styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
 import { addTest } from '../../../store/userTest/global-test-slice'
@@ -11,13 +8,7 @@ import { addTest } from '../../../store/userTest/global-test-slice'
 const DescrbImgUsr = ({ img }) => {
    const [value, setValue] = useState()
    const dispatch = useDispatch()
-   const duration = 20
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
    const handleInputChange = (e) => {
       setValue(e.target.value)
    }
@@ -29,40 +20,32 @@ const DescrbImgUsr = ({ img }) => {
    }
    return (
       <div>
-         <Background>
-            <Container>
-               <PrgressBlock>
-                  <ProgressBar
-                     timeObject={timeObject}
-                     timeProgress={chartPercent}
-                  />
-               </PrgressBlock>
-               <div>
-                  <DescribeText>
-                     Write one or more sentences that describe the image
-                  </DescribeText>
-               </div>
-               <BlockImg>
-                  <BoxImg>
-                     <img src={img} alt="img comes with props" />
-                  </BoxImg>
-                  <Input
-                     minRows={5}
-                     maxRows={5}
-                     onChange={handleInputChange}
-                     value={value}
-                  />
-               </BlockImg>
-               <BlockBottom>
-                  <hr />
-                  <ButtonBox>
-                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
-                        Next
-                     </Button>
-                  </ButtonBox>
-               </BlockBottom>
-            </Container>
-         </Background>
+         <Container>
+            <div>
+               <DescribeText>
+                  Write one or more sentences that describe the image
+               </DescribeText>
+            </div>
+            <BlockImg>
+               <BoxImg>
+                  <img src={img} alt="img comes with props" />
+               </BoxImg>
+               <Input
+                  minRows={5}
+                  maxRows={5}
+                  onChange={handleInputChange}
+                  value={value}
+               />
+            </BlockImg>
+            <BlockBottom>
+               <hr />
+               <ButtonBox>
+                  <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                     Next
+                  </Button>
+               </ButtonBox>
+            </BlockBottom>
+         </Container>
       </div>
    )
 }
@@ -78,10 +61,9 @@ const Container = styled('div')({
    flexDirection: 'column',
    gap: '3.1rem',
    alignItems: 'center',
+   marginTop: '2rem',
 })
-const PrgressBlock = styled('div')({
-   width: '50rem',
-})
+
 const BlockImg = styled('div')({
    width: '38rem',
    height: '15rem',
