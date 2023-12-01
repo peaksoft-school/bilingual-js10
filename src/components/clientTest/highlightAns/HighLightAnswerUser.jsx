@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Typography, styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
 import { addTest } from '../../../store/userTest/global-test-slice'
@@ -23,13 +20,7 @@ const passage = `Sed ut perspiciatis unde omnis iste natus error sit
 const HighLightAnswerUser = () => {
    const [answerValue, setAnswerValue] = useState('')
    const dispatch = useDispatch()
-   const duration = 40
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
    const handleAddTest = () => {
       const testPayload = {
          highlightedAnswer: answerValue,
@@ -38,61 +29,52 @@ const HighLightAnswerUser = () => {
    }
    return (
       <div>
-         <Background padding="3.125rem 2rem" maxWidth>
-            <Container>
-               <PrgressBlock>
-                  <ProgressBar
-                     timeObject={timeObject}
-                     timeProgress={chartPercent}
-                  />
-               </PrgressBlock>
-               <BottomBlock>
-                  <PassageBlock>
-                     <div>
-                        <ThePassage>Passage</ThePassage>
-                        <hr />
-                     </div>
-                     <TextBox>
-                        <Pstyle
-                           onMouseUp={() =>
-                              setAnswerValue(window.getSelection().toString())
-                           }
-                        >
-                           {passage}
-                        </Pstyle>
-                     </TextBox>
-                  </PassageBlock>
-                  <InputBlock>
-                     <TitleBox>
-                        <TextClick>
-                           Click and drad text to highlight the answer to the
-                           question below
-                        </TextClick>
-                     </TitleBox>
-                     <QuestionBox>
-                        <p>
-                           What did residents think couild happen with new
-                           bridge?
-                        </p>
-                     </QuestionBox>
-                     <HighlitedBox>
-                        <StyledInput
-                           disabled
-                           minRows={3}
-                           maxRows={3}
-                           placeholder="Highlight text in the passage to set an answer"
-                           value={answerValue}
-                        />
-                     </HighlitedBox>
-                     <ButtonBox>
-                        <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
-                           Next
-                        </Button>
-                     </ButtonBox>
-                  </InputBlock>
-               </BottomBlock>
-            </Container>
-         </Background>
+         <Container>
+            <BottomBlock>
+               <PassageBlock>
+                  <div>
+                     <ThePassage>Passage</ThePassage>
+                     <hr />
+                  </div>
+                  <TextBox>
+                     <Pstyle
+                        onMouseUp={() =>
+                           setAnswerValue(window.getSelection().toString())
+                        }
+                     >
+                        {passage}
+                     </Pstyle>
+                  </TextBox>
+               </PassageBlock>
+               <InputBlock>
+                  <TitleBox>
+                     <TextClick>
+                        Click and drad text to highlight the answer to the
+                        question below
+                     </TextClick>
+                  </TitleBox>
+                  <QuestionBox>
+                     <p>
+                        What did residents think couild happen with new bridge?
+                     </p>
+                  </QuestionBox>
+                  <HighlitedBox>
+                     <StyledInput
+                        disabled
+                        minRows={3}
+                        maxRows={3}
+                        placeholder="Highlight text in the passage to set an answer"
+                        value={answerValue}
+                     />
+                  </HighlitedBox>
+                  <ButtonBox>
+                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                        Next
+                     </Button>
+                  </ButtonBox>
+               </InputBlock>
+            </BottomBlock>
+         </Container>
       </div>
    )
 }
@@ -105,10 +87,9 @@ const Container = styled('div')({
    flexDirection: 'column',
    gap: '3.1rem',
    alignItems: 'center',
+   marginTop: '2.5rem',
 })
-const PrgressBlock = styled('div')({
-   width: '60.25rem',
-})
+
 const BottomBlock = styled('div')({
    width: '60.25rem',
    display: 'flex',
