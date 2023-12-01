@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { addTest } from '../../../store/userTest/global-test-slice'
@@ -52,13 +49,6 @@ export const UserMainIdea = () => {
       },
    })
 
-   const duration = 120
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
    const handleRadioChange = (id) => {
       formik.setFieldValue(
          'options',
@@ -81,66 +71,60 @@ export const UserMainIdea = () => {
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
-            <Background className="ContainerBackground">
-               <ProgressBar
-                  timeObject={timeObject}
-                  timeProgress={chartPercent}
-               />
-               <ContainerUserTest>
-                  <ContainerTextArea>
-                     <div className="containerPassage">
-                        <span>PASSAGE</span>
-                     </div>
-                     <div className="ContainerParagraf">
-                        <p>{passage}</p>
-                     </div>
-                  </ContainerTextArea>
-                  <ContainerSelectRadio>
-                     <p className="passageMainIdea">
-                        Select the main idea for the passage
-                     </p>
-                     {arr.map((el) => (
-                        <div key={el.id} className="ContainerCreateUserTest">
-                           <div
-                              className="ContainCreatTest"
-                              style={{
-                                 border:
-                                    selectedRadio === el.id
-                                       ? '2px solid #3A10E5'
-                                       : '1px solid #D4D0D0',
-                                 background:
-                                    selectedRadio === el.id
-                                       ? '#EAF4FF'
-                                       : 'transparent',
-                              }}
-                           >
-                              <div className="ContainerRadio">
-                                 <InputRadio
-                                    variant="RADIO"
-                                    checkedSwitch={selectedRadio === el.id}
-                                    onChange={() => handleRadioChange(el.id)}
-                                 />
-                                 <p style={{ color: '#4C4859' }}>{el.title}</p>
-                              </div>
+            <ContainerUserTest>
+               <ContainerTextArea>
+                  <div className="containerPassage">
+                     <span>PASSAGE</span>
+                  </div>
+                  <div className="ContainerParagraf">
+                     <p>{passage}</p>
+                  </div>
+               </ContainerTextArea>
+               <ContainerSelectRadio>
+                  <p className="passageMainIdea">
+                     Select the main idea for the passage
+                  </p>
+                  {arr.map((el) => (
+                     <div key={el.id} className="ContainerCreateUserTest">
+                        <div
+                           className="ContainCreatTest"
+                           style={{
+                              border:
+                                 selectedRadio === el.id
+                                    ? '2px solid #3A10E5'
+                                    : '1px solid #D4D0D0',
+                              background:
+                                 selectedRadio === el.id
+                                    ? '#EAF4FF'
+                                    : 'transparent',
+                           }}
+                        >
+                           <div className="ContainerRadio">
+                              <InputRadio
+                                 variant="RADIO"
+                                 checkedSwitch={selectedRadio === el.id}
+                                 onChange={() => handleRadioChange(el.id)}
+                              />
+                              <p style={{ color: '#4C4859' }}>{el.title}</p>
                            </div>
                         </div>
-                     ))}
-                     <Button
-                        disabled={isNextButtonDisabled}
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        className="NextButton"
-                        variant="contained"
-                        type="submit"
-                        onClick={() => {
-                           handleNextButtonClick()
-                        }}
-                     >
-                        NEXT
-                     </Button>
-                  </ContainerSelectRadio>
-               </ContainerUserTest>
-            </Background>
+                     </div>
+                  ))}
+                  <Button
+                     disabled={isNextButtonDisabled}
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="NextButton"
+                     variant="contained"
+                     type="submit"
+                     onClick={() => {
+                        handleNextButtonClick()
+                     }}
+                  >
+                     NEXT
+                  </Button>
+               </ContainerSelectRadio>
+            </ContainerUserTest>
          </ContainerSelectTest>
       </form>
    )
