@@ -1,13 +1,10 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import { addTest } from '../../../store/userTest/global-test-slice'
 
-export const UserRealEnglishWord = ({ onClickQuitTest }) => {
+export const UserRealEnglishWord = () => {
    const dispatch = useDispatch()
    const initialState = [
       {
@@ -27,9 +24,7 @@ export const UserRealEnglishWord = ({ onClickQuitTest }) => {
          options: [],
       },
    ]
-   const duration = 40
-   function handleTimeUp() {}
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
    const [movedItems, setMovedItems] = useState([])
    const [boards, setBoards] = useState(initialState)
    const [currentBoard, setCurrentBoard] = useState(null)
@@ -119,68 +114,73 @@ export const UserRealEnglishWord = ({ onClickQuitTest }) => {
    }
 
    return (
-      <GlobalDiv>
-         <div className="buttonContainer">
-            <Button
-               defaultStyle="white"
-               hoverStyle="#3A10E5"
-               className="logOutButton"
-               variant="outlined"
-               onClick={onClickQuitTest}
-            >
-               QUIT TEST
-            </Button>
-         </div>
-         <BackgroundStyle marginTop="10px">
-            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <div className="title">
-               Select the real English words in this list
+      <GlobalContainer>
+         <div className="title">Select the real English words in this list</div>
+         <Container>
+            {boards.map((board) => (
+               <Board
+                  key={board.id}
+                  onDragOver={(e) => dragOverHandler(e)}
+                  onDrop={(e) => dropHandler(e, board, null)}
+                  isFirstBoard={isFirstBoard(board)}
+                  isSecondBoard={isSecondBoard(board)}
+                  onDragEnter={(e) => dragEnterHandler(e)}
+                  onDragLeave={(e) => dragLeaveHandler(e)}
+               >
+                  <BoardTitle>
+                     {board.options.length === 0 ? board.title : ''}
+                  </BoardTitle>
+                  {board.options?.map((item) => (
+                     <Item
+                        key={item.id}
+                        onDragStart={(e) => dragStartHandler(e, board, item)}
+                        onDragEnd={(e) => dragEndHandler(e)}
+                        draggable={Boolean(true)}
+                        className="item"
+                     >
+                        {item.title}
+                     </Item>
+                  ))}
+               </Board>
+            ))}
+            <div className="nextButtonContainer">
+               <Button
+                  disabled={
+                     movedItems.length === 0 ? Boolean(true) : Boolean(false)
+                  }
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#4E28E8"
+                  className="nextButton"
+                  onClick={handleNext}
+               >
+                  next
+               </Button>
             </div>
-            <Container>
-               {boards.map((board) => (
-                  <Board
-                     key={board.id}
-                     onDragOver={(e) => dragOverHandler(e)}
-                     onDrop={(e) => dropHandler(e, board, null)}
-                     isFirstBoard={isFirstBoard(board)}
-                     isSecondBoard={isSecondBoard(board)}
-                     onDragEnter={(e) => dragEnterHandler(e)}
-                     onDragLeave={(e) => dragLeaveHandler(e)}
-                  >
-                     <BoardTitle>
-                        {board.options.length === 0 ? board.title : ''}
-                     </BoardTitle>
-                     {board.options?.map((item) => (
-                        <Item
-                           key={item.id}
-                           onDragStart={(e) => dragStartHandler(e, board, item)}
-                           onDragEnd={(e) => dragEndHandler(e)}
-                           draggable={Boolean(true)}
-                           className="item"
-                        >
-                           {item.title}
-                        </Item>
-                     ))}
-                  </Board>
-               ))}
-               <div className="nextButtonContainer">
-                  <Button
-                     disabled={
-                        movedItems.length === 0 ? Boolean(true) : Boolean(false)
-                     }
-                     defaultStyle="#3A10E5"
-                     hoverStyle="#4E28E8"
-                     className="nextButton"
-                     onClick={handleNext}
-                  >
-                     next
-                  </Button>
-               </div>
-            </Container>
-         </BackgroundStyle>
-      </GlobalDiv>
+         </Container>
+      </GlobalContainer>
    )
 }
+const GlobalContainer = styled('div')`
+   margin-top: 2.5rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   .title {
+      color: #4c4859;
+      font-family: DINNextRoundedLTW01-Regular;
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+   }
+`
+
+const BoardTitle = styled('div')(() => ({
+   fontSize: '0.90rem',
+   fontWeight: '700',
+}))
 
 const Container = styled('div')(() => ({
    display: 'flex',
@@ -203,11 +203,6 @@ const Board = styled('div')(({ isFirstBoard, isSecondBoard }) => ({
    flexWrap: 'wrap',
 }))
 
-const BoardTitle = styled('div')(() => ({
-   fontSize: '0.90rem',
-   fontWeight: '700',
-}))
-
 const Item = styled('div')(() => ({
    width: 'fit-content',
    height: '41px',
@@ -226,54 +221,5 @@ const Item = styled('div')(() => ({
    '&:active': {
       backgroundColor: '#3A10E5',
       color: 'white',
-   },
-}))
-
-const BackgroundStyle = styled(Background)(() => ({
-   minWidth: '62.5vw',
-   '.timer': {
-      color: '#4C4859',
-      fontFamily: 'Poppins',
-      fontSize: '32px',
-      fontStyle: 'normal',
-      fontWeight: '500',
-      lineHeight: '24px',
-   },
-   '.title': {
-      marginTop: '15px',
-      width: '100%',
-      height: '70px',
-      borderRadius: '3px',
-      alignItems: 'end',
-      justifyContent: 'center',
-      display: 'flex',
-      color: '#4C4859',
-      fontFamily: 'Poppins',
-      fontSize: '28px',
-      fontStyle: 'normal',
-      fontWeight: '400',
-      lineHeight: '24px',
-   },
-}))
-const GlobalDiv = styled('div')(() => ({
-   height: '100vh',
-   background: '#D7E1F8',
-   '.buttonContainer': {
-      display: 'flex',
-      padding: '15px 40px 0 0',
-      alignItems: 'center',
-      justifyContent: 'end',
-      width: '100%',
-   },
-   '.nextButtonContainer': {
-      height: '70px',
-      width: '100%',
-      borderTop: '2px solid #D4D0D0',
-      display: 'flex',
-      alignItems: 'end',
-      justifyContent: 'end',
-      '& Button': {
-         width: '143px',
-      },
    },
 }))
