@@ -129,8 +129,7 @@ export const UserMainIdea = () => {
                         disabled={isNextButtonDisabled}
                         defaultStyle="#3A10E5"
                         hoverStyle="#4E28E8"
-                        className="NextButton"
-                        variant="contained"
+                        className="nextButton"
                         type="submit"
                         onClick={() => {
                            handleNextButtonClick()

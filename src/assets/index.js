@@ -49,7 +49,7 @@ import { ReactComponent as ALaptop } from './icons/aLaptop.svg'
 import { ReactComponent as Time } from './icons/time.svg'
 import { ReactComponent as Search } from './icons/search.svg'
 import { ReactComponent as Contacts } from './icons/contacts.svg'
-
+import { ReactComponent as Hear } from './icons/hear.svg'
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
@@ -113,4 +113,5 @@ export {
    Time,
    Search,
    Contacts,
+   Hear,
 }
