@@ -16,12 +16,14 @@ export const AdminCreateRealEnglishWord = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const { pathname } = useLocation()
-   const getDataOption = async () => {
-      const { payload } = await dispatch(getOptionByQuestionId())
-      setGetOptions(payload.data)
-      setTimeout(() => {
-         console.log(getOptions)
-      }, 3000)
+
+   const getDataOption = () => {
+      dispatch(getOptionByQuestionId())
+         .unwrap()
+         .then((payload) => {
+            setGetOptions(payload.data)
+            console.log(getOptions)
+         })
    }
 
    useEffect(() => {
@@ -31,7 +33,10 @@ export const AdminCreateRealEnglishWord = () => {
    const formik = useFormik({
       initialValues: {
          titleValues: '',
-         options: pathname === '/admin/update-question' ? getOptions : [],
+         options:
+            pathname === '/admin/update-question' && getOptions.length < 0
+               ? getOptions
+               : [],
          checkboxValue: true,
          openModal: false,
       },
