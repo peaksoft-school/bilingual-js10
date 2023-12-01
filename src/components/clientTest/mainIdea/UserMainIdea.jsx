@@ -70,7 +70,7 @@ export const UserMainIdea = () => {
 
    const handleNextButtonClick = () => {
       const selectedOption = arr.find((el) => el.id === selectedRadio)
-      dispatch(addTest({ options: [{ id: selectedOption.id }] }))
+      dispatch(addTest({ options: [selectedOption.id] }))
    }
 
    return (
@@ -151,10 +151,7 @@ const ContainerUserTest = styled('div')({
    '.nextButton': {
       alignSelf: 'flex-end',
       width: '9rem',
-      marginTop: '2rem',
-   },
-   button: {
-      marginTop: '2rem',
+      marginTop: '1.3rem',
    },
    '.ContainerInputRadio': {
       paddingTop: '20px',

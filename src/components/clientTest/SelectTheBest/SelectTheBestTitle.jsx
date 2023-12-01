@@ -68,7 +68,7 @@ export const SelectTheBestTitle = () => {
          isTrue: formik.values.options[el.id - 1],
       }))
       const answer = newTest.find((el) => el.isTrue === true)
-      dispatch(addTest({ options: [{ id: answer.id }] }))
+      dispatch(addTest({ options: [answer.id] }))
    }
 
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)

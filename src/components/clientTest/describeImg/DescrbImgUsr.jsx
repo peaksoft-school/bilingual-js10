@@ -23,9 +23,10 @@ const DescrbImgUsr = ({ img }) => {
    }
    const handleAddTest = () => {
       const testPayload = {
-         describeImg: value,
+         statement: value,
       }
       dispatch(addTest(testPayload))
+      console.log(testPayload)
    }
    return (
       <div>
@@ -44,7 +45,12 @@ const DescrbImgUsr = ({ img }) => {
                </div>
                <BlockImg>
                   <BoxImg>
-                     <img src={img} alt="img comes with props" />
+                     <img
+                        src={img}
+                        alt="img comes with props"
+                        width="100%"
+                        height="100%"
+                     />
                   </BoxImg>
                   <Input
                      minRows={5}
@@ -91,7 +97,6 @@ const BlockImg = styled('div')({
    alignItems: 'center',
 })
 const BoxImg = styled('div')({
-   border: '1px green solid',
    width: '11.37rem',
    height: '11rem',
    textAlign: 'center',
