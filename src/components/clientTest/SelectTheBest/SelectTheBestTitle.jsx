@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { addTest } from '../../../store/userTest/global-test-slice'
@@ -53,13 +50,6 @@ export const SelectTheBestTitle = () => {
       },
    })
 
-   const duration = 120
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-
    const SendingToTheServer = () => {
       const newTest = arr.map((el) => ({
          passage,
@@ -70,7 +60,6 @@ export const SelectTheBestTitle = () => {
       dispatch(addTest(answer))
    }
 
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
    const handleRadioChange = (id) => {
       formik.setFieldValue(
          'options',
@@ -83,69 +72,63 @@ export const SelectTheBestTitle = () => {
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
-            <Background maxWidth="1098px" className="ContainerBackground">
-               <ProgressBar
-                  timeObject={timeObject}
-                  timeProgress={chartPercent}
-               />
-               <ContainerUserTest>
-                  <ContainerTextArea>
-                     <div className="containerPassage">
-                        <span>PASSAGE</span>
-                     </div>
-                     <div className="ContainerParagraf">
-                        <p>{passage}</p>
-                     </div>
-                  </ContainerTextArea>
-                  <ContainerSelectRadio>
-                     <p className="passageBestTitle">
-                        Select the best title for the passage
-                     </p>
-                     <div className="ContainerCreateUserTest">
-                        {arr.map((el) => (
-                           <div key={el.id}>
-                              <div
-                                 className="ContainCreatTest"
-                                 style={{
-                                    border:
-                                       selectedRadio === el.id
-                                          ? '2px solid #3A10E5'
-                                          : '1px solid #D4D0D0',
-                                    background:
-                                       selectedRadio === el.id
-                                          ? '#EAF4FF'
-                                          : 'transparent',
-                                 }}
-                              >
-                                 <div className="ContainerRadio">
-                                    <InputRadio
-                                       variant="RADIO"
-                                       checkedSwitch={selectedRadio === el.id}
-                                       onChange={() => handleRadioChange(el.id)}
-                                    />
-                                    <p className="NameTitle">{el.title}</p>
-                                 </div>
+            <ContainerUserTest>
+               <ContainerTextArea>
+                  <div className="containerPassage">
+                     <span>PASSAGE</span>
+                  </div>
+                  <div className="ContainerParagraf">
+                     <p>{passage}</p>
+                  </div>
+               </ContainerTextArea>
+               <ContainerSelectRadio>
+                  <p className="passageBestTitle">
+                     Select the best title for the passage
+                  </p>
+                  <div className="ContainerCreateUserTest">
+                     {arr.map((el) => (
+                        <div key={el.id}>
+                           <div
+                              className="ContainCreatTest"
+                              style={{
+                                 border:
+                                    selectedRadio === el.id
+                                       ? '2px solid #3A10E5'
+                                       : '1px solid #D4D0D0',
+                                 background:
+                                    selectedRadio === el.id
+                                       ? '#EAF4FF'
+                                       : 'transparent',
+                              }}
+                           >
+                              <div className="ContainerRadio">
+                                 <InputRadio
+                                    variant="RADIO"
+                                    checkedSwitch={selectedRadio === el.id}
+                                    onChange={() => handleRadioChange(el.id)}
+                                 />
+                                 <p className="NameTitle">{el.title}</p>
                               </div>
                            </div>
-                        ))}
-                     </div>
-                     <Button
-                        disabled={isNextButtonDisabled}
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        className="nextButton"
-                        variant="contained"
-                        type="submit"
-                        padding="0.81rem 3.5rem"
-                        onClick={() => {
-                           SendingToTheServer()
-                        }}
-                     >
-                        NEXT
-                     </Button>
-                  </ContainerSelectRadio>
-               </ContainerUserTest>
-            </Background>
+                        </div>
+                     ))}
+                  </div>
+                  <Button
+                     disabled={isNextButtonDisabled}
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="nextButton"
+                     variant="contained"
+                     type="submit"
+                     padding="0.81rem 3.5rem"
+                     onClick={() => {
+                        SendingToTheServer()
+                     }}
+                  >
+                     NEXT
+                  </Button>
+               </ContainerSelectRadio>
+            </ContainerUserTest>
          </ContainerSelectTest>
       </form>
    )

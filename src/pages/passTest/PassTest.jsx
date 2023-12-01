@@ -2,7 +2,7 @@ import React from 'react'
 import ProgressBar from '../../components/UI/progressBar/ProgressBar'
 import { useProgressBar } from '../../components/UI/progressBar/useProgressBar'
 import { Background } from '../../layout/Background'
-import { UserMainIdea } from '../../components/clientTest/mainIdea/UserMainIdea'
+import { SelectTheBestTitle } from '../../components/clientTest/SelectTheBest/SelectTheBestTitle'
 
 export const PassTest = () => {
    const duration = 60
@@ -19,7 +19,7 @@ export const PassTest = () => {
       <div>
          <Background>
             <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <UserMainIdea />
+            <SelectTheBestTitle />
          </Background>
       </div>
    )
