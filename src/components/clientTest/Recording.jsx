@@ -3,11 +3,8 @@ import React, { useState } from 'react'
 import { ReactMic } from 'react-mic'
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
-import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { CircleIcon, SpeakIcon } from '../../assets'
-import { useProgressBar } from '../UI/progressBar/useProgressBar'
-import ProgressBar from '../UI/progressBar/ProgressBar'
 import { postFileThunk } from '../../store/questions/questionsThunk'
 import { addTest } from '../../store/userTest/global-test-slice'
 
@@ -44,83 +41,72 @@ function Recording() {
       AddLink(links)
    }
 
-   const duration = 40
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
-
    return (
       <div>
-         <BackgroundStyle marginTop="6.25rem">
-            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <MainRecordingContainer>
+         <MainRecordingContainer>
+            <div>
                <div>
-                  <div>
-                     <Title>Record yorself saying the statement below:</Title>
-                  </div>
-                  <SpeakContainer>
-                     <div>
-                        <SpeakIcon />
-                     </div>
-                     <div>&quot;My uncle is at work&quot;.</div>
-                  </SpeakContainer>
+                  <Title>Record yorself saying the statement below:</Title>
                </div>
-               <hr />
-               <ActiveContainer>
-                  {isButtonStop ? (
-                     <>
-                        <RecordingContainer>
-                           <CircleIcon />
-                           <div>RECORDING...</div>
-                        </RecordingContainer>
+               <SpeakContainer>
+                  <div>
+                     <SpeakIcon />
+                  </div>
+                  <div>&quot;My uncle is at work&quot;.</div>
+               </SpeakContainer>
+            </div>
+            <hr />
+            <ActiveContainer>
+               {isButtonStop ? (
+                  <>
+                     <RecordingContainer>
+                        <CircleIcon />
+                        <div>RECORDING...</div>
+                     </RecordingContainer>
 
-                        <Container className="wave">
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                        </Container>
-                     </>
-                  ) : null}
-                  <ButtonContainer>
-                     <Button
-                        onClick={PlayHandler}
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        padding={isButtonStop ? '13px 54px' : '13px 24px'}
-                     >
-                        {isButtonStop ? 'stop' : 'record now'}
-                     </Button>
-                     <Button
-                        disabled={!disabled}
-                        className="nextButton"
-                        variant="contained"
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        padding="13px 50px"
-                        onClick={nextButtonHandler}
-                     >
-                        next
-                     </Button>
-                  </ButtonContainer>
-               </ActiveContainer>
-            </MainRecordingContainer>
-         </BackgroundStyle>
+                     <Container className="wave">
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                     </Container>
+                  </>
+               ) : null}
+               <ButtonContainer>
+                  <Button
+                     onClick={PlayHandler}
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     padding={isButtonStop ? '13px 54px' : '13px 24px'}
+                  >
+                     {isButtonStop ? 'stop' : 'record now'}
+                  </Button>
+                  <Button
+                     disabled={!disabled}
+                     className="nextButton"
+                     variant="contained"
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     padding="13px 50px"
+                     onClick={nextButtonHandler}
+                  >
+                     next
+                  </Button>
+               </ButtonContainer>
+            </ActiveContainer>
+         </MainRecordingContainer>
 
          <ReactMik
             record={record}
@@ -263,9 +249,4 @@ const ButtonContainer = styled('div')({
 const MainRecordingContainer = styled('div')({
    width: '56rem',
    marginTop: '3rem',
-})
-
-const BackgroundStyle = styled(Background)({
-   padding: '40px 45px',
-   borderRadius: '10px',
 })
