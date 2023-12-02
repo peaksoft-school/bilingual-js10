@@ -26,13 +26,19 @@ function convertDateString(timestamp) {
 const UserResult = () => {
    const [apiData, setApiData] = useState([])
    const [openModal, setOpenModal] = useState(false)
-   const [userTestID, setUserTestID] = useState(null)
    const [error, setError] = useState(null)
-
+   const [userTestID, setUserTestID] = useState(null)
+   const [userId, setUserId] = useState(null)
+   // console.log(apiData, 'apiData')
    const getData = async () => {
       try {
          const response = await axiosInstance.get('/result/userGetResults')
          setApiData(response.data)
+         if (Array.isArray(response.data) && response.data.length > 0) {
+            const firstItem = response.data[0]
+            const isUserId = firstItem.userId
+            setUserId(isUserId)
+         }
       } catch (error) {
          setError(error)
       }
@@ -41,10 +47,13 @@ const UserResult = () => {
    useEffect(() => {
       getData()
    }, [])
+   console.log(userId, 'userId')
 
    const deleteData = async () => {
       try {
-         await axiosInstance.delete(`/result/?userId=12&testId=${userTestID}`)
+         await axiosInstance.delete(
+            `/result/?userId=${userId}&testId=${userTestID}`
+         )
          getData()
          setOpenModal(false)
       } catch (error) {
@@ -57,6 +66,7 @@ const UserResult = () => {
    }
 
    const handleOpenModal = (id) => {
+      console.log(id, 'test id')
       setUserTestID(id)
       setOpenModal(true)
    }
@@ -91,6 +101,7 @@ const UserResult = () => {
       {
          id: 'action',
          render: (row) => {
+            // console.log(row, 'row')
             return (
                <MainContainer>
                   <TrashCan
@@ -102,6 +113,7 @@ const UserResult = () => {
          },
       },
    ]
+
    const transferedData = apiData.map((data) => {
       const stringDate = convertDateString(data.dateOfSubmission)
       return { ...data, dateOfSubmission: stringDate }
