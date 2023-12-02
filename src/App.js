@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-// import { UserTypeWhatYouHear } from './components/clientTest/typeWUHear/UserTypeWhatYouHear'
+import { UserTypeWhatYouHear } from './components/clientTest/typeWUHear/UserTypeWhatYouHear'
 // import { AppRoutes } from './routes/AppRoutes'
 
 function App() {
@@ -26,6 +26,11 @@ function App() {
       }
    }, [])
 
-   return <div>{/* <AppRoutes /> */}</div>
+   return (
+      <div>
+         {/* <AppRoutes /> */}
+         <UserTypeWhatYouHear />
+      </div>
+   )
 }
 export default App

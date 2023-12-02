@@ -24,10 +24,6 @@ export const UserTypeWhatYouHear = () => {
    const handleInputChange = (e) => {
       setValue(e.target.value)
    }
-   // function handleTimeUp() {
-   //    // Обрабатываем событие, когда время вышло
-   // }
-
    const isNextButtonDisabled = !value
    const playAudio = () => {
       if (audioRef.current && !isIconBlue && numberOffReplays > 0) {
@@ -53,20 +49,27 @@ export const UserTypeWhatYouHear = () => {
                   <BoxImg>
                      <Hear
                         onClick={playAudio}
-                        style={{ color: isIconBlue ? 'blue' : 'grey' }}
+                        style={{
+                           color: isIconBlue ? 'blue' : 'grey',
+                           marginTop: '2rem',
+                        }}
                      />
                      <audio ref={audioRef} src={link}>
                         <track kind="captions" />
                      </audio>
                   </BoxImg>
-                  <Input
-                     minRows={5}
-                     maxRows={5}
-                     onChange={handleInputChange}
-                     value={value}
-                  />
+                  <div>
+                     <Input
+                        minRows={5}
+                        maxRows={5}
+                        onChange={handleInputChange}
+                        value={value}
+                     />
+                     <NumberReplace>
+                        Number of replays left:{numberOffReplays}
+                     </NumberReplace>
+                  </div>
                </BlockImg>
-               <div>number of replays left:{numberOffReplays}</div>
 
                <BlockBottom>
                   <hr />
@@ -90,7 +93,6 @@ export const UserTypeWhatYouHear = () => {
 const Container = styled('div')({
    fontfamily: 'Gilroy',
    fontStyle: 'normal',
-   width: '50rem',
    height: '30rem',
    display: 'flex',
    flexDirection: 'column',
@@ -100,27 +102,28 @@ const Container = styled('div')({
 const PrgressBlock = styled('div')({
    width: '50rem',
 })
+const NumberReplace = styled('span')({
+   color: '#AFAFAF',
+   fontWeight: '400',
+   lineHeight: '1.4rem',
+   fontSize: '1rem',
+})
 const BlockImg = styled('div')({
-   width: '38rem',
    display: 'flex',
    gap: '2rem',
-   // alignItems: 'center',
 })
 const BoxImg = styled('div')({
    width: '9.37rem',
-   height: '11rem',
    textAlign: 'center',
    display: 'flex',
 })
 const Input = styled(TextArea)({
    width: '27.4375rem',
    height: '11.43rem',
-   // padding: '0.3rem',
 })
 
 const BlockBottom = styled('div')({
    width: '50rem',
-   height: '8rem',
    display: 'flex',
    gap: '1.5rem',
    flexDirection: 'column',

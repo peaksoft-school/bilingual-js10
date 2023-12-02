@@ -17,16 +17,21 @@ export const Table = ({ data, columns }) => {
             <MuiTableStyled>
                <TableHead>
                   <TableRowColumns>
-                     {columns?.map((column) => (
-                        <TableCell key={column.id}>{column.label}</TableCell>
-                     ))}
+                     {questions.length === 0 && data.length === 0 ? (
+                        <p>There s no one here yet</p>
+                     ) : (
+                        columns?.map((column) => (
+                           <TableCell key={column.id}>{column.label}</TableCell>
+                        ))
+                     )}
                   </TableRowColumns>
                </TableHead>
                <TableBodyStyled>
                   <MainContainerStyled>
                      {Array.isArray(data) &&
-                        data.map((row) => (
+                        data.map((row, i) => (
                            <TableRowData key={row.id}>
+                              {i + 1}
                               {columns?.map((column) => {
                                  if (column.render) {
                                     return column.render(row)
@@ -37,12 +42,30 @@ export const Table = ({ data, columns }) => {
                                        title={String(row[column.id])}
                                        className="tableCell"
                                     >
-                                       {row[column.id]?.length > 10
-                                          ? `${row[column.id].substring(
-                                               0,
-                                               10
-                                            )}...`
-                                          : row[column.id]}
+                                       {/* {i + 1} */}
+                                       {column.id !== 'dateOfSubmission' &&
+                                          (row[column.id]?.length > 10
+                                             ? `${row[column.id].substring(
+                                                  0,
+                                                  10
+                                               )}...`
+                                             : row[column.id])}
+                                       {column.id === 'dateOfSubmission' && (
+                                          <div>
+                                             <p>
+                                                {
+                                                   row[column.id]
+                                                      ?.hoursAndMinutes
+                                                }
+                                             </p>
+                                             <p>
+                                                {
+                                                   row[column.id]
+                                                      ?.dayMonthAndYear
+                                                }
+                                             </p>
+                                          </div>
+                                       )}
                                     </TableCell>
                                  )
                               })}
@@ -107,7 +130,7 @@ const TableRowData = styled(TableRow)(() => ({
    boxShadow:
       '0px 4px 10px 0px rgba(0, 0, 0, 0.06),0px -4px 10px 0px rgba(0, 0, 0, 0.06)',
    borderRadius: '0.5rem',
-   width: '62rem',
+   width: '56rem',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
