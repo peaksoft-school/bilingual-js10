@@ -39,13 +39,13 @@ const Header = ({ roles = 'guest' }) => {
          ) : (
             <Options>
                <OptionsBlock>
-                  <HeaderLink to="/">
+                  <HeaderLink to={roles === 'user' ? '/user' : '/'}>
                      <MyText>Tests</MyText>
                   </HeaderLink>
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <HeaderLink to="/">
+                     <HeaderLink to="/user/my-results">
                         <MyText>My Results</MyText>
                      </HeaderLink>
                   ) : (

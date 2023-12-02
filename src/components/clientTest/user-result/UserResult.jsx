@@ -7,7 +7,7 @@ import Header from '../../../layout/Header'
 import { Modal } from '../../UI/UiModal'
 import Button from '../../UI/Buttons/Button'
 import { CancelModal, ModalDeleteIcon, TrashCan } from '../../../assets'
-import { axiosInstanceS3File } from '../../../config/axiosInsatanceS3File'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 function convertDateString(timestamp) {
    const dateObject = new Date(timestamp)
@@ -26,17 +26,15 @@ function convertDateString(timestamp) {
 const UserResult = () => {
    const [apiData, setApiData] = useState([])
    const [openModal, setOpenModal] = useState(false)
+   const [userTestID, setUserTestID] = useState(null)
+   const [error, setError] = useState(null)
 
    const getDATA = async () => {
       try {
-         const response = await axiosInstanceS3File.get(
-            '/result/userGetResults'
-         )
+         const response = await axiosInstance.get('/result/userGetResults')
          setApiData(response.data)
-         return response.data
       } catch (error) {
-         console.error(error)
-         return null
+         setError(error)
       }
    }
 
@@ -46,10 +44,9 @@ const UserResult = () => {
 
    const deleteData = async () => {
       try {
-         await axiosInstanceS3File.delete(`/result/?userId=1&testId=1`)
+         await axiosInstance.delete(`/result/?userId=12&testId=${userTestID}`)
          getDATA()
       } catch (error) {
-         console.error(error)
          setOpenModal(false)
       }
    }
@@ -59,11 +56,12 @@ const UserResult = () => {
    }
 
    const handleOpenModal = (id) => {
+      setUserTestID(id)
       setOpenModal(true)
    }
 
    const columns = [
-      { id: 'row_number', label: '#' },
+      { label: '#' },
       {
          id: 'dateOfSubmission',
          label: 'Date of submissions',
@@ -95,8 +93,7 @@ const UserResult = () => {
                <MainContainer>
                   <TrashCan
                      className="TrashCan"
-                     onClick={() => handleOpenModal(row.id)}
-                     // onClick={() => deleteData(row.id)}
+                     onClick={() => handleOpenModal(row.testId)}
                   />
                </MainContainer>
             )
@@ -149,6 +146,11 @@ const UserResult = () => {
                   </ModalContainer>
                </div>
             </Modal>
+            {error && (
+               <div style={{ color: 'red', marginTop: '10px' }}>
+                  An error occurred: {error.message || 'Unknown error'}
+               </div>
+            )}
          </Background>
       </Container>
    )
