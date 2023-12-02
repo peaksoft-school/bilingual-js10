@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
 import { Background } from '../../../layout/Background'
 import { useProgressBar } from '../../UI/progressBar/useProgressBar'
@@ -7,10 +7,11 @@ import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { Hear } from '../../../assets'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
 export const UserTypeWhatYouHear = () => {
-   const [value, setValue] = useState()
-
+   const [value, setValue] = useState('')
+   const dispatch = useDispatch()
    const duration = 120
    function handleTimeUp() {
       // setTimeout(() => {
@@ -19,17 +20,26 @@ export const UserTypeWhatYouHear = () => {
    }
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
    const { link, numberOffReplays } = useSelector((state) => state.questions)
-   const [isIconBlue, setIsIconBlue] = useState(false)
+   const [replaysLeft, setReplaysLeft] = useState(numberOffReplays)
+   const [isPlaying, setIsPlaying] = useState(false)
    const audioRef = useRef(null)
    const handleInputChange = (e) => {
       setValue(e.target.value)
    }
    const isNextButtonDisabled = !value
+
    const playAudio = () => {
-      if (audioRef.current && !isIconBlue && numberOffReplays > 0) {
+      if (audioRef.current && !isPlaying && replaysLeft > 0) {
          audioRef.current.play()
-         setIsIconBlue(true)
-         // setIsIconBlue(true)
+         setIsPlaying(true)
+         setReplaysLeft((prev) => prev - 1)
+      }
+   }
+
+   const stopAudio = () => {
+      if (audioRef.current && isPlaying) {
+         audioRef.current.pause()
+         setIsPlaying(false)
       }
    }
    return (
@@ -48,11 +58,8 @@ export const UserTypeWhatYouHear = () => {
                <BlockImg>
                   <BoxImg>
                      <Hear
-                        onClick={playAudio}
-                        style={{
-                           color: isIconBlue ? 'blue' : 'grey',
-                           marginTop: '2rem',
-                        }}
+                        onClick={isPlaying ? stopAudio : playAudio}
+                        disabled={replaysLeft === 0}
                      />
                      <audio ref={audioRef} src={link}>
                         <track kind="captions" />
@@ -66,7 +73,7 @@ export const UserTypeWhatYouHear = () => {
                         value={value}
                      />
                      <NumberReplace>
-                        Number of replays left:{numberOffReplays}
+                        Number of replays left:{replaysLeft}
                      </NumberReplace>
                   </div>
                </BlockImg>
@@ -80,6 +87,9 @@ export const UserTypeWhatYouHear = () => {
                         defaultStyle="#3A10E5"
                         hoverStyle="#4E28E8"
                         className="nextButton"
+                        onClick={() => {
+                           dispatch(addTest({ statement: value }))
+                        }}
                      >
                         Next
                      </Button>
@@ -128,7 +138,7 @@ const BlockBottom = styled('div')({
    gap: '1.5rem',
    flexDirection: 'column',
    hr: {
-      border: '1.5px #D4D0D0 solid',
+      border: '1px #D4D0D0 solid',
    },
 })
 const ButtonBox = styled('div')({
