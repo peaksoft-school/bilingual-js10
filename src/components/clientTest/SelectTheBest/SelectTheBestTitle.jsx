@@ -52,12 +52,13 @@ export const SelectTheBestTitle = () => {
 
    const SendingToTheServer = () => {
       const newTest = arr.map((el) => ({
+         id: el.id,
          passage,
          title: el.title,
          isTrue: formik.values.options[el.id - 1],
       }))
       const answer = newTest.find((el) => el.isTrue === true)
-      dispatch(addTest(answer))
+      dispatch(addTest({ options: [answer.id] }))
    }
 
    const handleRadioChange = (id) => {

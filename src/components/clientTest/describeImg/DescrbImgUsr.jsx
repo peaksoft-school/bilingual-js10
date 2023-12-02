@@ -14,9 +14,10 @@ const DescrbImgUsr = ({ img }) => {
    }
    const handleAddTest = () => {
       const testPayload = {
-         describeImg: value,
+         statement: value,
       }
       dispatch(addTest(testPayload))
+      console.log(testPayload)
    }
    return (
       <div>
@@ -73,7 +74,6 @@ const BlockImg = styled('div')({
    alignItems: 'center',
 })
 const BoxImg = styled('div')({
-   border: '1px green solid',
    width: '11.37rem',
    height: '11rem',
    textAlign: 'center',

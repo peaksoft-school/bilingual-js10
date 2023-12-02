@@ -23,7 +23,7 @@ const HighLightAnswerUser = () => {
 
    const handleAddTest = () => {
       const testPayload = {
-         highlightedAnswer: answerValue,
+         statement: answerValue,
       }
       dispatch(addTest(testPayload))
    }

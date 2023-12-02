@@ -60,14 +60,9 @@ export const UserMainIdea = () => {
 
    const handleNextButtonClick = () => {
       const selectedOption = arr.find((el) => el.id === selectedRadio)
-      dispatch(
-         addTest({
-            passage,
-            title: selectedOption.title,
-            isTrue: formik.values.options[selectedOption.id - 1],
-         })
-      )
+      dispatch(addTest({ options: [selectedOption.id] }))
    }
+
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
@@ -136,16 +131,17 @@ const ContainerUserTest = styled('div')({
    justifyContent: 'center',
    gap: '2.5rem',
    marginTop: '3.15rem',
-   '.NextButton': {
+   '.nextButton': {
       alignSelf: 'flex-end',
       width: '9rem',
-      marginTop: '2rem',
+      marginTop: '1.3rem',
+   },
+   '.ContainerInputRadio': {
+      paddingTop: '20px',
    },
 })
 const ContainerSelectTest = styled('div')({
    '.ContainerBackground': {
-      width: '70rem',
-      height: '100%',
       padding: '2.69rem',
    },
    '.ContainCreatTest': {
@@ -158,7 +154,7 @@ const ContainerSelectTest = styled('div')({
       width: '26.68rem',
       '.ContainerRadio': {
          display: 'flex',
-         alignItems: 'center',
+         alignItems: 'start',
          gap: '1rem',
       },
    },
@@ -170,7 +166,7 @@ const ContainerTextArea = styled('div')({
    '.ContainerParagraf': {
       padding: '2.9rem 3.13rem 3rem 1.06rem',
       width: '100%',
-      height: '36rem',
+      height: '28rem',
       color: '#4C4859',
       fontSize: '1rem',
       fontWeight: '400',
@@ -188,11 +184,10 @@ const ContainerSelectRadio = styled('div')({
    display: 'flex',
    flexDirection: 'column',
    gap: '1rem',
-   marginBottom: '9rem',
    '.passageMainIdea': {
       color: '#4C4859',
       fontSize: '1.3rem',
       fontWeight: 420,
-      lineHeight: '3.63rem',
+      lineHeight: '2.63rem',
    },
 })
