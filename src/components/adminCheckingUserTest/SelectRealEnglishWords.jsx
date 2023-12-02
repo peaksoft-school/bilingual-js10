@@ -101,7 +101,7 @@ const SelectRealEnglishWords = ({ title, duration, questionType }) => {
                   <ContainerCreateTest>
                      {options.map((option, index) => (
                         <CreateTest key={option.id}>
-                           <div style={{ width: '1rem' }}>
+                           <div>
                               <MainContainer>
                                  <p className="Number-Words">{index + 1}</p>
                                  <div className="NumberText">
@@ -151,6 +151,7 @@ const Container = styled('div')({
    justifyContent: 'center',
    alignItems: 'center',
    marginTop: '4.25rem',
+   fontFamily: ' DINNextRoundedLTW04-Medium',
    '.TextUserAnswer': {
       color: '#4C4859',
       fontSize: '1.125rem',
@@ -159,7 +160,7 @@ const Container = styled('div')({
    },
    '.TextTestQuestion': {
       color: '#4C4859',
-      fontSize: '1.125rem',
+      fontSize: '1.25rem',
       fontWeight: 500,
       lineHeight: '2rem',
    },
@@ -194,8 +195,9 @@ const ContainerCkeckInTheTest = styled('div')({
    justifyContent: 'space-between',
    width: '100%',
    alignContent: 'center',
+   fontWeight: 500,
    '.ColorBlue': {
-      color: 'blue',
+      color: '#3752B4',
    },
 })
 const ContainerTestQuestion = styled('div')({
@@ -203,6 +205,7 @@ const ContainerTestQuestion = styled('div')({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'start',
+   fontWeight: 500,
    '.FixedDisplay': {
       display: 'flex',
       gap: '10px',
@@ -215,6 +218,7 @@ const ContainerCreateTest = styled('div')(() => ({
    marginTop: '9px',
    flexWrap: 'wrap',
    paddingTop: '20px',
+   color: ' #4C4859',
 }))
 const CreateTest = styled('div')(() => ({
    border: 'solid 1.53px #D4D0D0',
