@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { ReactMic } from 'react-mic'
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
-import Button from '../UI/Buttons/Button'
-import { CircleIcon, SpeakIcon } from '../../assets'
-import { postFileThunk } from '../../store/questions/questionsThunk'
-import { addTest } from '../../store/userTest/global-test-slice'
+import Button from '../../UI/Buttons/Button'
+import { CircleIcon, SpeakIcon } from '../../../assets'
+import { postFileThunk } from '../../../store/questions/questionsThunk'
+import { addTest } from '../../../store/userTest/global-test-slice'
 
 function Recording() {
    const [file, setFile] = useState(null)
