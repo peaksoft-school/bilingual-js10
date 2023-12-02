@@ -29,7 +29,7 @@ const UserResult = () => {
    const [userTestID, setUserTestID] = useState(null)
    const [error, setError] = useState(null)
 
-   const getDATA = async () => {
+   const getData = async () => {
       try {
          const response = await axiosInstance.get('/result/userGetResults')
          setApiData(response.data)
@@ -39,15 +39,16 @@ const UserResult = () => {
    }
 
    useEffect(() => {
-      getDATA()
+      getData()
    }, [])
 
    const deleteData = async () => {
       try {
          await axiosInstance.delete(`/result/?userId=12&testId=${userTestID}`)
-         getDATA()
-      } catch (error) {
+         getData()
          setOpenModal(false)
+      } catch (error) {
+         setError(error)
       }
    }
 
@@ -71,7 +72,8 @@ const UserResult = () => {
          id: 'status',
          label: 'Status',
          render: (row) => {
-            const statusText = row.checked === true ? 'true' : 'false'
+            const statusText =
+               row.checked === true ? 'Evaluated' : 'Not evaluated'
             const color = row.checked === true ? 'green' : 'red'
             return <p style={{ color }}>{statusText}</p>
          },

@@ -1,11 +1,12 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 
 const Header = ({ roles = 'guest' }) => {
    const navigate = useNavigate()
+   const { pathname } = useLocation()
    const handleComeInClick = () => {
       navigate('/signin')
    }
@@ -39,13 +40,27 @@ const Header = ({ roles = 'guest' }) => {
          ) : (
             <Options>
                <OptionsBlock>
-                  <HeaderLink to={roles === 'user' ? '/user' : '/'}>
+                  <HeaderLink
+                     style={
+                        pathname === '/user'
+                           ? { color: 'blue' }
+                           : { color: '#4C4859' }
+                     }
+                     to={roles === 'user' ? '/user' : '/'}
+                  >
                      <MyText>Tests</MyText>
                   </HeaderLink>
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <HeaderLink to="/user/my-results">
+                     <HeaderLink
+                        style={
+                           pathname === '/user/my-results'
+                              ? { color: 'blue' }
+                              : { color: '#4C4859' }
+                        }
+                        to="/user/my-results"
+                     >
                         <MyText>My Results</MyText>
                      </HeaderLink>
                   ) : (
@@ -104,12 +119,9 @@ const OptionsBlock = styled('div')({
    textAlign: 'center',
    marginRight: '1.7rem',
 })
-const HeaderLink = styled(Link)({
+const HeaderLink = styled(NavLink)({
    textDecoration: 'none',
-   color: 'black',
-   '&:focus, &:active': {
-      color: 'blue',
-   },
+   color: '#4C4859',
 })
 const MyText = styled(Typography)({
    '&': {
