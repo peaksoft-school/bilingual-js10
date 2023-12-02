@@ -7,11 +7,11 @@ import { Background } from '../../layout/Background'
 // import { SelectTheBestTitle } from '../../components/clientTest/SelectTheBest/SelectTheBestTitle'
 // import HighLightAnswerUser from '../../components/clientTest/highlightAns/HighLightAnswerUser'
 // import DescrbImgUsr from '../../components/clientTest/describeImg/DescrbImgUsr'
-// import Recording from '../../components/clientTest/recording/Recording'
+import Recording from '../../components/clientTest/recording/Recording'
 // import { UserMainIdea } from '../../components/clientTest/mainIdea/UserMainIdea'
 
 export const PassTest = () => {
-   const duration = 60
+   const duration = 120
 
    function handleTimeUp() {
       // setTimeout(() => {
@@ -29,7 +29,7 @@ export const PassTest = () => {
             {/* <SelectTheBestTitle /> */}
             {/* <HighLightAnswerUser /> */}
             {/* <DescrbImgUsr /> */}
-            {/* <Recording /> */}
+            <Recording />
             {/* <UserMainIdea /> */}
          </Background>
       </div>
