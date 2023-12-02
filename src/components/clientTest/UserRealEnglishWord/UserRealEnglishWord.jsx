@@ -14,11 +14,11 @@ export const UserRealEnglishWord = ({ onClickQuitTest }) => {
          id: 1,
          options: [
             { id: 1, title: 'twall' },
-            { id: 1, title: 'world' },
-            { id: 1, title: 'greesey' },
-            { id: 1, title: 'cability' },
-            { id: 1, title: 'advantage' },
-            { id: 1, title: 'uncove' },
+            { id: 2, title: 'world' },
+            { id: 3, title: 'greesey' },
+            { id: 4, title: 'cability' },
+            { id: 5, title: 'advantage' },
+            { id: 6, title: 'uncove' },
          ],
       },
       {
@@ -63,15 +63,7 @@ export const UserRealEnglishWord = ({ onClickQuitTest }) => {
          e.target.style.backgroundColor = '#fff'
       }
    }
-   const handleNext = () => {
-      const newTest = {
-         id: 3,
-         title: 'Next Test Title',
-         options: movedItems,
-      }
 
-      dispatch(addTest(newTest))
-   }
    function dropHandler(e, targetBoard, targetItem) {
       e.preventDefault()
       if (currentBoard === targetBoard) {
@@ -116,6 +108,15 @@ export const UserRealEnglishWord = ({ onClickQuitTest }) => {
             )
          }
       }
+   }
+
+   const handleNext = () => {
+      const newTest = {
+         options: movedItems.map((el) => {
+            return el.id
+         }),
+      }
+      dispatch(addTest(newTest))
    }
 
    return (
