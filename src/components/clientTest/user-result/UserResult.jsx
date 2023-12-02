@@ -29,7 +29,6 @@ const UserResult = () => {
    const [error, setError] = useState(null)
    const [userTestID, setUserTestID] = useState(null)
    const [userId, setUserId] = useState(null)
-   // console.log(apiData, 'apiData')
    const getData = async () => {
       try {
          const response = await axiosInstance.get('/result/userGetResults')
@@ -47,7 +46,6 @@ const UserResult = () => {
    useEffect(() => {
       getData()
    }, [])
-   console.log(userId, 'userId')
 
    const deleteData = async () => {
       try {
@@ -66,7 +64,6 @@ const UserResult = () => {
    }
 
    const handleOpenModal = (id) => {
-      console.log(id, 'test id')
       setUserTestID(id)
       setOpenModal(true)
    }
@@ -101,7 +98,6 @@ const UserResult = () => {
       {
          id: 'action',
          render: (row) => {
-            // console.log(row, 'row')
             return (
                <MainContainer>
                   <TrashCan
