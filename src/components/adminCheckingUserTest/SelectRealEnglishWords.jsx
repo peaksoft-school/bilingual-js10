@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
-import Input from '../UI/Input'
 
 const options = [
    {
@@ -53,11 +52,22 @@ const answers = [
 ]
 
 const SelectRealEnglishWords = ({ title, duration, questionType }) => {
-   const handleInputChange = (e) => {
-      const value = parseInt(e.target.value, 10)
-      const clampedValue = Math.min(Math.max(value, 0), 10)
-      e.target.value = clampedValue
-   }
+   const [score, setScore] = useState(7)
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await fetch()
+            const data = await response.json()
+            const initialScoreFromBackend = data.score
+            setScore(initialScoreFromBackend)
+         } catch (error) {
+            console.error(error)
+         }
+      }
+      fetchData()
+   }, [])
+
    return (
       <>
          <Header />
@@ -88,13 +98,8 @@ const SelectRealEnglishWords = ({ title, duration, questionType }) => {
                      <ContaineScore>
                         <p>Evaluation</p>
                         <div className="ContainerEvaluation">
-                           <p className="ColorBlue">Score:(1-10)</p>
-                           <Input
-                              type="number"
-                              min="1"
-                              max="10"
-                              onChange={handleInputChange}
-                           />
+                           <p className="ColorBlue">Score:</p>
+                           <span>{score}</span>
                         </div>
                      </ContaineScore>
                   </ContainerCkeckInTheTest>
@@ -166,7 +171,8 @@ const Container = styled('div')({
    },
    '.ContainerEvaluation': {
       display: 'flex',
-      flexDirection: 'column',
+      gap: '7px',
+      color: 'green',
    },
    '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
       paddingLeft: '40px',
