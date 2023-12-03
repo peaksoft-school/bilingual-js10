@@ -6,7 +6,7 @@ import Button from '../../UI/Buttons/Button'
 import Header from '../../../layout/Header'
 import { testListArr } from '../../../utils/helpers/testListArr'
 
-export const TestListTwo = () => {
+export const EstimatePracticeScore = () => {
    const navigate = useNavigate()
    const { id } = useParams()
 
@@ -72,7 +72,6 @@ const ContainerIkons = styled('div')`
    justify-content: center;
    margin-top: 4rem;
    gap: 5rem;
-
    .Search {
       display: flex;
       align-items: center;
