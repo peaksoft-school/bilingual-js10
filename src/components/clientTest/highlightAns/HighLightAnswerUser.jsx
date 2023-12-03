@@ -32,7 +32,7 @@ const HighLightAnswerUser = () => {
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
    const handleAddTest = () => {
       const testPayload = {
-         highlightedAnswer: answerValue,
+         statement: answerValue,
       }
       dispatch(addTest(testPayload))
    }
