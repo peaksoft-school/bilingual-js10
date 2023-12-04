@@ -42,7 +42,6 @@ export const Table = ({ data, columns }) => {
                                        title={String(row[column.id])}
                                        className="tableCell"
                                     >
-                                       {/* {i + 1} */}
                                        {column.id !== 'dateOfSubmission' &&
                                           (row[column.id]?.length > 10
                                              ? `${row[column.id].substring(
@@ -91,7 +90,6 @@ const Container = styled('div')`
 const TableBodyStyled = styled(TableBody)(() => ({
    '&& .css-ecxqme-MuiTableRow-root': {
       borderBottom: '0.1px solid grey',
-      // boxShadow: 'none',
    },
 }))
 const MainContainerStyled = styled('div')`
@@ -100,8 +98,10 @@ const MainContainerStyled = styled('div')`
    justify-content: space-around;
    flex-direction: column;
    gap: 1rem;
+   margin-right: 2rem;
    && .css-txc5l5-MuiTableCell-root {
       border: none;
+      padding: 0;
    }
 `
 const TableContainerStyled = styled(TableContainer)(() => ({
@@ -119,7 +119,7 @@ const MuiTableStyled = styled(MuiTable)(() => ({
    flexDirection: 'column',
 }))
 const TableRowColumns = styled(TableRow)(() => ({
-   width: '62rem',
+   width: '100%',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
@@ -127,13 +127,14 @@ const TableRowColumns = styled(TableRow)(() => ({
    columnGap: '60px',
 }))
 const TableRowData = styled(TableRow)(() => ({
-   boxShadow:
-      '0px 4px 10px 0px rgba(0, 0, 0, 0.06),0px -4px 10px 0px rgba(0, 0, 0, 0.06)',
+   boxShadow: '0px 3px 2px 3px rgba(34, 60, 80, 0.24)',
    borderRadius: '0.5rem',
-   width: '56rem',
+   width: '58vw',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'space-around',
-   columnGap: '60px',
+   gap: '2rem',
+   marginLeft: '1rem',
+   marginBottom: '1rem',
 }))

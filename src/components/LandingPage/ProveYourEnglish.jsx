@@ -34,7 +34,6 @@ export const ProveYourEnglish = () => {
             <span>and confidence they need to speak new languages.</span>
             <ToBeginButton className="Buttons">TO BEGIN</ToBeginButton>
          </TextContiners>
-
          <ContainerBackground />
       </div>
    )
@@ -69,7 +68,6 @@ const HeaderContiners = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
-   //   gap: '37.5rem',
    position: 'absolute',
 })
 
