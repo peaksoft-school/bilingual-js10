@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { ALaptop, Contacts, Search, Time } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import Header from '../../../layout/Header'
-import { testListArr } from '../../../utils/helpers/testListArr'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 export const EstimatePracticeScore = () => {
    const navigate = useNavigate()
-   const { id } = useParams()
+   const dispatch = useDispatch()
+   const [error, setError] = useState(null)
+   const { testID, testsArr } = useSelector((state) => state.typeTest)
 
-   const findTest = testListArr.find((test) => Number(id) === test.id)
+   const getTest = async () => {
+      try {
+         const response = await axiosInstance.get(
+            `/tests/getById?testId=${testID}`
+         )
+         dispatch(response.data)
+      } catch (error) {
+         setError(error)
+      }
+   }
+   const currTest = testsArr.find((test) => test.id === testID)
+
    return (
       <div>
          <Header roles="user" />
@@ -22,12 +36,13 @@ export const EstimatePracticeScore = () => {
                   <MiniContainer>
                      <div className="divALaptop">
                         <ALaptop />
-                        <span>{findTest.title}</span>
+                        <span>{currTest.title}</span>
                      </div>
                      <div className="divTime">
                         <Time />
                         <span>
-                           Practice takes just {findTest.minutes} minutes
+                           Practice takes just {currTest[0]}
+                           minutes
                         </span>
                      </div>
                      <div className="divContacts">
@@ -41,6 +56,11 @@ export const EstimatePracticeScore = () => {
                   appear on the certified test.
                </p>
                <hr />
+               {error && (
+                  <div style={{ color: 'red', marginTop: '10px' }}>
+                     An error occurred: {error.message || 'Unknown error'}
+                  </div>
+               )}
                <ContainerButtons>
                   <Button
                      onClick={() => navigate(-1)}
@@ -54,7 +74,7 @@ export const EstimatePracticeScore = () => {
                      className="PRACTICE"
                      hoverStyle="#4E28E8"
                      defaultStyle="#3A10E5"
-                     onClick={() => navigate('/user/testing')}
+                     onClick={getTest}
                   >
                      PRACTICE TEST
                   </Button>

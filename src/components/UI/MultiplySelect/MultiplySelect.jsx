@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import CheckIcon from '@mui/icons-material/Check'
 import { SelectEnglishWord } from './SelectEnglishWord'
 
 export const MultiplySelect = ({
    words,
-   setIsButtonDisabled,
+   // setIsButtonDisabled,
    answer,
    setAnswer,
 }) => {
-   const isButtonDisabled = answer.length === 0
+   // const isButtonDisabled = answer.length === 0
 
    const handleSelectWord = (word) => {
       setAnswer((prevSelectedWords) => {
@@ -24,9 +24,9 @@ export const MultiplySelect = ({
       })
    }
 
-   useEffect(() => {
-      setIsButtonDisabled(isButtonDisabled)
-   }, [isButtonDisabled, setIsButtonDisabled])
+   // useEffect(() => {
+   //    setIsButtonDisabled(isButtonDisabled)
+   // }, [isButtonDisabled, setIsButtonDisabled])
 
    return (
       <SelectEnglishWord
