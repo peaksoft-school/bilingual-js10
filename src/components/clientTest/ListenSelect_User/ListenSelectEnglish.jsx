@@ -27,7 +27,6 @@ export const ListenSelectEnglish = ({
       },
    ],
 }) => {
-   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
    const [selectedWords, setSelectedWords] = useState([...words])
    const [answer, setAnswer] = useState([])
 
@@ -39,10 +38,6 @@ export const ListenSelectEnglish = ({
          )
       )
    }
-
-   // const handleTimeUp = () => {
-   // setIsButtonDisabled(true)
-   // }
 
    const handleNextButtonClick = () => {
       const data = answer.map((el) => {

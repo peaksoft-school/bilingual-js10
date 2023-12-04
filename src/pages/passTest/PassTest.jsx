@@ -12,7 +12,7 @@ import { ListenSelectEnglish } from '../../components/clientTest/ListenSelect_Us
 // import { UserMainIdea } from '../../components/clientTest/mainIdea/UserMainIdea'
 
 export const PassTest = () => {
-   const duration = 5
+   const duration = 60
 
    function handleTimeUp() {
       // setTimeout(() => {

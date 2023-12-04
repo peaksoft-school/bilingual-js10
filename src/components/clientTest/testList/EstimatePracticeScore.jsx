@@ -19,7 +19,6 @@ export const EstimatePracticeScore = () => {
                <h2>Take a free practice test and estimate your score</h2>
                <ContainerIkons>
                   <Search className="Search" />
-
                   <MiniContainer>
                      <div className="divALaptop">
                         <ALaptop />
