@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
-import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 import { addTest } from '../../../store/userTest/global-test-slice'
 
@@ -43,11 +40,9 @@ export const ListenSelectEnglish = ({
       )
    }
 
-   const duration = 240
-
-   const handleTimeUp = () => {
-      setIsButtonDisabled(true)
-   }
+   // const handleTimeUp = () => {
+   // setIsButtonDisabled(true)
+   // }
 
    const handleNextButtonClick = () => {
       const data = answer.map((el) => {
@@ -56,43 +51,35 @@ export const ListenSelectEnglish = ({
       dispatch(addTest({ options: data }))
    }
 
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
-
    return (
       <ContainerTest>
-         <Background>
-            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <h2>Select the Real English words in this list</h2>
-            <ContainerMultiplySelect>
-               <MultiplySelect
-                  words={selectedWords}
-                  answer={answer}
-                  setAnswer={setAnswer}
-                  onSelect={handleOptionSelect}
-                  setIsButtonDisabled={setIsButtonDisabled}
-               />
-            </ContainerMultiplySelect>
-            <hr className="ContainerHr" />
-            <ContainerButton>
-               <Button
-                  className="nextButton"
-                  defaultStyle="#3A10E5"
-                  hoverStyle="#4E28E8"
-                  disabled={isButtonDisabled}
-                  onClick={handleNextButtonClick}
-               >
-                  NEXT
-               </Button>
-            </ContainerButton>
-         </Background>
+         <h2>Select the Real English words in this list</h2>
+         <ContainerMultiplySelect>
+            <MultiplySelect
+               words={selectedWords}
+               answer={answer}
+               setAnswer={setAnswer}
+               onSelect={handleOptionSelect}
+               setIsButtonDisabled={setIsButtonDisabled}
+            />
+         </ContainerMultiplySelect>
+         <hr className="ContainerHr" />
+         <ContainerButton>
+            <Button
+               className="nextButton"
+               defaultStyle="#3A10E5"
+               hoverStyle="#4E28E8"
+               disabled={isButtonDisabled}
+               onClick={handleNextButtonClick}
+            >
+               NEXT
+            </Button>
+         </ContainerButton>
       </ContainerTest>
    )
 }
 
 const ContainerTest = styled('div')({
-   background: 'white',
-   width: '100vw',
-   height: '100vh',
    h2: {
       marginTop: '3.12rem',
       textAlign: 'center',
