@@ -49,13 +49,10 @@ import { ReactComponent as ALaptop } from './icons/aLaptop.svg'
 import { ReactComponent as Time } from './icons/time.svg'
 import { ReactComponent as Search } from './icons/search.svg'
 import { ReactComponent as Contacts } from './icons/contacts.svg'
-<<<<<<< HEAD
 import { ReactComponent as Hear } from './icons/hear.svg'
 import { ReactComponent as CheckSquare } from './icons/check-square.svg'
 import { ReactComponent as GrenCheck } from './icons/grenCheck.svg'
-=======
 import { ReactComponent as VolumeEnglishWord } from './icons/volumeEnglishWord.svg'
->>>>>>> 5203395a56b84800594b5d295b9ba12988e8c745
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -120,11 +117,8 @@ export {
    Time,
    Search,
    Contacts,
-<<<<<<< HEAD
    Hear,
    CheckSquare,
    GrenCheck,
-=======
    VolumeEnglishWord,
->>>>>>> 5203395a56b84800594b5d295b9ba12988e8c745
 }
