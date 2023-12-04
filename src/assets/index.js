@@ -49,6 +49,9 @@ import { ReactComponent as ALaptop } from './icons/aLaptop.svg'
 import { ReactComponent as Time } from './icons/time.svg'
 import { ReactComponent as Search } from './icons/search.svg'
 import { ReactComponent as Contacts } from './icons/contacts.svg'
+import { ReactComponent as Hear } from './icons/hear.svg'
+import { ReactComponent as CheckSquare } from './icons/check-square.svg'
+import { ReactComponent as GrenCheck } from './icons/grenCheck.svg'
 import { ReactComponent as VolumeEnglishWord } from './icons/volumeEnglishWord.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
@@ -114,5 +117,8 @@ export {
    Time,
    Search,
    Contacts,
+   Hear,
+   CheckSquare,
+   GrenCheck,
    VolumeEnglishWord,
 }
