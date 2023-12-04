@@ -89,13 +89,15 @@ const ButtonsContainer = styled('div')(() => ({
    display: 'flex',
    columnGap: '24px',
 }))
-const MyHeader = styled('header')({
-   maxWidth: '100vw',
-   height: '15vh',
-   display: 'flex',
-   justifyContent: 'space-between',
-   alignItems: 'center',
-   backgroundColor: '#ffff',
+const MyHeader = styled('header')(({ maxWidth }) => {
+   return {
+      maxWidth: `${maxWidth || '90rem'}`,
+      height: '5.87rem',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#ffff',
+   }
 })
 const LogoBox = styled('div')({
    position: 'sticky',

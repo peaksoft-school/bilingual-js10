@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
 // import { AppRoutes } from './routes/AppRoutes'
-import DescribeImage from './components/adminCheckingTests/describeImg/DescribeImage'
+import DescribeImage from './components/adminCheckingUserTest/DescribeImage'
 
 function App() {
    const dispatch = useDispatch()
