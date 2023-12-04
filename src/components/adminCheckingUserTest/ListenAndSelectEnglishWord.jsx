@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../../layout/Header'
 import { Background } from '../../layout/Background'
-import Input from '../UI/Input'
 import { InputRadio } from '../UI/InputRadio'
-import { Delete, VolumeForEnglishWord } from '../../assets'
+import { Delete, VolumeEnglishWord } from '../../assets'
 import Button from '../UI/Buttons/Button'
 
 const initialOptions = [
@@ -44,17 +43,22 @@ const userTest = [
    },
 ]
 const ListenAndSelectEnglishWord = ({ title, duration, questionType }) => {
-   const [options, setOptions] = useState(initialOptions)
+   const [score, setScore] = useState(7)
 
-   const handleInputChange = (e) => {
-      const value = parseInt(e.target.value, 10)
-      const clampedValue = Math.min(Math.max(value, 0), 10)
-      e.target.value = clampedValue
-   }
-   const removeElement = (id) => {
-      const newOptions = options.filter((option) => option.id !== id)
-      setOptions(newOptions)
-   }
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await fetch()
+            const data = await response.json()
+            const initialScoreFromBackend = data.score
+            setScore(initialScoreFromBackend)
+         } catch (error) {
+            console.error(error)
+         }
+      }
+      fetchData()
+   }, [])
+
    return (
       <>
          <Header />
@@ -83,30 +87,22 @@ const ListenAndSelectEnglishWord = ({ title, duration, questionType }) => {
                   <ContaineScore>
                      <p>Evaluation</p>
                      <div className="ContainerEvaluation">
-                        <p className="ColorBlue">Score:(1-10)</p>
-                        <Input
-                           type="number"
-                           min="1"
-                           max="10"
-                           onChange={handleInputChange}
-                        />
+                        <p className="ColorBlue">Score:</p>
+                        <span>{score}</span>
                      </div>
                   </ContaineScore>
                </ContainerCkeckInTheTest>
                <div className="CreatTests">
-                  {options.map((el, index) => (
+                  {initialOptions.map((el, index) => (
                      <div key={el.id} className="CreatTest">
                         <AudioContainer>
                            <p>{index + 1}</p>
-                           <VolumeForEnglishWord />
+                           <VolumeEnglishWord className="valumIcon" />
                            <p>{el.title}</p>
                         </AudioContainer>
                         <ContainDeleteChek>
                            <InputRadio variant="CHECKBOX" />
-                           <Delete
-                              onClick={() => removeElement(el.id)}
-                              className="DeleteIcon"
-                           />
+                           <Delete className="DeleteIcon" />
                         </ContainDeleteChek>
                      </div>
                   ))}
@@ -118,7 +114,7 @@ const ListenAndSelectEnglishWord = ({ title, duration, questionType }) => {
                         <div key={item.id} className="CreatUserTest">
                            <AudioContainer>
                               <p>{index + 1}</p>
-                              <VolumeForEnglishWord />
+                              <VolumeEnglishWord className="valumIcon" />
                               <p>{item.title}</p>
                            </AudioContainer>
                         </div>
@@ -161,7 +157,8 @@ const Containers = styled('div')({
    },
    '.ContainerEvaluation': {
       display: 'flex',
-      flexDirection: 'column',
+      gap: '7px',
+      color: 'green',
    },
    '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
       paddingLeft: '45px',
@@ -186,6 +183,9 @@ const Containers = styled('div')({
       borderRadius: '0.5rem',
       padding: '0.80rem 0.85rem 0.80rem 0.85rem',
       color: '#4C4859',
+   },
+   '.valumIcon': {
+      fill: '#655F5F',
    },
    '.CreatUserTest': {
       display: 'flex',
