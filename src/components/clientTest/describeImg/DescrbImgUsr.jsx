@@ -26,7 +26,6 @@ const DescrbImgUsr = ({ img }) => {
          statement: value,
       }
       dispatch(addTest(testPayload))
-      console.log(testPayload)
    }
    return (
       <div>

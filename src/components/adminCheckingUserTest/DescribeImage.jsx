@@ -15,6 +15,9 @@ const DescribeImage = ({
    const [score, setScore] = useState(7)
    const [isFocused, setIsFocused] = useState(false)
 
+   useEffect(() => {
+      getQuestionTest()
+   }, [])
    const handleFocus = () => {
       setIsFocused(true)
    }
@@ -39,8 +42,8 @@ const DescribeImage = ({
    return (
       <>
          <Header />
-         <Background marginTop="3rem" padding="0">
-            <Container>
+         <Container>
+            <Background marginTop="3rem" padding="0">
                <ContainerFlex>
                   <ContainerCkeckInTheTest>
                      <div>
@@ -79,9 +82,19 @@ const DescribeImage = ({
                         role="button"
                      >
                         {isFocused ? (
-                           <p className="replaceImg" onClick={handleBlur}>
-                              Replace
-                           </p>
+                           <BoxImgRep>
+                              <Button
+                                 className="replaceImg"
+                                 onClick={handleBlur}
+                              >
+                                 Replace
+                              </Button>
+                              <img
+                                 className="imgReplace"
+                                 src={img}
+                                 alt="img comes with props"
+                              />
+                           </BoxImgRep>
                         ) : (
                            <img src={img} alt="img comes with props" />
                         )}
@@ -107,8 +120,8 @@ const DescribeImage = ({
                      Save
                   </Button>
                </ContainerButtons>
-            </Container>
-         </Background>
+            </Background>
+         </Container>
       </>
    )
 }
@@ -117,12 +130,18 @@ export default DescribeImage
 
 const Container = styled('div')({
    display: 'flex',
-   flexDirection: 'column',
-   gap: '1rem',
-   width: '58rem',
-   height: '35rem',
-   marginTop: '4.25rem',
+   justifyContent: 'center',
    fontFamily: ' DINNextRoundedLTW04-Medium',
+   '.imgReplace': {
+      width: '100%',
+      height: '100%',
+      opacity: 0.5,
+   },
+   '.ContainerEvaluation': {
+      display: 'flex',
+      gap: '7px',
+      color: 'green',
+   },
    '.TextTestQuestion': {
       color: '#4C4859',
       fontSize: '1.25rem',
@@ -143,7 +162,7 @@ const ContainerFlex = styled('div')({
    width: '100%',
    display: 'flex',
    flexDirection: 'column',
-   gap: '2rem',
+   gap: '1rem',
    justifyContent: 'center',
    alignItems: 'start',
 })
@@ -172,31 +191,37 @@ const ContainerTestQuestion = styled('div')({
 const ContainerImgQuestion = styled('div')({
    display: 'flex',
    flexDirection: 'row',
-   gap: '2rem',
-   marginTop: '2rem',
+   gap: '1rem',
    width: '38rem',
    height: '13rem',
+})
+const BoxImgRep = styled('div')({
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'center',
+   width: '11.25rem',
+   height: '11rem',
+   alignSelf: 'center',
+   borderRadius: '0.5rem',
 })
 const BoxImg = styled('div')({
    width: '11.25rem',
    height: '11rem',
    alignSelf: 'center',
    borderRadius: '0.5rem',
-   border: '1px grey solid',
    img: {
       borderRadius: '0.5rem',
       width: '100%',
       height: '100%',
+      cursor: 'pointer',
    },
    '.replaceImg': {
-      width: '5rem',
-      height: '3rem',
       backgroundColor: 'blue',
-      color: 'white',
       position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      zIndex: 5,
+      color: 'white',
+      width: '4rem',
+      height: '3rem',
       textAlign: 'center',
       cursor: 'pointer',
       margin: 0,
