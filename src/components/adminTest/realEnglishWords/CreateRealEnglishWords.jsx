@@ -231,7 +231,7 @@ const CreateTest = styled('div')(() => ({
    '.NumberText': {
       display: 'flex',
       justifyContent: 'start',
-      p: {
+      span: {
          color: '#4C4859',
       },
    },
