@@ -1,6 +1,7 @@
 import { Formik, useFormik } from 'formik'
 import { styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
@@ -9,12 +10,24 @@ import { SelectBestModal } from './SelectBestModal'
 import TextArea from '../../UI/textarea/TextArea'
 import { validationPassage } from '../../../utils/helpers/validate/validation'
 import { postQuestion } from '../../../api/postQuestionApi'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
+import {
+   deleteOption,
+   optionEnable,
+   postOption,
+   updateQuestion,
+} from '../../../store/questions/questionsThunk'
 
 export const SelectBestTitle = () => {
    const { testID } = useSelector((state) => state.createTestSlice)
-   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { title, questionDuration, options, question } = useSelector(
+      (state) => state.questions
+   )
    const navigate = useNavigate()
    const dispatch = useDispatch()
+
+   const { pathname } = useLocation()
+   const updateUrl = pathname === '/admin/update-question/select-the-best-title'
 
    const formik = useFormik({
       initialValues: {
@@ -25,45 +38,103 @@ export const SelectBestTitle = () => {
          openModal: false,
       },
       validationSchema: validationPassage,
-      onSubmit: async (values) => {
-         if (title && questionDuration) {
+   })
+
+   const saveBtn = async () => {
+      if (title && questionDuration) {
+         if (!updateUrl) {
             const data = {
                title,
                duration: questionDuration,
-               passage: values.passage,
-               options: values.options.map((el) => {
+               passage: formik.values.passage,
+               options: formik.values.options.map((el) => {
                   return {
                      title: el.title,
-                     isTrue: el.checked,
+                     isTrue: el.isTrue,
                   }
                }),
             }
             await dispatch(postQuestion(data))
-            navigate(`/admin/questions/${testID}`)
+         } else {
+            const data = {
+               title,
+               duration: questionDuration,
+               passage: formik.values.passage,
+               statement: 'string',
+               correctAnswer: 'string',
+               attempts: 0,
+               fileUrl: 'string',
+            }
+            await dispatch(updateQuestion(data))
          }
-      },
-   })
+
+         navigate(`/admin/questions/${testID}`)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+
+   useEffect(() => {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         formik.setFieldValue('passage', question.passage)
+         formik.setFieldValue('options', options)
+      }
+   }, [question, options])
 
    const optionsModal = () => {
       formik.setFieldValue('openModal', true)
    }
 
-   const handleCheckboxChange = (id) => {
+   const handleCheckboxChange = async (id) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
             return {
                ...option,
-               checked: !option.checked,
+               isTrue: !option.isTrue,
             }
          }
          return {
             ...option,
-            checked: false,
+            isTrue: false,
          }
       })
+
       formik.setFieldValue('options', updatedOptions)
-      const anyChecked = updatedOptions.some((option) => option.checked)
+      const anyChecked = updatedOptions.some((option) => option.isTrue)
       formik.setFieldValue('checkboxValue', anyChecked)
+
+      if (updateUrl) {
+         const trueElement = formik.values.options.find(
+            (option) => option.id === id
+         )
+         const trueID = trueElement ? trueElement.id : null
+
+         if (trueID !== null) {
+            await dispatch(optionEnable({ id: trueID, boolean: true }))
+         }
+
+         const falseElements = formik.values.options.filter(
+            (option) => option.id !== id
+         )
+         const id1 = falseElements.length > 0 ? falseElements[0].id : null
+         const id2 = falseElements.length > 1 ? falseElements[1].id : null
+         const id3 = falseElements.length > 2 ? falseElements[2].id : null
+
+         if (id1 !== null) {
+            await dispatch(optionEnable({ id: id1, boolean: false }))
+         }
+
+         if (id2 !== null) {
+            await dispatch(optionEnable({ id: id2, boolean: false }))
+         }
+
+         if (id3 !== null) {
+            await dispatch(optionEnable({ id: id3, boolean: false }))
+         }
+      }
    }
 
    const removeElement = (id) => {
@@ -71,27 +142,37 @@ export const SelectBestTitle = () => {
          'options',
          formik.values.options.filter((option) => option.id !== id)
       )
+      if (updateUrl) {
+         dispatch(deleteOption(id))
+      }
    }
 
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
    }
 
-   const handleSave = (e) => {
+   const handleSave = async (e) => {
       e.preventDefault()
       const newOption = {
          id: Math.random(),
          title: formik.values.titleValues,
-         checked: formik.values.checkboxValue,
+         isTrue: formik.values.checkboxValue,
       }
       formik.setFieldValue('titleValues', '')
       formik.setFieldValue('options', [...formik.values.options, newOption])
       formik.setFieldValue('checkboxValue', false)
+      if (updateUrl) {
+         const option = {
+            title: formik.values.titleValues,
+            isTrue: formik.values.checkboxValue,
+         }
+         await dispatch(postOption(option))
+      }
       handleClose()
    }
 
    return (
-      <form onSubmit={formik.handleSubmit}>
+      <div>
          <Formik>
             {() => (
                <Container>
@@ -139,7 +220,7 @@ export const SelectBestTitle = () => {
                               <div className="RadioDelete">
                                  <CheckedRadio
                                     variant="RADIO"
-                                    checkedSwitch={el.checked}
+                                    checkedSwitch={el.isTrue}
                                     onChange={() => handleCheckboxChange(el.id)}
                                  />
                                  <Delete
@@ -154,7 +235,7 @@ export const SelectBestTitle = () => {
                      {formik.values.options.length > 0 ? (
                         <div className="ControlButton">
                            <Button
-                              onClick={() => navigate('/admin')}
+                              onClick={() => navigate(-1)}
                               variant="outlined"
                               hoverStyle="#3A10E5"
                               className="Button"
@@ -167,7 +248,7 @@ export const SelectBestTitle = () => {
                               hoverStyle="#31CF38"
                               className="saveButton"
                               variant="contained"
-                              type="submit"
+                              onClick={() => saveBtn()}
                            >
                               SAVE
                            </Button>
@@ -193,7 +274,7 @@ export const SelectBestTitle = () => {
                </Container>
             )}
          </Formik>
-      </form>
+      </div>
    )
 }
 

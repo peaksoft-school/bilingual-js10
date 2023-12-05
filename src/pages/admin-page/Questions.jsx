@@ -11,19 +11,24 @@ import { Table } from '../../components/table/Table'
 import { axiosInstance } from '../../config/axiosInstance'
 import { deleteQuestion, getTestThunk } from '../../store/admin/QuestionsSlice'
 import { questionsSlice } from '../../store/questions/questionsSlice'
+import {
+   getOptionByQuestionId,
+   getQuestionThunk,
+} from '../../store/questions/questionsThunk'
 
 export const Questions = ({ testID }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const [getId, setGetId] = useState()
    const [openModal, setOpenModal] = useState(false)
+   // const { pathname } = useLocation()
    const { questions } = useSelector((state) => state.questionSlice)
 
    useEffect(() => {
-      dispatch(getTestThunk(testID))
       dispatch(
          questionsSlice.actions.selectedOption('Select real English words')
       )
+      dispatch(getTestThunk(testID))
    }, [])
 
    const handleRadioChange = async (item) => {
@@ -49,6 +54,8 @@ export const Questions = ({ testID }) => {
       color: #fff;
    `
    const goToCustomForm = () => {
+      dispatch(questionsSlice.actions.addTime(null))
+      dispatch(questionsSlice.actions.addTitle(''))
       navigate('/admin/create-question')
    }
 
@@ -66,9 +73,13 @@ export const Questions = ({ testID }) => {
 
    const editQuestionHandler = (item) => {
       const select = qestionTypes[item.questionType]
+      navigate(
+         `/admin/update-question/${select.toLowerCase().replaceAll(' ', '-')}`
+      )
       dispatch(questionsSlice.actions.selectedOption(select))
       dispatch(questionsSlice.actions.setQuestionID(item.id))
-      navigate('/admin/update-question')
+      dispatch(getOptionByQuestionId())
+      dispatch(getQuestionThunk())
    }
 
    const columns = [

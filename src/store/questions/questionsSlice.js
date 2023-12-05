@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { postFileThunk } from './questionsThunk'
+import {
+   getOptionByQuestionId,
+   getQuestionThunk,
+   postFileThunk,
+} from './questionsThunk'
 
 const initialState = {
    questionDuration: 0,
@@ -8,6 +12,10 @@ const initialState = {
    selectedOption: 'Select real English words',
    questionID: null,
    options: [],
+   isLoading: false,
+   question: {},
+   titleValidate: false,
+   durationValidate: false,
 }
 
 export const questionsSlice = createSlice({
@@ -26,13 +34,27 @@ export const questionsSlice = createSlice({
       setQuestionID: (state, action) => {
          state.questionID = action.payload
       },
-      addOption: (state, action) => {
-         state.options.push(action.payload)
+      titleValidate: (state, action) => {
+         state.titleValidate = action.payload
+      },
+      durationValidate: (state, action) => {
+         state.durationValidate = action.payload
       },
    },
    extraReducers: (builder) => {
-      builder.addCase(postFileThunk.fulfilled, (state, action) => {
-         state.link = action.payload.link
-      })
+      builder
+         .addCase(postFileThunk.fulfilled, (state, action) => {
+            state.link = action.payload.link
+         })
+         .addCase(getOptionByQuestionId.pending, (state) => {
+            state.isLoading = true
+         })
+         .addCase(getOptionByQuestionId.fulfilled, (state, action) => {
+            state.options = action.payload.data
+            state.isLoading = false
+         })
+         .addCase(getQuestionThunk.fulfilled, (state, action) => {
+            state.question = action.payload
+         })
    },
 })

@@ -16,6 +16,63 @@ export const postFileThunk = createAsyncThunk(
       }
    }
 )
+export const updateQuestion = createAsyncThunk(
+   'updateQuestion',
+   async function (data, { getState, dispatch }) {
+      try {
+         const { questionID } = getState().questions
+         const link = await dispatch(postFileThunk({ file: data.fileUrl }))
+         await axiosInstance.put(`/questions?questionId=${questionID}`, {
+            ...data,
+            fileUrl:
+               typeof data.fileUrl === 'string'
+                  ? data.fileUrl
+                  : link.payload.data.link,
+         })
+      } catch (error) {
+         console.log(error)
+      }
+   }
+)
+export const deleteOption = createAsyncThunk(
+   'deleteOption',
+   async function (id) {
+      try {
+         await axiosInstance.delete(`/questions/deleteOption?optionId=${id}`)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+)
+
+export const postOption = createAsyncThunk(
+   'postOption',
+   async (option, { getState }) => {
+      try {
+         const { questionID } = getState().questions
+         await axiosInstance.post(
+            `/questions/saveOption?questionId=${questionID}`,
+            option
+         )
+      } catch (error) {
+         console.log(error)
+      }
+   }
+)
+
+export const optionEnable = createAsyncThunk(
+   'optionEnable',
+   async function ({ e, id, boolean }) {
+      try {
+         await axiosInstance.put(
+            `/questions/updateOption?optionId=${id}`,
+            e ? e.target.checked : boolean
+         )
+      } catch (error) {
+         console.log(error)
+      }
+   }
+)
 
 export const getQuestionThunk = createAsyncThunk(
    'getQuestionThunk',
@@ -31,6 +88,7 @@ export const getQuestionThunk = createAsyncThunk(
       }
    }
 )
+
 export const getOptionByQuestionId = createAsyncThunk(
    'getOptionByQuestionId',
    async (_, { rejectWithValue, getState }) => {

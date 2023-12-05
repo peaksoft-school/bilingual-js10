@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
 import { validationAuthSignUp } from '../../../utils/helpers/validate/validation'
 import { postQuestion } from '../../../api/postQuestionApi'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
+import { updateQuestion } from '../../../store/questions/questionsThunk'
 
 export const RespondLeast = () => {
-   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
+
+   const { pathname } = useLocation()
+   const updateUrl =
+      pathname === '/admin/update-question/respond-in-at-least-n-words'
+
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const formik = useFormik({
@@ -18,23 +27,42 @@ export const RespondLeast = () => {
          numberReplays: '',
       },
       validationSchema: validationAuthSignUp,
-      onSubmit: async (values) => {
-         if (title && questionDuration) {
-            const data = {
-               title,
-               duration: questionDuration,
-               statement: values.questionStatement,
-               attempts: values.numberReplays,
-            }
-
-            dispatch(postQuestion(data))
-            navigate(-1)
-         }
-      },
    })
 
+   const saveBtn = async () => {
+      if (title && questionDuration) {
+         const data = {
+            title,
+            duration: questionDuration,
+            statement: formik.values.questionStatement,
+            attempts: formik.values.numberReplays,
+            correctAnswer: 'string',
+            fileUrl: 'string',
+            passage: 'string',
+         }
+         if (updateUrl) {
+            await dispatch(updateQuestion(data))
+         } else {
+            await dispatch(postQuestion(data))
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+
+   useEffect(() => {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         formik.setFieldValue('questionStatement', question.statement)
+         formik.setFieldValue('numberReplays', question.attempts)
+      }
+   }, [question])
+
    return (
-      <form onSubmit={formik.handleSubmit}>
+      <>
          <Container>
             <label htmlFor="questionStatement">Question statement</label>
             <Input
@@ -78,15 +106,15 @@ export const RespondLeast = () => {
                Go back
             </Button>
             <Button
-               type="submit"
                variant="contained"
                defaultStyle="#2AB930"
                hoverStyle="#31CF38"
+               onClick={saveBtn}
             >
                Save
             </Button>
          </Buttons>
-      </form>
+      </>
    )
 }
 const ErrorMessage = styled(Typography)(() => ({
