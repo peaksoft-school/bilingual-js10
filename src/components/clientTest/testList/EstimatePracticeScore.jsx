@@ -18,11 +18,13 @@ export const EstimatePracticeScore = () => {
          const response = await axiosInstance.get(
             `/tests/getById?testId=${testID}`
          )
+         navigate('/user/testing')
          dispatch(response.data)
       } catch (error) {
          setError(error)
       }
    }
+
    const currTest = testsArr.find((test) => test.id === testID)
 
    return (
@@ -41,8 +43,7 @@ export const EstimatePracticeScore = () => {
                      <div className="divTime">
                         <Time />
                         <span>
-                           Practice takes just {currTest[0]}
-                           minutes
+                           Practice takes just {currTest.duration} minutes
                         </span>
                      </div>
                      <div className="divContacts">
@@ -58,9 +59,11 @@ export const EstimatePracticeScore = () => {
                <hr />
                {error && (
                   <div style={{ color: 'red', marginTop: '10px' }}>
-                     An error occurred: {error.message || 'Unknown error'}
+                     An error occurred:
+                     {error.message || 'Unknown error'}
                   </div>
                )}
+
                <ContainerButtons>
                   <Button
                      onClick={() => navigate(-1)}

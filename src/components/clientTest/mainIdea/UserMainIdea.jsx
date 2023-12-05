@@ -44,9 +44,7 @@ export const UserMainIdea = () => {
       initialValues: {
          options: [],
       },
-      onSubmit: (values) => {
-         console.log(values.options)
-      },
+      onSubmit: () => {},
    })
 
    const handleRadioChange = (id) => {

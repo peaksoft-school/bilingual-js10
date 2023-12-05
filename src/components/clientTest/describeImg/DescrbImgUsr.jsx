@@ -17,7 +17,6 @@ const DescrbImgUsr = ({ img }) => {
          statement: value,
       }
       dispatch(addTest(testPayload))
-      console.log(testPayload)
    }
    return (
       <div>
@@ -29,7 +28,12 @@ const DescrbImgUsr = ({ img }) => {
             </div>
             <BlockImg>
                <BoxImg>
-                  <img src={img} alt="img comes with props" />
+                  <img
+                     src={img}
+                     alt="img comes with props"
+                     width="100%"
+                     height="100%"
+                  />
                </BoxImg>
                <Input
                   minRows={5}
@@ -41,7 +45,13 @@ const DescrbImgUsr = ({ img }) => {
             <BlockBottom>
                <hr />
                <ButtonBox>
-                  <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                  <Button
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="nextButton"
+                     padding="0.8rem 2.5rem"
+                     onClick={handleAddTest}
+                  >
                      Next
                   </Button>
                </ButtonBox>

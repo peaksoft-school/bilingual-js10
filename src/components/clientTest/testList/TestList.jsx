@@ -43,7 +43,7 @@ const TestList = () => {
                      >
                         {error && (
                            <div style={{ color: 'red', marginTop: '10px' }}>
-                              An error occurred:{' '}
+                              An error occurred:
                               {error.message || 'Unknown error'}
                            </div>
                         )}
@@ -51,8 +51,8 @@ const TestList = () => {
                            <div className="mainContainer">
                               <TestListIcon />
                               <div className="description">
-                                 <p>{test[0]} MINUTES</p>
-                                 <p>{test.title}</p>
+                                 <p>{test.duration} MINUTES</p>
+                                 <p>{test ? test.title : null}</p>
                                  <p>Train as much as you like.</p>
                               </div>
                            </div>
