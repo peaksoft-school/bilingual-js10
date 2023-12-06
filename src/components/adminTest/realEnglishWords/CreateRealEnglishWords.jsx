@@ -1,52 +1,77 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import OptionModal from './AddOptionModal'
 import { InputRadio } from '../../UI/InputRadio'
 import { DeleteRealEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
-import { axiosInstance } from '../../../config/axiosInstance'
-import Notify from '../../UI/Notifay'
+import { postQuestion } from '../../../api/postQuestionApi'
+import {
+   deleteOption,
+   getOptionByQuestionId,
+   optionEnable,
+   updateQuestion,
+} from '../../../store/questions/questionsThunk'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
 
 export const AdminCreateRealEnglishWord = () => {
-   const { testID } = useSelector((state) => state.createTestSlice)
-   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { title, questionDuration, options, isLoading, question } =
+      useSelector((state) => state.questions)
+
    const navigate = useNavigate()
+   const dispatch = useDispatch()
+   const { pathname } = useLocation()
+
    const formik = useFormik({
       initialValues: {
          titleValues: '',
          options: [],
          checkboxValue: true,
-         openModal: false,
-      },
-      onSubmit: async (values) => {
-         try {
-            Notify(
-               {
-                  sucessTitle: 'The words have been preserved!',
-                  successMessage: 'Successfully these words were saved!',
-                  errorTitle: 'Error',
-               },
-               axiosInstance.post(
-                  `/questions?testId=${testID}&questionType=SELECT_REAL_ENGLISH_WORD`,
-                  {
-                     title,
-                     questionDuration,
-                     options: values.options.map((el) => ({
-                        title: el.title,
-                        isTrue: el.checked,
-                     })),
-                  }
-               )
-            )
-            navigate('/admin/QuestionsPage')
-         } catch (error) {
-            setError(error)
-         }
       },
    })
+
+   useEffect(() => {
+      if (pathname === '/admin/update-question/select-real-english-words') {
+         formik.setFieldValue('options', options)
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+      }
+   }, [options, question])
+
+   const handleSave = async () => {
+      if (title && questionDuration) {
+         if (pathname === '/admin/update-question/select-real-english-words') {
+            dispatch(
+               updateQuestion({
+                  title,
+                  statement: 'string',
+                  correctAnswer: 'string',
+                  duration: questionDuration,
+                  attempts: 0,
+                  fileUrl: 'string',
+                  passage: 'string',
+               })
+            )
+         } else {
+            const data = {
+               title,
+               duration: questionDuration,
+               options: formik.values.options.map((el) => ({
+                  title: el.title,
+                  isTrue: el.checked,
+               })),
+            }
+            dispatch(postQuestion(data))
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+
    const handleOpenModal = () => {
       formik.setFieldValue('openModal', true)
    }
@@ -65,7 +90,7 @@ export const AdminCreateRealEnglishWord = () => {
       formik.setFieldValue('checkboxValue', checked)
    }
 
-   const handleCheckboxChange = (id) => {
+   const handleCheckboxChange = (id, e) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
             return {
@@ -81,6 +106,12 @@ export const AdminCreateRealEnglishWord = () => {
       formik.setFieldValue('options', updatedOptions)
       const anyChecked = updatedOptions.some((option) => option.checked)
       formik.setFieldValue('checkboxValue', anyChecked)
+      if (pathname === '/admin/update-question/select-real-english-words') {
+         dispatch(optionEnable({ e, id }))
+         setTimeout(() => {
+            dispatch(getOptionByQuestionId())
+         }, 400)
+      }
    }
 
    const handleDeleteOption = (id) => {
@@ -88,6 +119,7 @@ export const AdminCreateRealEnglishWord = () => {
          'options',
          formik.values.options.filter((option) => option.id !== id)
       )
+      dispatch(deleteOption(id))
    }
 
    return (
@@ -105,28 +137,34 @@ export const AdminCreateRealEnglishWord = () => {
                </Button>
             </MiniContainerButton>
             <ContainerCreateTest>
-               {formik.values?.options.map((option, index) => (
-                  <CreateTest key={option.id}>
-                     <div style={{ width: '1rem' }}>
-                        <MainContainer>
-                           <p className="Number-Words">{index + 1}</p>
-                           <div className="NumberText">
-                              <span>{option.title}</span>
-                           </div>
-                        </MainContainer>
-                     </div>
-                     <div className="InputDelete">
-                        <InputRadio
-                           variant="CHECKBOX"
-                           checkedSwitch={option.checked}
-                           onChange={() => handleCheckboxChange(option.id)}
-                        />
-                        <DeleteIcon
-                           onClick={() => handleDeleteOption(option.id)}
-                        />
-                     </div>
-                  </CreateTest>
-               ))}
+               {isLoading ? (
+                  <h3 style={{ color: '#6d6b71' }}>Loading...</h3>
+               ) : (
+                  formik.values?.options.map((option, index) => (
+                     <CreateTest key={option.id}>
+                        <div style={{ width: '1rem' }}>
+                           <MainContainer>
+                              <p className="Number-Words">{index + 1}</p>
+                              <div className="NumberText">
+                                 <span>{option.title}</span>
+                              </div>
+                           </MainContainer>
+                        </div>
+                        <div className="InputDelete">
+                           <InputRadio
+                              variant="CHECKBOX"
+                              checkedSwitch={option.isTrue}
+                              onChange={(e) =>
+                                 handleCheckboxChange(option.id, e)
+                              }
+                           />
+                           <DeleteIcon
+                              onClick={() => handleDeleteOption(option.id)}
+                           />
+                        </div>
+                     </CreateTest>
+                  ))
+               )}
             </ContainerCreateTest>
          </Container>
          {formik.values.openModal && (
@@ -140,6 +178,7 @@ export const AdminCreateRealEnglishWord = () => {
                handleSaveOption={handleSaveOption}
                title="Select real English words"
                options={formik.values.options}
+               formik={formik}
             />
          )}
          {formik.values.options.length > 0 && (
@@ -154,7 +193,7 @@ export const AdminCreateRealEnglishWord = () => {
                <Button
                   defaultStyle="#2AB930"
                   hoverStyle="#31CF38"
-                  onClick={formik.handleSubmit}
+                  onClick={handleSave}
                >
                   Save
                </Button>

@@ -2,20 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
 import PauseIcon from '@mui/icons-material/Pause'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
-import { TypeWhatYouHearThunk } from '../../store/questions/questionsThunk'
+import {
+   TypeWhatYouHearThunk,
+   updateQuestion,
+} from '../../store/questions/questionsThunk'
+import { questionsSlice } from '../../store/questions/questionsSlice'
 
 export const TypeWhatYouHear = () => {
+   const { pathname } = useLocation()
+   const updateUrl = pathname === '/admin/update-question/type-what-you-hear'
+
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
    const [audioFile, setAudioFile] = useState(null)
    const [isAudioTrue, setIsAudioTrue] = useState(false)
    const [audio, setAudio] = useState(null)
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { title, questionDuration } = useSelector((state) => state.questions)
    const { testID } = useSelector((state) => state.createTestSlice)
 
    const formik = useFormik({
@@ -25,17 +34,36 @@ export const TypeWhatYouHear = () => {
       },
    })
 
-   const saveHandler = (e) => {
-      e.preventDefault()
-      const data = {
-         title,
-         duration: questionDuration,
-         numberOffReplays: formik.values.quantityInputValue,
-         correctAnswer: formik.values.correctAnswer,
-         audioFile,
-         testID,
+   const saveHandler = async () => {
+      if (title && questionDuration) {
+         if (updateUrl) {
+            await dispatch(
+               updateQuestion({
+                  title,
+                  statement: 'string',
+                  correctAnswer: formik.values.correctAnswer,
+                  duration: questionDuration,
+                  attempts: formik.values.quantityInputValue,
+                  fileUrl: audioFile,
+                  passage: 'string',
+               })
+            )
+         } else {
+            const data = {
+               title,
+               duration: questionDuration,
+               numberOffReplays: formik.values.quantityInputValue,
+               correctAnswer: formik.values.correctAnswer,
+               audioFile,
+               testID,
+            }
+            await dispatch(TypeWhatYouHearThunk(data))
+         }
+         navigate(`/admin/questions/${testID}`)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
       }
-      dispatch(TypeWhatYouHearThunk(data))
    }
 
    const playAudio = () => {
@@ -43,7 +71,21 @@ export const TypeWhatYouHear = () => {
    }
 
    useEffect(() => {
-      if (audioFile) {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         setAudioFile(question.fileUrl)
+         formik.setFieldValue('quantityInputValue', question.attempts)
+         formik.setFieldValue('correctAnswer', question.correctAnswer)
+         if (isAudioTrue) {
+            const audio = new Audio(audioFile)
+            audio.play()
+            setAudio(audio)
+         } else if (audio) {
+            audio.pause()
+            setAudio(null)
+         }
+      } else if (!updateUrl && audioFile) {
          if (isAudioTrue) {
             const audio = new Audio(URL.createObjectURL(audioFile))
             audio.play()
@@ -53,7 +95,7 @@ export const TypeWhatYouHear = () => {
             setAudio(null)
          }
       }
-   }, [isAudioTrue, audioFile])
+   }, [isAudioTrue, question])
 
    return (
       <MainContainer>
@@ -102,7 +144,7 @@ export const TypeWhatYouHear = () => {
                         )}
                      </Button>
                      <label htmlFor="fileInput">
-                        {audioFile ? audioFile.name : 'Выберите аудиофайл'}
+                        {audioFile ? audioFile?.name : 'Выберите аудиофайл'}
                      </label>
                   </div>
                </div>
@@ -132,7 +174,7 @@ export const TypeWhatYouHear = () => {
                      className="saveButton"
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={(e) => saveHandler(e)}
+                     onClick={() => saveHandler()}
                   >
                      Save
                   </Button>
