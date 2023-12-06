@@ -1,130 +1,228 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
-import Header from '../../layout/Header'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
 
-const HighlightedAnswerCheck = ({
-   title,
-   duration,
-   questionType,
-   wordsNum,
-   answer,
-   statement,
-}) => {
-   const [score, setScore] = useState(7)
-
-   const getQuestionTest = async () => {
+const HighlightedAnswerCheck = () => {
+   const [score, setScore] = useState()
+   const [state, setState] = useState({ response: null })
+   const [error, setError] = useState(null)
+   const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            'result/getQuestionsResults?userId=1&questionId=4'
+            '/result/getQuestionsResults?userId=1&questionId=7'
          )
-         console.log(response)
+         const allresult = response.data
+         setState({ response: allresult })
       } catch (error) {
-         console.log(error)
+         setError(error)
       }
    }
-
-   //    useEffect(() => {
-   //       getQuestionTest()
-   //    }, [])
-
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await fetch()
-            const data = await response.json()
-            const initialScoreFromBackend = data.score
-            setScore(initialScoreFromBackend)
-         } catch (error) {
-            console.error(error)
-         }
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId: 1,
+            questionId: 7,
+            score,
+         })
+      } catch (error) {
+         setError(error)
       }
-      fetchData()
-      getQuestionTest()
+   }
+   const handleInputChange = (e) => {
+      const value = parseInt(e.target.value, 10)
+      const clampedValue = Math.min(Math.max(value, 0), 10)
+      setScore(clampedValue)
+   }
+   useEffect(() => {
+      getQuestionResult()
    }, [])
 
    return (
-      <>
-         <Header />
-         <Background marginTop="3rem" padding="0">
-            <Container>
-               <ContainerFlex>
-                  <ContainerCkeckInTheTest>
-                     <div>
-                        <p className="TextTestQuestion ">Test Question </p>
-                        <ContainerTestQuestion>
+      <Background marginTop="3rem" padding="0">
+         <Container>
+            <ContainerFlex>
+               <ContainerUser>
+                  {state.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">User:</span>
+                        <p className="ColorParagraf">
+                           {state.response.fullName}
+                        </p>
+                     </div>
+                  )}
+                  {state.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">Test:</span>
+                        <p className="ColorParagraf">
+                           {state.response.testTitle}
+                        </p>
+                     </div>
+                  )}
+               </ContainerUser>
+               <ContainerCkeckInTheTest>
+                  <div>
+                     <p className="TextTestQuestion ">Test Question </p>
+                     <ContainerTestQuestion>
+                        {state.response && (
                            <div className="FixedDisplay">
                               <span className="ColorBlue">Question Title:</span>
-                              <p> {title} </p>
+                              <p className="ColorParagraf">
+                                 {' '}
+                                 {state.response.questionTitle}{' '}
+                              </p>
                            </div>
+                        )}
+                        {state.response && (
                            <div className="FixedDisplay">
                               <span className="ColorBlue">
                                  Duration (in minutes):
                               </span>
-                              <span>{duration} </span>
+                              <span className="ColorParagraf">
+                                 {state.response.duration}{' '}
+                              </span>
                            </div>
+                        )}
+                        {state.response && (
                            <div className="FixedDisplay">
                               <span className="ColorBlue">Question Type:</span>
-                              <p>{questionType}</p>
+                              <p className="ColorParagraf">
+                                 {state.response.questionType}
+                              </p>
                            </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Mimimum number of words:
-                              </span>
-                              <p>{wordsNum}</p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Question Statement:
-                              </span>
-                              <p>{statement}</p>
-                           </div>
-                        </ContainerTestQuestion>
+                        )}
+                     </ContainerTestQuestion>
+                  </div>
+                  <ContaineScore>
+                     <p>Evaluation</p>
+                     <div className="ContainerEvaluation">
+                        <p className="ColorBlue">Score:(1-10)</p>
+                        <InputNumber
+                           type="number"
+                           value={score}
+                           onChange={handleInputChange}
+                        />
                      </div>
-                     <ContaineScore>
-                        <p>Evaluation</p>
-                        <div className="ContainerEvaluation">
-                           <p className="ColorBlue">Score:</p>
-                           <span>{score}</span>
-                        </div>
-                     </ContaineScore>
-                  </ContainerCkeckInTheTest>
-                  <ContainerUserAnswer>
-                     <div>
-                        <p className="TextUserAnswer">User’s Answer </p>
-                     </div>
-                     <div className="statement-box">
-                        <span className="statement">Respond:</span>
-                        <p className="p-answer">{answer}</p>
-                     </div>
-                     <span className="statement">Number of words:</span>
-                  </ContainerUserAnswer>
-               </ContainerFlex>
-               <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
-                     GO BACK
-                  </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
-                     Save
-                  </Button>
-               </ContainerButtons>
-            </Container>
-         </Background>
-      </>
+                  </ContaineScore>
+               </ContainerCkeckInTheTest>
+               <ContainerQuestion>
+                  {state.response && (
+                     <BoxPassage>
+                        <span className="statement">Passage:</span>
+                        <p className="ColorParagraf">
+                           {state.response.passage}
+                        </p>
+                     </BoxPassage>
+                  )}
+                  {state.response && (
+                     <BoxStatement>
+                        <span className="statement">Question Statement:</span>
+                        <p className="ColorParagraf">
+                           {state.response.statement}
+                        </p>
+                     </BoxStatement>
+                  )}
+                  {state.response && (
+                     <BoxCorrectAnswer>
+                        <span className="statement">Correct Answer:</span>
+                        <p className="correctAnswer">
+                           {state.response.correctAnswer}
+                        </p>
+                     </BoxCorrectAnswer>
+                  )}
+               </ContainerQuestion>
+               <ContainerUserAnswer>
+                  <div>
+                     <p className="TextUserAnswer">User’s Answer </p>
+                  </div>
+                  <div className="statement-box">
+                     <span className="statement">Respond:</span>
+                     {state.response && (
+                        <p className="ColorParagraf">
+                           {state.response.respond}
+                        </p>
+                     )}
+                  </div>
+                  {error && (
+                     <ErrorBox>
+                        An error occurred:
+                        {error.message || 'Unknown error'}
+                     </ErrorBox>
+                  )}
+               </ContainerUserAnswer>
+            </ContainerFlex>
+            <ContainerButtons>
+               <Button variant="outlined" hoverStyle="#3A10E5">
+                  GO BACK
+               </Button>
+               <Button
+                  onClick={postScore}
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+               >
+                  Save
+               </Button>
+            </ContainerButtons>
+         </Container>
+      </Background>
    )
 }
 export default HighlightedAnswerCheck
 
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
+   },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
+const BoxPassage = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'start',
+   gap: '7px',
+   width: '56rem',
+   height: '8.7rem',
+})
+const BoxStatement = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'center',
+   gap: '7px',
+   width: '56rem',
+   height: '2.7rem',
+})
 const Container = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   gap: '3rem',
+   gap: '1rem',
    width: '58rem',
-   height: '27rem',
-   marginTop: '4.25rem',
-   fontFamily: ' DINNextRoundedLTW04-Medium',
+   height: '44rem',
+   marginTop: '1.25rem',
+   fontFamily: 'Poppins',
+   '.statement': {
+      fontFamily: 'Poppins',
+      color: '#4C4859',
+      fontSize: '1.14rem',
+      lineHeight: '1.28rem',
+      paddingTop: '1px',
+      fontWeight: 500,
+   },
+   '.correctAnswer': {
+      color: '#3A10E5',
+   },
    '.TextTestQuestion': {
       color: '#4C4859',
       fontSize: '1.25rem',
@@ -132,12 +230,8 @@ const Container = styled('div')({
       lineHeight: '2rem',
       marginBottom: '0.6rem',
    },
-   '.p': {
-      fontFamily: 'DIN Next Rounded LT W01 Regular',
-      fontSize: '1rem',
-      lineHeight: '1rem',
+   '.ColorParagraf': {
       color: '#4C4859',
-      fontWeight: 400,
    },
 })
 
@@ -145,7 +239,7 @@ const ContainerFlex = styled('div')({
    width: '100%',
    display: 'flex',
    flexDirection: 'column',
-   gap: '2rem',
+   gap: '1.5rem',
    justifyContent: 'center',
    alignItems: 'start',
 })
@@ -159,6 +253,36 @@ const ContaineScore = styled('div')({
       paddingLeft: '10px',
    },
 })
+const BoxCorrectAnswer = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   justifyContent: 'start',
+   alignItems: 'center',
+   gap: '7px',
+})
+const InputNumber = styled('input')({
+   marginTop: '6px',
+   width: '5.8rem',
+   height: '2.8rem',
+   borderRadius: '9px',
+   border: '2px solid rgba(196, 196, 196, 0.60)',
+   outline: 'none',
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   textAlign: 'center',
+   fontSize: '1.2rem',
+   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+   },
+   '&[type=number]': {
+      '-moz-appearance': 'textfield',
+   },
+   '&:focus': {
+      border: '2px solid rgba(196, 196, 196, 0.60)',
+   },
+})
 const ContainerUserAnswer = styled('div')({
    width: '55rem',
    height: '9rem',
@@ -166,37 +290,22 @@ const ContainerUserAnswer = styled('div')({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'start',
-   gap: '1rem',
+   gap: '4px',
    '.statement-box': {
       width: '56rem',
       height: '3.5rem',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'start',
+      alignItems: 'center',
       gap: '0.5rem',
    },
    '.TextUserAnswer': {
-      fontFamily: 'DIN Next Rounded LT W04 Medium',
+      fontFamily: 'Poppins',
       color: '#4C4859',
       fontSize: '1.125rem',
       lineHeight: '1.28rem',
       fontWeight: 500,
-   },
-   '.statement': {
-      fontFamily: 'DIN Next Rounded LT W04 Medium',
-      color: '#4C4859',
-      fontSize: '1.14rem',
-      lineHeight: '1.28rem',
-      fontWeight: 500,
-   },
-   '.p-answer': {
-      fontFamily: 'DIN Next Rounded LT W01 Regular',
-      fontSize: '1rem',
-      paddingTop: '4px',
-      lineHeight: '1rem',
-      color: '#3752B4',
-      fontWeight: 400,
-      alignContent: 'center',
    },
 })
 const ContainerTestQuestion = styled('div')({
@@ -211,13 +320,21 @@ const ContainerTestQuestion = styled('div')({
       textAlign: 'center',
    },
 })
+const ContainerQuestion = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1rem',
+   width: '56rem',
+   height: '14rem',
+})
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
    width: '100%',
    alignContent: 'center',
    flexDirection: 'row',
-   gap: '1rem',
+   gap: '1.5rem',
+   marginTop: '0.5rem',
    fontWeight: 500,
    '.ColorBlue': {
       color: '#3752B4',
