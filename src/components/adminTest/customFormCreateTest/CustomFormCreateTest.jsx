@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { InputLabel, styled } from '@mui/material'
-import { TimeField } from '@mui/x-date-pickers/TimeField'
+import { useLocation } from 'react-router-dom'
+// import { TimeField } from '@mui/x-date-pickers/TimeField'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from '../../UI/select/Select'
 import Input from '../../UI/Input'
@@ -49,26 +50,33 @@ const renderedContent = {
       placeholder: 'Select the main idea',
       content: <SelectMainIdea />,
    },
-   'Select best title': {
-      placeholder: 'Select best title',
+   'Select the best title': {
+      placeholder: 'Select the best title',
       content: <SelectBestTitle />,
    },
 }
 
 const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
-   const [selectedOption, setSelectedOption] = React.useState(
-      'Select real English words'
-   )
-
    const dispatch = useDispatch()
-   const { /* questionDuration, */ title } = useSelector(
+   const { pathname } = useLocation()
+   const { selectedOption } = useSelector((state) => state.questions)
+
+   const { questionDuration, title, titleValidate } = useSelector(
       (state) => state.questions
    )
    const handleChange = (event) => {
-      setSelectedOption(event.target.value)
+      dispatch(questionsSlice.actions.selectedOption(event.target.value))
    }
+
+   useEffect(() => {
+      if ((title, questionDuration)) {
+         dispatch(questionsSlice.actions.titleValidate(false))
+         dispatch(questionsSlice.actions.durationValidate(false))
+      }
+   }, [title, questionDuration])
+
    return (
-      <Background marginTop="4rem">
+      <Background>
          <FormSubmit style={formStyles}>
             <ContainerTitleInput>
                <Container>
@@ -91,24 +99,38 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                      Duration
                      <span>(in minutes)</span>
                   </TimeText>
+                  {/* <FieldTime
+                     
+                     format="mm:00"
+                  /> */}
                   <FieldTime
+                     placeholder="00:00"
+                     type="number"
+                     min="0"
                      onChange={(event) => {
                         return dispatch(
-                           questionsSlice.actions.addTime(event?.$m)
+                           questionsSlice.actions.addTime(event.target.value)
                         )
                      }}
-                     format="mm:00"
+                     value={questionDuration}
                   />
                </ContainerTimerInput>
             </ContainerTitleInput>
-            <ContainerInputSecond>
-               <InputLabelTextType>{selectLabel}Type</InputLabelTextType>{' '}
-               <Select
-                  selectedOption={selectedOption}
-                  handleChange={handleChange}
-                  fullWidth
-               />
-            </ContainerInputSecond>
+            <div style={{ textAlign: 'center', color: 'red' }}>
+               {titleValidate ? (
+                  <p>Title and Duration fields are required</p>
+               ) : null}
+            </div>
+            {pathname.startsWith('/admin/update-question') ? null : (
+               <ContainerInputSecond>
+                  <InputLabelTextType>{selectLabel}Type</InputLabelTextType>
+                  <Select
+                     selectedOption={selectedOption}
+                     handleChange={handleChange}
+                     fullWidth
+                  />
+               </ContainerInputSecond>
+            )}
             {renderedContent[selectedOption]?.content}
          </FormSubmit>
       </Background>
@@ -178,19 +200,19 @@ const ContainerInputSecond = styled('div')(() => ({
    gap: '13px',
 }))
 
-const FieldTime = styled(TimeField)(() => ({
+const FieldTime = styled('input')(() => ({
    width: '6rem',
-   '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input ': {
-      height: '0.55rem',
-      borderRadius: ' 0.5rem',
-      border: '1.53px solid #D4D0D0',
-      textAlign: 'center',
-      '&:hover, &:focus': {
-         border: '1.53px solid #3A10E5',
-      },
-   },
-   '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline ': {
-      border: 'none',
+   height: '43px',
+   padding: '9.5px 0 5px 25px',
+   borderRadius: '8px',
+   outline: 'none',
+   border: '1px solid #D4D0D0',
+   color: '#4C4859',
+   fontSize: '18px',
+   '&::placeholder': {
+      color: '#c2c0c0',
+      fontWeight: '500',
+      fontSize: '18px',
    },
 }))
 

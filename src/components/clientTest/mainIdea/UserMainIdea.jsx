@@ -47,9 +47,7 @@ export const UserMainIdea = () => {
       initialValues: {
          options: [],
       },
-      onSubmit: (values) => {
-         console.log(values.options)
-      },
+      onSubmit: () => {},
    })
 
    const duration = 120

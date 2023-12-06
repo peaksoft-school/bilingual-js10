@@ -1,20 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
+<<<<<<< HEAD:src/components/adminTest/selectImg/SelectImage.jsx
 import UpploadFile from './UpploadFile'
 import Input from '../../UI/Input'
 import Button from '../../UI/Buttons/Button'
 import { postDescribeImage } from '../../../store/s3file/thunk'
+=======
+import { useLocation, useNavigate } from 'react-router-dom'
+import Button from '../../components/UI/Buttons/Button'
+import Input from '../../components/UI/Input'
+import UpploadFile from './UpploadFile'
+import { postDescribeImage } from '../../store/s3file/thunk'
+import { questionsSlice } from '../../store/questions/questionsSlice'
+import { updateQuestion } from '../../store/questions/questionsThunk'
 
-const SelectImage = ({ handleClose }) => {
+const SelectImage = () => {
+   const { pathname } = useLocation()
+   const updateUrl = pathname === '/admin/update-question/describe-image'
+>>>>>>> 4367d0ae920f94a83ffdfd2082488fe984cd3a65:src/layout/selectImg/SelectImage.jsx
+
    const [selectedImage, setSelectedImage] = useState(null)
-   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
+   const { testID } = useSelector((state) => state.createTestSlice)
    const dispatch = useDispatch()
-
-   const handleSave = (data) => {
-      dispatch(postDescribeImage({ selectedImage, data }))
-   }
+   const navigate = useNavigate()
 
    const formik = useFormik({
       initialValues: {
@@ -29,59 +42,86 @@ const SelectImage = ({ handleClose }) => {
          }
          return errors
       },
-      onSubmit: (values) => {
-         const data = {
-            title,
-            duration: questionDuration,
-            correctAnswer: values.inputValue,
-         }
-         handleSave(data)
-      },
    })
+   const handleSave = async () => {
+      if (title && questionDuration) {
+         if (updateUrl) {
+            await dispatch(
+               updateQuestion({
+                  title,
+                  statement: 'string',
+                  correctAnswer: formik.values.inputValue,
+                  duration: questionDuration,
+                  attempts: 0,
+                  fileUrl: selectedImage,
+                  passage: 'string',
+               })
+            )
+         } else {
+            const data = {
+               title,
+               duration: questionDuration,
+               correctAnswer: formik.values.inputValue,
+            }
+            await dispatch(postDescribeImage({ selectedImage, data, testID }))
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+
+   useEffect(() => {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         setSelectedImage(question.fileUrl)
+         formik.setFieldValue('inputValue', question.correctAnswer)
+      }
+   }, [question])
 
    return (
       <Container>
          <div className="Box">
-            <form onSubmit={formik.handleSubmit}>
-               <UpploadFile
-                  inputFile={formik.values.inputFile}
-                  name="inputFile"
-                  selectedImage={selectedImage}
-                  setSelectedImage={setSelectedImage}
+            <UpploadFile
+               inputFile={formik.values.inputFile}
+               name="inputFile"
+               selectedImage={selectedImage}
+               setSelectedImage={setSelectedImage}
+            />
+            <div className="AnswerBlock">
+               <InputTextAnswer>Correct Answer</InputTextAnswer>
+               <Input
+                  type="text"
+                  padding="0.6rem 1rem"
+                  fullWidth
+                  name="inputValue"
+                  value={formik.values.inputValue}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                />
-               <div className="AnswerBlock">
-                  <InputTextAnswer>Correct Answer</InputTextAnswer>
-                  <Input
-                     type="text"
-                     padding="0.6rem 1rem"
-                     fullWidth
-                     name="inputValue"
-                     value={formik.values.inputValue}
-                     onChange={formik.handleChange}
-                     onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.inputValue && formik.errors.inputValue ? (
-                     <Boxerror>{formik.errors.inputValue}</Boxerror>
-                  ) : null}
-               </div>
-               <div className="ButtonBlock">
-                  <Button
-                     variant="outlined"
-                     hoverStyle="#3A10E5"
-                     onClick={handleClose}
-                  >
-                     GO BACK
-                  </Button>
-                  <Button
-                     defaultStyle="#2AB930"
-                     hoverStyle="#31CF38"
-                     variant="contained"
-                     type="submit"
-                  >
-                     SAVE
-                  </Button>
-               </div>
-            </form>
+               {formik.touched.inputValue && formik.errors.inputValue ? (
+                  <Boxerror>{formik.errors.inputValue}</Boxerror>
+               ) : null}
+            </div>
+            <div className="ButtonBlock">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={() => navigate(-1)}
+               >
+                  GO BACK
+               </Button>
+               <Button
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+                  variant="contained"
+                  onClick={handleSave}
+               >
+                  SAVE
+               </Button>
+            </div>
          </div>
       </Container>
    )

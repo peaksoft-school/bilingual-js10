@@ -1,12 +1,18 @@
 import { Typography, styled } from '@mui/material'
 import React from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
+import { authActions } from '../store/auth/authSlice'
 
 const Header = ({ roles = 'guest' }) => {
    const navigate = useNavigate()
-   const { pathname } = useLocation()
+   const dispatch = useDispatch()
+
+   const handleLogout = () => {
+      dispatch(authActions.logout(navigate))
+   }
    const handleComeInClick = () => {
       navigate('/signin')
    }
@@ -14,6 +20,7 @@ const Header = ({ roles = 'guest' }) => {
    const handleLoginClick = () => {
       navigate('/signup')
    }
+
    return (
       <MyHeader>
          <LogoBox>
@@ -40,33 +47,33 @@ const Header = ({ roles = 'guest' }) => {
          ) : (
             <Options>
                <OptionsBlock>
-                  <HeaderLink
-                     style={
-                        pathname === '/user'
-                           ? { color: 'blue' }
-                           : { color: '#4C4859' }
+                  <NavLink
+                     to="/admin"
+                     style={({ isActive }) =>
+                        isActive
+                           ? { color: 'blue', textDecoration: 'none' }
+                           : { color: 'black', textDecoration: 'none' }
                      }
-                     to={roles === 'user' ? '/user' : '/'}
                   >
                      <MyText>Tests</MyText>
-                  </HeaderLink>
+                  </NavLink>
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <HeaderLink
-                        style={
-                           pathname === '/user/my-results'
-                              ? { color: 'blue' }
-                              : { color: '#4C4859' }
-                        }
-                        to="/user/my-results"
-                     >
+                     <NavLink to="/">
                         <MyText>My Results</MyText>
-                     </HeaderLink>
+                     </NavLink>
                   ) : (
-                     <HeaderLink to="/">
+                     <NavLink
+                        to="/"
+                        style={({ isActive }) =>
+                           isActive
+                              ? { color: 'blue', textDecoration: 'none' }
+                              : { color: 'black', textDecoration: 'none' }
+                        }
+                     >
                         <MyText>Submitted Results</MyText>
-                     </HeaderLink>
+                     </NavLink>
                   )}
                </OptionsBlock>
                <OptionsBlock>
@@ -76,7 +83,7 @@ const Header = ({ roles = 'guest' }) => {
                      defaultStyle="white"
                      hoverStyle="blue"
                   >
-                     <MyText>Log out</MyText>
+                     <MyText onClick={handleLogout}>Log out</MyText>
                   </Button>
                </OptionsBlock>
             </Options>
@@ -84,6 +91,7 @@ const Header = ({ roles = 'guest' }) => {
       </MyHeader>
    )
 }
+
 const ButtonsContainer = styled('div')(() => ({
    paddingRight: '80px',
    display: 'flex',
@@ -120,10 +128,6 @@ const OptionsBlock = styled('div')({
    flexDirection: 'column',
    textAlign: 'center',
    marginRight: '1.7rem',
-})
-const HeaderLink = styled(NavLink)({
-   textDecoration: 'none',
-   color: '#4C4859',
 })
 const MyText = styled(Typography)({
    '&': {
