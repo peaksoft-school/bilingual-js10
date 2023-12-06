@@ -1,72 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+// import { useDispatch } from 'react-redux'
+import { axiosInstance } from '../../config/axiosInstance'
 import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
 
-const options = [
-   {
-      id: 1,
-      title: 'champion',
-   },
-   {
-      id: 2,
-      title: 'Dasi012',
-   },
-   {
-      id: 3,
-      title: 'Rinat',
-   },
-   {
-      id: 4,
-      title: 'Nurlan',
-   },
-   {
-      id: 5,
-      title: 'Begish',
-   },
-   {
-      id: 6,
-      title: 'Elizar',
-   },
-]
-
-const answers = [
-   {
-      id: 1,
-      title: 'Listen',
-   },
-   {
-      id: 2,
-      title: 'Dastan',
-   },
-   {
-      id: 3,
-      title: 'Rinat',
-   },
-   {
-      id: 4,
-      title: 'Nurlan',
-   },
-]
-
-const SelectRealEnglishWords = ({ title, duration, questionType }) => {
-   const [score, setScore] = useState(7)
+const SelectRealEnglishWords = () => {
+   // const dispatch = useDispatch()
+   const [score] = useState(7)
+   const [appState, setAppState] = useState({ response: null })
+   const usetTestId = 1
+   const getQuestionTest = async () => {
+      try {
+         const response = await axiosInstance.get(
+            `/result/getQuestionsResults?userId=1&questionId=${usetTestId}`
+         )
+         // dispatch(response)
+         const allRepos = response.data
+         setAppState({ response: allRepos })
+      } catch (error) {
+         console.log(error)
+      }
+   }
 
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await fetch()
-            const data = await response.json()
-            const initialScoreFromBackend = data.score
-            setScore(initialScoreFromBackend)
-         } catch (error) {
-            console.error(error)
-         }
-      }
-      fetchData()
-   }, [])
+      getQuestionTest()
+   }, [setAppState])
+
+   // useEffect(() => {
+   //    const fetchData = async () => {
+   //       try {
+   //          const response = await fetch()
+   //          const data = await response.json()
+   //          const initialScoreFromBackend = data.score
+   //          setScore(initialScoreFromBackend)
+   //       } catch (error) {
+   //          console.error(error)
+   //       }
+   //    }
+   //    fetchData()
+   // }, [])
 
    return (
       <>
@@ -76,25 +51,34 @@ const SelectRealEnglishWords = ({ title, duration, questionType }) => {
                <ContainerFlex>
                   <ContainerCkeckInTheTest>
                      <div>
-                        <p className="TextTestQuestion ">Test Question </p>
+                        <p className="TextTestQuestion">Test Question </p>
                         <ContainerTestQuestion>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Title:</span>
-                              <p> {title} </p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Duration (in minutes):
-                              </span>
-                              <span>{duration} </span>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Type:</span>
-                              <p>{questionType}</p>
-                           </div>
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Title:
+                                 </span>
+                                 <p>{appState.response.questionTitle}</p>
+                              </div>
+                           )}
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Duration (in minutes):
+                                 </span>
+                                 <span>{appState.response.duration}</span>
+                              </div>
+                           )}
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Type:
+                                 </span>
+                                 <p>{appState.response.questionType}</p>
+                              </div>
+                           )}
                         </ContainerTestQuestion>
                      </div>
-
                      <ContaineScore>
                         <p>Evaluation</p>
                         <div className="ContainerEvaluation">
@@ -104,34 +88,36 @@ const SelectRealEnglishWords = ({ title, duration, questionType }) => {
                      </ContaineScore>
                   </ContainerCkeckInTheTest>
                   <ContainerCreateTest>
-                     {options.map((option, index) => (
-                        <CreateTest key={option.id}>
-                           <div>
-                              <MainContainer>
-                                 <p className="Number-Words">{index + 1}</p>
-                                 <div className="NumberText">
-                                    <span>{option.title}</span>
-                                 </div>
-                              </MainContainer>
-                           </div>
-                           <div className="InputDelete">
-                              <InputRadio variant="CHECKBOX" />
-                           </div>
-                        </CreateTest>
-                     ))}
+                     {appState.response &&
+                        appState.response.optionList.map((el, index) => (
+                           <CreateTest key={el.id}>
+                              <div>
+                                 <MainContainer>
+                                    <p className="Number-Words">{index + 1}</p>
+                                    <div className="NumberText">
+                                       <span>{el.title}</span>
+                                    </div>
+                                 </MainContainer>
+                              </div>
+                              <div className="InputDelete">
+                                 <InputRadio variant="CHECKBOX" />
+                              </div>
+                           </CreateTest>
+                        ))}
                   </ContainerCreateTest>
                   <ContainerCreateAnswerTest>
                      <p className="TextUserAnswer">User’s Answer </p>
                      <div className="ContainerAnswerMap">
-                        {answers.map((el) => (
-                           <CreateAnswerTest key={el.id}>
-                              <MainContainer>
-                                 <div className="NumberText">
-                                    <p>{el.title}</p>
-                                 </div>
-                              </MainContainer>
-                           </CreateAnswerTest>
-                        ))}
+                        {appState.response &&
+                           appState.response.optionFromUser.map((item) => (
+                              <CreateAnswerTest key={item.id}>
+                                 <MainContainer>
+                                    <div className="NumberText">
+                                       <p>{item.title}</p>
+                                    </div>
+                                 </MainContainer>
+                              </CreateAnswerTest>
+                           ))}
                      </div>
                   </ContainerCreateAnswerTest>
                </ContainerFlex>
@@ -139,7 +125,11 @@ const SelectRealEnglishWords = ({ title, duration, questionType }) => {
                   <Button variant="outlined" hoverStyle="#3A10E5">
                      GO BACK
                   </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     onClick={getQuestionTest}
+                  >
                      Save
                   </Button>
                </ContainerButtons>
