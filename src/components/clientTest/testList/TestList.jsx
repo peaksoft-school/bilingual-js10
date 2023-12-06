@@ -44,7 +44,6 @@ const TestList = () => {
                         {error && (
                            <div style={{ color: 'red', marginTop: '10px' }}>
                               An error occurred:
-                              {error.message || 'Unknown error'}
                            </div>
                         )}
                         <ListContainerStyle>
