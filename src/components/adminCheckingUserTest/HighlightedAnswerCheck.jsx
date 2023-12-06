@@ -3,6 +3,7 @@ import { styled } from '@mui/material'
 import Header from '../../layout/Header'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
+import { axiosInstance } from '../../config/axiosInstance'
 
 const HighlightedAnswerCheck = ({
    title,
@@ -13,6 +14,21 @@ const HighlightedAnswerCheck = ({
    statement,
 }) => {
    const [score, setScore] = useState(7)
+
+   const getQuestionTest = async () => {
+      try {
+         const response = await axiosInstance.get(
+            'result/getQuestionsResults?userId=1&questionId=4'
+         )
+         console.log(response)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+
+   //    useEffect(() => {
+   //       getQuestionTest()
+   //    }, [])
 
    useEffect(() => {
       const fetchData = async () => {
@@ -26,7 +42,9 @@ const HighlightedAnswerCheck = ({
          }
       }
       fetchData()
+      getQuestionTest()
    }, [])
+
    return (
       <>
          <Header />
