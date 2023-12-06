@@ -1,40 +1,68 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
 import { validationAuthSignUp } from '../../../utils/helpers/validate/validation'
-import { axiosInstance } from '../../../config/axiosInstance'
+import { postQuestion } from '../../../api/postQuestionApi'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
+import { updateQuestion } from '../../../store/questions/questionsThunk'
 
 export const RespondLeast = () => {
-   const { testID } = useSelector((state) => state.createTestSlice)
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
+
+   const { pathname } = useLocation()
+   const updateUrl =
+      pathname === '/admin/update-question/respond-in-at-least-n-words'
+
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const formik = useFormik({
       initialValues: {
          questionStatement: '',
          numberReplays: '',
       },
       validationSchema: validationAuthSignUp,
-      onSubmit: async (values) => {
-         try {
-            await axiosInstance.post(
-               `questions?testId=${testID}&questionType=RESPOND_AT_LEAST_N_WORDS`,
-               {
-                  statement: values.questionStatement,
-                  attempts: values.numberReplays,
-                  options: [{}],
-               }
-            )
-         } catch (error) {
-            console.error('Error:', error)
-         }
-      },
    })
 
+   const saveBtn = async () => {
+      if (title && questionDuration) {
+         const data = {
+            title,
+            duration: questionDuration,
+            statement: formik.values.questionStatement,
+            attempts: formik.values.numberReplays,
+            correctAnswer: 'string',
+            fileUrl: 'string',
+            passage: 'string',
+         }
+         if (updateUrl) {
+            await dispatch(updateQuestion(data))
+         } else {
+            await dispatch(postQuestion(data))
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+
+   useEffect(() => {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         formik.setFieldValue('questionStatement', question.statement)
+         formik.setFieldValue('numberReplays', question.attempts)
+      }
+   }, [question])
+
    return (
-      <form onSubmit={formik.handleSubmit}>
+      <>
          <Container>
             <label htmlFor="questionStatement">Question statement</label>
             <Input
@@ -52,8 +80,8 @@ export const RespondLeast = () => {
          </Container>
          <AudioContainer>
             <div>
-               <p className="LabelTop">numberReplays of</p>
-               <p className="LabelBottom">Replays</p>
+               <p className="LabelTop">Number off</p>
+               <p className="LabelBottom">Words</p>
                <Input
                   type="number"
                   id="numberReplays"
@@ -78,15 +106,15 @@ export const RespondLeast = () => {
                Go back
             </Button>
             <Button
-               type="submit"
                variant="contained"
                defaultStyle="#2AB930"
                hoverStyle="#31CF38"
+               onClick={saveBtn}
             >
                Save
             </Button>
          </Buttons>
-      </form>
+      </>
    )
 }
 const ErrorMessage = styled(Typography)(() => ({

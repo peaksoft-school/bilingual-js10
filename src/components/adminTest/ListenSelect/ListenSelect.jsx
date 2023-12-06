@@ -1,8 +1,8 @@
 import { styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, FormikProvider, useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
-import React, { useRef } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useEffect, useRef } from 'react'
 import {
    postFileS3,
    postListenSelect,
@@ -11,12 +11,23 @@ import { Delete, VolumeForEnglishWord } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import { ListenModal } from './ListenModal'
+import {
+   deleteOption,
+   getOptionByQuestionId,
+   optionEnable,
+   postOption,
+   updateQuestion,
+} from '../../../store/questions/questionsThunk'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
 
 export const ListenSelect = () => {
    const dispatch = useDispatch()
+   const { pathname } = useLocation()
    const navigate = useNavigate()
    const { testID } = useSelector((state) => state.createTestSlice)
-   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { title, questionDuration, options, question } = useSelector(
+      (state) => state.questions
+   )
 
    const formik = useFormik({
       initialValues: {
@@ -29,9 +40,41 @@ export const ListenSelect = () => {
          isTrue: false,
       },
    })
-   const SaveFile = () => {
-      dispatch(postListenSelect({ formik, testID, title, questionDuration }))
-      navigate('/admin')
+   useEffect(() => {
+      if (
+         pathname === '/admin/update-question/listen-and-select-english-word'
+      ) {
+         formik.setFieldValue('options', options)
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+      }
+   }, [options, question])
+
+   const SaveFile = async () => {
+      if (title && questionDuration) {
+         if (
+            pathname === '/admin/update-question/listen-and-select-english-word'
+         ) {
+            const data = {
+               title,
+               statement: 'string',
+               correctAnswer: 'string',
+               duration: questionDuration,
+               attempts: 0,
+               fileUrl: 'string',
+               passage: 'string',
+            }
+            await dispatch(updateQuestion(data))
+         } else {
+            dispatch(
+               postListenSelect({ formik, testID, title, questionDuration })
+            )
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
    }
    const addedOptionsModal = () => {
       formik.setFieldValue('isModalOpen', true)
@@ -47,6 +90,16 @@ export const ListenSelect = () => {
          title: formik.values.titleValues,
          isTrue: formik.values.isTrue,
       }
+      if (
+         pathname === '/admin/update-question/listen-and-select-english-word'
+      ) {
+         const option = {
+            audioUrl: link.payload.data.link,
+            title: formik.values.titleValues,
+            isTrue: formik.values.isTrue,
+         }
+         await dispatch(postOption(option))
+      }
       if (formik.values) {
          formik.setValues({
             ...formik.values,
@@ -54,8 +107,8 @@ export const ListenSelect = () => {
             selectedFile: '',
             titleValues: '',
          })
-         handleClose()
       }
+      handleClose()
    }
    const fileInputRef = useRef(null)
    const handleClick = () => {
@@ -72,7 +125,7 @@ export const ListenSelect = () => {
          })
       }
    }
-   const handleCheckboxChange = (id) => {
+   const handleCheckboxChange = (id, e) => {
       const updatedOptions = formik.values.options.map((option) => {
          if (option.id === id) {
             return { ...option, isTrue: !option.isTrue }
@@ -83,6 +136,14 @@ export const ListenSelect = () => {
          ...formik.values,
          options: updatedOptions,
       })
+      if (
+         pathname === '/admin/update-question/listen-and-select-english-word'
+      ) {
+         dispatch(optionEnable({ e, id }))
+         setTimeout(() => {
+            dispatch(getOptionByQuestionId())
+         }, 400)
+      }
    }
    const handlePlayAudio = (id) => {
       const audioFile = formik.values.options.find(
@@ -116,6 +177,7 @@ export const ListenSelect = () => {
          (option) => option.id !== id
       )
       formik.setValues({ ...formik.values, options: newOption })
+      dispatch(deleteOption(id))
    }
 
    return (
@@ -152,7 +214,7 @@ export const ListenSelect = () => {
                            <InputRadio
                               variant="CHECKBOX"
                               name={`isTrue_${el.id}`}
-                              onChange={() => handleCheckboxChange(el.id)}
+                              onChange={(e) => handleCheckboxChange(el.id, e)}
                               checkedSwitch={el.isTrue}
                            />
                            <Delete
