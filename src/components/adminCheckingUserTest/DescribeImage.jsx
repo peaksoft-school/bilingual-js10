@@ -3,42 +3,43 @@ import styled from 'styled-components'
 import { Background } from '../../layout/Background'
 import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
+import { axiosInstance } from '../../config/axiosInstance'
 
-const DescribeImage = ({
-   title,
-   duration,
-   questionType,
-   answer,
-   enteredStatement,
-   img,
-}) => {
-   const [score, setScore] = useState(7)
-   const [isFocused, setIsFocused] = useState(false)
+const DescribeImage = () => {
+   const [score, setScore] = useState()
+   const [state, setState] = useState({ response: null })
 
-   useEffect(() => {
-      getQuestionTest()
-   }, [])
-   const handleFocus = () => {
-      setIsFocused(true)
-   }
-
-   const handleBlur = () => {
-      setIsFocused(false)
-   }
-   const replaceImage = () => {}
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await fetch()
-            const data = await response.json()
-            const initialScoreFromBackend = data.score
-            setScore(initialScoreFromBackend)
-         } catch (error) {
-            console.error(error)
-         }
+   const getQuestionResult = async () => {
+      try {
+         const response = await axiosInstance.get(
+            '/result/getQuestionsResults?userId=1&questionId=4'
+         )
+         const allresult = response.data
+         setState({ response: allresult })
+      } catch (error) {
+         console.log(error)
       }
-      fetchData()
+   }
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId: 1,
+            questionId: 4,
+            score,
+         })
+      } catch (error) {
+         console.log(error)
+      }
+   }
+   const handleInputChange = (e) => {
+      const value = parseInt(e.target.value, 10)
+      const clampedValue = Math.min(Math.max(value, 0), 10)
+      setScore(clampedValue)
+   }
+   useEffect(() => {
+      getQuestionResult()
    }, [])
+
    return (
       <>
          <Header />
@@ -49,66 +50,67 @@ const DescribeImage = ({
                      <div>
                         <p className="TextTestQuestion ">Test Question </p>
                         <ContainerTestQuestion>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Title:</span>
-                              <p> {title} </p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Duration (in minutes):
-                              </span>
-                              <span>{duration} </span>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Type:</span>
-                              <p>{questionType}</p>
-                           </div>
+                           {state.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Title:
+                                 </span>
+                                 <p> {state.response.questionTitle} </p>
+                              </div>
+                           )}
+                           {state.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Duration (in minutes):
+                                 </span>
+                                 <span>{state.response.duration} </span>
+                              </div>
+                           )}
+                           {state.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Type:
+                                 </span>
+                                 <p>{state.response.questionType}</p>
+                              </div>
+                           )}
                         </ContainerTestQuestion>
                      </div>
                      <ContaineScore>
                         <p>Evaluation</p>
                         <div className="ContainerEvaluation">
-                           <p className="ColorBlue">Score:</p>
-                           <span>{score}</span>
+                           <p className="ColorBlue">Score:(1-10)</p>
+                           <InputNumber
+                              type="number"
+                              value={score}
+                              onChange={handleInputChange}
+                           />
                         </div>
                      </ContaineScore>
                   </ContainerCkeckInTheTest>
                   <ContainerImgQuestion>
-                     <BoxImg
-                        tabIndex="0"
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        onClick={replaceImage}
-                        role="button"
-                     >
-                        {isFocused ? (
-                           <BoxImgRep>
-                              <Button
-                                 className="replaceImg"
-                                 onClick={handleBlur}
-                              >
-                                 Replace
-                              </Button>
-                              <img
-                                 className="imgReplace"
-                                 src={img}
-                                 alt="img comes with props"
-                              />
-                           </BoxImgRep>
-                        ) : (
-                           <img src={img} alt="img comes with props" />
-                        )}
-                     </BoxImg>
+                     {state.response && (
+                        <BoxImg>
+                           <img
+                              src={state.response.audioFile}
+                              alt="img comes with props"
+                           />
+                        </BoxImg>
+                     )}
                      <BoxCorrectAnswer>
-                        <p className="p">Correct Answer:</p>
-                        <span>{answer}</span>
+                        <p className="CarrentAnswer">Correct Answer:</p>
+                        {state.response && (
+                           <span>{state.response.correctAnswer}</span>
+                        )}
                      </BoxCorrectAnswer>
                   </ContainerImgQuestion>
                   <ContainerUserAnswer>
                      <p className="TextUserAnswer">User’s Answer </p>
                      <div className="statement-box">
                         <span className="statement">Entered statement:</span>
-                        <p className="p">{enteredStatement}</p>
+                        {state.response && (
+                           <p className="p">{state.response.respond}</p>
+                        )}
                      </div>
                   </ContainerUserAnswer>
                </ContainerFlex>
@@ -116,7 +118,11 @@ const DescribeImage = ({
                   <Button variant="outlined" hoverStyle="#3A10E5">
                      GO BACK
                   </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  <Button
+                     onClick={postScore}
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                  >
                      Save
                   </Button>
                </ContainerButtons>
@@ -131,15 +137,14 @@ export default DescribeImage
 const Container = styled('div')({
    display: 'flex',
    justifyContent: 'center',
-   fontFamily: ' DINNextRoundedLTW04-Medium',
+   fontFamily: 'Poppins',
    '.imgReplace': {
       width: '100%',
       height: '100%',
-      opacity: 0.5,
    },
    '.ContainerEvaluation': {
       display: 'flex',
-      gap: '7px',
+      flexDirection: 'column',
       color: 'green',
    },
    '.TextTestQuestion': {
@@ -149,15 +154,36 @@ const Container = styled('div')({
       lineHeight: '2rem',
       marginBottom: '0.6rem',
    },
-   '.p': {
-      fontFamily: 'DIN Next Rounded LT W01 Regular',
+   '.CarrectAnswer': {
       fontSize: '1rem',
       lineHeight: '1rem',
-      color: '#4C4859',
+      color: '#4C4859 ',
       fontWeight: 400,
    },
 })
-
+const InputNumber = styled('input')({
+   marginTop: '6px',
+   width: '5.8rem',
+   height: '2.8rem',
+   borderRadius: '9px',
+   border: '2px solid rgba(196, 196, 196, 0.60)',
+   outline: 'none',
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   textAlign: 'center',
+   fontSize: '1.2rem',
+   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+   },
+   '&[type=number]': {
+      '-moz-appearance': 'textfield',
+   },
+   '&:focus': {
+      border: '2px solid rgba(196, 196, 196, 0.60)',
+   },
+})
 const ContainerFlex = styled('div')({
    width: '100%',
    display: 'flex',
@@ -195,15 +221,6 @@ const ContainerImgQuestion = styled('div')({
    width: '38rem',
    height: '13rem',
 })
-const BoxImgRep = styled('div')({
-   display: 'flex',
-   alignItems: 'center',
-   justifyContent: 'center',
-   width: '11.25rem',
-   height: '11rem',
-   alignSelf: 'center',
-   borderRadius: '0.5rem',
-})
 const BoxImg = styled('div')({
    width: '11.25rem',
    height: '11rem',
@@ -235,7 +252,7 @@ const BoxCorrectAnswer = styled('div')({
    gap: '1rem',
 })
 const ContainerUserAnswer = styled('div')({
-   width: '21.25rem',
+   width: '38.25rem',
    height: '4rem',
    display: 'flex',
    flexDirection: 'column',
@@ -248,14 +265,14 @@ const ContainerUserAnswer = styled('div')({
       gap: '1rem',
    },
    '.TextUserAnswer': {
-      fontFamily: 'DIN Next Rounded LT W04 Medium',
+      fontFamily: 'Poppins',
       color: '#4C4859',
       fontSize: '1.125rem',
       lineHeight: '1.28rem',
       fontWeight: 500,
    },
    '.statement': {
-      fontFamily: 'DIN Next Rounded LT W04 Medium',
+      fontFamily: 'Poppins',
       color: '#4C4859',
       fontSize: '1.14rem',
       lineHeight: '1.28rem',
