@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { InputRadio } from '../InputRadio'
 import Edits from '../../../assets/icons/edit.svg'
 import Delete from '../../../assets/icons/delete.svg'
+import redDelete from '../../../assets/icons/redDeleteIcon.png'
+import blueEditIcon from '../../../assets/icons/blueEditIcon.png'
 import { createTestActions } from '../../../store/admin/createTestSlice'
 
 export const TestItem = ({ setOpen, test, enableHandler, setDelID }) => {
@@ -14,6 +16,8 @@ export const TestItem = ({ setOpen, test, enableHandler, setDelID }) => {
    const enableTest = useSelector((state) =>
       state.createTestSlice.tests.find((t) => t.id === test.id)
    )
+   const [del, setDel] = useState(false)
+   const [ed, setEd] = useState(false)
 
    const updateFn = (id) => {
       dispatch(createTestActions.updatedTestId(id))
@@ -22,7 +26,7 @@ export const TestItem = ({ setOpen, test, enableHandler, setDelID }) => {
 
    const testQuestionsHandler = (id) => {
       dispatch(createTestActions.testID(id))
-      navigate('/admin/QuestionsPage')
+      navigate(`/admin/questions/${id}`)
    }
 
    return (
@@ -36,16 +40,22 @@ export const TestItem = ({ setOpen, test, enableHandler, setDelID }) => {
                variant="SWITCH"
                onChange={(e) => enableHandler(e, test.id)}
             />
-            <Button onClick={() => updateFn(test.id)}>
-               <img src={Edits} alt="Изменения" />
+            <Button
+               onClick={() => updateFn(test.id)}
+               onMouseOver={() => setEd(true)}
+               onMouseOut={() => setEd(false)}
+            >
+               <img src={ed ? blueEditIcon : Edits} alt="Изменения" />
             </Button>
             <Button
                onClick={() => {
                   setDelID(test.id)
                   setOpen(Boolean(true))
                }}
+               onMouseOver={() => setDel(true)}
+               onMouseOut={() => setDel(false)}
             >
-               <img src={Delete} alt="Удаления" />
+               <img src={del ? redDelete : Delete} alt="Удаления" />
             </Button>
          </div>
       </ContainerItems>
@@ -81,6 +91,9 @@ const ContainerItems = styled('div')(() => ({
    '& .MuiButtonBase-root': {
       minWidth: '0',
       color: '#fff',
+   },
+   '& img': {
+      width: '22px',
    },
 }))
 
