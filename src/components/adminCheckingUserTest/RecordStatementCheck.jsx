@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import Button from '../UI/Buttons/Button'
-import Header from '../../layout/Header'
 import { Background } from '../../layout/Background'
+import { axiosInstance } from '../../config/axiosInstance'
 
 const RecordStatementCheck = () => {
-   const [score, setScore] = useState(7)
    const [isPlaying, setIsPlaying] = useState(false)
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
+   const audioRef = React.createRef()
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            '/result/getQuestionsResults?userId=1&questionId=7'
+            '/result/getQuestionsResults?userId=1&questionId=5'
          )
          const allresult = response.data
          setState({ response: allresult })
@@ -23,11 +23,21 @@ const RecordStatementCheck = () => {
          setError(error)
       }
    }
+   const playAudio = () => {
+      if (audioRef.current) {
+         if (isPlaying) {
+            audioRef.current.pause()
+         } else {
+            audioRef.current.play()
+         }
+      }
+      setIsPlaying((prev) => !prev)
+   }
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
             userId: 1,
-            questionId: 7,
+            questionId: 5,
             score,
          })
       } catch (error) {
@@ -42,17 +52,6 @@ const RecordStatementCheck = () => {
    useEffect(() => {
       getQuestionResult()
    }, [])
-   const playAudio = () => {
-      if (audioRef.current) {
-         if (isPlaying) {
-            audioRef.current.pause()
-         } else {
-            audioRef.current.play()
-         }
-         setIsPlaying(!isPlaying)
-      }
-   }
-
    return (
       <Background marginTop="3rem" padding="0">
          <Container>
@@ -79,67 +78,118 @@ const RecordStatementCheck = () => {
                   <div>
                      <p className="TextTestQuestion ">Test Question </p>
                      <ContainerTestQuestion>
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">Question Title:</span>
-                           <p> {title} </p>
-                        </div>
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">
-                              Duration (in minutes):
-                           </span>
-                           <span>{duration} </span>
-                        </div>
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">Question Type:</span>
-                           <p>{questionType}</p>
-                        </div>
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">Statement:</span>
-                           <p>{statement}</p>
-                        </div>
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">Question Title:</span>
+                              <p className="ColorParagraf">
+                                 {state.response.questionTitle}
+                              </p>
+                           </div>
+                        )}
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">
+                                 Duration (in minutes):
+                              </span>
+                              <span className="ColorParagraf">
+                                 {state.response.duration}
+                              </span>
+                           </div>
+                        )}
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">Question Type:</span>
+                              <p className="ColorParagraf">
+                                 {state.response.questionType}
+                              </p>
+                           </div>
+                        )}
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">Statement:</span>
+                              <p className="ColorParagraf">
+                                 {state.response.statement}
+                              </p>
+                           </div>
+                        )}
                      </ContainerTestQuestion>
                   </div>
                   <ContaineScore>
                      <p>Evaluation</p>
                      <div className="ContainerEvaluation">
-                        <p className="ColorBlue">Score:</p>
-                        <span>{score}</span>
+                        <p className="ColorBlue">Score:(1-10)</p>
+                        <InputNumber
+                           type="number"
+                           value={score}
+                           onChange={handleInputChange}
+                        />
                      </div>
                   </ContaineScore>
                </ContainerCkeckInTheTest>
                <ContainerQuestion>
                   <BoxPlay>
-                     {/* <audio ref={audioRef} src={audioUrl} /> */}
                      <Button
                         variant="contained"
                         className="playButton"
                         hoverStyle="#4E28E8"
                         onClick={playAudio}
                      >
-                        {isPlaying && audioFile ? (
+                        {state.response && (
                            <div>
-                              <PauseCircleOutlineIcon />
-                              <span> STOP RECORDED AUDIO</span>
+                              {isPlaying && state.response.audioFile ? (
+                                 <div>
+                                    <PauseCircleOutlineIcon />
+                                    <span> STOP RECORDED AUDIO</span>
+                                 </div>
+                              ) : (
+                                 <div>
+                                    <PlayCircleOutlineIcon />
+                                    <span>PLAY AUDIO</span>
+                                 </div>
+                              )}
                            </div>
-                        ) : (
-                           <BoxPlay>
-                              <PlayCircleOutlineIcon />
-                              <span>PLAY AUDIO</span>
-                           </BoxPlay>
+                        )}
+                        {isPlaying && state.response && (
+                           <audio className="audio" ref={audioRef} controls>
+                              <source
+                                 src={state.response.audioFile}
+                                 type="audio/mpeg"
+                              />
+                              <track
+                                 kind="captions"
+                                 src="captions.vtt"
+                                 label="English"
+                                 default
+                              />
+                           </audio>
                         )}
                      </Button>
                   </BoxPlay>
-                  <BoxCorrectAnswer>
-                     <p className="p">Correct Answer:</p>
-                     <span>{answer}</span>
-                  </BoxCorrectAnswer>
+                  {state.response && (
+                     <BoxCorrectAnswer>
+                        <span className="statement">Correct Answer:</span>
+                        <p className="ColorParagraf">
+                           {state.response.correctAnswer}
+                        </p>
+                     </BoxCorrectAnswer>
+                  )}
                </ContainerQuestion>
+               {error && (
+                  <ErrorBox>
+                     An error occurred:
+                     {error.message || 'Unknown error'}
+                  </ErrorBox>
+               )}
             </ContainerFlex>
             <ContainerButtons>
                <Button variant="outlined" hoverStyle="#3A10E5">
                   GO BACK
                </Button>
-               <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+               <Button
+                  onClick={postScore}
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+               >
                   Save
                </Button>
             </ContainerButtons>
@@ -149,14 +199,26 @@ const RecordStatementCheck = () => {
 }
 export default RecordStatementCheck
 
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
 const Container = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   gap: '2rem',
-   width: '58rem',
-   height: '19rem',
-   marginTop: '4.25rem',
-   fontFamily: ' DINNextRoundedLTW04-Medium',
+   gap: '1rem',
+   width: '55rem',
+   height: '29rem',
+   marginTop: '1.25rem',
+   fontFamily: 'Poppins',
+   '.ColorParagraf': {
+      color: '#4C4859',
+   },
+   '.ContainerEvaluation': {
+      display: 'flex',
+      flexDirection: 'column',
+      color: 'green',
+   },
    '.TextTestQuestion': {
       color: '#4C4859',
       fontSize: '1.25rem',
@@ -164,15 +226,52 @@ const Container = styled('div')({
       lineHeight: '2rem',
       marginBottom: '0.6rem',
    },
-   '.p': {
-      fontFamily: 'DIN Next Rounded LT W01 Regular',
-      fontSize: '1rem',
-      lineHeight: '1rem',
+   '.statement': {
+      fontFamily: 'Poppins',
       color: '#4C4859',
-      fontWeight: 400,
+      fontSize: '1.14rem',
+      lineHeight: '1.28rem',
+      paddingTop: '1px',
+      fontWeight: 500,
    },
 })
-
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
+   },
+})
+const InputNumber = styled('input')({
+   marginTop: '6px',
+   width: '5.8rem',
+   height: '2.8rem',
+   borderRadius: '9px',
+   border: '2px solid rgba(196, 196, 196, 0.60)',
+   outline: 'none',
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   textAlign: 'center',
+   fontSize: '1.2rem',
+   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+   },
+   '&[type=number]': {
+      '-moz-appearance': 'textfield',
+   },
+   '&:focus': {
+      border: '2px solid rgba(196, 196, 196, 0.60)',
+   },
+})
 const ContainerFlex = styled('div')({
    width: '100%',
    display: 'flex',
