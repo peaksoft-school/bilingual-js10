@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Background } from '../../layout/Background'
-import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
 
 const DescribeImage = () => {
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
-
+   const [error, setError] = useState(null)
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
@@ -17,7 +16,7 @@ const DescribeImage = () => {
          const allresult = response.data
          setState({ response: allresult })
       } catch (error) {
-         console.log(error)
+         setError(error)
       }
    }
    const postScore = async () => {
@@ -28,7 +27,7 @@ const DescribeImage = () => {
             score,
          })
       } catch (error) {
-         console.log(error)
+         setError(error)
       }
    }
    const handleInputChange = (e) => {
@@ -41,99 +40,128 @@ const DescribeImage = () => {
    }, [])
 
    return (
-      <>
-         <Header />
-         <Container>
-            <Background marginTop="3rem" padding="0">
-               <ContainerFlex>
-                  <ContainerCkeckInTheTest>
-                     <div>
-                        <p className="TextTestQuestion ">Test Question </p>
-                        <ContainerTestQuestion>
-                           {state.response && (
-                              <div className="FixedDisplay">
-                                 <span className="ColorBlue">
-                                    Question Title:
-                                 </span>
-                                 <p> {state.response.questionTitle} </p>
-                              </div>
-                           )}
-                           {state.response && (
-                              <div className="FixedDisplay">
-                                 <span className="ColorBlue">
-                                    Duration (in minutes):
-                                 </span>
-                                 <span>{state.response.duration} </span>
-                              </div>
-                           )}
-                           {state.response && (
-                              <div className="FixedDisplay">
-                                 <span className="ColorBlue">
-                                    Question Type:
-                                 </span>
-                                 <p>{state.response.questionType}</p>
-                              </div>
-                           )}
-                        </ContainerTestQuestion>
+      <Container>
+         <Background marginTop="3rem" padding="0">
+            <ContainerFlex>
+               <ContainerUser>
+                  {state.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">User:</span>
+                        <p className="ColorParagraf">
+                           {state.response.fullName}
+                        </p>
                      </div>
-                     <ContaineScore>
-                        <p>Evaluation</p>
-                        <div className="ContainerEvaluation">
-                           <p className="ColorBlue">Score:(1-10)</p>
-                           <InputNumber
-                              type="number"
-                              value={score}
-                              onChange={handleInputChange}
-                           />
-                        </div>
-                     </ContaineScore>
-                  </ContainerCkeckInTheTest>
-                  <ContainerImgQuestion>
+                  )}
+                  {state.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">Test:</span>
+                        <p className="ColorParagraf">
+                           {state.response.testTitle}
+                        </p>
+                     </div>
+                  )}
+               </ContainerUser>
+               <ContainerCkeckInTheTest>
+                  <div>
+                     <p className="TextTestQuestion ">Test Question </p>
+                     <ContainerTestQuestion>
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">Question Title:</span>
+                              <p className="ColorParagraf">
+                                 {' '}
+                                 {state.response.questionTitle}{' '}
+                              </p>
+                           </div>
+                        )}
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">
+                                 Duration (in minutes):
+                              </span>
+                              <span className="ColorParagraf">
+                                 {state.response.duration}{' '}
+                              </span>
+                           </div>
+                        )}
+                        {state.response && (
+                           <div className="FixedDisplay">
+                              <span className="ColorBlue">Question Type:</span>
+                              <p className="ColorParagraf">
+                                 {state.response.questionType}
+                              </p>
+                           </div>
+                        )}
+                     </ContainerTestQuestion>
+                  </div>
+                  <ContaineScore>
+                     <p>Evaluation</p>
+                     <div className="ContainerEvaluation">
+                        <p className="ColorBlue">Score:(1-10)</p>
+                        <InputNumber
+                           type="number"
+                           value={score}
+                           onChange={handleInputChange}
+                        />
+                     </div>
+                  </ContaineScore>
+               </ContainerCkeckInTheTest>
+               <ContainerImgQuestion>
+                  {state.response && (
+                     <BoxImg>
+                        <img
+                           src={state.response.audioFile}
+                           alt="img comes with props"
+                        />
+                     </BoxImg>
+                  )}
+                  <BoxCorrectAnswer>
+                     <p className="CarrentAnswer">Correct Answer:</p>
                      {state.response && (
-                        <BoxImg>
-                           <img
-                              src={state.response.audioFile}
-                              alt="img comes with props"
-                           />
-                        </BoxImg>
+                        <span>{state.response.correctAnswer}</span>
                      )}
-                     <BoxCorrectAnswer>
-                        <p className="CarrentAnswer">Correct Answer:</p>
-                        {state.response && (
-                           <span>{state.response.correctAnswer}</span>
-                        )}
-                     </BoxCorrectAnswer>
-                  </ContainerImgQuestion>
-                  <ContainerUserAnswer>
-                     <p className="TextUserAnswer">User’s Answer </p>
-                     <div className="statement-box">
-                        <span className="statement">Entered statement:</span>
-                        {state.response && (
-                           <p className="p">{state.response.respond}</p>
-                        )}
-                     </div>
-                  </ContainerUserAnswer>
-               </ContainerFlex>
-               <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
-                     GO BACK
-                  </Button>
-                  <Button
-                     onClick={postScore}
-                     defaultStyle="#2AB930"
-                     hoverStyle="#31CF38"
-                  >
-                     Save
-                  </Button>
-               </ContainerButtons>
-            </Background>
-         </Container>
-      </>
+                  </BoxCorrectAnswer>
+               </ContainerImgQuestion>
+               <ContainerUserAnswer>
+                  <p className="TextUserAnswer">User’s Answer </p>
+                  <div className="statement-box">
+                     <span className="statement">Entered statement:</span>
+                     {state.response && (
+                        <p className="p">{state.response.respond}</p>
+                     )}
+                  </div>
+
+                  {error && (
+                     <ErrorBox>
+                        An error occurred:
+                        {error.message || 'Unknown error'}
+                     </ErrorBox>
+                  )}
+               </ContainerUserAnswer>
+            </ContainerFlex>
+            <ContainerButtons>
+               <Button variant="outlined" hoverStyle="#3A10E5">
+                  GO BACK
+               </Button>
+               <Button
+                  onClick={postScore}
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+               >
+                  Save
+               </Button>
+            </ContainerButtons>
+         </Background>
+      </Container>
    )
 }
 
 export default DescribeImage
 
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
 const Container = styled('div')({
    display: 'flex',
    justifyContent: 'center',
@@ -141,6 +169,9 @@ const Container = styled('div')({
    '.imgReplace': {
       width: '100%',
       height: '100%',
+   },
+   '.ColorParagraf': {
+      color: '#4C4859',
    },
    '.ContainerEvaluation': {
       display: 'flex',
@@ -159,6 +190,20 @@ const Container = styled('div')({
       lineHeight: '1rem',
       color: '#4C4859 ',
       fontWeight: 400,
+   },
+})
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
    },
 })
 const InputNumber = styled('input')({
