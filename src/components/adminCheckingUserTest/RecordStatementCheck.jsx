@@ -6,20 +6,42 @@ import Button from '../UI/Buttons/Button'
 import Header from '../../layout/Header'
 import { Background } from '../../layout/Background'
 
-const RecordStatementCheck = ({
-   title,
-   duration,
-   questionType,
-   answer,
-   statement,
-}) => {
+const RecordStatementCheck = () => {
    const [score, setScore] = useState(7)
    const [isPlaying, setIsPlaying] = useState(false)
-   // const [audio, setAudio] = useState(null)
-   const audioRef = useRef(null)
-   // const playAudio = () => {
-   //    setIsPlaying((prev) => !prev)
-   // }
+   const [score, setScore] = useState()
+   const [state, setState] = useState({ response: null })
+   const [error, setError] = useState(null)
+   const getQuestionResult = async () => {
+      try {
+         const response = await axiosInstance.get(
+            '/result/getQuestionsResults?userId=1&questionId=7'
+         )
+         const allresult = response.data
+         setState({ response: allresult })
+      } catch (error) {
+         setError(error)
+      }
+   }
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId: 1,
+            questionId: 7,
+            score,
+         })
+      } catch (error) {
+         setError(error)
+      }
+   }
+   const handleInputChange = (e) => {
+      const value = parseInt(e.target.value, 10)
+      const clampedValue = Math.min(Math.max(value, 0), 10)
+      setScore(clampedValue)
+   }
+   useEffect(() => {
+      getQuestionResult()
+   }, [])
    const playAudio = () => {
       if (audioRef.current) {
          if (isPlaying) {
@@ -30,105 +52,99 @@ const RecordStatementCheck = ({
          setIsPlaying(!isPlaying)
       }
    }
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await fetch()
-            const data = await response.json()
-            const initialScoreFromBackend = data.score
-            setScore(initialScoreFromBackend)
-         } catch (error) {
-            console.error(error)
-         }
-      }
-      fetchData()
-   }, [])
-   // const fetchAudio = async () => {
-   //    try {
-   //       const response = await axios.get('your-audio-api-endpoint')
-   //       setAudioUrl(response.data.audioUrl)
-   //    } catch (error) {
-   //       console.error('Error fetching audio:', error)
-   //    }
-   // }
 
    return (
-      <>
-         <Header />
-         <Background marginTop="3rem" padding="0">
-            <Container>
-               <ContainerFlex>
-                  <ContainerCkeckInTheTest>
-                     <div>
-                        <p className="TextTestQuestion ">Test Question </p>
-                        <ContainerTestQuestion>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Title:</span>
-                              <p> {title} </p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Duration (in minutes):
-                              </span>
-                              <span>{duration} </span>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Type:</span>
-                              <p>{questionType}</p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Statement:</span>
-                              <p>{statement}</p>
-                           </div>
-                        </ContainerTestQuestion>
+      <Background marginTop="3rem" padding="0">
+         <Container>
+            <ContainerFlex>
+               <ContainerUser>
+                  {state.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">User:</span>
+                        <p className="ColorParagraf">
+                           {state.response.fullName}
+                        </p>
                      </div>
-                     <ContaineScore>
-                        <p>Evaluation</p>
-                        <div className="ContainerEvaluation">
-                           <p className="ColorBlue">Score:</p>
-                           <span>{score}</span>
+                  )}
+                  {state.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">Test:</span>
+                        <p className="ColorParagraf">
+                           {state.response.testTitle}
+                        </p>
+                     </div>
+                  )}
+               </ContainerUser>
+               <ContainerCkeckInTheTest>
+                  <div>
+                     <p className="TextTestQuestion ">Test Question </p>
+                     <ContainerTestQuestion>
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">Question Title:</span>
+                           <p> {title} </p>
                         </div>
-                     </ContaineScore>
-                  </ContainerCkeckInTheTest>
-                  <ContainerQuestion>
-                     <BoxPlay>
-                        {/* <audio ref={audioRef} src={audioUrl} /> */}
-                        <Button
-                           variant="contained"
-                           className="playButton"
-                           hoverStyle="#4E28E8"
-                           onClick={playAudio}
-                        >
-                           {isPlaying && audioFile ? (
-                              <div>
-                                 <PauseCircleOutlineIcon />
-                                 <span> STOP RECORDED AUDIO</span>
-                              </div>
-                           ) : (
-                              <BoxPlay>
-                                 <PlayCircleOutlineIcon />
-                                 <span>PLAY AUDIO</span>
-                              </BoxPlay>
-                           )}
-                        </Button>
-                     </BoxPlay>
-                     <BoxCorrectAnswer>
-                        <p className="p">Correct Answer:</p>
-                        <span>{answer}</span>
-                     </BoxCorrectAnswer>
-                  </ContainerQuestion>
-               </ContainerFlex>
-               <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
-                     GO BACK
-                  </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
-                     Save
-                  </Button>
-               </ContainerButtons>
-            </Container>
-         </Background>
-      </>
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">
+                              Duration (in minutes):
+                           </span>
+                           <span>{duration} </span>
+                        </div>
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">Question Type:</span>
+                           <p>{questionType}</p>
+                        </div>
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">Statement:</span>
+                           <p>{statement}</p>
+                        </div>
+                     </ContainerTestQuestion>
+                  </div>
+                  <ContaineScore>
+                     <p>Evaluation</p>
+                     <div className="ContainerEvaluation">
+                        <p className="ColorBlue">Score:</p>
+                        <span>{score}</span>
+                     </div>
+                  </ContaineScore>
+               </ContainerCkeckInTheTest>
+               <ContainerQuestion>
+                  <BoxPlay>
+                     {/* <audio ref={audioRef} src={audioUrl} /> */}
+                     <Button
+                        variant="contained"
+                        className="playButton"
+                        hoverStyle="#4E28E8"
+                        onClick={playAudio}
+                     >
+                        {isPlaying && audioFile ? (
+                           <div>
+                              <PauseCircleOutlineIcon />
+                              <span> STOP RECORDED AUDIO</span>
+                           </div>
+                        ) : (
+                           <BoxPlay>
+                              <PlayCircleOutlineIcon />
+                              <span>PLAY AUDIO</span>
+                           </BoxPlay>
+                        )}
+                     </Button>
+                  </BoxPlay>
+                  <BoxCorrectAnswer>
+                     <p className="p">Correct Answer:</p>
+                     <span>{answer}</span>
+                  </BoxCorrectAnswer>
+               </ContainerQuestion>
+            </ContainerFlex>
+            <ContainerButtons>
+               <Button variant="outlined" hoverStyle="#3A10E5">
+                  GO BACK
+               </Button>
+               <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  Save
+               </Button>
+            </ContainerButtons>
+         </Container>
+      </Background>
    )
 }
 export default RecordStatementCheck
