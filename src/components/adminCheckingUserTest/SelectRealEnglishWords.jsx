@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-// import { useDispatch } from 'react-redux'
 import { axiosInstance } from '../../config/axiosInstance'
 import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
@@ -8,40 +7,35 @@ import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
 
 const SelectRealEnglishWords = () => {
-   // const dispatch = useDispatch()
-   const [score] = useState(7)
    const [appState, setAppState] = useState({ response: null })
+   const [error, setError] = useState(null)
+
    const usetTestId = 1
    const getQuestionTest = async () => {
       try {
          const response = await axiosInstance.get(
             `/result/getQuestionsResults?userId=1&questionId=${usetTestId}`
          )
-         // dispatch(response)
          const allRepos = response.data
          setAppState({ response: allRepos })
       } catch (error) {
-         console.log(error)
+         setError(error)
       }
    }
 
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId: 1,
+            questionId: 1,
+         })
+      } catch (error) {
+         setError(error)
+      }
+   }
    useEffect(() => {
       getQuestionTest()
    }, [setAppState])
-
-   // useEffect(() => {
-   //    const fetchData = async () => {
-   //       try {
-   //          const response = await fetch()
-   //          const data = await response.json()
-   //          const initialScoreFromBackend = data.score
-   //          setScore(initialScoreFromBackend)
-   //       } catch (error) {
-   //          console.error(error)
-   //       }
-   //    }
-   //    fetchData()
-   // }, [])
 
    return (
       <>
@@ -49,6 +43,24 @@ const SelectRealEnglishWords = () => {
          <Container>
             <Background padding="0">
                <ContainerFlex>
+                  <ContainerUser>
+                     {appState.response && (
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">User:</span>
+                           <p className="ColorParagraf">
+                              {appState.response.fullName}
+                           </p>
+                        </div>
+                     )}
+                     {appState.response && (
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">Test:</span>
+                           <p className="ColorParagraf">
+                              {appState.response.testTitle}
+                           </p>
+                        </div>
+                     )}
+                  </ContainerUser>
                   <ContainerCkeckInTheTest>
                      <div>
                         <p className="TextTestQuestion">Test Question </p>
@@ -58,7 +70,9 @@ const SelectRealEnglishWords = () => {
                                  <span className="ColorBlue">
                                     Question Title:
                                  </span>
-                                 <p>{appState.response.questionTitle}</p>
+                                 <p className="ColorParagraf">
+                                    {appState.response.questionTitle}
+                                 </p>
                               </div>
                            )}
                            {appState.response && (
@@ -66,7 +80,9 @@ const SelectRealEnglishWords = () => {
                                  <span className="ColorBlue">
                                     Duration (in minutes):
                                  </span>
-                                 <span>{appState.response.duration}</span>
+                                 <span className="ColorParagraf">
+                                    {appState.response.duration}
+                                 </span>
                               </div>
                            )}
                            {appState.response && (
@@ -74,7 +90,9 @@ const SelectRealEnglishWords = () => {
                                  <span className="ColorBlue">
                                     Question Type:
                                  </span>
-                                 <p>{appState.response.questionType}</p>
+                                 <p className="ColorParagraf">
+                                    {appState.response.questionType}
+                                 </p>
                               </div>
                            )}
                         </ContainerTestQuestion>
@@ -83,7 +101,9 @@ const SelectRealEnglishWords = () => {
                         <p>Evaluation</p>
                         <div className="ContainerEvaluation">
                            <p className="ColorBlue">Score:</p>
-                           <span>{score}</span>
+                           {appState.response && (
+                              <span>{appState.response.score}</span>
+                           )}
                         </div>
                      </ContaineScore>
                   </ContainerCkeckInTheTest>
@@ -100,7 +120,10 @@ const SelectRealEnglishWords = () => {
                                  </MainContainer>
                               </div>
                               <div className="InputDelete">
-                                 <InputRadio variant="CHECKBOX" />
+                                 <InputRadio
+                                    variant="CHECKBOX"
+                                    checkedSwitch={el.isTrue}
+                                 />
                               </div>
                            </CreateTest>
                         ))}
@@ -119,6 +142,13 @@ const SelectRealEnglishWords = () => {
                               </CreateAnswerTest>
                            ))}
                      </div>
+
+                     {error && (
+                        <ErrorBox>
+                           An error occurred:
+                           {error.message || 'Unknown error'}
+                        </ErrorBox>
+                     )}
                   </ContainerCreateAnswerTest>
                </ContainerFlex>
                <ContainerButtons>
@@ -128,7 +158,7 @@ const SelectRealEnglishWords = () => {
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={getQuestionTest}
+                     onClick={postScore}
                   >
                      Save
                   </Button>
@@ -169,6 +199,13 @@ const Container = styled('div')({
       width: '45px',
       height: '10px',
    },
+   '.ColorParagraf': {
+      color: '#4C4859',
+   },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
 })
 const ContaineScore = styled('div')({
    display: 'flex',
@@ -185,6 +222,21 @@ const ContainerFlex = styled('div')({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'start',
+   gap: '3.13rem',
+})
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
+   },
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
