@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material'
+import { useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Modal } from '../../UI/UiModal'
 import { InputRadio } from '../../UI/InputRadio'
 import Button from '../../UI/Buttons/Button'
 import { CancelModal } from '../../../assets'
+import { postOption } from '../../../store/questions/questionsThunk'
 
 const OptionModal = ({
    open,
@@ -13,8 +16,20 @@ const OptionModal = ({
 }) => {
    const [checked, setIsTrueOption] = useState(false)
    const [title, setTitle] = useState('')
+   const dispatch = useDispatch()
+   const { pathname } = useLocation()
+
+   const updateUrl =
+      pathname === '/admin/update-question/select-real-english-words'
 
    const handleSave = () => {
+      if (updateUrl) {
+         const option = {
+            title,
+            isTrue: checked,
+         }
+         dispatch(postOption(option))
+      }
       if (title) {
          handleSaveOption(title, checked)
          setTitle('')

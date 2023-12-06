@@ -1,34 +1,47 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../config/axiosInstance'
+import Notify from '../../components/UI/Notifay'
 
 export const postHighlightAnswer = createAsyncThunk(
    'post/highlightAnswer',
-   async (result, { rejectWithValue, getState }) => {
+   async (result, { getState }) => {
       try {
          const testId = getState().createTestSlice?.testID
-         const response = axiosInstance.post(
-            `/questions?testId=${testId}&questionType=HIGHLIGHT_THE_ANSWER`,
-            result
+         Notify(
+            {
+               sucessTitle: 'Question saved ',
+               successMessage: 'Successfully saved',
+               errorTitle: 'Error',
+            },
+            axiosInstance.post(
+               `/questions?testId=${testId}&questionType=HIGHLIGHT_THE_ANSWER`,
+               result
+            )
          )
-         return response.data
       } catch (error) {
-         return rejectWithValue(error)
+         console.log(error)
       }
    }
 )
 
 export const postRecordStatement = createAsyncThunk(
    'post/statement',
-   async (result, { rejectWithValue, getState }) => {
+   async (result, { getState }) => {
       try {
          const testId = getState().createTestSlice?.testID
-         const response = axiosInstance.post(
-            `/questions?testId=${testId}&questionType=RECORD_SAYING_STATEMENT`,
-            result
+         Notify(
+            {
+               sucessTitle: 'Question saved ',
+               successMessage: 'Successfully saved',
+               errorTitle: 'Error',
+            },
+            axiosInstance.post(
+               `/questions?testId=${testId}&questionType=RECORD_SAYING_STATEMENT`,
+               result
+            )
          )
-         return response.data
       } catch (error) {
-         return rejectWithValue(error)
+         console.log(error)
       }
    }
 )
