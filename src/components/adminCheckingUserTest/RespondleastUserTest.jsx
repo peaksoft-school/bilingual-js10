@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Header from '../../layout/Header'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
-import Input from '../UI/Input'
+import { axiosInstance } from '../../config/axiosInstance'
 
 const answers = [
    {
@@ -12,98 +11,215 @@ const answers = [
    },
 ]
 
-const RespondleastUserTest = ({
-   MinimumNumberWords,
-   NumberOfWords,
-   statement,
-   title,
-   duration,
-   questionType,
-}) => {
+const RespondleastUserTest = () => {
+   const [appState, setAppState] = useState({ response: null })
+   const [error, setError] = useState(null)
+
+   const usetTestId = 6
+   const getQuestionTest = async () => {
+      try {
+         const response = await axiosInstance.get(
+            `/result/getQuestionsResults?userId=1&questionId=${usetTestId}`
+         )
+         const allRepos = response.data
+         setAppState({ response: allRepos })
+      } catch (error) {
+         setError(error)
+      }
+   }
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId: 1,
+            questionId: 1,
+         })
+      } catch (error) {
+         setError(error)
+      }
+   }
+   useEffect(() => {
+      getQuestionTest()
+   }, [setAppState])
+
    const handleInputChange = (e) => {
       const value = parseInt(e.target.value, 10)
       const clampedValue = Math.min(Math.max(value, 0), 10)
       e.target.value = clampedValue
    }
    return (
-      <>
-         <Header />
-         <Container>
-            <Background>
+      <Container>
+         <Background>
+            <ContainerMain>
+               <ContainerUser>
+                  {appState.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">User:</span>
+                        <p className="ColorText">
+                           {appState.response.fullName}
+                        </p>
+                     </div>
+                  )}
+                  {appState.response && (
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">Test:</span>
+                        <p className="ColorText">
+                           {appState.response.testTitle}
+                        </p>
+                     </div>
+                  )}
+               </ContainerUser>
                <ContainerCkeckInTheTest>
                   <div>
                      <p className="TextTestQuestion ">Test Question </p>
                      <ContainerTestQuestion>
                         <div className="FixedDisplay">
                            <span className="ColorBlue">Question Title:</span>
-                           <p> {title} </p>
+                           {appState.response && (
+                              <p className="ColorText">
+                                 {appState.response.questionTitle}
+                              </p>
+                           )}
                         </div>
                         <div className="FixedDisplay">
                            <span className="ColorBlue">
                               Duration (in minutes):
                            </span>
-                           <span>{duration} </span>
+                           {appState.response && (
+                              <span className="ColorText">
+                                 {appState.response.duration}
+                              </span>
+                           )}
                         </div>
                         <div className="FixedDisplay">
                            <span className="ColorBlue">Question Type:</span>
-                           <p>{questionType}</p>
+                           {appState.response && (
+                              <p className="ColorText">
+                                 {appState.response.questionType}
+                              </p>
+                           )}
                         </div>
-                        <div>
+                        <div className="FixedDisplay">
                            <span className="ColorBlue">
                               Mimimum number of words:
                            </span>
-                           <p>{MinimumNumberWords}</p>
+                           {appState.response && (
+                              <p className="ColorText">
+                                 {appState.response.attempts}
+                              </p>
+                           )}
                         </div>
-                        <div>
+                        <div className="FixedDisplay">
                            <span className="ColorBlue">
                               Question Statement:
                            </span>
-                           <p>{statement}</p>
+                           {appState.response && (
+                              <p className="ColorText">
+                                 {appState.response.statement}
+                              </p>
+                           )}
                         </div>
                      </ContainerTestQuestion>
                   </div>
-
                   <ContaineScore>
                      <p>Evaluation</p>
                      <div className="ContainerEvaluation">
                         <p className="ColorBlue">Score:(1-10)</p>
-                        <Input type="number" onChange={handleInputChange} />
+                        <InputNumber
+                           type="number"
+                           onChange={handleInputChange}
+                        />
                      </div>
                   </ContaineScore>
                </ContainerCkeckInTheTest>
-               <div className="ContainerTitleMap">
-                  <p className="TextUserAnswer">User’s Answer </p>
-                  {answers.map((el) => (
-                     <CreateAnswerTest key={el.id}>
-                        <p>Respond: </p>
-                        <div className="TitleText">
-                           <p>{el.title}</p>
-                        </div>
-                     </CreateAnswerTest>
-                  ))}
-               </div>
-               <div className="TextUserAnswer">
-                  <span>Number of words:</span>
-                  <p>{NumberOfWords}</p>
-               </div>
-               <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
-                     GO BACK
-                  </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
-                     Save
-                  </Button>
-               </ContainerButtons>
-            </Background>
-         </Container>
-      </>
+            </ContainerMain>
+            <div className="ContainerTitleMap">
+               <p className="TextUserAnswer">User’s Answer </p>
+               {answers.map((el) => (
+                  <CreateAnswerTest key={el.id}>
+                     <p>Respond: </p>
+                     <div className="TitleText">
+                        <p>{el.title}</p>
+                     </div>
+                  </CreateAnswerTest>
+               ))}
+            </div>
+            <div className="TextUserAnswer">
+               <span>Number of words:</span>
+               {appState.response && <p>{appState.response.attempts}</p>}
+            </div>
+            {error && (
+               <ErrorBox>
+                  An error occurred:
+                  {error.message || 'Unknown error'}
+               </ErrorBox>
+            )}
+            <ContainerButtons>
+               <Button variant="outlined" hoverStyle="#3A10E5">
+                  GO BACK
+               </Button>
+               <Button
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+                  onClick={postScore}
+               >
+                  Save
+               </Button>
+            </ContainerButtons>
+         </Background>
+      </Container>
    )
 }
 
 export default RespondleastUserTest
-
+const InputNumber = styled('input')({
+   marginTop: '6px',
+   width: '5.8rem',
+   height: '2.8rem',
+   borderRadius: '9px',
+   border: '2px solid rgba(196, 196, 196, 0.60)',
+   outline: 'none',
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   textAlign: 'center',
+   fontSize: '1.2rem',
+   color: '#4C4859',
+   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+   },
+   '&[type=number]': {
+      '-moz-appearance': 'textfield',
+   },
+   '&:focus': {
+      border: '2px solid rgba(196, 196, 196, 0.60)',
+   },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
+const ContainerMain = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '3.12rem',
+})
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
+   },
+})
 const Container = styled('div')({
-   marginTop: '4.25rem',
+   marginTop: '1.25rem',
    '.TextUserAnswer': {
       color: '#4C4859',
       fontSize: '1.125rem',
@@ -133,6 +249,9 @@ const Container = styled('div')({
       display: 'flex',
       flexDirection: 'column',
       gap: '14px',
+   },
+   '.ColorText': {
+      color: '#4C4859',
    },
 })
 const ContaineScore = styled('div')({
