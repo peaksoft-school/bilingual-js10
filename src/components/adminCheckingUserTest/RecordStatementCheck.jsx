@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material'
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
@@ -11,7 +11,7 @@ const RecordStatementCheck = () => {
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
-   const audioRef = React.createRef()
+   const audioRef = useRef(new Audio())
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
@@ -19,21 +19,28 @@ const RecordStatementCheck = () => {
          )
          const allresult = response.data
          setState({ response: allresult })
-         console.log(response.data.audioFile)
       } catch (error) {
          setError(error)
       }
    }
+
    const playAudio = () => {
-      if (audioRef.current) {
+      if (state.response && state.response.audioFile) {
+         const audio = audioRef.current
+         audio.src = state.response.audioFile
+
          if (isPlaying) {
-            audioRef.current.pause()
+            audio.pause()
          } else {
-            audioRef.current.play()
+            audio.play().catch((error) => {
+               console.error('Error playing audio:', error)
+            })
          }
+
+         setIsPlaying((prev) => !prev)
       }
-      setIsPlaying((prev) => !prev)
    }
+
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
@@ -135,35 +142,19 @@ const RecordStatementCheck = () => {
                         hoverStyle="#4E28E8"
                         onClick={playAudio}
                      >
-                        {state.response && (
-                           <div>
-                              {isPlaying && state.response.audioFile ? (
-                                 <AudioBoxPlay>
-                                    <PauseCircleOutlineIcon />
-                                    <span>STOP RECORDED AUDIO</span>
-                                 </AudioBoxPlay>
-                              ) : (
-                                 <AudioBoxPlay>
-                                    <PlayCircleOutlineIcon />
-                                    <span>PLAY AUDIO</span>
-                                 </AudioBoxPlay>
-                              )}
-                           </div>
-                        )}
-                        {isPlaying && state.response && (
-                           <audio className="audio" ref={audioRef} controls>
-                              <source
-                                 src={state.response.audioFile}
-                                 type="audio/mpeg"
-                              />
-                              <track
-                                 kind="captions"
-                                 src="captions.vtt"
-                                 label="English"
-                                 default
-                              />
-                           </audio>
-                        )}
+                        <div>
+                           {isPlaying ? (
+                              <AudioBoxPlay>
+                                 <PauseCircleOutlineIcon />
+                                 <span>STOP RECORDED AUDIO</span>
+                              </AudioBoxPlay>
+                           ) : (
+                              <AudioBoxPlay>
+                                 <PlayCircleOutlineIcon />
+                                 <span>PLAY AUDIO</span>
+                              </AudioBoxPlay>
+                           )}
+                        </div>
                      </Button>
                   </BoxPlay>
                   {state.response && (
