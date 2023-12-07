@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-// import { AppRoutes } from './routes/AppRoutes'
-import SelectTheBestTitle from './components/adminCheckingUserTest/SelectTheBestTitle'
+import { AppRoutes } from './routes/AppRoutes'
 
 function App() {
    const dispatch = useDispatch()
@@ -28,8 +27,7 @@ function App() {
 
    return (
       <div>
-         {/* <AppRoutes /> */}
-         <SelectTheBestTitle />
+         <AppRoutes />
       </div>
    )
 }
