@@ -9,14 +9,16 @@ import {
    Paper,
    styled,
 } from '@mui/material'
+import { useSelector } from 'react-redux'
 
-export const Table = ({ data, columns }) => {
+export const Table = ({ data, columns, columnGap, rowGap }) => {
+   const { questions } = useSelector((state) => state.questionSlice)
    return (
       <Container>
          <TableContainerStyled component={Paper}>
             <MuiTableStyled>
                <TableHead>
-                  <TableRowColumns>
+                  <TableRowColumns columnGap={columnGap}>
                      {questions.length === 0 && data.length === 0 ? (
                         <p>There s no one here yet</p>
                      ) : (
@@ -30,7 +32,7 @@ export const Table = ({ data, columns }) => {
                   <MainContainerStyled>
                      {Array.isArray(data) &&
                         data.map((row, i) => (
-                           <TableRowData key={row.id}>
+                           <TableRowData rowGap={rowGap} key={row.id}>
                               {i + 1}
                               {columns?.map((column) => {
                                  if (column.render) {
@@ -97,7 +99,6 @@ const MainContainerStyled = styled('div')`
    align-items: center;
    justify-content: space-around;
    flex-direction: column;
-   gap: 1rem;
    margin-right: 2rem;
    && .css-txc5l5-MuiTableCell-root {
       border: none;
@@ -118,23 +119,24 @@ const MuiTableStyled = styled(MuiTable)(() => ({
    justifyContent: 'space-around',
    flexDirection: 'column',
 }))
-const TableRowColumns = styled(TableRow)(() => ({
+const TableRowColumns = styled(TableRow)((props) => ({
    width: '100%',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'space-around',
-   columnGap: '60px',
+   columnGap: props.columnGap || '60px',
 }))
-const TableRowData = styled(TableRow)(() => ({
-   boxShadow: '0px 3px 2px 3px rgba(34, 60, 80, 0.24)',
+const TableRowData = styled(TableRow)((props) => ({
+   boxShadow:
+      ' 0px 4px 10px 0px rgba(0, 0, 0, 0.06), 0px -4px 10px 0px rgba(0, 0, 0, 0.06);',
    borderRadius: '0.5rem',
    width: '58vw',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'space-around',
-   gap: '2rem',
+   gap: props.rowGap || '2rem',
    marginLeft: '1rem',
    marginBottom: '1rem',
 }))

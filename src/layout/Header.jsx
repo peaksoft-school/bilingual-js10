@@ -4,7 +4,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 
-const Header = ({ roles = 'guest' }) => {
+const Header = ({ roles = 'guest', marginBottom }) => {
    const navigate = useNavigate()
    const { pathname } = useLocation()
    const handleComeInClick = () => {
@@ -15,7 +15,7 @@ const Header = ({ roles = 'guest' }) => {
       navigate('/signup')
    }
    return (
-      <MyHeader>
+      <MyHeader marginBottom={marginBottom}>
          <LogoBox>
             <Logo />
          </LogoBox>
@@ -46,7 +46,7 @@ const Header = ({ roles = 'guest' }) => {
                            ? { color: 'blue' }
                            : { color: '#4C4859' }
                      }
-                     to={roles === 'user' ? '/user' : '/'}
+                     to={roles === 'user' ? '/user' : '/admin'}
                   >
                      <MyText>Tests</MyText>
                   </HeaderLink>
@@ -64,7 +64,7 @@ const Header = ({ roles = 'guest' }) => {
                         <MyText>My Results</MyText>
                      </HeaderLink>
                   ) : (
-                     <HeaderLink to="/">
+                     <HeaderLink to="/admin/users-answers">
                         <MyText>Submitted Results</MyText>
                      </HeaderLink>
                   )}
@@ -89,14 +89,15 @@ const ButtonsContainer = styled('div')(() => ({
    display: 'flex',
    columnGap: '24px',
 }))
-const MyHeader = styled('header')({
+const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',
    height: '15vh',
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
    backgroundColor: '#ffff',
-})
+   marginBottom: marginBottom || null,
+}))
 const LogoBox = styled('div')({
    position: 'sticky',
    top: '1.2rem',

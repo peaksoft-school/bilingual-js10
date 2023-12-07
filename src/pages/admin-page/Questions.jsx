@@ -47,7 +47,6 @@ export const Questions = ({ testID }) => {
       navigate('/admin/custom-form')
    }
    const columns = [
-      { id: 'row_number', label: '#' },
       {
          id: 'title',
          label: 'Name',
@@ -62,7 +61,7 @@ export const Questions = ({ testID }) => {
       },
       {
          id: 'Score',
-         label: <StyledLabel>ffffffffffffff</StyledLabel>,
+         label: <StyledLabel>o</StyledLabel>,
          render: (item) => {
             return (
                <Container>
