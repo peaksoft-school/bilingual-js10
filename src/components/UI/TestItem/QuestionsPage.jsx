@@ -62,4 +62,12 @@ const Title = styled('div')`
    & .Description + span {
       color: #4c4859;
    }
+   & .Duration {
+      color: #3752b4;
+      font-weight: 500;
+      font-size: 16px;
+   }
+   & .Duration + span {
+      color: #4c4859;
+   }
 `

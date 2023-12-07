@@ -49,7 +49,9 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                <OptionsBlock>
                   <HeaderLink
                      style={
-                        pathname === '/user' || pathname === '/admin'
+                        pathname === '/user' ||
+                        pathname === '/admin' ||
+                        pathname === '/admin/QuestionsPage'
                            ? { color: 'blue' }
                            : { color: '#4C4859' }
                      }
@@ -73,7 +75,8 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   ) : (
                      <HeaderLink
                         style={
-                           pathname === '/admin/users-answers'
+                           pathname === '/admin/users-answers' ||
+                           pathname === '/admin/user-responses'
                               ? { color: 'blue' }
                               : { color: '#4C4859' }
                         }

@@ -9,9 +9,14 @@ import {
    Paper,
    styled,
 } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { answersSlice } from '../../store/checkTestSlices/answers-slice'
 
 export const Table = ({ data, columns, columnGap, rowGap }) => {
+   const dispatch = useDispatch()
+   const handleCheck = (id) => {
+      dispatch(answersSlice.actions.addQuestionId(id))
+   }
    const { questions } = useSelector((state) => state.questionSlice)
    return (
       <Container>
@@ -19,7 +24,7 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
             <MuiTableStyled>
                <TableHead>
                   <TableRowColumns columnGap={columnGap}>
-                     {questions.length === 0 && data.length === 0 ? (
+                     {questions?.length === 0 && data?.length === 0 ? (
                         <p>There s no one here yet</p>
                      ) : (
                         columns?.map((column) => (
@@ -32,7 +37,11 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                   <MainContainerStyled>
                      {Array.isArray(data) &&
                         data.map((row, i) => (
-                           <TableRowData rowGap={rowGap} key={row.id}>
+                           <TableRowData
+                              rowGap={rowGap}
+                              key={row.id}
+                              onClick={() => handleCheck(row.id)}
+                           >
                               {i + 1}
                               {columns?.map((column) => {
                                  if (column.render) {

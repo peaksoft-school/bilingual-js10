@@ -60,7 +60,7 @@ export const UserAnswers = () => {
          label: 'Status',
          render: (row) => {
             const statusText =
-               row.checked === true ? 'Evaluated' : 'Not evaluated'
+               row.checked === true ? 'Evalauted' : 'Not evalauted'
             const color = row.checked === true ? '#2AB930' : '#F61414'
             return <p style={{ color }}>{statusText}</p>
          },
@@ -81,11 +81,8 @@ export const UserAnswers = () => {
                      <Eye
                         style={{ cursor: 'pointer' }}
                         onClick={() => {
-                           const data = {
-                              userId: row.userId,
-                              testId: row.testId,
-                           }
-                           dispatch(answersSlice.actions.addUserData(data))
+                           dispatch(answersSlice.actions.addUserId(row.userId))
+                           dispatch(answersSlice.actions.addTestId(row.testId))
                            navigate('/admin/user-responses')
                         }}
                      />
