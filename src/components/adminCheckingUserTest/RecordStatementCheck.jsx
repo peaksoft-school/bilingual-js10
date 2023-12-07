@@ -19,6 +19,7 @@ const RecordStatementCheck = () => {
          )
          const allresult = response.data
          setState({ response: allresult })
+         console.log(response.data.audioFile)
       } catch (error) {
          setError(error)
       }
@@ -137,15 +138,15 @@ const RecordStatementCheck = () => {
                         {state.response && (
                            <div>
                               {isPlaying && state.response.audioFile ? (
-                                 <div>
+                                 <AudioBoxPlay>
                                     <PauseCircleOutlineIcon />
-                                    <span> STOP RECORDED AUDIO</span>
-                                 </div>
+                                    <span>STOP RECORDED AUDIO</span>
+                                 </AudioBoxPlay>
                               ) : (
-                                 <div>
+                                 <AudioBoxPlay>
                                     <PlayCircleOutlineIcon />
                                     <span>PLAY AUDIO</span>
-                                 </div>
+                                 </AudioBoxPlay>
                               )}
                            </div>
                         )}
@@ -315,6 +316,12 @@ const BoxPlay = styled('div')({
    flexDirection: 'row',
    gap: '0.5rem',
 })
+const AudioBoxPlay = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   gap: '0.7rem',
+})
+
 const BoxCorrectAnswer = styled('div')({
    display: 'flex',
    flexDirection: 'row',
