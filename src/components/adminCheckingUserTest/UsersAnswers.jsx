@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import { Table } from './components/components/table/Table'
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { Check, Eye, TrashCan } from '../../assets'
 import { Table } from '../table/Table'
 import { axiosInstance } from '../../config/axiosInstance'
@@ -11,6 +12,7 @@ import { answersSlice } from '../../store/checkTestSlices/answers-slice'
 export const UserAnswers = () => {
    const [data, setData] = useState([])
    const dispatch = useDispatch()
+   const navigate = useNavigate()
 
    const result = async () => {
       try {
@@ -84,6 +86,7 @@ export const UserAnswers = () => {
                               testId: row.testId,
                            }
                            dispatch(answersSlice.actions.addUserData(data))
+                           navigate('/admin/user-responses')
                         }}
                      />
                   ) : (

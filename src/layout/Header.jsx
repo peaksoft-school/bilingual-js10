@@ -1,11 +1,14 @@
 import { Typography, styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import React from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
+import { authActions } from '../store/auth/authSlice'
 
 const Header = ({ roles = 'guest', marginBottom }) => {
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const { pathname } = useLocation()
    const handleComeInClick = () => {
       navigate('/signin')
@@ -14,6 +17,10 @@ const Header = ({ roles = 'guest', marginBottom }) => {
    const handleLoginClick = () => {
       navigate('/signup')
    }
+   const handleLogout = () => {
+      dispatch(authActions.logout(navigate))
+   }
+
    return (
       <MyHeader marginBottom={marginBottom}>
          <LogoBox>
@@ -42,7 +49,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                <OptionsBlock>
                   <HeaderLink
                      style={
-                        pathname === '/user'
+                        pathname === '/user' || pathname === '/admin'
                            ? { color: 'blue' }
                            : { color: '#4C4859' }
                      }
@@ -64,7 +71,14 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                         <MyText>My Results</MyText>
                      </HeaderLink>
                   ) : (
-                     <HeaderLink to="/admin/users-answers">
+                     <HeaderLink
+                        style={
+                           pathname === '/admin/users-answers'
+                              ? { color: 'blue' }
+                              : { color: '#4C4859' }
+                        }
+                        to="/admin/users-answers"
+                     >
                         <MyText>Submitted Results</MyText>
                      </HeaderLink>
                   )}
@@ -75,6 +89,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                      variant="outlined"
                      defaultStyle="white"
                      hoverStyle="blue"
+                     onClick={handleLogout}
                   >
                      <MyText>Log out</MyText>
                   </Button>
