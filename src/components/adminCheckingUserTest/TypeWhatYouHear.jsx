@@ -1,55 +1,131 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import { Background } from '../../layout/Background'
-import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
 import { PlayAudio, StopRecordingAudio } from '../../assets'
+import { getResult, sendingResult } from '../../api/questionsService'
 
-export const TypeWhatYouHear = ({ title, duration, questionType }) => {
+export const TypeWhatYouHear = () => {
    const [isRecording, setRecording] = useState(false)
-   const handleButtonClick = () => {
-      // Toggle
-      setRecording(!isRecording)
+   const [audio, setAudio] = useState(null)
+   const [questionData, setQuestionData] = useState({})
+   const [inputValue, setInputValue] = useState('')
+
+   const handleInputChange = (e) => {
+      const newValue = Math.min(parseInt(e.target.value, 10), 10)
+      setInputValue(newValue)
    }
+   const handleButtonClick = () => {
+      if (isRecording) {
+         setRecording(false)
+         if (audio) {
+            audio.pause()
+         }
+      } else {
+         setRecording(true)
+         const newAudio = new Audio(questionData?.audioFile)
+         newAudio.onloadeddata = () => {
+            newAudio.play()
+         }
+         setAudio(newAudio)
+      }
+   }
+   const handleSaveButtonClick = () => {
+      const data = {
+         userId: 1,
+         questionId: 3,
+         score: inputValue,
+      }
+
+      sendingResult(data)
+         .then((response) => {
+            console.log('Отправленный score:', data.score)
+            console.log('Результат успешно', response.data)
+         })
+         .catch((error) => {
+            console.error('Ошибка', error)
+         })
+   }
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await getResult()
+            setQuestionData(response.data)
+         } catch (error) {
+            console.error('Error fetching data:', error)
+         }
+      }
+      fetchData()
+   }, [])
+   const {
+      questionTitle,
+      questionType,
+      correctAnswer,
+      respond,
+      attempts,
+      count,
+      fullName,
+      testTitle,
+      duration,
+   } = questionData
    return (
-      <>
-         <Header />
+      <div>
          <Container>
             <Background>
                <ContainerFlex>
                   <ContainerCkeckInTheTest>
                      <div>
-                        <p className="TextTestQuestion ">Test Question </p>
                         <ContainerTestQuestion>
                            <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Title:</span>
-                              <p> {title} </p>
+                              <span className="ColorBlue">User: </span>
+                              <Text>{fullName}</Text>
                            </div>
+
                            <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Duration (in minutes):
-                              </span>
-                              <span>{duration} </span>
+                              <span className="ColorBlue">Test: </span>
+                              <Text> {testTitle}</Text>
                            </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Type:</span>
-                              <p>{questionType}</p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Minimum number of words:
-                              </span>
-                              <p>{}</p>
+                           <div style={{ marginTop: '3rem' }}>
+                              <p className="TextTestQuestion ">Test Question</p>
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Title:
+                                 </span>
+                                 <Text> {questionTitle} </Text>
+                              </div>
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Duration (in minutes):
+                                 </span>
+                                 <Text>{duration} </Text>
+                              </div>
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Type:
+                                 </span>
+                                 <Text>{questionType}</Text>
+                              </div>
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Number of Replays:
+                                 </span>
+                                 <Text>{attempts}</Text>
+                              </div>
                            </div>
                         </ContainerTestQuestion>
                      </div>
-
                      <ContaineScore>
                         <p>Evaluation</p>
                         <div className="ContainerEvaluation">
                            <p className="ColorBlue">Score:(1-10)</p>
                         </div>
-                        <InputNumber type="number" min="0" max="10" />
+                        <InputNumber
+                           type="number"
+                           min="0"
+                           max="10"
+                           value={inputValue}
+                           onChange={handleInputChange}
+                        />
                      </ContaineScore>
                   </ContainerCkeckInTheTest>
                   <ContainerButton>
@@ -61,28 +137,36 @@ export const TypeWhatYouHear = ({ title, duration, questionType }) => {
                         {isRecording ? <StopRecordingAudio /> : <PlayAudio />}
                         {isRecording ? 'STOP RECORDED AUDIO' : 'PLAY AUDIO'}
                      </Button>
-                     <span style={{ color: '#4C4859' }}>
-                        Correct answer: “Hello, how is it going?”
-                     </span>
+                     <Text>{correctAnswer}</Text>
                   </ContainerButton>
 
                   <ContainerCreateAnswerTest>
                      <p className="TextUserAnswer">User’s Answer</p>
-                     <p className="TextUserAnswer">Entered Statement: {}</p>
-                     <p className="TextUserAnswer"> Number of plays: {}</p>
+                     <div className="FixedDisplay">
+                        <span className="TextUserAnswer">
+                           Entered Statement:{' '}
+                        </span>
+                        <Text>{respond}</Text>
+                     </div>
+
+                     <p className="TextUserAnswer"> Number of plays: {count}</p>
                   </ContainerCreateAnswerTest>
                </ContainerFlex>
                <ContainerButtons>
                   <Button variant="outlined" hoverStyle="#3A10E5">
                      GO BACK
                   </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     onClick={handleSaveButtonClick}
+                  >
                      Save
                   </Button>
                </ContainerButtons>
             </Background>
          </Container>
-      </>
+      </div>
    )
 }
 const InputNumber = styled('input')({
@@ -92,6 +176,18 @@ const InputNumber = styled('input')({
    borderRadius: '9px',
    border: '2px solid rgba(196, 196, 196, 0.60)',
    outline: 'none',
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   textAlign: 'center',
+   fontSize: '1.2rem',
+   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+   },
+   '&[type=number]': {
+      '-moz-appearance': 'textfield',
+   },
    '&:focus': {
       border: '2px solid rgba(196, 196, 196, 0.60)',
    },
@@ -102,7 +198,9 @@ const ContainerButton = styled('div')({
    gap: '1.7rem',
    marginTop: '2.6rem',
 })
-
+const Text = styled('span')({
+   color: '#4C4859',
+})
 const Container = styled('div')({
    display: 'flex',
    justifyContent: 'center',
@@ -114,7 +212,6 @@ const Container = styled('div')({
       color: '#4C4859',
       fontSize: '1.125rem',
       fontWeight: 500,
-      paddingTop: '0.7rem',
    },
    '.TextTestQuestion': {
       color: '#4C4859',
@@ -136,11 +233,10 @@ const Container = styled('div')({
 const ContaineScore = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   marginRight: '3.2rem',
+   marginTop: '6.5rem',
    '.rightAnswer': {
       color: 'green',
       fontWeight: 500,
-      paddingLeft: '10px',
    },
 })
 const ContainerFlex = styled('div')({
@@ -167,15 +263,19 @@ const ContainerTestQuestion = styled('div')({
    justifyContent: 'center',
    alignItems: 'start',
    fontWeight: 500,
-   gap: '0.5rem',
    '.FixedDisplay': {
       display: 'flex',
       textAlign: 'center',
+      gap: '6px',
+      marginTop: '0.5rem',
    },
 })
 
 const ContainerCreateAnswerTest = styled('div')({
    marginTop: '2.4rem',
+   gap: '0.5rem',
+   display: 'flex',
+   flexDirection: 'column',
 })
 
 const ContainerButtons = styled('div')(() => ({

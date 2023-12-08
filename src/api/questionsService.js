@@ -1,11 +1,8 @@
 import { axiosInstance } from '../config/axiosInstance'
 
-export const getAllTests = (id) => {
-   return axiosInstance.get(`/questions?questionId=${id}`)
+export const getResult = () => {
+   return axiosInstance.get('/result/getQuestionsResults?userId=1&questionId=3')
 }
-
-export const getTestById = (id) => {
-   return axiosInstance.get(
-      `/questions/getOptionsByQuestionId?questionId=${id}`
-   )
+export const sendingResult = () => {
+   return axiosInstance.post('/result')
 }
