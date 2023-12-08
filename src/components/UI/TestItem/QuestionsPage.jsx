@@ -22,8 +22,8 @@ const QuestionsPage = () => {
                return (
                   <Title key={test?.id}>
                      <Typography>
-                        <span className="title">Title:</span>
-                        <span>{test?.title}</span>
+                        <span className="title">Title: </span>
+                        <span> {test?.title}</span>
                      </Typography>
                      <Typography>
                         <span className="Description">Description: </span>
