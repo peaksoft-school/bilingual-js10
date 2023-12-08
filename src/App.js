@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-import { AppRoutes } from './routes/AppRoutes'
+import { RespondLeast } from './components/adminTest/respondLeast/RespondLeast'
+// import { AppRoutes } from './routes/AppRoutes'
 // import { PassTest } from './pages/passTest/PassTest'
 // import LandingPage from './pages/LandingPage'
 
@@ -15,6 +16,7 @@ function App() {
       const userInfo = JSON.parse(
          localStorage.getItem(USER_KEY.BILINGUAL_USER_KEY)
       )
+
       if (userInfo) {
          const authorizedUserCredentials = {
             token: userInfo.token,
@@ -29,10 +31,12 @@ function App() {
 
    return (
       <div>
-         <AppRoutes />
+         <RespondLeast />
+         {/* <AppRoutes /> */}
          {/* <PassTest /> */}
          {/* <LandingPage /> */}
       </div>
    )
 }
+
 export default App

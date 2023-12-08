@@ -79,8 +79,6 @@ export default TestList
 
 const PurpleBackground = styled('div')({
    backgroundColor: '#D7E1F8',
-   height: '100vh',
-   width: '100vw',
    display: 'flex',
    flexDirection: 'column',
 })

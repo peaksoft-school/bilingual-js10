@@ -47,7 +47,6 @@ const Container = styled('div')({
    '.hrTop': {
       marginTop: '3.75rem',
       width: '41rem',
-      height: ' 0.09563rem',
       marginLeft: ' 2.5rem',
       border: ' 2px solid #d4d0d0',
    },
@@ -99,7 +98,6 @@ const ContainerButton = styled('div')({
       height: '2.62rem',
       fontSize: ' 0.76rem',
       fontWeight: 600,
-      color: '#3A10E5',
    },
 
    '.buttonDone': {

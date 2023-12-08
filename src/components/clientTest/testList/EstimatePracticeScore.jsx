@@ -9,7 +9,6 @@ import Header from '../../../layout/Header'
 export const EstimatePracticeScore = () => {
    const navigate = useNavigate()
    const { testID, testsArr } = useSelector((state) => state.typeTest)
-
    const currTest = testsArr.find((test) => test.id === testID)
 
    return (

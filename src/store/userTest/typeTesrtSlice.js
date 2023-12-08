@@ -15,6 +15,7 @@ const typeTest = createSlice({
          state.testsArr = action.payload
       },
       setIDToTest: (state, action) => {
+         console.log('action', action.payload)
          state.testID = action.payload
       },
    },
