@@ -25,9 +25,15 @@ export const UserResponses = () => {
       getData()
    }, [])
 
+   const sendResultHandler = async () => {
+      await axiosInstance.post(
+         `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
+      )
+   }
+
    const columns = [
       {
-         id: 'questionTitle',
+         id: 'questionType',
          label: <div style={{ paddingLeft: '80px' }}>Question</div>,
       },
       { id: 'score', label: 'Score' },
@@ -110,6 +116,7 @@ export const UserResponses = () => {
                   variant="outlined"
                   defaultStyle="white"
                   hoverStyle="#3A10E5"
+                  onClick={sendResultHandler}
                >
                   SEND RESULTS TO USERS EMAIL
                </Button>
@@ -140,8 +147,8 @@ const IconsContainer = styled('div')`
    display: flex;
    align-items: center;
    & > * {
-      cursor: pointer;
-      margin-right: 14px;
+      cursor: auto;
+      margin-right: 7px;
    }
 `
 const Title = styled('div')`

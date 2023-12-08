@@ -7,6 +7,7 @@ import QuestionsPage from '../../components/UI/TestItem/QuestionsPage'
 import { UserAnswers } from '../../components/adminCheckingUserTest/UsersAnswers'
 import { UserResponses } from '../../components/adminCheckingUserTest/UserResponses'
 import Header from '../../layout/Header'
+import { CheckingPage } from '../../pages/admin-page/CheckingPage'
 
 export const AdminRoutes = () => {
    return (
@@ -24,6 +25,7 @@ export const AdminRoutes = () => {
                element={<CustomFormCreateTest />}
             />
             <Route path="/questions/:id" element={<QuestionsPage />} />
+            <Route path="/checking-page" element={<CheckingPage />} />
          </Routes>
          <Outlet />
       </div>

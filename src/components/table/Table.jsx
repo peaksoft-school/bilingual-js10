@@ -9,16 +9,19 @@ import {
    Paper,
    styled,
 } from '@mui/material'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { answersSlice } from '../../store/checkTestSlices/answers-slice'
 
 export const Table = ({ data, columns, columnGap, rowGap }) => {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { pathname } = useLocation()
 
-   const handleCheck = (id) => {
+   const handleCheck = (id, questionType) => {
       dispatch(answersSlice.actions.addQuestionId(id))
+      dispatch(answersSlice.actions.addQuestionType(questionType))
+      navigate('/admin/checking-page')
    }
 
    const { questions } = useSelector((state) => state.questionSlice)
@@ -47,7 +50,7 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                               key={row.id}
                               onClick={() => {
                                  if (pathname === '/admin/user-responses') {
-                                    handleCheck(row.id)
+                                    handleCheck(row.id, row.questionType)
                                  }
                               }}
                            >
@@ -162,6 +165,8 @@ const TableRowData = styled(TableRow)((props) => ({
    ':hover': {
       backgroundColor:
          props.pathname === '/admin/user-responses' ? '#f8f8f8' : 'white',
-      transitionDuration: '0.6s',
+      boxShadow:
+         ' 0px 1px 5px 0px rgba(0, 0, 0, 0.06), 0px -4px 10px 0px rgba(0, 0, 0, 0.06);',
+      transitionDuration: '0.7s',
    },
 }))

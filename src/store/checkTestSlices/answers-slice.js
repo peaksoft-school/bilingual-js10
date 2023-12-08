@@ -6,6 +6,7 @@ export const answersSlice = createSlice({
       testId: null,
       userId: null,
       questionId: null,
+      questionType: '',
    },
    reducers: {
       addUserId: (state, action) => {
@@ -16,6 +17,9 @@ export const answersSlice = createSlice({
       },
       addQuestionId: (state, action) => {
          state.questionId = action.payload
+      },
+      addQuestionType: (state, action) => {
+         state.questionType = action.payload
       },
    },
 })
