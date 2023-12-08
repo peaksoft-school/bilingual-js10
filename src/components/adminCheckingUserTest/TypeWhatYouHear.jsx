@@ -30,21 +30,18 @@ export const TypeWhatYouHear = () => {
          setAudio(newAudio)
       }
    }
-   const handleSaveButtonClick = () => {
+   const postScore = async () => {
       const data = {
          userId: 1,
-         questionId: 3,
+         questionId: 5,
          score: inputValue,
       }
-
-      sendingResult(data)
-         .then((response) => {
-            console.log('Отправленный score:', data.score)
-            console.log('Результат успешно', response.data)
-         })
-         .catch((error) => {
-            console.error('Ошибка', error)
-         })
+      console.log('Отправляемые данные:', data)
+      try {
+         await sendingResult(data)
+      } catch (error) {
+         console.log('error')
+      }
    }
    useEffect(() => {
       const fetchData = async () => {
@@ -159,7 +156,7 @@ export const TypeWhatYouHear = () => {
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={handleSaveButtonClick}
+                     onClick={postScore}
                   >
                      Save
                   </Button>
