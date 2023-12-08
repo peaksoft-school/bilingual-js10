@@ -149,7 +149,7 @@ const Title = styled('div')`
       color: #3752b4;
       font-weight: 100;
       font-size: 16px;
-      font-family: 'DINNextRoundedLTW01-Regular';
+      font-family: 'DIN Next Rounded LT Pro Bold';
       line-height: normal;
    }
    & .User + span {

@@ -1,7 +1,7 @@
 import { Typography, styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 import { authActions } from '../store/auth/authSlice'
@@ -104,17 +104,14 @@ const ButtonsContainer = styled('div')(() => ({
 }))
 const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',
-   height: '15vh',
+   height: '94px',
    display: 'flex',
    justifyContent: 'space-between',
-   alignItems: 'center',
    backgroundColor: '#ffff',
    marginBottom: marginBottom || null,
 }))
 const LogoBox = styled('div')({
-   position: 'sticky',
-   top: '1.2rem',
-   marginLeft: '7rem',
+   margin: '19px 0 0 7rem',
 })
 const Options = styled('div')({
    display: 'flex',
@@ -125,6 +122,9 @@ const Options = styled('div')({
    top: '1.2rem',
    bottom: '1.2rem',
    textTransform: 'uppercase',
+   '& a': {
+      textDecoration: 'none',
+   },
 })
 const OptionsBlock = styled('div')({
    display: 'flex',

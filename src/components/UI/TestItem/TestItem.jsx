@@ -71,6 +71,10 @@ const ContainerItems = styled('div')(() => ({
    borderRadius: '8px',
    background: '#fff',
    border: 'none',
+   ':hover': {
+      backgroundColor: '#f8f8f8',
+      transitionDuration: '0.6s',
+   },
    boxShadow:
       ' 0px 4px 10px 0px rgba(0, 0, 0, 0.066), 0px -4px 10px 0px rgba(0, 0, 0, 0.06)',
    '& .Buttons': {

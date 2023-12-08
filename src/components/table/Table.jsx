@@ -9,14 +9,18 @@ import {
    Paper,
    styled,
 } from '@mui/material'
+import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { answersSlice } from '../../store/checkTestSlices/answers-slice'
 
 export const Table = ({ data, columns, columnGap, rowGap }) => {
    const dispatch = useDispatch()
+   const { pathname } = useLocation()
+
    const handleCheck = (id) => {
       dispatch(answersSlice.actions.addQuestionId(id))
    }
+
    const { questions } = useSelector((state) => state.questionSlice)
    return (
       <Container>
@@ -39,8 +43,13 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                         data.map((row, i) => (
                            <TableRowData
                               rowGap={rowGap}
+                              pathname={pathname}
                               key={row.id}
-                              onClick={() => handleCheck(row.id)}
+                              onClick={() => {
+                                 if (pathname === '/admin/user-responses') {
+                                    handleCheck(row.id)
+                                 }
+                              }}
                            >
                               {i + 1}
                               {columns?.map((column) => {
@@ -88,6 +97,7 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
       </Container>
    )
 }
+
 const Container = styled('div')`
    border: none;
    box-shadow: none;
@@ -148,4 +158,10 @@ const TableRowData = styled(TableRow)((props) => ({
    gap: props.rowGap || '2rem',
    marginLeft: '1rem',
    marginBottom: '1rem',
+   cursor: props.pathname === '/admin/user-responses' ? 'pointer' : 'auto',
+   ':hover': {
+      backgroundColor:
+         props.pathname === '/admin/user-responses' ? '#f8f8f8' : 'white',
+      transitionDuration: '0.6s',
+   },
 }))
