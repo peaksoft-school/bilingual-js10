@@ -19,6 +19,7 @@ export const CreateTest = () => {
    const params = useParams()
    const obj = Object.values(params)
    const testId = tests.find((test) => test.id === updatedTestId)
+
    const formik = useFormik({
       initialValues: {
          title: obj[0] === 'update-test' ? testId.title : '',
@@ -41,50 +42,54 @@ export const CreateTest = () => {
    })
    const saveHandler = async (e) => {
       e.preventDefault()
-      if (obj[0] === 'create-test') {
-         Notify(
-            {
-               sucessTitle: 'Test saved ',
-               successMessage: 'Successfully saved',
-               errorTitle: 'Error',
-            },
-            axiosInstance.post('/tests', {
-               title: formik.values.title,
-               description: formik.values.description,
-            })
-         )
-      } else {
-         Notify(
-            {
-               sucessTitle: 'Test updated ',
-               successMessage: 'Successfully updated',
-               errorTitle: 'Error',
-            },
-            axiosInstance.put(`/tests?testId=${testId.id}`, {
-               title: formik.values.title,
-               description: formik.values.description,
-               enable: formik.values.enable,
-            })
-         )
+      if (formik.values.title && formik.values.description) {
+         if (obj[0] === 'create-test') {
+            Notify(
+               {
+                  sucessTitle: 'Test saved ',
+                  successMessage: 'Successfully saved',
+                  errorTitle: 'Error',
+               },
+               axiosInstance.post('/tests', {
+                  title: formik.values.title,
+                  description: formik.values.description,
+               })
+            )
+         } else {
+            Notify(
+               {
+                  sucessTitle: 'Test updated ',
+                  successMessage: 'Successfully updated',
+                  errorTitle: 'Error',
+               },
+               axiosInstance.put(`/tests?testId=${testId.id}`, {
+                  title: formik.values.title,
+                  description: formik.values.description,
+                  enable: formik.values.enable,
+               })
+            )
+         }
+         navigate('/admin')
       }
-      navigate('/admin')
    }
 
    const addQuestionHandler = async (e) => {
       e.preventDefault()
-      axiosInstance
-         .post('/tests', {
-            title: formik.values.title,
-            description: formik.values.description,
-         })
-         .then((response) => {
-            const { message } = response.data
-            const regex = /id: (\d+)/
-            const match = regex.exec(message)
-            const id = match[1]
-            dispatch(createTestActions.testID(Number(id)))
-         })
-      navigate('/admin/custom-form')
+      if (formik.values.title && formik.values.description) {
+         axiosInstance
+            .post('/tests', {
+               title: formik.values.title,
+               description: formik.values.description,
+            })
+            .then((response) => {
+               const { message } = response.data
+               const regex = /id: (\d+)/
+               const match = regex.exec(message)
+               const id = match[1]
+               dispatch(createTestActions.testID(Number(id)))
+            })
+         navigate('/admin/create-question')
+      }
    }
 
    return (
@@ -129,6 +134,7 @@ export const CreateTest = () => {
                   <Button
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
+                     type="submit"
                      variant="contained"
                      onClick={(e) => saveHandler(e)}
                   >
@@ -140,6 +146,7 @@ export const CreateTest = () => {
                         hoverStyle="#3A10E5E5"
                         variant="contained"
                         className="addNewTestButton"
+                        type="submit"
                         onClick={(e) => addQuestionHandler(e)}
                      >
                         add questions

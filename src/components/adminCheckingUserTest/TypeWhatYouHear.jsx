@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { styled } from '@mui/material'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { PlayAudio, StopRecordingAudio } from '../../assets'
-import { getResult, sendingResult } from '../../api/questionsService'
+import { getResult } from '../../api/questionsService'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const TypeWhatYouHear = () => {
    const [isRecording, setRecording] = useState(false)
    const [audio, setAudio] = useState(null)
    const [questionData, setQuestionData] = useState({})
    const [inputValue, setInputValue] = useState('')
+   const userId = useSelector((state) => state.answer.userId)
+   const questionId = useSelector((state) => state.answer.questionId)
 
    const handleInputChange = (e) => {
       const newValue = Math.min(parseInt(e.target.value, 10), 10)
       setInputValue(newValue)
    }
+
    const handleButtonClick = () => {
       if (isRecording) {
          setRecording(false)
@@ -30,23 +35,11 @@ export const TypeWhatYouHear = () => {
          setAudio(newAudio)
       }
    }
-   const postScore = async () => {
-      const data = {
-         userId: 1,
-         questionId: 5,
-         score: inputValue,
-      }
-      console.log('Отправляемые данные:', data)
-      try {
-         await sendingResult(data)
-      } catch (error) {
-         console.log('error')
-      }
-   }
+
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await getResult()
+            const response = await getResult(userId, questionId)
             setQuestionData(response.data)
          } catch (error) {
             console.error('Error fetching data:', error)
@@ -54,6 +47,17 @@ export const TypeWhatYouHear = () => {
       }
       fetchData()
    }, [])
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId,
+            questionId,
+            score: inputValue,
+         })
+      } catch (error) {
+         console.log('error')
+      }
+   }
    const {
       questionTitle,
       questionType,

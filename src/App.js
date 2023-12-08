@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-import { TypeWhatYouHear } from './components/adminCheckingUserTest/TypeWhatYouHear'
-// import { AppRoutes } from './routes/AppRoutes'
+import { AppRoutes } from './routes/AppRoutes'
+import LandingPage from './pages/LandingPage'
 
 function App() {
    const dispatch = useDispatch()
@@ -28,8 +28,9 @@ function App() {
 
    return (
       <div>
-         {/* <AppRoutes /> */}
-         <TypeWhatYouHear />
+         <LandingPage />
+         <AppRoutes />
+         {/* <TypeWhatYouHear /> */}
       </div>
    )
 }

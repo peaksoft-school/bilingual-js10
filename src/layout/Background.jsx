@@ -28,5 +28,6 @@ const StyleBackground = styled('div')(({ marginTop, maxWidth }) => {
       borderRadius: '25px',
       background: 'white',
       boxShadow: '0px 4px 39px rgba(196, 196, 196, 0.60)',
+      minWidth: '970px',
    }
 })

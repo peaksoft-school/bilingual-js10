@@ -1,12 +1,19 @@
 import { Typography, styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import React from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
+import { authActions } from '../store/auth/authSlice'
 
-const Header = ({ roles = 'guest' }) => {
+const Header = ({ roles = 'guest', marginBottom }) => {
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const { pathname } = useLocation()
+
+   const handleLogout = () => {
+      dispatch(authActions.logout(navigate))
+   }
    const handleComeInClick = () => {
       navigate('/signin')
    }
@@ -14,8 +21,9 @@ const Header = ({ roles = 'guest' }) => {
    const handleLoginClick = () => {
       navigate('/signup')
    }
+
    return (
-      <MyHeader>
+      <MyHeader marginBottom={marginBottom}>
          <LogoBox>
             <Logo />
          </LogoBox>
@@ -40,33 +48,36 @@ const Header = ({ roles = 'guest' }) => {
          ) : (
             <Options>
                <OptionsBlock>
-                  <HeaderLink
+                  <NavLink
                      style={
-                        pathname === '/user'
+                        pathname === '/user' ||
+                        pathname === '/admin' ||
+                        pathname === '/admin/QuestionsPage'
                            ? { color: 'blue' }
                            : { color: '#4C4859' }
                      }
-                     to={roles === 'user' ? '/user' : '/'}
+                     to={roles === 'user' ? '/user' : '/admin'}
                   >
                      <MyText>Tests</MyText>
-                  </HeaderLink>
+                  </NavLink>
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <HeaderLink
+                     <NavLink to="/">
+                        <MyText>My Results</MyText>
+                     </NavLink>
+                  ) : (
+                     <NavLink
                         style={
-                           pathname === '/user/my-results'
+                           pathname === '/admin/users-answers' ||
+                           pathname === '/admin/user-responses'
                               ? { color: 'blue' }
                               : { color: '#4C4859' }
                         }
-                        to="/user/my-results"
+                        to="/admin/users-answers"
                      >
-                        <MyText>My Results</MyText>
-                     </HeaderLink>
-                  ) : (
-                     <HeaderLink to="/">
                         <MyText>Submitted Results</MyText>
-                     </HeaderLink>
+                     </NavLink>
                   )}
                </OptionsBlock>
                <OptionsBlock>
@@ -75,8 +86,9 @@ const Header = ({ roles = 'guest' }) => {
                      variant="outlined"
                      defaultStyle="white"
                      hoverStyle="blue"
+                     onClick={handleLogout}
                   >
-                     <MyText>Log out</MyText>
+                     <MyText onClick={handleLogout}>Log out</MyText>
                   </Button>
                </OptionsBlock>
             </Options>
@@ -84,23 +96,22 @@ const Header = ({ roles = 'guest' }) => {
       </MyHeader>
    )
 }
+
 const ButtonsContainer = styled('div')(() => ({
    paddingRight: '80px',
    display: 'flex',
    columnGap: '24px',
 }))
-const MyHeader = styled('header')({
+const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',
-   height: '15vh',
+   height: '94px',
    display: 'flex',
    justifyContent: 'space-between',
-   alignItems: 'center',
    backgroundColor: '#ffff',
-})
+   marginBottom: marginBottom || null,
+}))
 const LogoBox = styled('div')({
-   position: 'sticky',
-   top: '1.2rem',
-   marginLeft: '7rem',
+   margin: '19px 0 0 7rem',
 })
 const Options = styled('div')({
    display: 'flex',
@@ -111,6 +122,9 @@ const Options = styled('div')({
    top: '1.2rem',
    bottom: '1.2rem',
    textTransform: 'uppercase',
+   '& a': {
+      textDecoration: 'none',
+   },
 })
 const OptionsBlock = styled('div')({
    display: 'flex',
@@ -118,10 +132,6 @@ const OptionsBlock = styled('div')({
    flexDirection: 'column',
    textAlign: 'center',
    marginRight: '1.7rem',
-})
-const HeaderLink = styled(NavLink)({
-   textDecoration: 'none',
-   color: '#4C4859',
 })
 const MyText = styled(Typography)({
    '&': {
