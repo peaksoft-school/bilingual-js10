@@ -8,10 +8,12 @@ import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
 import {
-   TypeWhatYouHearThunk,
+   postFileThunk,
    updateQuestion,
 } from '../../store/questions/questionsThunk'
 import { questionsSlice } from '../../store/questions/questionsSlice'
+import Notify from '../UI/Notifay'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const TypeWhatYouHear = () => {
    const { pathname } = useLocation()
@@ -57,7 +59,26 @@ export const TypeWhatYouHear = () => {
                audioFile,
                testID,
             }
-            await dispatch(TypeWhatYouHearThunk(data))
+            const fileUrl = await dispatch(
+               postFileThunk({ file: data.audioFile })
+            )
+            Notify(
+               {
+                  sucessTitle: 'Question saved ',
+                  successMessage: 'Successfully saved',
+                  errorTitle: 'Error',
+               },
+               axiosInstance.post(
+                  `/questions?testId=${data.testID}&questionType=TYPE_WHAT_YOU_HEAR`,
+                  {
+                     title: data.title,
+                     duration: data.duration,
+                     attempts: data.numberOffReplays,
+                     correctAnswer: data.correctAnswer,
+                     fileUrl: fileUrl.payload.data.link,
+                  }
+               )
+            )
          }
          navigate(`/admin/questions/${testID}`)
       } else {
@@ -81,6 +102,10 @@ export const TypeWhatYouHear = () => {
             const audio = new Audio(audioFile)
             audio.play()
             setAudio(audio)
+            audio.onended = () => {
+               setIsAudioTrue(false)
+               setAudioFile(null)
+            }
          } else if (audio) {
             audio.pause()
             setAudio(null)
@@ -95,7 +120,7 @@ export const TypeWhatYouHear = () => {
             setAudio(null)
          }
       }
-   }, [isAudioTrue, question])
+   }, [isAudioTrue, question, audioFile])
 
    return (
       <MainContainer>
@@ -201,9 +226,16 @@ const MainContainer = styled('div')(() => ({
          display: 'flex',
          alignItems: 'end',
          '.replaceInput': {
-            width: '59px',
+            '-webkit-appearance': 'none',
+            '-moz-appearance': 'textfield',
+            width: '49px',
             marginTop: '10px',
+            '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+               '-webkit-appearance': 'none',
+               margin: 0,
+            },
          },
+
          '.uploadContainer': {
             display: 'flex',
             columnGap: '15px',
