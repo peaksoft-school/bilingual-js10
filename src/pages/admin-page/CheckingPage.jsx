@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import SelectTheBestTitle from '../../components/adminCheckingUserTest/SelectTheBestTitle'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <div>SELECT_REAL_ENGLISH_WORD</div>,
@@ -10,7 +11,7 @@ const questionsPages = {
    RESPOND_AT_LEAST_N_WORDS: <div>RESPOND_AT_LEAST_N_WORDS</div>,
    HIGHLIGHT_THE_ANSWER: <div>HIGHLIGHT_THE_ANSWER</div>,
    SELECT_THE_MAIN_IDEA: <div>SELECT_THE_MAIN_IDEA</div>,
-   SELECT_THE_BEST_TITLE: <div>SELECT_THE_BEST_TITLE</div>,
+   SELECT_THE_BEST_TITLE: <SelectTheBestTitle />,
 }
 
 export const CheckingPage = () => {
