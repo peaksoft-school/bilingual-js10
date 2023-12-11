@@ -20,7 +20,8 @@ export const HighlightTheAnswer = () => {
    const navigate = useNavigate()
 
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/highlight-the-answer'
+   const updateUrl =
+      pathname === '/admin/tests/update-question/highlight-the-answer'
 
    const formik = useFormik({
       initialValues: {

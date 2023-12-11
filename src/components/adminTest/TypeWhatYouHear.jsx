@@ -17,7 +17,8 @@ import { axiosInstance } from '../../config/axiosInstance'
 
 export const TypeWhatYouHear = () => {
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/type-what-you-hear'
+   const updateUrl =
+      pathname === '/admin/tests/update-question/type-what-you-hear'
 
    const { title, questionDuration, question } = useSelector(
       (state) => state.questions

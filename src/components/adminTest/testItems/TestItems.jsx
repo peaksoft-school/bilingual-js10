@@ -19,7 +19,7 @@ export const TestItems = () => {
    const [delID, setDelID] = useState(null)
 
    const AddNewTestHandler = () => {
-      navigate(`/admin/create-test`)
+      navigate(`/admin/tests/create-test`)
    }
 
    const getData = async () => {
@@ -29,7 +29,7 @@ export const TestItems = () => {
    }
 
    const deleteTestHandler = async () => {
-      Notify(
+      await Notify(
          {
             sucessTitle: 'Test deleted ',
             successMessage: 'Successfully deleted',
@@ -38,9 +38,7 @@ export const TestItems = () => {
          axiosInstance.delete(`/tests?testId=${delID}`)
       )
       setOpen(false)
-      setTimeout(() => {
-         getData()
-      }, 500)
+      getData()
    }
 
    const enableHandler = async (e, id) => {
@@ -91,6 +89,7 @@ export const TestItems = () => {
             {open && (
                <ModalStyle
                   open={open}
+                  handleClose={() => setOpen(false)}
                   width="519px"
                   height="368px"
                   borderRadius="20px"

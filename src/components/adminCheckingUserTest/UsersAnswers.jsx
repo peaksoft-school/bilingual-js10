@@ -83,7 +83,7 @@ export const UserAnswers = () => {
                         onClick={() => {
                            dispatch(answersSlice.actions.addUserId(row.userId))
                            dispatch(answersSlice.actions.addTestId(row.testId))
-                           navigate('/admin/user-responses')
+                           navigate('/admin/results/user-responses')
                         }}
                      />
                   ) : (
@@ -91,7 +91,7 @@ export const UserAnswers = () => {
                         onClick={() => {
                            dispatch(answersSlice.actions.addUserId(row.userId))
                            dispatch(answersSlice.actions.addTestId(row.testId))
-                           navigate('/admin/user-responses')
+                           navigate('/admin/results/user-responses')
                         }}
                         style={{ cursor: 'pointer' }}
                      />
