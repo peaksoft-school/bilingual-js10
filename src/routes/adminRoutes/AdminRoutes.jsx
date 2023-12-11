@@ -17,7 +17,7 @@ export const AdminRoutes = () => {
             <Route path="/" element={<TestItems />} />
             <Route path="/create-test" element={<CreateTest />} />
             <Route path="/update-test" element={<CreateTest />} />
-            <Route path="/custom-form" element={<CustomFormCreateTest />} />
+            <Route path="/create-question" element={<CustomFormCreateTest />} />
             <Route path="/users-answers" element={<UserAnswers />} />
             <Route path="/user-responses" element={<UserResponses />} />
             <Route

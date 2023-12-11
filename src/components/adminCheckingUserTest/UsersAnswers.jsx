@@ -24,10 +24,10 @@ export const UserAnswers = () => {
                return {
                   ...el,
                   newDate: el?.dateOfSubmission
-                     .split(' ')[0]
-                     .slice(0, 10)
-                     .replaceAll('-', '.'),
-                  time: el?.dateOfSubmission.split(' ')[1].slice(0, 5),
+                     ?.split(' ')[0]
+                     ?.slice(0, 10)
+                     ?.replaceAll('-', '.'),
+                  time: el?.dateOfSubmission?.split(' ')[1].slice(0, 5),
                }
             })
          )
@@ -87,7 +87,14 @@ export const UserAnswers = () => {
                         }}
                      />
                   ) : (
-                     <Check style={{ cursor: 'pointer' }} />
+                     <Check
+                        onClick={() => {
+                           dispatch(answersSlice.actions.addUserId(row.userId))
+                           dispatch(answersSlice.actions.addTestId(row.testId))
+                           navigate('/admin/user-responses')
+                        }}
+                        style={{ cursor: 'pointer' }}
+                     />
                   )}
                   <TrashCan style={{ cursor: 'pointer' }} />
                </Container>
