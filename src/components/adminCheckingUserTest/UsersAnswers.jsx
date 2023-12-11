@@ -24,10 +24,10 @@ export const UserAnswers = () => {
                return {
                   ...el,
                   newDate: el?.dateOfSubmission
-                     .split(' ')[0]
-                     .slice(0, 10)
-                     .replaceAll('-', '.'),
-                  time: el?.dateOfSubmission.split(' ')[1].slice(0, 5),
+                     ?.split(' ')[0]
+                     ?.slice(0, 10)
+                     ?.replaceAll('-', '.'),
+                  time: el?.dateOfSubmission?.split(' ')[1].slice(0, 5),
                }
             })
          )
