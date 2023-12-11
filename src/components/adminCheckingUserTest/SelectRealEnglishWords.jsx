@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { axiosInstance } from '../../config/axiosInstance'
-import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
@@ -41,8 +40,7 @@ const SelectRealEnglishWords = () => {
    }, [setAppState])
 
    return (
-      <>
-         <Header />
+      <div>
          <Container>
             <Background padding="0">
                <ContainerFlex>
@@ -172,7 +170,7 @@ const SelectRealEnglishWords = () => {
                </ContainerButtons>
             </Background>
          </Container>
-      </>
+      </div>
    )
 }
 
