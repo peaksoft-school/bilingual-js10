@@ -38,9 +38,6 @@ export const HighlightTheAnswer = () => {
       <div>
          <MainPassageContainer onSubmit={formik.handleSubmit}>
             <span>Questions to the Passage</span>
-            {formik.errors.question ? (
-               <div className="error">{formik.errors.question}</div>
-            ) : null}
             <Input
                border=" 1.53px solid #D4D0D0"
                className="input"
@@ -50,11 +47,11 @@ export const HighlightTheAnswer = () => {
                value={formik.values.question}
                onChange={formik.handleChange}
             />
+            {formik.errors.question ? (
+               <div className="error">{formik.errors.question}</div>
+            ) : null}
             <span>Passage</span>
             <TextFieldStyle>
-               {formik.errors.text ? (
-                  <div className="error">{formik.errors.text}</div>
-               ) : null}
                <TextArea
                   multiline
                   name="text"
@@ -63,6 +60,9 @@ export const HighlightTheAnswer = () => {
                   fullWidth
                   className="textarea"
                />
+               {formik.errors.text ? (
+                  <div className="error">{formik.errors.text}</div>
+               ) : null}
             </TextFieldStyle>
             <span>Highlight correct answer:</span>
             <CorrectAnswerBlock>
@@ -129,9 +129,10 @@ const MainPassageContainer = styled('form')(() => ({
    '.error': {
       color: '#ff0000',
       fontWeight: '700',
-      fontSize: '13px',
-      lineHeight: '9px',
+      fontSize: '14px',
+      lineHeight: '8px',
       letterSpacing: '1px',
+      marginBottom: '10px',
    },
 }))
 
