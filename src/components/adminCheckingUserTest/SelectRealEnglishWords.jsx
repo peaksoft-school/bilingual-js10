@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { axiosInstance } from '../../config/axiosInstance'
-import Header from '../../layout/Header'
 import Button from '../UI/Buttons/Button'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
@@ -9,12 +10,13 @@ import { InputRadio } from '../UI/InputRadio'
 const SelectRealEnglishWords = () => {
    const [appState, setAppState] = useState({ response: null })
    const [error, setError] = useState(null)
+   const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
 
-   const usetTestId = 1
    const getQuestionTest = async () => {
       try {
          const response = await axiosInstance.get(
-            `/result/getQuestionsResults?userId=1&questionId=${usetTestId}`
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allRepos = response.data
          setAppState({ response: allRepos })
@@ -22,13 +24,13 @@ const SelectRealEnglishWords = () => {
          setError(error)
       }
    }
-
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 1,
+            userId,
+            questionId,
          })
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
@@ -38,8 +40,7 @@ const SelectRealEnglishWords = () => {
    }, [setAppState])
 
    return (
-      <>
-         <Header />
+      <div>
          <Container>
             <Background padding="0">
                <ContainerFlex>
@@ -152,7 +153,11 @@ const SelectRealEnglishWords = () => {
                   </ContainerCreateAnswerTest>
                </ContainerFlex>
                <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={() => navigate(-1)}
+                  >
                      GO BACK
                   </Button>
                   <Button
@@ -165,7 +170,7 @@ const SelectRealEnglishWords = () => {
                </ContainerButtons>
             </Background>
          </Container>
-      </>
+      </div>
    )
 }
 
@@ -207,6 +212,24 @@ const ErrorBox = styled('div')({
    color: 'red',
    marginTop: '7px',
 })
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
+   },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
 const ContaineScore = styled('div')({
    display: 'flex',
    flexDirection: 'column',
@@ -223,6 +246,7 @@ const ContainerFlex = styled('div')({
    justifyContent: 'center',
    alignItems: 'start',
    gap: '3.13rem',
+<<<<<<< HEAD
 })
 const ContainerUser = styled('div')({
    display: 'flex',
@@ -237,6 +261,8 @@ const ContainerUser = styled('div')({
       textAlign: 'center',
       fontWeight: 500,
    },
+=======
+>>>>>>> ec334d654f9f83a12b4d5c872359f65e5c6e6287
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',

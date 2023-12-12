@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Button from '../../components/UI/Buttons/Button'
-import Input from '../../components/UI/Input'
 import UpploadFile from './UpploadFile'
-import { postDescribeImage } from '../../store/s3file/thunk'
-import { questionsSlice } from '../../store/questions/questionsSlice'
-import { updateQuestion } from '../../store/questions/questionsThunk'
+import Input from '../../UI/Input'
+import Button from '../../UI/Buttons/Button'
+import { updateQuestion } from '../../../store/questions/questionsThunk'
+import { postDescribeImage } from '../../../store/s3file/thunk'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
 
 const SelectImage = () => {
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/describe-image'
+   const updateUrl = pathname === '/admin/tests/update-question/describe-image'
 
    const [selectedImage, setSelectedImage] = useState(null)
    const { title, questionDuration, question } = useSelector(

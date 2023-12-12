@@ -12,7 +12,6 @@ const initialState = {
    selectedOption: 'Select real English words',
    questionID: null,
    options: [],
-   isLoading: false,
    question: {},
    titleValidate: false,
    durationValidate: false,
@@ -46,12 +45,8 @@ export const questionsSlice = createSlice({
          .addCase(postFileThunk.fulfilled, (state, action) => {
             state.link = action.payload.link
          })
-         .addCase(getOptionByQuestionId.pending, (state) => {
-            state.isLoading = true
-         })
          .addCase(getOptionByQuestionId.fulfilled, (state, action) => {
             state.options = action.payload.data
-            state.isLoading = false
          })
          .addCase(getQuestionThunk.fulfilled, (state, action) => {
             state.question = action.payload
