@@ -1,143 +1,243 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Header from '../../layout/Header'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+// import { v4 as uuidv4 } from 'uuid'
+import { axiosInstance } from '../../config/axiosInstance'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
 import { Delete, VolumeEnglishWord } from '../../assets'
 import Button from '../UI/Buttons/Button'
 
-const initialOptions = [
-   {
-      id: 1,
-      title: ' Word 1',
-   },
-   {
-      id: 2,
-      title: ' Word 2',
-   },
-   {
-      id: 3,
-      title: ' Word 3',
-   },
-   {
-      id: 4,
-      title: ' Word 4',
-   },
-]
-const userTest = [
-   {
-      id: 1,
-      title: 'Word 1',
-   },
-   {
-      id: 2,
-      title: ' Word 2',
-   },
-   {
-      id: 3,
-      title: ' Word 3',
-   },
-   {
-      id: 4,
-      title: ' Word 4',
-   },
-]
-const ListenAndSelectEnglishWord = ({ title, duration, questionType }) => {
-   const [score, setScore] = useState(7)
+const ListenAndSelectEnglishWord = () => {
+   const [appState, setAppState] = useState({ response: null })
+   const [error, setError] = useState(null)
+   const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
 
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await fetch()
-            const data = await response.json()
-            const initialScoreFromBackend = data.score
-            setScore(initialScoreFromBackend)
-         } catch (error) {
-            console.error(error)
-         }
+   const getQuestionTest = async () => {
+      try {
+         const response = await axiosInstance.get(
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
+         )
+         const allRepos = response.data
+         setAppState({ response: allRepos })
+      } catch (error) {
+         setError(error)
       }
-      fetchData()
-   }, [])
+   }
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId,
+            questionId,
+         })
+         navigate(-1)
+      } catch (error) {
+         setError(error)
+      }
+   }
+   useEffect(() => {
+      getQuestionTest()
+   }, [setAppState])
+
+   const [isPlayingArray, setIsPlayingArray] = useState([])
+
+   const playOption = (el, index) => {
+      const newArray = [...isPlayingArray]
+      const currentlyPlayingIndex = newArray.findIndex(
+         (audio) => audio !== null
+      )
+      if (currentlyPlayingIndex !== -1) {
+         newArray[currentlyPlayingIndex].pause()
+         newArray[currentlyPlayingIndex] = null
+      }
+      const audio = new Audio(el.audioUrl)
+      newArray[index] = audio
+      setIsPlayingArray(newArray)
+      audio.play()
+   }
+   const pauseOption = (index) => {
+      const audio = isPlayingArray[index]
+      if (audio) {
+         const newArray = [...isPlayingArray]
+         newArray[index] = null
+         setIsPlayingArray(newArray)
+         audio.pause()
+      }
+   }
 
    return (
-      <>
-         <Header />
-         <Containers>
-            <Background>
-               <ContainerCkeckInTheTest>
-                  <div>
-                     <p className="TextTestQuestion ">Test Question </p>
-                     <ContainerTestQuestion>
+      <div>
+         <Container>
+            <Background padding="0">
+               <ContainerFlex>
+                  <ContainerUser>
+                     {appState.response && (
                         <div className="FixedDisplay">
-                           <span className="ColorBlue">Question Title:</span>
-                           <p> {title} </p>
+                           <span className="ColorBlue">User:</span>
+                           <p className="ColorParagraf">
+                              {appState.response.fullName}
+                           </p>
                         </div>
+                     )}
+                     {appState.response && (
                         <div className="FixedDisplay">
-                           <span className="ColorBlue">
-                              Duration (in minutes):
-                           </span>
-                           <span>{duration} </span>
+                           <span className="ColorBlue">Test:</span>
+                           <p className="ColorParagraf">
+                              {appState.response.testTitle}
+                           </p>
                         </div>
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">Question Type:</span>
-                           <p>{questionType}</p>
-                        </div>
-                     </ContainerTestQuestion>
-                  </div>
-                  <ContaineScore>
-                     <p>Evaluation</p>
-                     <div className="ContainerEvaluation">
-                        <p className="ColorBlue">Score:</p>
-                        <span>{score}</span>
+                     )}
+                  </ContainerUser>
+                  <ContainerCkeckInTheTest>
+                     <div>
+                        <p className="TextTestQuestion">Test Question </p>
+                        <ContainerTestQuestion>
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Title:
+                                 </span>
+                                 <p className="ColorParagraf">
+                                    {appState.response.questionTitle}
+                                 </p>
+                              </div>
+                           )}
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Duration (in minutes):
+                                 </span>
+                                 <span className="ColorParagraf">
+                                    {appState.response.duration}
+                                 </span>
+                              </div>
+                           )}
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Type:
+                                 </span>
+                                 <p className="ColorParagraf">
+                                    {appState.response.questionType}
+                                 </p>
+                              </div>
+                           )}
+                        </ContainerTestQuestion>
                      </div>
-                  </ContaineScore>
-               </ContainerCkeckInTheTest>
-               <div className="CreatTests">
-                  {initialOptions.map((el, index) => (
-                     <div key={el.id} className="CreatTest">
-                        <AudioContainer>
-                           <p>{index + 1}</p>
-                           <VolumeEnglishWord className="valumIcon" />
-                           <p>{el.title}</p>
-                        </AudioContainer>
-                        <ContainDeleteChek>
-                           <InputRadio variant="CHECKBOX" />
-                           <Delete className="DeleteIcon" />
-                        </ContainDeleteChek>
-                     </div>
-                  ))}
-               </div>
-               <ContainerUserTest>
-                  <p className="TextUser">User is Answer </p>
-                  <div className="ContainerUserTestMap">
-                     {userTest.map((item, index) => (
-                        <div key={item.id} className="CreatUserTest">
-                           <AudioContainer>
-                              <p>{index + 1}</p>
-                              <VolumeEnglishWord className="valumIcon" />
-                              <p>{item.title}</p>
-                           </AudioContainer>
+                     <ContaineScore>
+                        <p>Evaluation</p>
+                        <div className="ContainerEvaluation">
+                           <p className="ColorBlue">Score:</p>
+                           {appState.response && (
+                              <span>{appState.response.score}</span>
+                           )}
                         </div>
-                     ))}
-                  </div>
-               </ContainerUserTest>
+                     </ContaineScore>
+                  </ContainerCkeckInTheTest>
+                  <ContainerCreateTest>
+                     {appState.response &&
+                        appState.response.optionList.map((el, index) => (
+                           <CreateTest key={el.id}>
+                              <div>
+                                 <MainContainer>
+                                    <p className="Number-Words">{index + 1}</p>
+                                    {!isPlayingArray[index] ? (
+                                       <VolumeEnglishWord
+                                          onClick={() => playOption(el, index)}
+                                          className="valumIcon"
+                                       />
+                                    ) : (
+                                       <VolumeEnglishWord
+                                          style={{
+                                             fill: '#3A10E5',
+                                          }}
+                                          onClick={() => pauseOption(index)}
+                                       />
+                                    )}
+                                    <div className="NumberText">
+                                       <span>{el.title}</span>
+                                    </div>
+                                 </MainContainer>
+                              </div>
+                              <div className="InputDelete">
+                                 <InputRadio
+                                    variant="CHECKBOX"
+                                    checkedSwitch={el.isTrue}
+                                 />
+                              </div>
+                              <Delete />
+                           </CreateTest>
+                        ))}
+                  </ContainerCreateTest>
+                  <ContainerCreateAnswerTest>
+                     <p className="TextUserAnswer">User’s Answer </p>
+                     <div className="ContainerAnswerMap">
+                        {appState.response &&
+                           appState.response.optionFromUser.map(
+                              (item, index) => (
+                                 <CreateAnswerTest key={item.id}>
+                                    <MainContainer>
+                                       <p className="Number-Words">
+                                          {index + 1}
+                                       </p>
+                                       {!isPlayingArray[index] ? (
+                                          <VolumeEnglishWord
+                                             onClick={() =>
+                                                playOption(item, index)
+                                             }
+                                             className="valumIcon"
+                                          />
+                                       ) : (
+                                          <VolumeEnglishWord
+                                             style={{
+                                                fill: '#3A10E5',
+                                             }}
+                                             onClick={() => pauseOption(index)}
+                                          />
+                                       )}
+                                       <div className="NumberText">
+                                          <p>{item.title}</p>
+                                       </div>
+                                    </MainContainer>
+                                 </CreateAnswerTest>
+                              )
+                           )}
+                     </div>
+                     {error && (
+                        <ErrorBox>
+                           An error occurred:
+                           {error.message || 'Unknown error'}
+                        </ErrorBox>
+                     )}
+                  </ContainerCreateAnswerTest>
+               </ContainerFlex>
                <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={() => navigate(-1)}
+                  >
                      GO BACK
                   </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     onClick={postScore}
+                  >
                      Save
                   </Button>
                </ContainerButtons>
             </Background>
-         </Containers>
-      </>
+         </Container>
+      </div>
    )
 }
 
 export default ListenAndSelectEnglishWord
 
-const Containers = styled('div')({
+const Container = styled('div')({
    display: 'flex',
    justifyContent: 'center',
    alignItems: 'center',
@@ -161,62 +261,45 @@ const Containers = styled('div')({
       color: 'green',
    },
    '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
-      paddingLeft: '45px',
-      width: '50px',
+      paddingLeft: '40px',
+      width: '45px',
       height: '10px',
    },
-   '.CreatTests': {
+})
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
       display: 'flex',
-      rowGap: '1.12rem',
-      columnGap: '1.12rem',
-      flexWrap: 'wrap',
-      marginTop: '2rem',
-      fontFamly: 'Poppins',
-   },
-   '.CreatTest': {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '1rem',
-      border: '1.53px solid #D4D0D0',
-      width: '15rem',
-      height: '2.8rem',
-      borderRadius: '0.5rem',
-      padding: '0.80rem 0.85rem 0.80rem 0.85rem',
-      color: '#4C4859',
-   },
-   '.valumIcon': {
-      fill: '#655F5F',
-   },
-   '.CreatUserTest': {
-      display: 'flex',
-      alignItems: 'center',
-      width: '11.6rem',
-      height: '2.8rem',
-      border: '1.53px solid #D4D0D0',
-      borderRadius: '0.5rem',
-      padding: '0.80rem 0.85rem 0.80rem 0.85rem',
-      color: '#4C4859',
-   },
-   '.DeleteIcon': {
-      width: '1.25rem',
-      height: '1.25rem',
-   },
-   '.TextUser': {
-      color: '#4C4859',
-      fontSize: '1.125rem',
+      gap: '10px',
+      textAlign: 'center',
       fontWeight: 500,
-      paddingTop: '2.87rem',
    },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
 })
 const ContaineScore = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   marginRight: '2.2rem',
+   marginRight: '3.2rem',
    '.rightAnswer': {
       color: 'green',
       fontWeight: 500,
       paddingLeft: '10px',
    },
+})
+const ContainerFlex = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'start',
+   gap: '3.13rem',
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
@@ -240,20 +323,46 @@ const ContainerTestQuestion = styled('div')({
       textAlign: 'center',
    },
 })
-const ContainDeleteChek = styled('div')(() => ({
+const ContainerCreateTest = styled('div')(() => ({
+   display: 'flex',
+   gap: '10px',
+   marginTop: '9px',
+   flexWrap: 'wrap',
+   paddingTop: '20px',
+   color: ' #4C4859',
+}))
+const CreateTest = styled('div')(() => ({
+   border: 'solid 1.53px #D4D0D0',
+   display: 'flex',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   width: '14.5rem',
+   height: '2.8rem',
+   borderRadius: '0.5rem',
+   p: { color: 'grey' },
+   padding: '0.88rem 1rem 0.81rem 1rem ',
+   '.NumberText': {
+      display: 'flex',
+      justifyContent: 'start',
+      p: {
+         color: '#4C4859',
+      },
+   },
+}))
+const MainContainer = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
-   gap: '4px',
-   cursor: 'pointer',
+   justifyContent: 'center',
+   gap: '10px',
+   '.Number-Words': {
+      color: '#4C4859',
+   },
+   '.valumIcon': {
+      fill: '#655F5F',
+   },
 }))
-const AudioContainer = styled('div')(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   gap: '15px',
-   cursor: 'pointer',
-}))
-const ContainerUserTest = styled('div')({
-   '.ContainerUserTestMap': {
+const ContainerCreateAnswerTest = styled('div')({
+   '.ContainerAnswerMap': {
       display: 'flex',
       alignItems: 'center',
       gap: '0.87rem',
@@ -261,13 +370,28 @@ const ContainerUserTest = styled('div')({
       flexWrap: 'wrap',
    },
 })
+const CreateAnswerTest = styled('div')({
+   border: 'solid 1.53px #D4D0D0',
+   display: 'flex',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   width: '10.6rem',
+   height: '2.8rem',
+   borderRadius: '0.5rem',
+   p: { color: 'grey' },
+   padding: '0.88rem 1rem 0.81rem 1rem ',
+   '.NumberText': {
+      display: 'flex',
+      justifyContent: 'start',
+      p: {
+         color: '#4C4859',
+      },
+   },
+})
 const ContainerButtons = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'end',
    gap: '1rem',
    marginTop: '2rem',
-   marginRight: '2.2rem',
-   button: {
-      fontWeight: 600,
-   },
+   marginRight: '3.2rem',
 }))

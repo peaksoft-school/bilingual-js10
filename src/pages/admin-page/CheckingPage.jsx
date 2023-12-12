@@ -1,9 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import ListenAndSelectEnglishWord from '../../components/adminCheckingUserTest/ListenAndSelectEnglishWord'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <div>SELECT_REAL_ENGLISH_WORD</div>,
-   LISTEN_AND_SELECT_ENGLISH_WORDS: <div>LISTEN_AND_SELECT_ENGLISH_WORDS</div>,
+   LISTEN_AND_SELECT_ENGLISH_WORDS: <ListenAndSelectEnglishWord />,
    TYPE_WHAT_YOU_HEAR: <div>TYPE_WHAT_YOU_HEAR</div>,
    DESCRIBE_IMAGE: <div>DESCRIBE_IMAGE</div>,
    RECORD_SAYING_STATEMENT: <div>RECORD_SAYING_STATEMENT</div>,
