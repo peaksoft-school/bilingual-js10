@@ -56,7 +56,7 @@ export const Questions = ({ testID }) => {
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))
-      navigate('/admin/create-question')
+      navigate('/admin/tests/create-question')
    }
 
    const qestionTypes = {
@@ -74,7 +74,9 @@ export const Questions = ({ testID }) => {
    const editQuestionHandler = (item) => {
       const select = qestionTypes[item.questionType]
       navigate(
-         `/admin/update-question/${select.toLowerCase().replaceAll(' ', '-')}`
+         `/admin/tests/update-question/${select
+            .toLowerCase()
+            .replaceAll(' ', '-')}`
       )
       dispatch(questionsSlice.actions.selectedOption(select))
       dispatch(questionsSlice.actions.setQuestionID(item.id))

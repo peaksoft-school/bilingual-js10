@@ -12,7 +12,7 @@ import { questionsSlice } from '../../../store/questions/questionsSlice'
 
 const SelectImage = () => {
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/describe-image'
+   const updateUrl = pathname === '/admin/tests/update-question/describe-image'
 
    const [selectedImage, setSelectedImage] = useState(null)
    const { title, questionDuration, question } = useSelector(

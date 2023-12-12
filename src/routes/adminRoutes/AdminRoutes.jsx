@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes, Outlet } from 'react-router-dom'
+import { Route, Routes, Outlet, Navigate } from 'react-router-dom'
 import { CreateTest } from '../../components/adminTest/createTest'
 import { TestItems } from '../../components/adminTest/testItems/TestItems'
 import CustomFormCreateTest from '../../components/adminTest/customFormCreateTest/CustomFormCreateTest'
@@ -14,18 +14,22 @@ export const AdminRoutes = () => {
       <div>
          <Header roles="admin" marginBottom="60px" />
          <Routes>
-            <Route path="/" element={<TestItems />} />
-            <Route path="/create-test" element={<CreateTest />} />
-            <Route path="/update-test" element={<CreateTest />} />
-            <Route path="/create-question" element={<CustomFormCreateTest />} />
-            <Route path="/users-answers" element={<UserAnswers />} />
-            <Route path="/user-responses" element={<UserResponses />} />
+            <Route index path="/" element={<Navigate to="/admin/tests" />} />
+            <Route path="/tests" element={<TestItems />} />
+            <Route path="/tests/create-test" element={<CreateTest />} />
+            <Route path="/tests/update-test" element={<CreateTest />} />
             <Route
-               path="/update-question/:select"
+               path="/tests/create-question"
                element={<CustomFormCreateTest />}
             />
-            <Route path="/questions/:id" element={<QuestionsPage />} />
-            <Route path="/checking-page" element={<CheckingPage />} />
+            <Route path="/results/" element={<UserAnswers />} />
+            <Route path="/results/user-responses" element={<UserResponses />} />
+            <Route
+               path="/tests/update-question/:select"
+               element={<CustomFormCreateTest />}
+            />
+            <Route path="/tests/questions/:id" element={<QuestionsPage />} />
+            <Route path="/results/checking-page" element={<CheckingPage />} />
          </Routes>
          <Outlet />
       </div>

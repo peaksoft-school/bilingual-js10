@@ -23,13 +23,13 @@ export const SelectMainIdea = () => {
    const { title, questionDuration, question, options } = useSelector(
       (state) => state.questions
    )
-   const { testID } = useSelector((state) => state.createTestSlice)
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/select-the-main-idea'
+   const updateUrl =
+      pathname === '/admin/tests/update-question/select-the-main-idea'
 
    const formik = useFormik({
       initialValues: {
@@ -70,7 +70,7 @@ export const SelectMainIdea = () => {
             await dispatch(updateQuestion(data))
          }
 
-         navigate(`/admin/questions/${testID}`)
+         navigate(-1)
       } else {
          dispatch(questionsSlice.actions.titleValidate(true))
          dispatch(questionsSlice.actions.durationValidate(true))
