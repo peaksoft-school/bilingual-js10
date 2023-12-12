@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
-const DescrbImgUsr = ({ img }) => {
-   const [value, setValue] = useState()
+const DescrbImgUsr = () => {
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const dispatch = useDispatch()
+   const [value, setValue] = useState(null)
 
    const handleInputChange = (e) => {
       setValue(e.target.value)
@@ -17,6 +23,7 @@ const DescrbImgUsr = ({ img }) => {
          statement: value,
       }
       dispatch(addTest(testPayload))
+      handleNextClick()
    }
    return (
       <div>
@@ -29,7 +36,7 @@ const DescrbImgUsr = ({ img }) => {
             <BlockImg>
                <BoxImg>
                   <img
-                     src={img}
+                     src={testComponent.fileUrl}
                      alt="img comes with props"
                      width="100%"
                      height="100%"
@@ -50,7 +57,10 @@ const DescrbImgUsr = ({ img }) => {
                      hoverStyle="#4E28E8"
                      className="nextButton"
                      padding="0.8rem 2.5rem"
-                     onClick={handleAddTest}
+                     onClick={() => {
+                        handleAddTest()
+                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
+                     }}
                   >
                      Next
                   </Button>

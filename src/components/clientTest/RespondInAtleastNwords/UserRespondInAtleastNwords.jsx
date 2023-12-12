@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
 export const UserRespondInAtleastNwords = () => {
    const [wordCount, setWordCount] = useState(0)
    const [userInput, setUserInput] = useState('')
    const dispatch = useDispatch()
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
+
    const handleInputChange = (event) => {
       const text = event.target.value
       const words = text.trim() === '' ? [] : text.trim().split(/\s+/)
@@ -20,6 +27,7 @@ export const UserRespondInAtleastNwords = () => {
          statement: userInput,
       }
       dispatch(addTest(testPayload))
+      handleNextClick()
    }
    const isNextButtonDisabled = !wordCount
    return (
@@ -29,11 +37,11 @@ export const UserRespondInAtleastNwords = () => {
          </DescribeText>
          <MainContainer>
             <Describe>
-               “Describe a time you were surprised.What <br /> happened?”
+               <p>{testComponent.statement}</p>
             </Describe>
             <div>
                <Input minRows={5} maxRows={5} onChange={handleInputChange} />
-               <Word>Word: {wordCount}</Word>
+               <Word>Word:{testComponent.attempts}</Word>
             </div>
          </MainContainer>
          <BlockBottom>
@@ -45,7 +53,10 @@ export const UserRespondInAtleastNwords = () => {
                   className="nextButton"
                   padding="0.8rem 2.5rem"
                   disabled={isNextButtonDisabled}
-                  onClick={handleAddTest}
+                  onClick={() => {
+                     handleAddTest()
+                     dispatch(globalTestSlice.actions.addCurrentComponent(1))
+                  }}
                >
                   Next
                </Button>

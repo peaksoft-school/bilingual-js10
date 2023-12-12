@@ -3,9 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
-import { RespondLeast } from './components/adminTest/respondLeast/RespondLeast'
-// import { AppRoutes } from './routes/AppRoutes'
-// import { PassTest } from './pages/passTest/PassTest'
+import { AppRoutes } from './routes/AppRoutes'
 // import LandingPage from './pages/LandingPage'
 
 function App() {
@@ -31,9 +29,7 @@ function App() {
 
    return (
       <div>
-         <RespondLeast />
-         {/* <AppRoutes /> */}
-         {/* <PassTest /> */}
+         <AppRoutes />
          {/* <LandingPage /> */}
       </div>
    )

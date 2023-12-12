@@ -1,22 +1,22 @@
 import { styled } from '@mui/material'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
-export const UserRealEnglishWord = () => {
+export default function UserRealEnglishWord() {
    const dispatch = useDispatch()
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
+
    const initialState = [
       {
          id: 1,
-         options: [
-            { id: 1, title: 'twall' },
-            { id: 2, title: 'world' },
-            { id: 3, title: 'greesey' },
-            { id: 4, title: 'cability' },
-            { id: 5, title: 'advantage' },
-            { id: 6, title: 'uncove' },
-         ],
+         options: testComponent.optionList,
       },
       {
          id: 2,
@@ -24,41 +24,33 @@ export const UserRealEnglishWord = () => {
          options: [],
       },
    ]
-
    const [movedItems, setMovedItems] = useState([])
    const [boards, setBoards] = useState(initialState)
    const [currentBoard, setCurrentBoard] = useState(null)
    const [currentItem, setCurrentItem] = useState(null)
-
    const isFirstBoard = (board) => boards.indexOf(board) === 0
    const isSecondBoard = (board) => boards.indexOf(board) === 1
-
    function dragStartHandler(e, board, item) {
       e.target.style.backgroundColor = 'rgb(51, 0, 255)'
       setCurrentBoard(board)
       setCurrentItem(item)
    }
-
    function dragOverHandler(e) {
       e.preventDefault()
    }
-
    function dragEnterHandler(e) {
       e.preventDefault()
       e.target.style.backgroundColor = 'rgba(58, 16, 229, 0.10)'
    }
-
    function dragLeaveHandler(e) {
       e.preventDefault()
       e.target.style.backgroundColor = '#fff'
    }
-
    function dragEndHandler(e) {
       if (e.target.classList.contains('item')) {
          e.target.style.backgroundColor = '#fff'
       }
    }
-
    function dropHandler(e, targetBoard, targetItem) {
       e.preventDefault()
       if (currentBoard === targetBoard) {
@@ -66,7 +58,6 @@ export const UserRealEnglishWord = () => {
          const currentIndex = newItems.indexOf(currentItem)
          newItems.splice(currentIndex, 1)
          newItems.splice(newItems.indexOf(targetItem), 0, currentItem)
-
          const newBoards = boards.map((board) => {
             if (board.id === currentBoard.id) {
                board.options = newItems
@@ -77,15 +68,12 @@ export const UserRealEnglishWord = () => {
       } else {
          const sourceBoard = currentBoard
          const sourceItem = currentItem
-
          const newSourceItems = [...sourceBoard.options]
          const sourceIndex = newSourceItems.indexOf(sourceItem)
          newSourceItems.splice(sourceIndex, 1)
-
          const newTargetItems = [...targetBoard.options]
          const targetIndex = newTargetItems.indexOf(targetItem)
          newTargetItems.splice(targetIndex + 1, 0, sourceItem)
-
          const newBoards = boards.map((board) => {
             if (board.id === sourceBoard.id) {
                board.options = newSourceItems
@@ -104,7 +92,6 @@ export const UserRealEnglishWord = () => {
          }
       }
    }
-
    const handleNext = () => {
       const newTest = {
          options: movedItems.map((el) => {
@@ -112,10 +99,11 @@ export const UserRealEnglishWord = () => {
          }),
       }
       dispatch(addTest(newTest))
+      dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      handleNextClick()
    }
-
    return (
-      <GlobalContainer>
+      <GlobalDiv>
          <div className="title">Select the real English words in this list</div>
          <Container>
             {boards.map((board) => (
@@ -158,38 +146,15 @@ export const UserRealEnglishWord = () => {
                </Button>
             </div>
          </Container>
-      </GlobalContainer>
+      </GlobalDiv>
    )
 }
-const GlobalContainer = styled('div')`
-   margin-top: 2.5rem;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   flex-direction: column;
-   .title {
-      color: #4c4859;
-      font-family: DINNextRoundedLTW01-Regular;
-      font-size: 1.75rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      text-transform: capitalize;
-   }
-`
-
-const BoardTitle = styled('div')(() => ({
-   fontSize: '0.90rem',
-   fontWeight: '700',
-}))
-
 const Container = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'end',
    gap: '5px',
 }))
-
 const Board = styled('div')(({ isFirstBoard, isSecondBoard }) => ({
    minWidth: isSecondBoard ? '243px' : '100%',
    minHeight: '20vh',
@@ -203,7 +168,10 @@ const Board = styled('div')(({ isFirstBoard, isSecondBoard }) => ({
    columnGap: '10px',
    flexWrap: 'wrap',
 }))
-
+const BoardTitle = styled('div')(() => ({
+   fontSize: '0.90rem',
+   fontWeight: '700',
+}))
 const Item = styled('div')(() => ({
    width: 'fit-content',
    height: '41px',
@@ -222,5 +190,36 @@ const Item = styled('div')(() => ({
    '&:active': {
       backgroundColor: '#3A10E5',
       color: 'white',
+   },
+}))
+
+const GlobalDiv = styled('div')(() => ({
+   '.title': {
+      color: '#4C4859',
+      fontSize: '1.75rem',
+      fontStyle: 'normal',
+      display: 'flex',
+      justifyContent: 'center',
+   },
+   height: '100%',
+   width: '100%',
+   marginTop: '2rem',
+   '.buttonContainer': {
+      display: 'flex',
+      padding: '15px 40px 0 0',
+      alignItems: 'center',
+      justifyContent: 'end',
+      width: '100%',
+   },
+   '.nextButtonContainer': {
+      height: '70px',
+      width: '100%',
+      borderTop: '2px solid #D4D0D0',
+      display: 'flex',
+      alignItems: 'end',
+      justifyContent: 'end',
+      '& Button': {
+         width: '143px',
+      },
    },
 }))

@@ -4,14 +4,17 @@ import { Typography, styled } from '@mui/material'
 import { Hear } from '../../../assets'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
 export const UserTypeWhatYouHear = () => {
    const [value, setValue] = useState('')
    const dispatch = useDispatch()
+   const { testComponent } = useSelector((state) => state.globalTestSlice)
 
-   const { link, numberOffReplays } = useSelector((state) => state.questions)
-   const [replaysLeft, setReplaysLeft] = useState(numberOffReplays)
+   const [replaysLeft, setReplaysLeft] = useState(testComponent.attempts)
    const [isPlaying, setIsPlaying] = useState(false)
    const audioRef = useRef(null)
    const handleInputChange = (e) => {
@@ -45,7 +48,7 @@ export const UserTypeWhatYouHear = () => {
                      onClick={isPlaying ? stopAudio : playAudio}
                      disabled={replaysLeft === 0}
                   />
-                  <audio ref={audioRef} src={link}>
+                  <audio ref={audioRef} src={testComponent.fileUrl}>
                      <track kind="captions" />
                   </audio>
                </BoxImg>
@@ -73,6 +76,7 @@ export const UserTypeWhatYouHear = () => {
                      className="nextButton"
                      onClick={() => {
                         dispatch(addTest({ statement: value }))
+                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
                      }}
                   >
                      Next

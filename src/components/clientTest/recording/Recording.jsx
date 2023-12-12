@@ -1,14 +1,20 @@
 /* eslint-disable react/self-closing-comp */
 import React, { useState } from 'react'
 import { ReactMic } from 'react-mic'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import { CircleIcon, SpeakIcon } from '../../../assets'
 import { postFileThunk } from '../../../store/questions/questionsThunk'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
 function Recording() {
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const [file, setFile] = useState(null)
    const [record, setRecord] = useState(false)
    const [disabled, setDisabled] = useState(false)
@@ -34,6 +40,7 @@ function Recording() {
          audioUrl: link.payload.data.link,
       }
       dispatch(addTest(audioUrl))
+      handleNextClick()
    }
 
    const nextButtonHandler = async () => {
@@ -52,7 +59,7 @@ function Recording() {
                   <div>
                      <SpeakIcon />
                   </div>
-                  <div>&quot;My uncle is at work&quot;.</div>
+                  <div>{testComponent.statement}</div>
                </SpeakContainer>
             </div>
             <hr />
@@ -100,7 +107,10 @@ function Recording() {
                      defaultStyle="#3A10E5"
                      hoverStyle="#4E28E8"
                      padding="13px 50px"
-                     onClick={nextButtonHandler}
+                     onClick={() => {
+                        nextButtonHandler()
+                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
+                     }}
                   >
                      next
                   </Button>

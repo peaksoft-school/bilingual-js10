@@ -1,23 +1,17 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
-const passage = `Sed ut perspiciatis unde omnis iste natus error sit
-                           voluptatem accusantium doloremque laudantium, totam
-                           rem aperiam, eaque ipsa quae ab illo inventore
-                           veritatis et quasi architecto beatae vitae dicta sunt
-                           explicabo. Nemo enim ipsam voluptatem quia voluptas
-                           sit aspernatur aut odit aut fugit, sed quia
-                           consequuntur magni dolores eos qui ratione voluptatem
-                           sequi nesciunt. Neque porro quisquam est, qui dolorem
-                           ipsum quia dolor sit amet, consectetur, adipisci
-                           velit, sed quia non numquam eius modi tempora
-                           incidunt ut labore et dolore magnam aliquam quaerat
-                           voluptatem`
 const HighLightAnswerUser = () => {
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const [answerValue, setAnswerValue] = useState('')
    const dispatch = useDispatch()
 
@@ -26,6 +20,7 @@ const HighLightAnswerUser = () => {
          statement: answerValue,
       }
       dispatch(addTest(testPayload))
+      handleNextClick()
    }
    return (
       <div>
@@ -42,7 +37,7 @@ const HighLightAnswerUser = () => {
                            setAnswerValue(window.getSelection().toString())
                         }
                      >
-                        {passage}
+                        {testComponent.passage}
                      </Pstyle>
                   </TextBox>
                </PassageBlock>
@@ -54,21 +49,29 @@ const HighLightAnswerUser = () => {
                      </TextClick>
                   </TitleBox>
                   <QuestionBox>
-                     <p>
-                        What did residents think couild happen with new bridge?
-                     </p>
+                     <p>{testComponent.statement}</p>
                   </QuestionBox>
                   <HighlitedBox>
                      <StyledInput
                         disabled
                         minRows={3}
                         maxRows={3}
+                        type="text"
                         placeholder="Highlight text in the passage to set an answer"
                         value={answerValue}
+                        onChange={(e) => setAnswerValue(e.target.value)}
                      />
                   </HighlitedBox>
                   <ButtonBox>
-                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                     <Button
+                        padding="0.8rem 2.5rem"
+                        onClick={() => {
+                           handleAddTest()
+                           dispatch(
+                              globalTestSlice.actions.addCurrentComponent(1)
+                           )
+                        }}
+                     >
                         Next
                      </Button>
                   </ButtonBox>

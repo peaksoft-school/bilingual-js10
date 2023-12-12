@@ -1,44 +1,19 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
 export const UserMainIdea = () => {
-   const passage = `Sed ut perspiciatis unde omnis iste natus error sit
-                           voluptatem accusantium doloremque laudantium, totam
-                           rem aperiam, eaque ipsa quae ab illo inventore
-                           veritatis et quasi architecto beatae vitae dicta sunt
-                           explicabo. Nemo enim ipsam voluptatem quia voluptas
-                           sit aspernatur aut odit aut fugit, sed quia
-                           consequuntur magni dolores eos qui ratione voluptatem
-                           sequi nesciunt. Neque porro quisquam est, qui dolorem
-                           ipsum quia dolor sit amet, consectetur, adipisci
-                           velit, sed quia non numquam eius modi tempora
-                           incidunt ut labore et dolore magnam aliquam quaerat
-                           voluptatem`
-   const arr = [
-      {
-         id: 1,
-         title: 'There are many variations of passages of Lorem Ipsum available, but the majority have.',
-      },
-      {
-         id: 2,
-         title: 'There are many variations of passages of Lorem Ipsum available, but the majority have.',
-      },
-      {
-         id: 3,
-         title: 'There are many variations of passages of Lorem Ipsum available, but the majority have.',
-      },
-      {
-         id: 4,
-         title: 'There are many variations of passages of Lorem Ipsum available, but the majority have.',
-      },
-   ]
-
    const [selectedRadio, setSelectedRadio] = useState(null)
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const dispatch = useDispatch()
    const formik = useFormik({
       initialValues: {
@@ -50,15 +25,18 @@ export const UserMainIdea = () => {
    const handleRadioChange = (id) => {
       formik.setFieldValue(
          'options',
-         arr.map((el) => el.id === id)
+         testComponent.optionList.map((el) => el.id === id)
       )
       setSelectedRadio(id)
    }
    const isNextButtonDisabled = !selectedRadio
 
    const handleNextButtonClick = () => {
-      const selectedOption = arr.find((el) => el.id === selectedRadio)
+      const selectedOption = testComponent.optionList.find(
+         (el) => el.id === selectedRadio
+      )
       dispatch(addTest({ options: [selectedOption.id] }))
+      handleNextClick()
    }
 
    return (
@@ -70,14 +48,14 @@ export const UserMainIdea = () => {
                      <span>PASSAGE</span>
                   </div>
                   <div className="ContainerParagraf">
-                     <p>{passage}</p>
+                     <p>{testComponent.passage}</p>
                   </div>
                </ContainerTextArea>
                <ContainerSelectRadio>
                   <p className="passageMainIdea">
                      Select the main idea for the passage
                   </p>
-                  {arr.map((el) => (
+                  {testComponent.optionList.map((el) => (
                      <div key={el.id} className="ContainerCreateUserTest">
                         <div
                            className="ContainCreatTest"
@@ -107,11 +85,12 @@ export const UserMainIdea = () => {
                      disabled={isNextButtonDisabled}
                      defaultStyle="#3A10E5"
                      hoverStyle="#4E28E8"
-                     className="NextButton"
+                     className="nextButton"
                      variant="contained"
                      type="submit"
                      onClick={() => {
                         handleNextButtonClick()
+                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
                      }}
                   >
                      NEXT
@@ -122,26 +101,19 @@ export const UserMainIdea = () => {
       </form>
    )
 }
-
 const ContainerUserTest = styled('div')({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
    gap: '2.5rem',
-   marginTop: '3.15rem',
-   '.nextButton': {
-      alignSelf: 'flex-end',
+   marginTop: '3.12rem',
+   button: {
       width: '9rem',
-      marginTop: '1.3rem',
-   },
-   '.ContainerInputRadio': {
-      paddingTop: '20px',
+      height: '2.62rem',
+      marginTop: '1.8rem',
    },
 })
 const ContainerSelectTest = styled('div')({
-   '.ContainerBackground': {
-      padding: '2.69rem',
-   },
    '.ContainCreatTest': {
       display: 'flex',
       alignItems: 'start',
@@ -149,10 +121,11 @@ const ContainerSelectTest = styled('div')({
       border: '1px solid #D4D0D0',
       background: '#fff',
       padding: '0.88rem',
-      width: '26.68rem',
+      width: '25.68rem',
+      height: '4rem',
       '.ContainerRadio': {
          display: 'flex',
-         alignItems: 'start',
+         alignItems: 'center',
          gap: '1rem',
       },
    },
@@ -161,10 +134,12 @@ const ContainerTextArea = styled('div')({
    border: '1px solid #D4D0D0',
    borderRadius: '0.5rem',
    background: '#F7F7F7',
+   width: '34.65rem',
+   height: '28.43rem',
    '.ContainerParagraf': {
       padding: '2.9rem 3.13rem 3rem 1.06rem',
       width: '100%',
-      height: '28rem',
+      height: '100%',
       color: '#4C4859',
       fontSize: '1rem',
       fontWeight: '400',
@@ -173,19 +148,21 @@ const ContainerTextArea = styled('div')({
       borderBottom: '1px solid #D4D0D0',
       padding: '1rem 29rem 1rem 1.13rem',
       color: ' #4C4859',
-      fontSize: '1rem',
+      fontSize: '0.95rem',
       fontWeight: 500,
-      lineHeight: '1.24rem',
    },
 })
 const ContainerSelectRadio = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   gap: '1rem',
+   gap: '0.88rem',
+   justifyContent: 'center',
+   alignItems: 'end',
    '.passageMainIdea': {
       color: '#4C4859',
-      fontSize: '1.3rem',
-      fontWeight: 420,
-      lineHeight: '2.63rem',
+      fontSize: '1.4rem',
+      fontWeight: 400,
+      lineHeight: '3.63rem',
+      width: '26rem',
    },
 })

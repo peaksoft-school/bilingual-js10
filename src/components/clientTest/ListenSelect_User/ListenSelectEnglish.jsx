@@ -1,37 +1,23 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 // import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 // import ProgressBar from '../../UI/progressBar/ProgressBar'
 // import { Background } from '../../../layout/Background'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
 
-export const ListenSelectEnglish = ({
-   words = [
-      {
-         id: 1,
-         title: 'LASEW',
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
-      },
-      {
-         id: 2,
-         title: 'LASEW ',
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
-      },
-      {
-         id: 3,
-         title: 'LASEW',
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701253795142Violin.mp3',
-      },
-   ],
-}) => {
+export const ListenSelectEnglish = () => {
    // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-   const [selectedWords, setSelectedWords] = useState([...words])
+   const { testComponent, handleNextClick } = useSelector(
+      (state) => state.globalTestSlice
+   )
+   const [selectedWords, setSelectedWords] = useState(testComponent.optionList)
    const [answer, setAnswer] = useState([])
 
    const dispatch = useDispatch()
@@ -54,6 +40,7 @@ export const ListenSelectEnglish = ({
          return el.id
       })
       dispatch(addTest({ options: data }))
+      handleNextClick()
    }
 
    // const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
@@ -79,7 +66,10 @@ export const ListenSelectEnglish = ({
                defaultStyle="#3A10E5"
                hoverStyle="#4E28E8"
                // disabled={isButtonDisabled}
-               onClick={handleNextButtonClick}
+               onClick={() => {
+                  handleNextButtonClick()
+                  dispatch(globalTestSlice.actions.addCurrentComponent(1))
+               }}
             >
                NEXT
             </Button>
