@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
+import { useSelector } from 'react-redux'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
@@ -8,10 +9,11 @@ const HighlightedAnswerCheck = () => {
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
+   const { userId, questionId } = useSelector((state) => state.answer)
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            '/result/getQuestionsResults?userId=1&questionId=7'
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allresult = response.data
          setState({ response: allresult })
@@ -22,8 +24,8 @@ const HighlightedAnswerCheck = () => {
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 7,
+            userId,
+            questionId,
             score,
          })
       } catch (error) {
