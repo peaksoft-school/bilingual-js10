@@ -36,6 +36,11 @@ export const UserAnswers = () => {
       }
    }
 
+   const deleteUserTest = async (userId, testId) => {
+      await axiosInstance.delete(`/result/?userId=${userId}&testId=${testId}`)
+      result()
+   }
+
    useEffect(() => {
       result()
    }, [])
@@ -96,7 +101,10 @@ export const UserAnswers = () => {
                         style={{ cursor: 'pointer' }}
                      />
                   )}
-                  <TrashCan style={{ cursor: 'pointer' }} />
+                  <TrashCan
+                     onClick={() => deleteUserTest(row.userId, row.testId)}
+                     style={{ cursor: 'pointer' }}
+                  />
                </Container>
             )
          },
