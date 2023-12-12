@@ -17,7 +17,7 @@ export const RespondLeast = () => {
 
    const { pathname } = useLocation()
    const updateUrl =
-      pathname === '/admin/update-question/respond-in-at-least-n-words'
+      pathname === '/admin/tests/update-question/respond-in-at-least-n-words'
 
    const navigate = useNavigate()
    const dispatch = useDispatch()

@@ -20,7 +20,8 @@ export const HighlightTheAnswer = () => {
    const navigate = useNavigate()
 
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/highlight-the-answer'
+   const updateUrl =
+      pathname === '/admin/tests/update-question/highlight-the-answer'
 
    const formik = useFormik({
       initialValues: {
@@ -68,7 +69,6 @@ export const HighlightTheAnswer = () => {
       <div>
          <MainPassageContainer onSubmit={formik.handleSubmit}>
             <span>Questions to the Passage</span>
-
             <Input
                border=" 1.53px solid #D4D0D0"
                className="input"

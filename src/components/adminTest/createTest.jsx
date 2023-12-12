@@ -22,8 +22,8 @@ export const CreateTest = () => {
 
    const formik = useFormik({
       initialValues: {
-         title: obj[0] === 'update-test' ? testId.title : '',
-         description: obj[0] === 'update-test' ? testId.description : '',
+         title: obj[0] === 'tests/update-test' ? testId.title : '',
+         description: obj[0] === 'tests/update-test' ? testId.description : '',
          enable: false,
       },
       validate: (values) => {
@@ -43,7 +43,7 @@ export const CreateTest = () => {
    const saveHandler = async (e) => {
       e.preventDefault()
       if (formik.values.title && formik.values.description) {
-         if (obj[0] === 'create-test') {
+         if (obj[0] === 'tests/create-test') {
             Notify(
                {
                   sucessTitle: 'Test saved ',
@@ -69,7 +69,7 @@ export const CreateTest = () => {
                })
             )
          }
-         navigate('/admin')
+         navigate('/admin/tests')
       }
    }
 
@@ -88,72 +88,70 @@ export const CreateTest = () => {
                const id = match[1]
                dispatch(createTestActions.testID(Number(id)))
             })
-         navigate('/admin/create-question')
+         navigate('/admin/tests/create-question')
       }
    }
 
    return (
       <TestStyle>
          <Background>
-            <form onSubmit={formik.handleSubmit}>
-               <div>
-                  <p>Title</p>
-                  <Input
-                     className="testInput"
-                     type="text"
-                     name="title"
-                     onChange={formik.handleChange}
-                     value={formik.values.title}
-                  />
-                  {formik.errors.title && (
-                     <div className="error">{formik.errors.title}</div>
-                  )}
-               </div>
-               <div>
-                  <p className="twoP">Short Description</p>
-                  <Input
-                     className="testInput"
-                     type="text"
-                     name="description"
-                     onChange={formik.handleChange}
-                     value={formik.values.description}
-                  />
-                  {formik.errors.description && (
-                     <div className="error">{formik.errors.description}</div>
-                  )}
-               </div>
-               <div className="testButtonContainer">
+            <div>
+               <p>Title</p>
+               <Input
+                  className="testInput"
+                  type="text"
+                  name="title"
+                  onChange={formik.handleChange}
+                  value={formik.values.title}
+               />
+               {formik.errors.title && (
+                  <div className="error">{formik.errors.title}</div>
+               )}
+            </div>
+            <div>
+               <p className="twoP">Short Description</p>
+               <Input
+                  className="testInput"
+                  type="text"
+                  name="description"
+                  onChange={formik.handleChange}
+                  value={formik.values.description}
+               />
+               {formik.errors.description && (
+                  <div className="error">{formik.errors.description}</div>
+               )}
+            </div>
+            <div className="testButtonContainer">
+               <Button
+                  defaultStyle="white"
+                  hoverStyle="#3A10E5"
+                  variant="outlined"
+                  onClick={() => navigate(-1)}
+               >
+                  GO BACK
+               </Button>
+               <Button
+                  defaultStyle="#2AB930"
+                  hoverStyle="#31CF38"
+                  type="submit"
+                  variant="contained"
+                  onClick={(e) => saveHandler(e)}
+               >
+                  SAVE
+               </Button>
+               {obj[0] === 'tests/create-test' ? (
                   <Button
-                     defaultStyle="white"
-                     hoverStyle="#3A10E5"
-                     variant="outlined"
-                     onClick={() => navigate(-1)}
-                  >
-                     GO BACK
-                  </Button>
-                  <Button
-                     defaultStyle="#2AB930"
-                     hoverStyle="#31CF38"
-                     type="submit"
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#3A10E5E5"
                      variant="contained"
-                     onClick={(e) => saveHandler(e)}
+                     className="addNewTestButton"
+                     type="submit"
+                     onClick={(e) => addQuestionHandler(e)}
                   >
-                     SAVE
+                     add questions
                   </Button>
-                  {obj[0] === 'create-test' ? (
-                     <Button
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#3A10E5E5"
-                        variant="contained"
-                        className="addNewTestButton"
-                        type="submit"
-                        onClick={(e) => addQuestionHandler(e)}
-                     >
-                        add questions
-                     </Button>
-                  ) : null}
-               </div>
-            </form>
+               ) : null}
+            </div>
          </Background>
       </TestStyle>
    )
