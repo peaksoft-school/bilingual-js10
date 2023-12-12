@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material'
+import { useSelector } from 'react-redux'
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import Button from '../UI/Buttons/Button'
@@ -12,10 +13,11 @@ const RecordStatementCheck = () => {
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
    const audioRef = useRef(new Audio())
+   const { userId, questionId } = useSelector((state) => state.answer)
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            '/result/getQuestionsResults?userId=1&questionId=5'
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allresult = response.data
          setState({ response: allresult })
@@ -44,8 +46,8 @@ const RecordStatementCheck = () => {
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 5,
+            userId,
+            questionId,
             score,
          })
       } catch (error) {
