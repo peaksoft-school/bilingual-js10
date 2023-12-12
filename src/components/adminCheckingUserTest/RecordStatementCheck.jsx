@@ -14,6 +14,7 @@ const RecordStatementCheck = () => {
    const [error, setError] = useState(null)
    const audioRef = useRef(new Audio())
    const { userId, questionId } = useSelector((state) => state.answer)
+
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
@@ -159,14 +160,14 @@ const RecordStatementCheck = () => {
                         </div>
                      </Button>
                   </BoxPlay>
-                  {state.response && (
-                     <BoxCorrectAnswer>
-                        <span className="statement">Correct Answer:</span>
+                  <BoxCorrectAnswer>
+                     <span className="statement">Correct Answer:</span>
+                     {state.response && (
                         <p className="ColorParagraf">
                            {state.response.correctAnswer}
                         </p>
-                     </BoxCorrectAnswer>
-                  )}
+                     )}
+                  </BoxCorrectAnswer>
                </ContainerQuestion>
                {error && (
                   <ErrorBox>

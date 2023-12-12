@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
@@ -13,13 +15,15 @@ const answers = [
 
 const RespondleastUserTest = () => {
    const [appState, setAppState] = useState({ response: null })
+   const { userId, questionId } = useSelector((appState) => appState.answer)
+   const navigate = useNavigate()
    const [error, setError] = useState(null)
+   const [score, setScore] = useState()
 
-   const usetTestId = 6
    const getQuestionTest = async () => {
       try {
          const response = await axiosInstance.get(
-            `/result/getQuestionsResults?userId=1&questionId=${usetTestId}`
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allRepos = response.data
          setAppState({ response: allRepos })
@@ -30,9 +34,11 @@ const RespondleastUserTest = () => {
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 1,
+            userId,
+            questionId,
+            score,
          })
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
@@ -44,7 +50,7 @@ const RespondleastUserTest = () => {
    const handleInputChange = (e) => {
       const value = parseInt(e.target.value, 10)
       const clampedValue = Math.min(Math.max(value, 0), 10)
-      e.target.value = clampedValue
+      setScore(clampedValue)
    }
    return (
       <Container>
@@ -145,7 +151,7 @@ const RespondleastUserTest = () => {
             </div>
             <div className="TextUserAnswer">
                <span>Number of words:</span>
-               {appState.response && <p>{appState.response.attempts}</p>}
+               {appState.response && <p>{appState.response.count}</p>}
             </div>
             {error && (
                <ErrorBox>
@@ -154,7 +160,11 @@ const RespondleastUserTest = () => {
                </ErrorBox>
             )}
             <ContainerButtons>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={() => navigate(-1)}
+               >
                   GO BACK
                </Button>
                <Button
