@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
@@ -10,6 +11,8 @@ const HighlightedAnswerCheck = () => {
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
    const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
+
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
@@ -28,6 +31,7 @@ const HighlightedAnswerCheck = () => {
             questionId,
             score,
          })
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
@@ -155,7 +159,11 @@ const HighlightedAnswerCheck = () => {
                </ContainerUserAnswer>
             </ContainerFlex>
             <ContainerButtons>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={() => navigate(-1)}
+               >
                   GO BACK
                </Button>
                <Button
