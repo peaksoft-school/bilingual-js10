@@ -1,18 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
 import { useSelector } from 'react-redux'
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline'
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
-import Button from '../UI/Buttons/Button'
 import { Background } from '../../layout/Background'
+import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
 
-const RecordStatementCheck = () => {
-   const [isPlaying, setIsPlaying] = useState(false)
+const HighlightedAnswerCheck = () => {
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
-   const audioRef = useRef(new Audio())
    const { userId, questionId } = useSelector((state) => state.answer)
    const getQuestionResult = async () => {
       try {
@@ -25,24 +21,6 @@ const RecordStatementCheck = () => {
          setError(error)
       }
    }
-
-   const playAudio = () => {
-      if (state.response && state.response.audioFile) {
-         const audio = audioRef.current
-         audio.src = state.response.audioFile
-
-         if (isPlaying) {
-            audio.pause()
-         } else {
-            audio.play().catch((error) => {
-               console.error('Error playing audio:', error)
-            })
-         }
-
-         setIsPlaying((prev) => !prev)
-      }
-   }
-
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
@@ -62,6 +40,7 @@ const RecordStatementCheck = () => {
    useEffect(() => {
       getQuestionResult()
    }, [])
+
    return (
       <Background marginTop="3rem" padding="0">
          <Container>
@@ -92,7 +71,8 @@ const RecordStatementCheck = () => {
                            <div className="FixedDisplay">
                               <span className="ColorBlue">Question Title:</span>
                               <p className="ColorParagraf">
-                                 {state.response.questionTitle}
+                                 {' '}
+                                 {state.response.questionTitle}{' '}
                               </p>
                            </div>
                         )}
@@ -102,7 +82,7 @@ const RecordStatementCheck = () => {
                                  Duration (in minutes):
                               </span>
                               <span className="ColorParagraf">
-                                 {state.response.duration}
+                                 {state.response.duration}{' '}
                               </span>
                            </div>
                         )}
@@ -111,14 +91,6 @@ const RecordStatementCheck = () => {
                               <span className="ColorBlue">Question Type:</span>
                               <p className="ColorParagraf">
                                  {state.response.questionType}
-                              </p>
-                           </div>
-                        )}
-                        {state.response && (
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Statement:</span>
-                              <p className="ColorParagraf">
-                                 {state.response.statement}
                               </p>
                            </div>
                         )}
@@ -137,43 +109,50 @@ const RecordStatementCheck = () => {
                   </ContaineScore>
                </ContainerCkeckInTheTest>
                <ContainerQuestion>
-                  <BoxPlay>
-                     <Button
-                        variant="contained"
-                        className="playButton"
-                        hoverStyle="#4E28E8"
-                        onClick={playAudio}
-                     >
-                        <div>
-                           {isPlaying ? (
-                              <AudioBoxPlay>
-                                 <PauseCircleOutlineIcon />
-                                 <span>STOP RECORDED AUDIO</span>
-                              </AudioBoxPlay>
-                           ) : (
-                              <AudioBoxPlay>
-                                 <PlayCircleOutlineIcon />
-                                 <span>PLAY AUDIO</span>
-                              </AudioBoxPlay>
-                           )}
-                        </div>
-                     </Button>
-                  </BoxPlay>
+                  {state.response && (
+                     <BoxPassage>
+                        <span className="statement">Passage:</span>
+                        <p className="ColorParagraf">
+                           {state.response.passage}
+                        </p>
+                     </BoxPassage>
+                  )}
+                  {state.response && (
+                     <BoxStatement>
+                        <span className="statement">Question Statement:</span>
+                        <p className="ColorParagraf">
+                           {state.response.statement}
+                        </p>
+                     </BoxStatement>
+                  )}
                   {state.response && (
                      <BoxCorrectAnswer>
                         <span className="statement">Correct Answer:</span>
-                        <p className="ColorParagraf">
+                        <p className="correctAnswer">
                            {state.response.correctAnswer}
                         </p>
                      </BoxCorrectAnswer>
                   )}
                </ContainerQuestion>
-               {error && (
-                  <ErrorBox>
-                     An error occurred:
-                     {error.message || 'Unknown error'}
-                  </ErrorBox>
-               )}
+               <ContainerUserAnswer>
+                  <div>
+                     <p className="TextUserAnswer">User’s Answer </p>
+                  </div>
+                  <div className="statement-box">
+                     <span className="statement">Respond:</span>
+                     {state.response && (
+                        <p className="ColorParagraf">
+                           {state.response.respond}
+                        </p>
+                     )}
+                  </div>
+                  {error && (
+                     <ErrorBox>
+                        An error occurred:
+                        {error.message || 'Unknown error'}
+                     </ErrorBox>
+                  )}
+               </ContainerUserAnswer>
             </ContainerFlex>
             <ContainerButtons>
                <Button variant="outlined" hoverStyle="#3A10E5">
@@ -191,44 +170,8 @@ const RecordStatementCheck = () => {
       </Background>
    )
 }
-export default RecordStatementCheck
+export default HighlightedAnswerCheck
 
-const ErrorBox = styled('div')({
-   color: 'red',
-   marginTop: '7px',
-})
-const Container = styled('div')({
-   display: 'flex',
-   flexDirection: 'column',
-   gap: '1rem',
-   width: '55rem',
-   height: '29rem',
-   marginTop: '1.25rem',
-   fontFamily: 'Poppins',
-   '.ColorParagraf': {
-      color: '#4C4859',
-   },
-   '.ContainerEvaluation': {
-      display: 'flex',
-      flexDirection: 'column',
-      color: 'green',
-   },
-   '.TextTestQuestion': {
-      color: '#4C4859',
-      fontSize: '1.25rem',
-      fontWeight: 500,
-      lineHeight: '2rem',
-      marginBottom: '0.6rem',
-   },
-   '.statement': {
-      fontFamily: 'Poppins',
-      color: '#4C4859',
-      fontSize: '1.14rem',
-      lineHeight: '1.28rem',
-      paddingTop: '1px',
-      fontWeight: 500,
-   },
-})
 const ContainerUser = styled('div')({
    display: 'flex',
    flexDirection: 'column',
@@ -242,6 +185,82 @@ const ContainerUser = styled('div')({
       textAlign: 'center',
       fontWeight: 500,
    },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
+const BoxPassage = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'start',
+   gap: '7px',
+   width: '56rem',
+   height: '8.7rem',
+})
+const BoxStatement = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'center',
+   gap: '7px',
+   width: '56rem',
+   height: '2.7rem',
+})
+const Container = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1rem',
+   width: '58rem',
+   height: '44rem',
+   marginTop: '1.25rem',
+   fontFamily: 'Poppins',
+   '.statement': {
+      fontFamily: 'Poppins',
+      color: '#4C4859',
+      fontSize: '1.14rem',
+      lineHeight: '1.28rem',
+      paddingTop: '1px',
+      fontWeight: 500,
+   },
+   '.correctAnswer': {
+      color: '#3A10E5',
+   },
+   '.TextTestQuestion': {
+      color: '#4C4859',
+      fontSize: '1.25rem',
+      fontWeight: 500,
+      lineHeight: '2rem',
+      marginBottom: '0.6rem',
+   },
+   '.ColorParagraf': {
+      color: '#4C4859',
+   },
+})
+
+const ContainerFlex = styled('div')({
+   width: '100%',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1.5rem',
+   justifyContent: 'center',
+   alignItems: 'start',
+})
+const ContaineScore = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   marginRight: '2.2rem',
+   '.rightAnswer': {
+      color: 'green',
+      fontWeight: 500,
+      paddingLeft: '10px',
+   },
+})
+const BoxCorrectAnswer = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   justifyContent: 'start',
+   alignItems: 'center',
+   gap: '7px',
 })
 const InputNumber = styled('input')({
    marginTop: '6px',
@@ -266,22 +285,29 @@ const InputNumber = styled('input')({
       border: '2px solid rgba(196, 196, 196, 0.60)',
    },
 })
-const ContainerFlex = styled('div')({
-   width: '100%',
+const ContainerUserAnswer = styled('div')({
+   width: '55rem',
+   height: '9rem',
    display: 'flex',
    flexDirection: 'column',
-   gap: '3rem',
    justifyContent: 'center',
    alignItems: 'start',
-})
-const ContaineScore = styled('div')({
-   display: 'flex',
-   flexDirection: 'column',
-   marginRight: '2.2rem',
-   '.rightAnswer': {
-      color: 'green',
+   gap: '4px',
+   '.statement-box': {
+      width: '56rem',
+      height: '3.5rem',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'start',
+      alignItems: 'center',
+      gap: '0.5rem',
+   },
+   '.TextUserAnswer': {
+      fontFamily: 'Poppins',
+      color: '#4C4859',
+      fontSize: '1.125rem',
+      lineHeight: '1.28rem',
       fontWeight: 500,
-      paddingLeft: '10px',
    },
 })
 const ContainerTestQuestion = styled('div')({
@@ -298,29 +324,10 @@ const ContainerTestQuestion = styled('div')({
 })
 const ContainerQuestion = styled('div')({
    display: 'flex',
-   flexDirection: 'row',
-   gap: '2rem',
-   width: '38rem',
-   height: '2rem',
-   alignItems: 'center',
-})
-const BoxPlay = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   gap: '0.5rem',
-})
-const AudioBoxPlay = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   gap: '0.7rem',
-})
-
-const BoxCorrectAnswer = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   justifyContent: 'start',
-   alignItems: 'center',
+   flexDirection: 'column',
    gap: '1rem',
+   width: '56rem',
+   height: '14rem',
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
@@ -328,7 +335,8 @@ const ContainerCkeckInTheTest = styled('div')({
    width: '100%',
    alignContent: 'center',
    flexDirection: 'row',
-   gap: '1rem',
+   gap: '1.5rem',
+   marginTop: '0.5rem',
    fontWeight: 500,
    '.ColorBlue': {
       color: '#3752B4',

@@ -87,7 +87,14 @@ export const UserAnswers = () => {
                         }}
                      />
                   ) : (
-                     <Check style={{ cursor: 'pointer' }} />
+                     <Check
+                        onClick={() => {
+                           dispatch(answersSlice.actions.addUserId(row.userId))
+                           dispatch(answersSlice.actions.addTestId(row.testId))
+                           navigate('/admin/user-responses')
+                        }}
+                        style={{ cursor: 'pointer' }}
+                     />
                   )}
                   <TrashCan style={{ cursor: 'pointer' }} />
                </Container>
