@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import SelectRealEnglishWords from '../../components/adminCheckingUserTest/SelectRealEnglishWords'
 import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 import DescribeImage from '../../components/adminCheckingUserTest/DescribeImage'
 import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/HighlightedAnswerCheck'
@@ -7,7 +8,7 @@ import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordS
 import RespondleastUserTest from '../../components/adminCheckingUserTest/RespondleastUserTest'
 
 const questionsPages = {
-   SELECT_REAL_ENGLISH_WORD: <div>SELECT_REAL_ENGLISH_WORD</div>,
+   SELECT_REAL_ENGLISH_WORD: <SelectRealEnglishWords />,
    LISTEN_AND_SELECT_ENGLISH_WORDS: <div>LISTEN_AND_SELECT_ENGLISH_WORDS</div>,
    TYPE_WHAT_YOU_HEAR: <div>TYPE_WHAT_YOU_HEAR</div>,
    DESCRIBE_IMAGE: <DescribeImage />,

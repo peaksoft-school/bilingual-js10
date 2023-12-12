@@ -17,7 +17,7 @@ const StatementInput = () => {
    const navigate = useNavigate()
    const { pathname } = useLocation()
    const updateUrl =
-      pathname === '/admin/update-question/record-saying-statement'
+      pathname === '/admin/tests/update-question/record-saying-statement'
 
    const formik = useFormik({
       initialValues: {

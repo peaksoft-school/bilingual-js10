@@ -42,7 +42,8 @@ export const ListenSelect = () => {
    })
    useEffect(() => {
       if (
-         pathname === '/admin/update-question/listen-and-select-english-word'
+         pathname ===
+         '/admin/tests/update-question/listen-and-select-english-word'
       ) {
          formik.setFieldValue('options', options)
          dispatch(questionsSlice.actions.addTime(question.duration))
@@ -53,7 +54,8 @@ export const ListenSelect = () => {
    const SaveFile = async () => {
       if (title && questionDuration) {
          if (
-            pathname === '/admin/update-question/listen-and-select-english-word'
+            pathname ===
+            '/admin/tests/update-question/listen-and-select-english-word'
          ) {
             const data = {
                title,
@@ -91,7 +93,8 @@ export const ListenSelect = () => {
          isTrue: formik.values.isTrue,
       }
       if (
-         pathname === '/admin/update-question/listen-and-select-english-word'
+         pathname ===
+         '/admin/tests/update-question/listen-and-select-english-word'
       ) {
          const option = {
             audioUrl: link.payload.data.link,
@@ -137,7 +140,8 @@ export const ListenSelect = () => {
          options: updatedOptions,
       })
       if (
-         pathname === '/admin/update-question/listen-and-select-english-word'
+         pathname ===
+         '/admin/tests/update-question/listen-and-select-english-word'
       ) {
          dispatch(optionEnable({ e, id }))
          setTimeout(() => {

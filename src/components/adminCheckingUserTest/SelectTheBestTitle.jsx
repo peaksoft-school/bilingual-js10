@@ -7,7 +7,7 @@ import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
 import { InputRadio } from '../UI/InputRadio'
 
-const SelectTheMainIdea = () => {
+const SelectTheBestTitle = () => {
    const [appState, setAppState] = useState({ response: null })
    const [error, setError] = useState(null)
    const [score, setScore] = useState(null)
@@ -185,8 +185,7 @@ const SelectTheMainIdea = () => {
       </div>
    )
 }
-
-export default SelectTheMainIdea
+export default SelectTheBestTitle
 
 const ContainerUserTest = styled('div')({
    display: 'flex',

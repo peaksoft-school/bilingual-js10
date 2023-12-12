@@ -21,7 +21,7 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
    const handleCheck = (id, questionType) => {
       dispatch(answersSlice.actions.addQuestionId(id))
       dispatch(answersSlice.actions.addQuestionType(questionType))
-      navigate('/admin/checking-page')
+      navigate('/admin/results/checking-page')
    }
 
    const { questions } = useSelector((state) => state.questionSlice)
@@ -49,7 +49,9 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                               pathname={pathname}
                               key={row.id}
                               onClick={() => {
-                                 if (pathname === '/admin/user-responses') {
+                                 if (
+                                    pathname === '/admin/results/user-responses'
+                                 ) {
                                     handleCheck(row.id, row.questionType)
                                  }
                               }}
@@ -164,7 +166,9 @@ const TableRowData = styled(TableRow)((props) => ({
    cursor: props.pathname === '/admin/user-responses' ? 'pointer' : 'auto',
    ':hover': {
       backgroundColor:
-         props.pathname === '/admin/user-responses' ? '#f8f8f8' : 'white',
+         props.pathname === '/admin/results/user-responses'
+            ? '#f8f8f8'
+            : 'white',
       boxShadow:
          ' 0px 1px 5px 0px rgba(0, 0, 0, 0.06), 0px -4px 10px 0px rgba(0, 0, 0, 0.06);',
       transitionDuration: '0.7s',
