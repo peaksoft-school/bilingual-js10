@@ -32,7 +32,7 @@ const SelectTheMainIdea = () => {
             questionId,
             score,
          })
-         navigate(`/admin/user-responses/${userId}`)
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
