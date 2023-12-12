@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import { styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
 
-const DescribeImage = () => {
+const HighlightedAnswerCheck = () => {
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
@@ -42,8 +42,8 @@ const DescribeImage = () => {
    }, [])
 
    return (
-      <Container>
-         <Background marginTop="3rem" padding="0">
+      <Background marginTop="3rem" padding="0">
+         <Container>
             <ContainerFlex>
                <ContainerUser>
                   {state.response && (
@@ -108,31 +108,44 @@ const DescribeImage = () => {
                      </div>
                   </ContaineScore>
                </ContainerCkeckInTheTest>
-               <ContainerImgQuestion>
+               <ContainerQuestion>
                   {state.response && (
-                     <BoxImg>
-                        <img
-                           src={state.response.audioFile}
-                           alt="img comes with props"
-                        />
-                     </BoxImg>
+                     <BoxPassage>
+                        <span className="statement">Passage:</span>
+                        <p className="ColorParagraf">
+                           {state.response.passage}
+                        </p>
+                     </BoxPassage>
                   )}
-                  <BoxCorrectAnswer>
-                     <p className="CarrentAnswer">Correct Answer:</p>
-                     {state.response && (
-                        <span>{state.response.correctAnswer}</span>
-                     )}
-                  </BoxCorrectAnswer>
-               </ContainerImgQuestion>
+                  {state.response && (
+                     <BoxStatement>
+                        <span className="statement">Question Statement:</span>
+                        <p className="ColorParagraf">
+                           {state.response.statement}
+                        </p>
+                     </BoxStatement>
+                  )}
+                  {state.response && (
+                     <BoxCorrectAnswer>
+                        <span className="statement">Correct Answer:</span>
+                        <p className="correctAnswer">
+                           {state.response.correctAnswer}
+                        </p>
+                     </BoxCorrectAnswer>
+                  )}
+               </ContainerQuestion>
                <ContainerUserAnswer>
-                  <p className="TextUserAnswer">User’s Answer </p>
+                  <div>
+                     <p className="TextUserAnswer">User’s Answer </p>
+                  </div>
                   <div className="statement-box">
-                     <span className="statement">Entered statement:</span>
+                     <span className="statement">Respond:</span>
                      {state.response && (
-                        <p className="p">{state.response.respond}</p>
+                        <p className="ColorParagraf">
+                           {state.response.respond}
+                        </p>
                      )}
                   </div>
-
                   {error && (
                      <ErrorBox>
                         An error occurred:
@@ -153,47 +166,12 @@ const DescribeImage = () => {
                   Save
                </Button>
             </ContainerButtons>
-         </Background>
-      </Container>
+         </Container>
+      </Background>
    )
 }
+export default HighlightedAnswerCheck
 
-export default DescribeImage
-
-const ErrorBox = styled('div')({
-   color: 'red',
-   marginTop: '7px',
-})
-const Container = styled('div')({
-   display: 'flex',
-   justifyContent: 'center',
-   fontFamily: 'Poppins',
-   '.imgReplace': {
-      width: '100%',
-      height: '100%',
-   },
-   '.ColorParagraf': {
-      color: '#4C4859',
-   },
-   '.ContainerEvaluation': {
-      display: 'flex',
-      flexDirection: 'column',
-      color: 'green',
-   },
-   '.TextTestQuestion': {
-      color: '#4C4859',
-      fontSize: '1.25rem',
-      fontWeight: 500,
-      lineHeight: '2rem',
-      marginBottom: '0.6rem',
-   },
-   '.CarrectAnswer': {
-      fontSize: '1rem',
-      lineHeight: '1rem',
-      color: '#4C4859 ',
-      fontWeight: 400,
-   },
-})
 const ContainerUser = styled('div')({
    display: 'flex',
    flexDirection: 'column',
@@ -207,6 +185,82 @@ const ContainerUser = styled('div')({
       textAlign: 'center',
       fontWeight: 500,
    },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
+const BoxPassage = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'start',
+   gap: '7px',
+   width: '56rem',
+   height: '8.7rem',
+})
+const BoxStatement = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'center',
+   gap: '7px',
+   width: '56rem',
+   height: '2.7rem',
+})
+const Container = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1rem',
+   width: '58rem',
+   height: '44rem',
+   marginTop: '1.25rem',
+   fontFamily: 'Poppins',
+   '.statement': {
+      fontFamily: 'Poppins',
+      color: '#4C4859',
+      fontSize: '1.14rem',
+      lineHeight: '1.28rem',
+      paddingTop: '1px',
+      fontWeight: 500,
+   },
+   '.correctAnswer': {
+      color: '#3A10E5',
+   },
+   '.TextTestQuestion': {
+      color: '#4C4859',
+      fontSize: '1.25rem',
+      fontWeight: 500,
+      lineHeight: '2rem',
+      marginBottom: '0.6rem',
+   },
+   '.ColorParagraf': {
+      color: '#4C4859',
+   },
+})
+
+const ContainerFlex = styled('div')({
+   width: '100%',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '1.5rem',
+   justifyContent: 'center',
+   alignItems: 'start',
+})
+const ContaineScore = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   marginRight: '2.2rem',
+   '.rightAnswer': {
+      color: 'green',
+      fontWeight: 500,
+      paddingLeft: '10px',
+   },
+})
+const BoxCorrectAnswer = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   justifyContent: 'start',
+   alignItems: 'center',
+   gap: '7px',
 })
 const InputNumber = styled('input')({
    marginTop: '6px',
@@ -231,22 +285,29 @@ const InputNumber = styled('input')({
       border: '2px solid rgba(196, 196, 196, 0.60)',
    },
 })
-const ContainerFlex = styled('div')({
-   width: '100%',
+const ContainerUserAnswer = styled('div')({
+   width: '55rem',
+   height: '9rem',
    display: 'flex',
    flexDirection: 'column',
-   gap: '1rem',
    justifyContent: 'center',
    alignItems: 'start',
-})
-const ContaineScore = styled('div')({
-   display: 'flex',
-   flexDirection: 'column',
-   marginRight: '2.2rem',
-   '.rightAnswer': {
-      color: 'green',
+   gap: '4px',
+   '.statement-box': {
+      width: '56rem',
+      height: '3.5rem',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'start',
+      alignItems: 'center',
+      gap: '0.5rem',
+   },
+   '.TextUserAnswer': {
+      fontFamily: 'Poppins',
+      color: '#4C4859',
+      fontSize: '1.125rem',
+      lineHeight: '1.28rem',
       fontWeight: 500,
-      paddingLeft: '10px',
    },
 })
 const ContainerTestQuestion = styled('div')({
@@ -261,70 +322,12 @@ const ContainerTestQuestion = styled('div')({
       textAlign: 'center',
    },
 })
-const ContainerImgQuestion = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   gap: '1rem',
-   width: '38rem',
-   height: '13rem',
-})
-const BoxImg = styled('div')({
-   width: '11.25rem',
-   height: '11rem',
-   alignSelf: 'center',
-   borderRadius: '0.5rem',
-   img: {
-      borderRadius: '0.5rem',
-      width: '100%',
-      height: '100%',
-      cursor: 'pointer',
-   },
-   '.replaceImg': {
-      backgroundColor: 'blue',
-      position: 'absolute',
-      zIndex: 5,
-      color: 'white',
-      width: '4rem',
-      height: '3rem',
-      textAlign: 'center',
-      cursor: 'pointer',
-      margin: 0,
-   },
-})
-const BoxCorrectAnswer = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   justifyContent: 'start',
-   alignItems: 'center',
-   gap: '1rem',
-})
-const ContainerUserAnswer = styled('div')({
-   width: '38.25rem',
-   height: '4rem',
+const ContainerQuestion = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   justifyContent: 'center',
-   alignItems: 'start',
    gap: '1rem',
-   '.statement-box': {
-      display: 'flex',
-      flexDirection: 'row',
-      gap: '1rem',
-   },
-   '.TextUserAnswer': {
-      fontFamily: 'Poppins',
-      color: '#4C4859',
-      fontSize: '1.125rem',
-      lineHeight: '1.28rem',
-      fontWeight: 500,
-   },
-   '.statement': {
-      fontFamily: 'Poppins',
-      color: '#4C4859',
-      fontSize: '1.14rem',
-      lineHeight: '1.28rem',
-      fontWeight: 500,
-   },
+   width: '56rem',
+   height: '14rem',
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
@@ -332,7 +335,8 @@ const ContainerCkeckInTheTest = styled('div')({
    width: '100%',
    alignContent: 'center',
    flexDirection: 'row',
-   gap: '10rem',
+   gap: '1.5rem',
+   marginTop: '0.5rem',
    fontWeight: 500,
    '.ColorBlue': {
       color: '#3752B4',
@@ -342,7 +346,6 @@ const ContainerButtons = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'end',
    gap: '1rem',
-   marginTop: '2rem',
    marginRight: '2.2rem',
    button: {
       fontWeight: 600,

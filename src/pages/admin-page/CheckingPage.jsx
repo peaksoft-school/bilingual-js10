@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 import DescribeImage from '../../components/adminCheckingUserTest/DescribeImage'
+import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/HighlightedAnswerCheck'
 import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordStatementCheck'
 
 const questionsPages = {
@@ -11,7 +12,7 @@ const questionsPages = {
    DESCRIBE_IMAGE: <DescribeImage />,
    RECORD_SAYING_STATEMENT: <RecordStatementCheck />,
    RESPOND_AT_LEAST_N_WORDS: <div>RESPOND_AT_LEAST_N_WORDS</div>,
-   HIGHLIGHT_THE_ANSWER: <div>HIGHLIGHT_THE_ANSWER</div>,
+   HIGHLIGHT_THE_ANSWER: <HighlightedAnswerCheck />,
    SELECT_THE_MAIN_IDEA: <SelectTheMainIdea />,
    SELECT_THE_BEST_TITLE: <div>SELECT_THE_BEST_TITLE</div>,
 }
