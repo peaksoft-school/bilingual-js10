@@ -1,30 +1,31 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { Route, Routes, useNavigate, Outlet } from 'react-router-dom'
-import Button from '../../components/UI/Buttons/Button'
+import { Route, Routes, Outlet } from 'react-router-dom'
 import { CreateTest } from '../../components/adminTest/createTest'
 import { TestItems } from '../../components/adminTest/testItems/TestItems'
 import CustomFormCreateTest from '../../components/adminTest/customFormCreateTest/CustomFormCreateTest'
 import QuestionsPage from '../../components/UI/TestItem/QuestionsPage'
-import { authActions } from '../../store/auth/authSlice'
+import { UserAnswers } from '../../components/adminCheckingUserTest/UsersAnswers'
+import { UserResponses } from '../../components/adminCheckingUserTest/UserResponses'
+import Header from '../../layout/Header'
+import { CheckingPage } from '../../pages/admin-page/CheckingPage'
 
 export const AdminRoutes = () => {
-   const navigate = useNavigate()
-   const dispatch = useDispatch()
-   const handleLogout = () => {
-      dispatch(authActions.logout(navigate))
-   }
    return (
       <div>
-         <Button type="button" onClick={handleLogout}>
-            logout
-         </Button>
+         <Header roles="admin" marginBottom="60px" />
          <Routes>
             <Route path="/" element={<TestItems />} />
             <Route path="/create-test" element={<CreateTest />} />
             <Route path="/update-test" element={<CreateTest />} />
-            <Route path="/custom-form" element={<CustomFormCreateTest />} />
-            <Route path="/QuestionsPage" element={<QuestionsPage />} />
+            <Route path="/create-question" element={<CustomFormCreateTest />} />
+            <Route path="/users-answers" element={<UserAnswers />} />
+            <Route path="/user-responses" element={<UserResponses />} />
+            <Route
+               path="/update-question/:select"
+               element={<CustomFormCreateTest />}
+            />
+            <Route path="/questions/:id" element={<QuestionsPage />} />
+            <Route path="/checking-page" element={<CheckingPage />} />
          </Routes>
          <Outlet />
       </div>

@@ -22,10 +22,9 @@ const options = [
    'Describe image',
    'Record saying statement',
    'Respond in at least N words',
-   'Describe image',
    'Highlight the answer',
    'Select the main idea',
-   'Select best title',
+   'Select the best title',
 ]
 function getStyles(option, selectedOption, theme) {
    return {

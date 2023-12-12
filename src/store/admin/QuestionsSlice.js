@@ -12,9 +12,10 @@ const getTestThunk = createAsyncThunk('getTestThunk', async (testID) => {
       return error
    }
 })
+
 export const deleteQuestion = createAsyncThunk(
    'questionSlice/deleteQuestion',
-   async (questionId, { rejectWithValue, dispatch }) => {
+   async (questionId, { rejectWithValue }) => {
       try {
          Notifay(
             {
@@ -24,9 +25,6 @@ export const deleteQuestion = createAsyncThunk(
             },
             axiosInstance.delete(`/questions?questionId=${questionId}`)
          )
-         setTimeout(() => {
-            dispatch(getTestThunk())
-         }, 400)
       } catch (error) {
          rejectWithValue(error)
       }
@@ -49,4 +47,5 @@ export const questionSlice = createSlice({
       })
    },
 })
+
 export { getTestThunk }
