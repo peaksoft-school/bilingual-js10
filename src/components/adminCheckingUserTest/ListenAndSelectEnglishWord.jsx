@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-// import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { axiosInstance } from '../../config/axiosInstance'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
@@ -14,6 +14,68 @@ const ListenAndSelectEnglishWord = () => {
    const [error, setError] = useState(null)
    const { userId, questionId } = useSelector((state) => state.answer)
    const navigate = useNavigate()
+   const [isPlayingArray, setIsPlayingArray] = useState(
+      Array(appState.length).fill(null)
+   )
+   const [isPlayingArrays, setIsPlayingArrays] = useState(
+      Array(appState.length).fill(null)
+   )
+
+   const playOptionUser = (el, id) => {
+      console.log(el, 'idplay ')
+      const newArray = [...isPlayingArrays]
+      const currentlyPlayingIndex = newArray.findIndex(
+         (audioObject) => audioObject !== null
+      )
+      if (currentlyPlayingIndex !== -1) {
+         const currentAudioObject = newArray[currentlyPlayingIndex]
+         if (currentAudioObject) {
+            currentAudioObject.audio.pause()
+         }
+         newArray[currentlyPlayingIndex] = null
+      }
+      const audio = new Audio(el.audioUrl)
+      newArray[id] = { id: uuidv4(), audio }
+      setIsPlayingArrays(newArray)
+      audio.play()
+   }
+   const pauseOptionUserAnswer = (id) => {
+      console.log(id, 'id')
+      const audioObject = isPlayingArrays[id]
+      if (audioObject && audioObject.audio) {
+         const newArray = [...isPlayingArrays]
+         newArray[id] = null
+         setIsPlayingArrays(newArray)
+         audioObject.audio.pause()
+      }
+   }
+
+   const playOption = (el, index) => {
+      const newArray = [...isPlayingArray]
+      const currentlyPlayingIndex = newArray.findIndex(
+         (audioObject) => audioObject !== null
+      )
+      if (currentlyPlayingIndex !== -1) {
+         const currentAudioObject = newArray[currentlyPlayingIndex]
+         if (currentAudioObject) {
+            currentAudioObject.audio.pause()
+         }
+         newArray[currentlyPlayingIndex] = null
+      }
+      const audio = new Audio(el.audioUrl)
+      newArray[index] = { id: uuidv4(), audio }
+      setIsPlayingArray(newArray)
+      audio.play()
+   }
+   const pauseOption = (index) => {
+      const audioObject = isPlayingArray[index]
+      if (audioObject && audioObject.audio) {
+         const newArray = [...isPlayingArray]
+         newArray[index] = null
+         setIsPlayingArray(newArray)
+         audioObject.audio.pause()
+      }
+   }
 
    const getQuestionTest = async () => {
       try {
@@ -40,32 +102,6 @@ const ListenAndSelectEnglishWord = () => {
    useEffect(() => {
       getQuestionTest()
    }, [setAppState])
-
-   const [isPlayingArray, setIsPlayingArray] = useState([])
-
-   const playOption = (el, index) => {
-      const newArray = [...isPlayingArray]
-      const currentlyPlayingIndex = newArray.findIndex(
-         (audio) => audio !== null
-      )
-      if (currentlyPlayingIndex !== -1) {
-         newArray[currentlyPlayingIndex].pause()
-         newArray[currentlyPlayingIndex] = null
-      }
-      const audio = new Audio(el.audioUrl)
-      newArray[index] = audio
-      setIsPlayingArray(newArray)
-      audio.play()
-   }
-   const pauseOption = (index) => {
-      const audio = isPlayingArray[index]
-      if (audio) {
-         const newArray = [...isPlayingArray]
-         newArray[index] = null
-         setIsPlayingArray(newArray)
-         audio.pause()
-      }
-   }
 
    return (
       <div>
@@ -151,7 +187,9 @@ const ListenAndSelectEnglishWord = () => {
                                     ) : (
                                        <VolumeEnglishWord
                                           style={{
-                                             fill: '#3A10E5',
+                                             fill: isPlayingArray
+                                                ? '#3A10E5'
+                                                : '#655F5F',
                                           }}
                                           onClick={() => pauseOption(index)}
                                        />
@@ -176,25 +214,29 @@ const ListenAndSelectEnglishWord = () => {
                      <div className="ContainerAnswerMap">
                         {appState.response &&
                            appState.response.optionFromUser.map(
-                              (item, index) => (
+                              (item, index, id) => (
                                  <CreateAnswerTest key={item.id}>
                                     <MainContainer>
                                        <p className="Number-Words">
                                           {index + 1}
                                        </p>
-                                       {!isPlayingArray[index] ? (
+                                       {!isPlayingArray[id] ? (
                                           <VolumeEnglishWord
                                              onClick={() =>
-                                                playOption(item, index)
+                                                playOptionUser(item, id)
                                              }
                                              className="valumIcon"
                                           />
                                        ) : (
                                           <VolumeEnglishWord
                                              style={{
-                                                fill: '#3A10E5',
+                                                fill: isPlayingArray
+                                                   ? '#3A10E5'
+                                                   : '#655F5F',
                                              }}
-                                             onClick={() => pauseOption(index)}
+                                             onClick={() =>
+                                                pauseOptionUserAnswer(id)
+                                             }
                                           />
                                        )}
                                        <div className="NumberText">
