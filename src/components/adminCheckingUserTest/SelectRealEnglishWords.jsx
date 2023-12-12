@@ -30,7 +30,7 @@ const SelectRealEnglishWords = () => {
             userId,
             questionId,
          })
-         navigate(`/admin/user-responses/${userId}`)
+         navigate(-1)
       } catch (error) {
          setError(error)
       }

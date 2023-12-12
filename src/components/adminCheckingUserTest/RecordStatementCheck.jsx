@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import Button from '../UI/Buttons/Button'
@@ -12,10 +14,13 @@ const RecordStatementCheck = () => {
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
    const audioRef = useRef(new Audio())
+   const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
+
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            '/result/getQuestionsResults?userId=1&questionId=5'
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allresult = response.data
          setState({ response: allresult })
@@ -23,12 +28,10 @@ const RecordStatementCheck = () => {
          setError(error)
       }
    }
-
    const playAudio = () => {
       if (state.response && state.response.audioFile) {
          const audio = audioRef.current
          audio.src = state.response.audioFile
-
          if (isPlaying) {
             audio.pause()
          } else {
@@ -36,18 +39,17 @@ const RecordStatementCheck = () => {
                console.error('Error playing audio:', error)
             })
          }
-
          setIsPlaying((prev) => !prev)
       }
    }
-
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 5,
+            userId,
+            questionId,
             score,
          })
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
@@ -174,7 +176,11 @@ const RecordStatementCheck = () => {
                )}
             </ContainerFlex>
             <ContainerButtons>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={() => navigate(-1)}
+               >
                   GO BACK
                </Button>
                <Button
