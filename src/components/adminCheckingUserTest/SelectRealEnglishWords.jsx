@@ -208,10 +208,6 @@ const Container = styled('div')({
       color: '#4C4859',
    },
 })
-const ErrorBox = styled('div')({
-   color: 'red',
-   marginTop: '7px',
-})
 const ContainerUser = styled('div')({
    display: 'flex',
    flexDirection: 'column',
@@ -246,23 +242,6 @@ const ContainerFlex = styled('div')({
    justifyContent: 'center',
    alignItems: 'start',
    gap: '3.13rem',
-<<<<<<< HEAD
-})
-const ContainerUser = styled('div')({
-   display: 'flex',
-   flexDirection: 'column',
-   '.ColorBlue': {
-      color: '#3752B4',
-      fontSize: '1.12rem',
-   },
-   '.FixedDisplay': {
-      display: 'flex',
-      gap: '10px',
-      textAlign: 'center',
-      fontWeight: 500,
-   },
-=======
->>>>>>> ec334d654f9f83a12b4d5c872359f65e5c6e6287
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
