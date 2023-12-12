@@ -299,8 +299,8 @@ const ContainerTestQuestion = styled('div')({
 const ContainerQuestion = styled('div')({
    display: 'flex',
    flexDirection: 'row',
-   gap: '2rem',
-   width: '38rem',
+   gap: '1rem',
+   width: '48rem',
    height: '2rem',
    alignItems: 'center',
 })
@@ -312,7 +312,7 @@ const BoxPlay = styled('div')({
 const AudioBoxPlay = styled('div')({
    display: 'flex',
    flexDirection: 'row',
-   gap: '0.7rem',
+   gap: '1px',
 })
 
 const BoxCorrectAnswer = styled('div')({
@@ -320,7 +320,8 @@ const BoxCorrectAnswer = styled('div')({
    flexDirection: 'row',
    justifyContent: 'start',
    alignItems: 'center',
-   gap: '1rem',
+   gap: '0.5rem',
+   margin: 0,
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
