@@ -1,14 +1,15 @@
 import { Typography, styled } from '@mui/material'
-import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import React from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 import { authActions } from '../store/auth/authSlice'
 
-const Header = ({ roles = 'guest' }) => {
+const Header = ({ roles = 'guest', marginBottom }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   const { pathname } = useLocation()
 
    const handleLogout = () => {
       dispatch(authActions.logout(navigate))
@@ -22,7 +23,7 @@ const Header = ({ roles = 'guest' }) => {
    }
 
    return (
-      <MyHeader>
+      <MyHeader marginBottom={marginBottom}>
          <LogoBox>
             <Logo />
          </LogoBox>
@@ -48,12 +49,14 @@ const Header = ({ roles = 'guest' }) => {
             <Options>
                <OptionsBlock>
                   <NavLink
-                     to="/admin"
-                     style={({ isActive }) =>
-                        isActive
-                           ? { color: 'blue', textDecoration: 'none' }
-                           : { color: 'black', textDecoration: 'none' }
+                     style={
+                        pathname === '/user' ||
+                        pathname === '/admin' ||
+                        pathname === '/admin/QuestionsPage'
+                           ? { color: 'blue' }
+                           : { color: '#4C4859' }
                      }
+                     to={roles === 'user' ? '/user' : '/admin'}
                   >
                      <MyText>Tests</MyText>
                   </NavLink>
@@ -65,12 +68,13 @@ const Header = ({ roles = 'guest' }) => {
                      </NavLink>
                   ) : (
                      <NavLink
-                        to="/"
-                        style={({ isActive }) =>
-                           isActive
-                              ? { color: 'blue', textDecoration: 'none' }
-                              : { color: 'black', textDecoration: 'none' }
+                        style={
+                           pathname === '/admin/users-answers' ||
+                           pathname === '/admin/user-responses'
+                              ? { color: 'blue' }
+                              : { color: '#4C4859' }
                         }
+                        to="/admin/users-answers"
                      >
                         <MyText>Submitted Results</MyText>
                      </NavLink>
@@ -82,6 +86,7 @@ const Header = ({ roles = 'guest' }) => {
                      variant="outlined"
                      defaultStyle="white"
                      hoverStyle="blue"
+                     onClick={handleLogout}
                   >
                      <MyText onClick={handleLogout}>Log out</MyText>
                   </Button>
@@ -97,19 +102,16 @@ const ButtonsContainer = styled('div')(() => ({
    display: 'flex',
    columnGap: '24px',
 }))
-const MyHeader = styled('header')({
+const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',
-   height: '90px',
+   height: '94px',
    display: 'flex',
    justifyContent: 'space-between',
-   alignItems: 'center',
-   background: 'white',
-   marginBottom: '65px',
-})
+   backgroundColor: '#ffff',
+   marginBottom: marginBottom || null,
+}))
 const LogoBox = styled('div')({
-   position: 'sticky',
-   top: '1.2rem',
-   marginLeft: '7rem',
+   margin: '19px 0 0 7rem',
 })
 const Options = styled('div')({
    display: 'flex',
@@ -120,6 +122,9 @@ const Options = styled('div')({
    top: '1.2rem',
    bottom: '1.2rem',
    textTransform: 'uppercase',
+   '& a': {
+      textDecoration: 'none',
+   },
 })
 const OptionsBlock = styled('div')({
    display: 'flex',

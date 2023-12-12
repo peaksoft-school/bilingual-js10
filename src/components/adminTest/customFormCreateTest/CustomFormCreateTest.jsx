@@ -13,7 +13,7 @@ import { ListenSelect } from '../ListenSelect/ListenSelect'
 import { TypeWhatYouHear } from '../TypeWhatYouHear'
 import { SelectBestTitle } from '../SelectTheBestTitle/SelectBestTitle'
 import StatementInput from '../statement/StatementInput'
-import SelectImage from '../../../layout/selectImg/SelectImage'
+import SelectImage from '../selectImg/SelectImage'
 import { SelectMainIdea } from '../selectMainIdea/SelectMainIdea'
 import { questionsSlice } from '../../../store/questions/questionsSlice'
 
