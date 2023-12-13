@@ -6,6 +6,7 @@ import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheM
 import DescribeImage from '../../components/adminCheckingUserTest/DescribeImage'
 import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/HighlightedAnswerCheck'
 import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordStatementCheck'
+import RespondleastUserTest from '../../components/adminCheckingUserTest/RespondleastUserTest'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <SelectRealEnglishWords />,
@@ -13,8 +14,8 @@ const questionsPages = {
    TYPE_WHAT_YOU_HEAR: <div>TYPE_WHAT_YOU_HEAR</div>,
    DESCRIBE_IMAGE: <DescribeImage />,
    RECORD_SAYING_STATEMENT: <RecordStatementCheck />,
-   RESPOND_AT_LEAST_N_WORDS: <div>RESPOND_AT_LEAST_N_WORDS</div>,
    SELECT_THE_BEST_TITLE: <SelectTheBestTitle />,
+   RESPOND_AT_LEAST_N_WORDS: <RespondleastUserTest />,
    HIGHLIGHT_THE_ANSWER: <HighlightedAnswerCheck />,
    SELECT_THE_MAIN_IDEA: <SelectTheMainIdea />,
 }

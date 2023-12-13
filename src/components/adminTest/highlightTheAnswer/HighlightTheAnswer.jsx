@@ -155,7 +155,7 @@ const MainPassageContainer = styled('div')(() => ({
       fontWeight: '500',
       lineHeight: '16px',
       color: '#4C4859',
-      marginBottom: '12px',
+      marginBottom: '6px',
    },
    '& > .input, .textarea': {
       marginBottom: '24px',
