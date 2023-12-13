@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Typography, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
@@ -7,12 +8,15 @@ import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 const DescrbImgUsr = () => {
-   const { testComponent, handleNextClick } = useSelector(
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [value, setValue] = useState(null)
 
    const handleInputChange = (e) => {
@@ -23,10 +27,26 @@ const DescrbImgUsr = () => {
          statement: value,
       }
       dispatch(addTest(testPayload))
-      handleNextClick()
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
       <div>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <Container>
             <div>
                <DescribeText>
@@ -57,10 +77,7 @@ const DescrbImgUsr = () => {
                      hoverStyle="#4E28E8"
                      className="nextButton"
                      padding="0.8rem 2.5rem"
-                     onClick={() => {
-                        handleAddTest()
-                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
-                     }}
+                     onClick={handleAddTest}
                   >
                      Next
                   </Button>

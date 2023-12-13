@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import {
    addTest,
    globalTestSlice,
@@ -11,7 +14,9 @@ import {
 
 export const UserMainIdea = () => {
    const [selectedRadio, setSelectedRadio] = useState(null)
-   const { testComponent, handleNextClick } = useSelector(
+   const navigate = useNavigate()
+
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
    const dispatch = useDispatch()
@@ -35,12 +40,27 @@ export const UserMainIdea = () => {
       const selectedOption = testComponent.optionList.find(
          (el) => el.id === selectedRadio
       )
-      dispatch(addTest({ options: [selectedOption.id] }))
-      handleNextClick()
+      dispatch(addTest({ optionsId: [selectedOption.id] }))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
 
    return (
       <form onSubmit={formik.handleSubmit}>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <ContainerSelectTest>
             <ContainerUserTest>
                <ContainerTextArea>
@@ -88,10 +108,7 @@ export const UserMainIdea = () => {
                      className="nextButton"
                      variant="contained"
                      type="submit"
-                     onClick={() => {
-                        handleNextButtonClick()
-                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
-                     }}
+                     onClick={handleNextButtonClick}
                   >
                      NEXT
                   </Button>

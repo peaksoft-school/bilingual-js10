@@ -9,8 +9,8 @@ export const postFileThunk = createAsyncThunk(
       try {
          const formData = new FormData()
          formData.append('multipartFile', file)
-         const data = await fileAxiosInstance.post('/s3file', formData)
-         return { fileUrl: data.payload.data.link, numberOffReplays }
+         const { data } = await fileAxiosInstance.post('/s3file', formData)
+         return { fileUrl: data.link }
       } catch (error) {
          return rejectWithValue(error)
       }

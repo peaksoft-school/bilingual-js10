@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { Hear } from '../../../assets'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
@@ -8,11 +9,17 @@ import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const UserTypeWhatYouHear = () => {
    const [value, setValue] = useState('')
+   const navigate = useNavigate()
+
    const dispatch = useDispatch()
-   const { testComponent } = useSelector((state) => state.globalTestSlice)
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
 
    const [replaysLeft, setReplaysLeft] = useState(testComponent.attempts)
    const [isPlaying, setIsPlaying] = useState(false)
@@ -36,8 +43,29 @@ export const UserTypeWhatYouHear = () => {
          setIsPlaying(false)
       }
    }
+
+   const nextBtn = () => {
+      dispatch(addTest({ statement: value }))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
       <div>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <Container>
             <div>
                <DescribeText>Type the statement you hear</DescribeText>
@@ -74,10 +102,7 @@ export const UserTypeWhatYouHear = () => {
                      defaultStyle="#3A10E5"
                      hoverStyle="#4E28E8"
                      className="nextButton"
-                     onClick={() => {
-                        dispatch(addTest({ statement: value }))
-                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
-                     }}
+                     onClick={nextBtn}
                   >
                      Next
                   </Button>

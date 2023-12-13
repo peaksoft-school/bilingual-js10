@@ -1,10 +1,19 @@
 import { styled } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
 import { Background } from '../../../layout/Background'
 import { Bilingual, Complete } from '../../../assets'
+import { axiosInstance } from '../../../config/axiosInstance'
 
 export const SendTheResults = () => {
+   const { tests } = useSelector((state) => state.globalTestSlice)
+   const navigate = useNavigate()
+
+   const handleSendTheResults = async () => {
+      await axiosInstance.post('/answer/', tests)
+   }
    return (
       <Container>
          <Background>
@@ -28,6 +37,7 @@ export const SendTheResults = () => {
                   variant="outlined"
                   hoverStyle="#3A10E5"
                   className="buttonTry"
+                  onClick={() => navigate(-2)}
                >
                   TRY AGAIN
                </Button>
@@ -35,6 +45,10 @@ export const SendTheResults = () => {
                   variant="contained"
                   className="buttonDone"
                   hoverStyle="#3A10E5"
+                  onClick={() => {
+                     navigate(-4)
+                     handleSendTheResults()
+                  }}
                >
                   DONE
                </Button>

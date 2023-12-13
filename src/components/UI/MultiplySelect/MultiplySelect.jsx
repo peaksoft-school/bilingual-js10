@@ -1,19 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CheckIcon from '@mui/icons-material/Check'
 import { SelectEnglishWord } from './SelectEnglishWord'
 
 export const MultiplySelect = ({
    words,
-   // setIsButtonDisabled,
+   setIsButtonDisabled,
    answer,
    setAnswer,
 }) => {
-   // const isButtonDisabled = answer.length === 0
+   const isButtonDisabled = answer.length === 0
 
    const handleSelectWord = (word) => {
       setAnswer((prevSelectedWords) => {
          const isWordSelected = prevSelectedWords.some(
-            (selectedWord) => selectedWord.id === word.id
+            (selectedWord) => selectedWord.id !== word.id
          )
          const updatedSelectedWords = isWordSelected
             ? prevSelectedWords.filter(
@@ -24,9 +24,9 @@ export const MultiplySelect = ({
       })
    }
 
-   // useEffect(() => {
-   //    setIsButtonDisabled(isButtonDisabled)
-   // }, [isButtonDisabled, setIsButtonDisabled])
+   useEffect(() => {
+      setIsButtonDisabled(isButtonDisabled)
+   }, [isButtonDisabled, setIsButtonDisabled])
 
    return (
       <SelectEnglishWord
@@ -34,8 +34,6 @@ export const MultiplySelect = ({
          answer={answer}
          handleSelectWord={handleSelectWord}
          CheckIcon={CheckIcon}
-         // audioRef={audioRef}
-         // onVolumeUpClick={(audioUrl) => handleVolumeUpClick(audioUrl)}
       />
    )
 }

@@ -1,15 +1,19 @@
 import { styled } from '@mui/material'
-import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../UI/Buttons/Button'
 import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export default function UserRealEnglishWord() {
    const dispatch = useDispatch()
-   const { testComponent, handleNextClick } = useSelector(
+   const navigate = useNavigate()
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
 
@@ -92,18 +96,32 @@ export default function UserRealEnglishWord() {
          }
       }
    }
+
    const handleNext = () => {
       const newTest = {
-         options: movedItems.map((el) => {
+         optionsId: movedItems.map((el) => {
             return el.id
          }),
       }
       dispatch(addTest(newTest))
-      dispatch(globalTestSlice.actions.addCurrentComponent(1))
-      handleNextClick()
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
    return (
       <GlobalDiv>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <div className="title">Select the real English words in this list</div>
          <Container>
             {boards.map((board) => (
@@ -200,6 +218,7 @@ const GlobalDiv = styled('div')(() => ({
       fontStyle: 'normal',
       display: 'flex',
       justifyContent: 'center',
+      marginTop: '2rem',
    },
    height: '100%',
    width: '100%',

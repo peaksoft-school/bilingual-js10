@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
 import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const SelectTheBestTitle = () => {
    const [selectedRadio, setSelectedRadio] = useState(null)
    const dispatch = useDispatch()
-   const { testComponent, handleNextClick } = useSelector(
+   const navigate = useNavigate()
+
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
 
@@ -20,8 +25,23 @@ export const SelectTheBestTitle = () => {
       initialValues: {
          options: [],
       },
-      onSubmit: () => {},
    })
+
+   const SendingToTheServer = () => {
+      const newTest = testComponent.optionList.map((el) => ({
+         id: el.id,
+         title: el.title,
+         isTrue: el.isTrue,
+      }))
+      const answer = newTest.find((el) => el.isTrue === true)
+      dispatch(addTest({ optionsId: [answer.id] }))
+
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }
 
    const handleRadioChange = (id) => {
       formik.setFieldValue(
@@ -32,17 +52,20 @@ export const SelectTheBestTitle = () => {
    }
    const isNextButtonDisabled = !selectedRadio
 
-   const handleNextButtonClick = () => {
-      const selectedOption = testComponent.optionList.find(
-         (el) => el.id === selectedRadio
-      )
-      dispatch(addTest({ options: [selectedOption.id] }))
-      handleNextClick()
-   }
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
 
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
+            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
             <ContainerUserTest>
                <ContainerTextArea>
                   <div className="containerPassage">
@@ -53,35 +76,37 @@ export const SelectTheBestTitle = () => {
                   </div>
                </ContainerTextArea>
                <ContainerSelectRadio>
-                  <p className="passageMainIdea">
+                  <p className="passageBestTitle">
                      Select the best title for the passage
                   </p>
-                  {testComponent.optionList.map((el) => (
-                     <div key={el.id} className="ContainerCreateUserTest">
-                        <div
-                           className="ContainCreatTest"
-                           style={{
-                              border:
-                                 selectedRadio === el.id
-                                    ? '2px solid #3A10E5'
-                                    : '1px solid #D4D0D0',
-                              background:
-                                 selectedRadio === el.id
-                                    ? '#EAF4FF'
-                                    : 'transparent',
-                           }}
-                        >
-                           <div className="ContainerRadio">
-                              <InputRadio
-                                 variant="RADIO"
-                                 checkedSwitch={selectedRadio === el.id}
-                                 onChange={() => handleRadioChange(el.id)}
-                              />
-                              <p style={{ color: '#4C4859' }}>{el.title}</p>
+                  <div className="ContainerCreateUserTest">
+                     {testComponent.optionList.map((el) => (
+                        <div key={el.id} className="ContainerCreateUserTest">
+                           <div
+                              className="ContainCreatTest"
+                              style={{
+                                 border:
+                                    selectedRadio === el.id
+                                       ? '2px solid #3A10E5'
+                                       : '1px solid #D4D0D0',
+                                 background:
+                                    selectedRadio === el.id
+                                       ? '#EAF4FF'
+                                       : 'transparent',
+                              }}
+                           >
+                              <div className="ContainerRadio">
+                                 <InputRadio
+                                    variant="RADIO"
+                                    checkedSwitch={selectedRadio === el.id}
+                                    onChange={() => handleRadioChange(el.id)}
+                                 />
+                                 <p className="NameTitle">{el.title}</p>
+                              </div>
                            </div>
                         </div>
-                     </div>
-                  ))}
+                     ))}
+                  </div>
                   <Button
                      disabled={isNextButtonDisabled}
                      defaultStyle="#3A10E5"
@@ -89,10 +114,8 @@ export const SelectTheBestTitle = () => {
                      className="nextButton"
                      variant="contained"
                      type="submit"
-                     onClick={() => {
-                        handleNextButtonClick()
-                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
-                     }}
+                     padding="0.81rem 3.5rem"
+                     onClick={SendingToTheServer}
                   >
                      NEXT
                   </Button>
@@ -109,13 +132,19 @@ const ContainerUserTest = styled('div')({
    justifyContent: 'center',
    gap: '2.5rem',
    marginTop: '3.15rem',
-   button: {
-      alignSelf: 'flex-end',
+   '.NextButton': {
       width: '9rem',
+      height: '2.62rem',
       marginTop: '2rem',
    },
-   '.ContainerInputRadio': {
-      paddingTop: '20px',
+   '.ContainerCreateUserTest': {
+      marginTop: '10px',
+      '& > div': {
+         marginTop: '11px',
+      },
+   },
+   button: {
+      marginTop: '2rem',
    },
 })
 const ContainerSelectTest = styled('div')({
@@ -129,10 +158,10 @@ const ContainerSelectTest = styled('div')({
       border: '1px solid #D4D0D0',
       background: '#fff',
       padding: '0.88rem',
-      width: '26.68rem',
+      width: '25.68rem',
       '.ContainerRadio': {
          display: 'flex',
-         alignItems: 'start',
+         alignItems: 'center',
          gap: '1rem',
       },
    },
@@ -144,7 +173,7 @@ const ContainerTextArea = styled('div')({
    '.ContainerParagraf': {
       padding: '2.9rem 3.13rem 3rem 1.06rem',
       width: '100%',
-      height: '23.2rem',
+      height: '100%',
       color: '#4C4859',
       fontSize: '1rem',
       fontWeight: '400',
@@ -153,19 +182,20 @@ const ContainerTextArea = styled('div')({
       borderBottom: '1px solid #D4D0D0',
       padding: '1rem 29rem 1rem 1.13rem',
       color: ' #4C4859',
-      fontSize: '0.90rem',
+      fontSize: '1.1rem',
       fontWeight: 500,
-      lineHeight: '1.24rem',
    },
 })
 const ContainerSelectRadio = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   gap: '1rem',
-   '.passageMainIdea': {
+   gap: '0.88rem',
+   justifyContent: 'center',
+   alignItems: 'end',
+   '.passageBestTitle': {
       color: '#4C4859',
-      fontSize: '1.3rem',
-      fontWeight: 420,
-      lineHeight: '3.63rem',
+      fontSize: '1.45rem',
+      fontWeight: 400,
+      lineHeight: '1.63rem',
    },
 })

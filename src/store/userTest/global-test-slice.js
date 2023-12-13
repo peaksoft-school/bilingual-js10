@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
    tests: [],
+   questions: null,
    testComponent: [],
    currentComponent: 0,
 }
@@ -17,6 +18,9 @@ export const globalTestSlice = createSlice({
       },
       addCurrentComponent: (state, action) => {
          state.currentComponent += action.payload
+      },
+      addQuestions: (state, action) => {
+         state.questions = action.payload
       },
    },
 })

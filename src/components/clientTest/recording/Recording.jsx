@@ -1,7 +1,8 @@
 /* eslint-disable react/self-closing-comp */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReactMic } from 'react-mic'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import { CircleIcon, SpeakIcon } from '../../../assets'
@@ -10,9 +11,11 @@ import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 function Recording() {
-   const { testComponent, handleNextClick } = useSelector(
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
    const [file, setFile] = useState(null)
@@ -20,7 +23,7 @@ function Recording() {
    const [disabled, setDisabled] = useState(false)
    const [isButtonStop, setIsButtonStop] = useState(false)
    const dispatch = useDispatch()
-
+   const navigate = useNavigate()
    const onStop = (blobFile) => {
       setFile(blobFile.blob)
    }
@@ -35,21 +38,39 @@ function Recording() {
       }
    }
 
-   const AddLink = (link) => {
+   const addLink = (link) => {
       const audioUrl = {
-         audioUrl: link.payload.data.link,
+         audioUrl: link,
       }
       dispatch(addTest(audioUrl))
-      handleNextClick()
    }
 
    const nextButtonHandler = async () => {
-      const links = await dispatch(postFileThunk({ file }))
-      AddLink(links)
+      dispatch(postFileThunk({ file }))
+         .unwrap()
+         .then((res) => {
+            addLink(res.fileUrl)
+            if (questions.length === currentComponent + 1) {
+               navigate('/user/send-the-results')
+            } else {
+               dispatch(globalTestSlice.actions.addCurrentComponent(1))
+            }
+         })
    }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
 
    return (
       <div>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <MainRecordingContainer>
             <div>
                <div>
@@ -107,10 +128,7 @@ function Recording() {
                      defaultStyle="#3A10E5"
                      hoverStyle="#4E28E8"
                      padding="13px 50px"
-                     onClick={() => {
-                        nextButtonHandler()
-                        dispatch(globalTestSlice.actions.addCurrentComponent(1))
-                     }}
+                     onClick={nextButtonHandler}
                   >
                      next
                   </Button>

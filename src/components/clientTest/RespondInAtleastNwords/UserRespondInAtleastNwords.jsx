@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Typography, styled } from '@mui/material'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
@@ -7,12 +8,16 @@ import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const UserRespondInAtleastNwords = () => {
    const [wordCount, setWordCount] = useState(0)
    const [userInput, setUserInput] = useState('')
    const dispatch = useDispatch()
-   const { testComponent, handleNextClick } = useSelector(
+   const navigate = useNavigate()
+
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
 
@@ -27,11 +32,28 @@ export const UserRespondInAtleastNwords = () => {
          statement: userInput,
       }
       dispatch(addTest(testPayload))
-      handleNextClick()
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
    const isNextButtonDisabled = !wordCount
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
       <Container>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+
          <DescribeText>
             Respond to the question in at least 50 words
          </DescribeText>
@@ -53,10 +75,7 @@ export const UserRespondInAtleastNwords = () => {
                   className="nextButton"
                   padding="0.8rem 2.5rem"
                   disabled={isNextButtonDisabled}
-                  onClick={() => {
-                     handleAddTest()
-                     dispatch(globalTestSlice.actions.addCurrentComponent(1))
-                  }}
+                  onClick={handleAddTest}
                >
                   Next
                </Button>
@@ -84,6 +103,7 @@ const DescribeText = styled(Typography)({
    fontfamily: 'Gilroy',
    fontSize: '1.5rem',
    fontWeight: '400',
+   marginTop: '2rem',
 
    lineHeight: 'normal',
 })

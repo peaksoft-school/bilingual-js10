@@ -17,7 +17,7 @@ export const Table = ({ data, columns }) => {
             <MuiTableStyled>
                <TableHead>
                   <TableRowColumns>
-                     {questions.length === 0 && data.length === 0 ? (
+                     {data.length === 0 && data.length === 0 ? (
                         <p>There s no one here yet</p>
                      ) : (
                         columns?.map((column) => (

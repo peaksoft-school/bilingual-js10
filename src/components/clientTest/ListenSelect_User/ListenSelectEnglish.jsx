@@ -1,26 +1,30 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-// import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-// import ProgressBar from '../../UI/progressBar/ProgressBar'
-// import { Background } from '../../../layout/Background'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
 import Button from '../../UI/Buttons/Button'
 import {
    addTest,
    globalTestSlice,
 } from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const ListenSelectEnglish = () => {
-   // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-   const { testComponent, handleNextClick } = useSelector(
+   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+   const [answer, setAnswer] = useState([])
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+
+   const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
-   const [selectedWords, setSelectedWords] = useState(testComponent.optionList)
-   const [answer, setAnswer] = useState([])
+   const [selectedWords, setSelectedWords] = useState([
+      ...testComponent.optionList,
+   ])
 
-   const dispatch = useDispatch()
    const handleOptionSelect = (selectedWordId) => {
       setSelectedWords((prevWords) =>
          prevWords.map((word) =>
@@ -29,26 +33,33 @@ export const ListenSelectEnglish = () => {
       )
    }
 
-   // const duration = 240
-
-   // const handleTimeUp = () => {
-   // setIsButtonDisabled(true)
-   // }
-
    const handleNextButtonClick = () => {
       const data = answer.map((el) => {
          return el.id
       })
-      dispatch(addTest({ options: data }))
-      handleNextClick()
+      dispatch(addTest({ optionsId: data }))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
 
-   // const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+   function handleTimeUp() {
+      setIsButtonDisabled(true)
+   }
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
 
    return (
       <ContainerTest>
-         {/* <Background> */}
-         {/* <ProgressBar timeObject={timeObject} timeProgress={chartPercent} /> */}
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <h2>Select the Real English words in this list</h2>
          <ContainerMultiplySelect>
             <MultiplySelect
@@ -56,7 +67,7 @@ export const ListenSelectEnglish = () => {
                answer={answer}
                setAnswer={setAnswer}
                onSelect={handleOptionSelect}
-               // setIsButtonDisabled={setIsButtonDisabled}
+               setIsButtonDisabled={setIsButtonDisabled}
             />
          </ContainerMultiplySelect>
          <hr className="ContainerHr" />
@@ -65,24 +76,17 @@ export const ListenSelectEnglish = () => {
                className="nextButton"
                defaultStyle="#3A10E5"
                hoverStyle="#4E28E8"
-               // disabled={isButtonDisabled}
-               onClick={() => {
-                  handleNextButtonClick()
-                  dispatch(globalTestSlice.actions.addCurrentComponent(1))
-               }}
+               disabled={isButtonDisabled}
+               onClick={handleNextButtonClick}
             >
                NEXT
             </Button>
          </ContainerButton>
-         {/* </Background> */}
       </ContainerTest>
    )
 }
 
 const ContainerTest = styled('div')({
-   // background: 'white',
-   // width: '100vw',
-   // height: '100vh',
    h2: {
       marginTop: '3.12rem',
       textAlign: 'center',
