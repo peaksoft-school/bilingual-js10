@@ -8,10 +8,6 @@ export const postFileThunk = createAsyncThunk(
       try {
          const formData = new FormData()
          formData.append('multipartFile', file)
-<<<<<<< HEAD
-         const { data } = await fileAxiosInstance.post('/s3file', formData)
-         return { fileUrl: data.link }
-=======
          const data = await fileAxiosInstance.post('/s3file', formData)
          return data
       } catch (error) {
@@ -86,7 +82,6 @@ export const getQuestionThunk = createAsyncThunk(
             `/questions?questionId=${questionID}`
          )
          return response.data
->>>>>>> origin/development
       } catch (error) {
          return rejectWithValue(error)
       }
