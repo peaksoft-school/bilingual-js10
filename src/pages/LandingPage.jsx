@@ -10,11 +10,13 @@ import SliderPartner from '../components/landingPage/SliderPartner'
 import { LearnMap } from '../components/landingPage/MianMap/LearnMap'
 import { FooterAccordions } from '../components/landingPage/Footer/Footer'
 import { ProveYourEnglish } from '../components/landingPage/ProveYourEnglish'
+import Header from '../layout/Header'
 
 const LandingPage = () => {
    return (
       <div>
          <Bg>
+            <Header />
             <ProveYourEnglish />
             <ReaderCounter />
             <UserExperience />

@@ -1,12 +1,12 @@
 import { styled } from '@mui/material'
-import { Logo, YellowBackground } from '../../assets'
-import Button from '../UI/Buttons/Button'
+import { YellowBackground } from '../../assets'
+// import Button from '../UI/Buttons/Button'
 import { ToBeginButton } from '../UI/Buttons/ToBeginButton'
 
 export const ProveYourEnglish = () => {
    return (
       <div>
-         <HeaderContiners>
+         {/* <HeaderContiners>
             <div>
                <Logo />
             </div>
@@ -22,7 +22,7 @@ export const ProveYourEnglish = () => {
                   Registration
                </Button>
             </ButtonContinersss>
-         </HeaderContiners>
+         </HeaderContiners> */}
          <TextContiners>
             <h2>Prove your English </h2>
             <h2>proficiency today with</h2>
@@ -62,19 +62,19 @@ const TextContiners = styled('div')({
       marginTop: '2rem',
    },
 })
-const HeaderContiners = styled('div')({
-   padding: '1.5rem 5rem 0 5rem',
-   width: '100%',
-   display: 'flex',
-   justifyContent: 'space-between',
-   alignItems: 'center',
-   position: 'absolute',
-})
+// const HeaderContiners = styled('div')({
+//    padding: '1.5rem 5rem 0 5rem',
+//    width: '100%',
+//    display: 'flex',
+//    justifyContent: 'space-between',
+//    alignItems: 'center',
+//    position: 'absolute',
+// })
 
-const ButtonContinersss = styled('div')({
-   display: 'flex',
-   gap: '1.5rem',
-})
+// const ButtonContinersss = styled('div')({
+//    display: 'flex',
+//    gap: '1.5rem',
+// })
 const ContainerBackground = styled(YellowBackground)({
    width: '100%',
    height: '20%',

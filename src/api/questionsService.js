@@ -5,6 +5,6 @@ export const getResult = (userId, questionId) => {
       `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
    )
 }
-export const sendingResult = () => {
-   return axiosInstance.post('/result')
+export const sendingResult = (data) => {
+   return axiosInstance.post('/result/', data)
 }

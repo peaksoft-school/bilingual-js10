@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { styled } from '@mui/material'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { PlayAudio, StopRecordingAudio } from '../../assets'
-import { getResult } from '../../api/questionsService'
-import { axiosInstance } from '../../config/axiosInstance'
+import { getResult, sendingResult } from '../../api/questionsService'
 
 export const TypeWhatYouHear = () => {
    const [isRecording, setRecording] = useState(false)
    const [audio, setAudio] = useState(null)
    const [questionData, setQuestionData] = useState({})
    const [inputValue, setInputValue] = useState('')
+   const [error, setError] = useState(null)
    const userId = useSelector((state) => state.answer.userId)
    const questionId = useSelector((state) => state.answer.questionId)
-
+   const navigate = useNavigate()
    const handleInputChange = (e) => {
       const newValue = Math.min(parseInt(e.target.value, 10), 10)
       setInputValue(newValue)
@@ -42,22 +43,25 @@ export const TypeWhatYouHear = () => {
             const response = await getResult(userId, questionId)
             setQuestionData(response.data)
          } catch (error) {
-            console.error('Error fetching data:', error)
+            setError(`Ошибка при загрузке данных: ${error.message}`)
          }
       }
+
       fetchData()
    }, [])
+
    const postScore = async () => {
       try {
-         await axiosInstance.post('/result/', {
+         await sendingResult({
             userId,
             questionId,
             score: inputValue,
          })
       } catch (error) {
-         console.log('error')
+         setError(`Ошибка при отправке результата: ${error.message}`)
       }
    }
+
    const {
       questionTitle,
       questionType,
@@ -153,8 +157,14 @@ export const TypeWhatYouHear = () => {
                      <p className="TextUserAnswer"> Number of plays: {count}</p>
                   </ContainerCreateAnswerTest>
                </ContainerFlex>
+               {error && <p style={{ color: 'red' }}>{error}</p>}
                <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     v
+                     onClick={() => navigate(-1)}
+                  >
                      GO BACK
                   </Button>
                   <Button
