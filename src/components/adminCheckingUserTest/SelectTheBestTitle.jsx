@@ -13,7 +13,7 @@ const SelectTheBestTitle = () => {
    const [score, setScore] = useState(null)
    const { userId, questionId } = useSelector((state) => state.answer)
    const navigate = useNavigate()
-
+   
    const getQuestionTest = async () => {
       try {
          const response = await axiosInstance.get(
