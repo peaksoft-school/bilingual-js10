@@ -38,13 +38,6 @@ function Recording() {
       }
    }
 
-   // const addLink = (link) => {
-   //    const audioUrl = {
-   //       audioUrl: link,
-   //    }
-   //    dispatch(addTest(audioUrl))
-   // }
-
    const addLink = (res) => {
       const audioUrl = {
          audioUrl: res.data.link,
@@ -53,16 +46,10 @@ function Recording() {
       dispatch(addTest(audioUrl))
    }
 
-   // const nextButtonHandler = async () => {
-   //    const links = await dispatch(postFileThunk({ file }))
-   //    AddLink(links)
-   // }
-
    const nextButtonHandler = async () => {
       dispatch(postFileThunk({ file }))
          .unwrap()
          .then((res) => {
-            console.log(res)
             addLink(res)
             if (questions.length === currentComponent + 1) {
                navigate('/user/send-the-results')
