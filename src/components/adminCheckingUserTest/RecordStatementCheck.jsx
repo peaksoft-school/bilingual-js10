@@ -130,7 +130,6 @@ const RecordStatementCheck = () => {
                         <p className="ColorBlue">Score:(1-10)</p>
                         <InputNumber
                            type="number"
-                           value={score}
                            onChange={handleInputChange}
                         />
                      </div>

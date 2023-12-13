@@ -1,14 +1,55 @@
 import { styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Logo, YellowBackground } from '../../assets'
+import Button from '../UI/Buttons/Button'
 import { ToBeginButton } from '../UI/Buttons/ToBeginButton'
-import Header from '../../layout/Header'
-import { YellowBackground } from '../../assets'
 
 export const ProveYourEnglish = () => {
+   const [isHeaderFixed, setIsHeaderFixed] = useState(false)
+   const navigate = useNavigate()
+
+   const handleComeInClick = () => {
+      navigate('/signin')
+   }
+   const handleLoginClick = () => {
+      navigate('/signup')
+   }
+   useEffect(() => {
+      const handleScroll = () => {
+         const offset = window.scrollY
+         setIsHeaderFixed(offset > 0)
+      }
+      window.addEventListener('scroll', handleScroll)
+      return () => {
+         window.removeEventListener('scroll', handleScroll)
+      }
+   }, [isHeaderFixed])
+
    return (
       <div>
-         {/* <ContainerHeader> */}
-         <Header />
-         {/* </ContainerHeader> */}
+         <HeaderContiners isHeaderFixed={isHeaderFixed}>
+            <div>
+               <Logo />
+            </div>
+            <ButtonContinersss>
+               <Button
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#4E28E8"
+                  onClick={handleComeInClick}
+               >
+                  TO COME IN
+               </Button>
+               <Button
+                  defaultStyle="white"
+                  hoverStyle="#F0EDED"
+                  className="registerButton"
+                  onClick={handleLoginClick}
+               >
+                  REGISTER
+               </Button>
+            </ButtonContinersss>
+         </HeaderContiners>
          <TextContiners>
             <h2>Prove your English </h2>
             <h2>proficiency today with</h2>
@@ -24,28 +65,16 @@ export const ProveYourEnglish = () => {
       </div>
    )
 }
-
-// const ContainerHeader = styled('div')({
-//    backgroundColor: isHeaderFixed ? 'white' : 'yellow',
-//    position: isHeaderFixed ? 'fixed' : 'static',
-//    width: '100%',
-//    zIndex: 1000,
-// })
-
-const ContainerBackground = styled(YellowBackground)({
-   width: '100%',
-   height: '50%',
-})
 const TextContiners = styled('div')({
    position: 'absolute',
    display: 'flex',
    justifyContent: 'center',
    alignContent: 'center',
    flexDirection: 'column',
-   top: '11rem',
+   top: '10rem',
    left: '5rem',
    h1: {
-      fontSize: '4rem',
+      fontSize: '3.75rem',
       color: '#cd4a85',
    },
    h2: {
@@ -59,4 +88,24 @@ const TextContiners = styled('div')({
    '.Buttons': {
       marginTop: '2rem',
    },
+})
+const ButtonContinersss = styled('div')({
+   display: 'flex',
+   gap: '1.5rem',
+})
+const HeaderContiners = styled('div')(({ isHeaderFixed }) => ({
+   backgroundColor: isHeaderFixed ? 'white' : '#FCD200',
+   width: '100%',
+   zIndex: 3,
+   position: 'fixed',
+   display: 'flex',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   height: '6rem',
+   padding: '1.5rem 5rem',
+}))
+
+const ContainerBackground = styled(YellowBackground)({
+   width: '100%',
+   height: '20%',
 })

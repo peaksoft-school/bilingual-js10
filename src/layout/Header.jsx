@@ -103,12 +103,9 @@ const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',
    height: '94px',
    display: 'flex',
+   background: '#fff',
    justifyContent: 'space-between',
-   backgroundColor: '#fff',
    marginBottom: marginBottom || null,
-   position: 'fixed',
-   zIndex: 2,
-   width: '100%',
 }))
 const LogoBox = styled('div')({
    margin: '19px 0 0 7rem',
