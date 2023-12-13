@@ -97,7 +97,7 @@ const Stepper = styled(Slider)({
    },
    '& .slick-arrow': {
       cursor: 'pointer',
-      zIndex: 11,
+      zIndex: 1,
       position: 'relative',
       top: '200px',
    },

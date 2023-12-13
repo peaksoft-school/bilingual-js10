@@ -33,7 +33,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   hoverStyle="#4E28E8"
                   onClick={handleComeInClick}
                >
-                  to come in
+                  TO COME IN
                </Button>
                <Button
                   defaultStyle="white"
@@ -41,7 +41,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   className="registerButton"
                   onClick={handleLoginClick}
                >
-                  Registration
+                  REGISTER
                </Button>
             </ButtonsContainer>
          ) : (
@@ -104,8 +104,11 @@ const MyHeader = styled('header')(({ marginBottom }) => ({
    height: '94px',
    display: 'flex',
    justifyContent: 'space-between',
-   backgroundColor: '#ffff',
+   backgroundColor: '#fff',
    marginBottom: marginBottom || null,
+   position: 'fixed',
+   zIndex: 2,
+   width: '100%',
 }))
 const LogoBox = styled('div')({
    margin: '19px 0 0 7rem',
