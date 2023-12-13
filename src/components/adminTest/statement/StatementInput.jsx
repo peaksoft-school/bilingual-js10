@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import Button from '../../UI/Buttons/Button'
 import Input from '../../UI/Input'
 import { postRecordStatement } from '../../../store/question/questionsThunk'
+import { updateQuestion } from '../../../store/questions/questionsThunk'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
 
-const StatementInput = ({ handleClose }) => {
+const StatementInput = () => {
    const dispatch = useDispatch()
-   const { title, questionDuration } = useSelector((state) => state.questions)
-   const handleSave = (result) => {
-      dispatch(postRecordStatement(result))
-   }
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
+   const navigate = useNavigate()
+   const { pathname } = useLocation()
+   const updateUrl =
+      pathname === '/admin/tests/update-question/record-saying-statement'
+
    const formik = useFormik({
       initialValues: {
          inputValue: '',
@@ -25,15 +32,44 @@ const StatementInput = ({ handleClose }) => {
          }
          return errors
       },
-      onSubmit: (values) => {
-         const result = {
-            title,
-            questionDuration,
-            statement: values.inputValue,
-         }
-         handleSave(result)
-      },
    })
+
+   const handleSave = async () => {
+      if (title && questionDuration) {
+         if (updateUrl) {
+            await dispatch(
+               updateQuestion({
+                  title,
+                  statement: formik.values.inputValue,
+                  correctAnswer: 'string',
+                  duration: questionDuration,
+                  attempts: 0,
+                  fileUrl: 'string',
+                  passage: 'string',
+               })
+            )
+         } else {
+            const result = {
+               title,
+               duration: questionDuration,
+               statement: formik.values.inputValue,
+            }
+            await dispatch(postRecordStatement(result))
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+   useEffect(() => {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         formik.setFieldValue('inputValue', question.statement)
+      }
+   }, [question])
+
    return (
       <Container>
          <div className="Box">
@@ -57,7 +93,7 @@ const StatementInput = ({ handleClose }) => {
                   <Button
                      variant="outlined"
                      hoverStyle="#3A10E5"
-                     onClick={handleClose}
+                     onClick={() => navigate(-1)}
                   >
                      GO BACK
                   </Button>
@@ -65,7 +101,7 @@ const StatementInput = ({ handleClose }) => {
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
                      variant="contained"
-                     type="submit"
+                     onClick={handleSave}
                   >
                      SAVE
                   </Button>

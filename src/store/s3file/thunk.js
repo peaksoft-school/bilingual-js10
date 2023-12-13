@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { fileAxiosInstance } from '../../config/fileAxiosInstanse'
 import { axiosInstance } from '../../config/axiosInstance'
+import Notify from '../../components/UI/Notifay'
 
 export const postImageS3 = createAsyncThunk(
    'post/image',
@@ -21,21 +22,27 @@ export const postImageS3 = createAsyncThunk(
 
 export const postDescribeImage = createAsyncThunk(
    'post/img',
-   async ({ data, selectedImage }, { rejectWithValue, dispatch, getState }) => {
+   async ({ data, selectedImage, testID }, { dispatch, getState }) => {
       try {
          await dispatch(postImageS3(selectedImage))
-         const response = await axiosInstance.post(
-            '/questions?testId=1&questionType=DESCRIBE_IMAGE',
+         Notify(
             {
-               title: data.title,
-               duration: data.duration,
-               correctAnswer: data.correctAnswer,
-               fileUrl: getState().file.file,
-            }
+               sucessTitle: 'Question saved ',
+               successMessage: 'Successfully saved',
+               errorTitle: 'Error',
+            },
+            axiosInstance.post(
+               `/questions?testId=${testID}&questionType=DESCRIBE_IMAGE`,
+               {
+                  title: data.title,
+                  duration: data.duration,
+                  correctAnswer: data.correctAnswer,
+                  fileUrl: getState().file.file,
+               }
+            )
          )
-         return response
       } catch (error) {
-         return rejectWithValue(error)
+         console.log(error)
       }
    }
 )

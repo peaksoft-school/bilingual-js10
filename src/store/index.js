@@ -6,6 +6,7 @@ import { createTestSlice } from './admin/createTestSlice'
 import { questionSlice } from './admin/QuestionsSlice'
 import { globalTestSlice } from './userTest/global-test-slice'
 import { typeTest } from './userTest/typeTesrtSlice'
+import { answersSlice } from './checkTestSlices/answers-slice'
 
 export const store = configureStore({
    reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
       [questionSlice.name]: questionSlice.reducer,
       [globalTestSlice.name]: globalTestSlice.reducer,
       [typeTest.name]: typeTest.reducer,
+      [answersSlice.name]: answersSlice.reducer,
    },
 })

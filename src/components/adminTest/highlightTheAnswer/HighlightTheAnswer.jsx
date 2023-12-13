@@ -1,5 +1,6 @@
 import { styled } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import Input from '../../UI/Input'
@@ -7,14 +8,20 @@ import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
 import { postHighlightAnswer } from '../../../store/question/questionsThunk'
 import { schemaHighlight } from '../../../utils/helpers/validate/authValidate'
+import { questionsSlice } from '../../../store/questions/questionsSlice'
+import { updateQuestion } from '../../../store/questions/questionsThunk'
 
 export const HighlightTheAnswer = () => {
    const [answerValue, setAnswerValue] = useState('')
-   const { title, questionDuration } = useSelector((state) => state.questions)
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
    const dispatch = useDispatch()
-   const handleSave = (result) => {
-      dispatch(postHighlightAnswer(result))
-   }
+   const navigate = useNavigate()
+
+   const { pathname } = useLocation()
+   const updateUrl =
+      pathname === '/admin/tests/update-question/highlight-the-answer'
 
    const formik = useFormik({
       initialValues: {
@@ -22,25 +29,46 @@ export const HighlightTheAnswer = () => {
          text: '',
       },
       validationSchema: schemaHighlight,
-      onSubmit: (values) => {
+   })
+
+   const handleSave = async () => {
+      if (title && questionDuration) {
          const result = {
             title,
             duration: questionDuration,
-            statement: values.question,
-            passage: values.text,
+            statement: formik.values.question,
+            passage: formik.values.text,
             correctAnswer: answerValue,
+            attempts: 0,
+            fileUrl: 'string',
          }
-         handleSave(result)
-      },
-   })
+         if (updateUrl) {
+            const data = result
+            await dispatch(updateQuestion(data))
+         } else {
+            await dispatch(postHighlightAnswer(result))
+         }
+         navigate(-1)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
+      }
+   }
+
+   useEffect(() => {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         formik.setFieldValue('question', question.statement)
+         formik.setFieldValue('text', question.passage)
+         setAnswerValue(question.correctAnswer)
+      }
+   }, [question])
 
    return (
       <div>
          <MainPassageContainer onSubmit={formik.handleSubmit}>
             <span>Questions to the Passage</span>
-            {formik.errors.question ? (
-               <div className="error">{formik.errors.question}</div>
-            ) : null}
             <Input
                border=" 1.53px solid #D4D0D0"
                className="input"
@@ -50,11 +78,11 @@ export const HighlightTheAnswer = () => {
                value={formik.values.question}
                onChange={formik.handleChange}
             />
+            {formik.errors.question ? (
+               <div className="error">{formik.errors.question}</div>
+            ) : null}
             <span>Passage</span>
             <TextFieldStyle>
-               {formik.errors.text ? (
-                  <div className="error">{formik.errors.text}</div>
-               ) : null}
                <TextArea
                   multiline
                   name="text"
@@ -63,6 +91,9 @@ export const HighlightTheAnswer = () => {
                   fullWidth
                   className="textarea"
                />
+               {formik.errors.text ? (
+                  <div className="error">{formik.errors.text}</div>
+               ) : null}
             </TextFieldStyle>
             <span>Highlight correct answer:</span>
             <CorrectAnswerBlock>
@@ -75,7 +106,11 @@ export const HighlightTheAnswer = () => {
                </Pstyle>
             </CorrectAnswerBlock>
             <ButtonContainer>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  onClick={() => navigate(-1)}
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+               >
                   go back
                </Button>
                <Button
@@ -83,7 +118,7 @@ export const HighlightTheAnswer = () => {
                   variant="contained"
                   defaultStyle="#2AB930"
                   className="saveButton"
-                  type="submit"
+                  onClick={handleSave}
                >
                   save
                </Button>
@@ -113,14 +148,14 @@ const TextFieldStyle = styled('div')(() => ({
    },
 }))
 
-const MainPassageContainer = styled('form')(() => ({
+const MainPassageContainer = styled('div')(() => ({
    '& > span': {
       fontSize: '16px',
       fontStyle: 'normal',
       fontWeight: '500',
       lineHeight: '16px',
       color: '#4C4859',
-      marginBottom: '12px',
+      marginBottom: '6px',
    },
    '& > .input, .textarea': {
       marginBottom: '24px',
@@ -129,9 +164,10 @@ const MainPassageContainer = styled('form')(() => ({
    '.error': {
       color: '#ff0000',
       fontWeight: '700',
-      fontSize: '13px',
-      lineHeight: '9px',
+      fontSize: '14px',
+      lineHeight: '8px',
       letterSpacing: '1px',
+      marginBottom: '10px',
    },
 }))
 
