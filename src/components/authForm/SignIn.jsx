@@ -76,8 +76,10 @@ const SigninPage = () => {
                   value={values.email}
                   onChange={handleChange}
                   type="email"
+                  id="outlined-basic"
                />
                <StyledInput
+                  id="outlined-basic"
                   label="Password"
                   name="password"
                   error={touched.password && !!errors.password}
@@ -142,7 +144,6 @@ const Background = styled(Grid)(() => ({
 
 const SignInForm = styled('form')(() => ({
    width: '38.5rem',
-
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
