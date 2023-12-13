@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import SelectRealEnglishWords from '../../components/adminCheckingUserTest/SelectRealEnglishWords'
-import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 import DescribeImage from '../../components/adminCheckingUserTest/DescribeImage'
 import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/HighlightedAnswerCheck'
 import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordStatementCheck'
 import RespondleastUserTest from '../../components/adminCheckingUserTest/RespondleastUserTest'
+import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <SelectRealEnglishWords />,
