@@ -99,6 +99,7 @@ export default function UserRealEnglishWord() {
 
    const handleNext = () => {
       const newTest = {
+         questionId: testComponent.id,
          optionsId: movedItems.map((el) => {
             return el.id
          }),

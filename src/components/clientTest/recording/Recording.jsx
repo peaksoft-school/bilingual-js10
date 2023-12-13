@@ -24,10 +24,10 @@ function Recording() {
    const [isButtonStop, setIsButtonStop] = useState(false)
    const dispatch = useDispatch()
    const navigate = useNavigate()
+
    const onStop = (blobFile) => {
       setFile(blobFile.blob)
    }
-
    const PlayHandler = () => {
       setIsButtonStop((prev) => !prev)
       if (isButtonStop) {
@@ -38,18 +38,32 @@ function Recording() {
       }
    }
 
-   const addLink = (link) => {
+   // const addLink = (link) => {
+   //    const audioUrl = {
+   //       audioUrl: link,
+   //    }
+   //    dispatch(addTest(audioUrl))
+   // }
+
+   const addLink = (res) => {
       const audioUrl = {
-         audioUrl: link,
+         audioUrl: res.data.link,
+         questionId: testComponent.id,
       }
       dispatch(addTest(audioUrl))
    }
+
+   // const nextButtonHandler = async () => {
+   //    const links = await dispatch(postFileThunk({ file }))
+   //    AddLink(links)
+   // }
 
    const nextButtonHandler = async () => {
       dispatch(postFileThunk({ file }))
          .unwrap()
          .then((res) => {
-            addLink(res.fileUrl)
+            console.log(res)
+            addLink(res)
             if (questions.length === currentComponent + 1) {
                navigate('/user/send-the-results')
             } else {

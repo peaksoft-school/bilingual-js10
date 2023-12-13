@@ -40,7 +40,12 @@ export const UserMainIdea = () => {
       const selectedOption = testComponent.optionList.find(
          (el) => el.id === selectedRadio
       )
-      dispatch(addTest({ optionsId: [selectedOption.id] }))
+      dispatch(
+         addTest({
+            questionId: testComponent.id,
+            optionsId: [selectedOption.id],
+         })
+      )
       if (questions.length === currentComponent + 1) {
          navigate('/user/send-the-results')
       } else {

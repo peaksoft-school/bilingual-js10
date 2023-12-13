@@ -45,7 +45,7 @@ export const UserTypeWhatYouHear = () => {
    }
 
    const nextBtn = () => {
-      dispatch(addTest({ statement: value }))
+      dispatch(addTest({ statement: value, questionId: testComponent.id }))
       if (questions.length === currentComponent + 1) {
          navigate('/user/send-the-results')
       } else {

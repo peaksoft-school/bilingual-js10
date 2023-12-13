@@ -22,6 +22,7 @@ const HighLightAnswerUser = () => {
    const handleAddTest = () => {
       const testPayload = {
          statement: answerValue,
+         questionId: testComponent.id,
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {

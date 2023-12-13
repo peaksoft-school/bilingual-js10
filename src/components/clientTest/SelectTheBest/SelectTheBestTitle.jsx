@@ -34,7 +34,12 @@ export const SelectTheBestTitle = () => {
          isTrue: el.isTrue,
       }))
       const answer = newTest.find((el) => el.isTrue === true)
-      dispatch(addTest({ optionsId: [answer.id] }))
+      dispatch(
+         addTest({
+            questionId: testComponent.id,
+            optionsId: [answer.id],
+         })
+      )
 
       if (questions.length === currentComponent + 1) {
          navigate('/user/send-the-results')

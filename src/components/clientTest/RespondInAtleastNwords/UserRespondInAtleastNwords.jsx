@@ -30,6 +30,7 @@ export const UserRespondInAtleastNwords = () => {
    const handleAddTest = () => {
       const testPayload = {
          statement: userInput,
+         questionId: testComponent.id,
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {

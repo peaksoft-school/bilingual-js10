@@ -13,7 +13,7 @@ export const MultiplySelect = ({
    const handleSelectWord = (word) => {
       setAnswer((prevSelectedWords) => {
          const isWordSelected = prevSelectedWords.some(
-            (selectedWord) => selectedWord.id !== word.id
+            (selectedWord) => selectedWord.id === word.id
          )
          const updatedSelectedWords = isWordSelected
             ? prevSelectedWords.filter(

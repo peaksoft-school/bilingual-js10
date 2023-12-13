@@ -25,6 +25,7 @@ const DescrbImgUsr = () => {
    const handleAddTest = () => {
       const testPayload = {
          statement: value,
+         questionId: testComponent.id,
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {

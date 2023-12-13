@@ -38,7 +38,7 @@ export const SelectEnglishWord = ({
                      style={{
                         fill: isPlaying ? '#3A10E5' : '#655F5F',
                      }}
-                     onClick={() => handleVolumeUpClick(word.audio_url)}
+                     onClick={() => handleVolumeUpClick(word.audioUrl)}
                   />
                   <p>{word.title}</p>
                </div>

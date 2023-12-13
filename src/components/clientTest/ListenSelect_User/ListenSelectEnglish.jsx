@@ -37,7 +37,12 @@ export const ListenSelectEnglish = () => {
       const data = answer.map((el) => {
          return el.id
       })
-      dispatch(addTest({ optionsId: data }))
+      dispatch(
+         addTest({
+            questionId: testComponent.id,
+            optionsId: data,
+         })
+      )
       if (questions.length === currentComponent + 1) {
          navigate('/user/send-the-results')
       } else {
