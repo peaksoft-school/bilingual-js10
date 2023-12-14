@@ -60,7 +60,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <NavLink to="/">
+                     <NavLink to="/user/my-results">
                         <MyText>My Results</MyText>
                      </NavLink>
                   ) : (

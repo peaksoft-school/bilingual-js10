@@ -50,9 +50,9 @@ export const Questions = ({ testID }) => {
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-   const StyledLabel = styled('span')`
-      color: #fff;
-   `
+   // const StyledLabel = styled('span')`
+   //    color: #fff;
+   // `
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))
@@ -99,7 +99,7 @@ export const Questions = ({ testID }) => {
       },
       {
          id: 'Score',
-         label: <StyledLabel>o</StyledLabel>,
+         // label: <StyledLabel>o</StyledLabel>,
          render: (item) => {
             return (
                <Container>
