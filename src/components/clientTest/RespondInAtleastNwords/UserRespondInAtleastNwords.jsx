@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Typography, styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const UserRespondInAtleastNwords = () => {
    const [wordCount, setWordCount] = useState(0)
    const [userInput, setUserInput] = useState('')
    const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
+
    const handleInputChange = (event) => {
       const text = event.target.value
       const words = text.trim() === '' ? [] : text.trim().split(/\s+/)
@@ -19,22 +30,41 @@ export const UserRespondInAtleastNwords = () => {
    const handleAddTest = () => {
       const testPayload = {
          statement: userInput,
+         questionId: testComponent.id,
       }
       dispatch(addTest(testPayload))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
    const isNextButtonDisabled = !wordCount
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
-      <Background>
+      <Container>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+
          <DescribeText>
             Respond to the question in at least 50 words
          </DescribeText>
          <MainContainer>
             <Describe>
-               “Describe a time you were surprised.What <br /> happened?”
+               <p>{testComponent.statement}</p>
             </Describe>
             <div>
                <Input minRows={5} maxRows={5} onChange={handleInputChange} />
-               <Word>Word: {wordCount}</Word>
+               <Word>Word:{testComponent.attempts}</Word>
             </div>
          </MainContainer>
          <BlockBottom>
@@ -52,9 +82,13 @@ export const UserRespondInAtleastNwords = () => {
                </Button>
             </ButtonBox>
          </BlockBottom>
-      </Background>
+      </Container>
    )
 }
+const Container = styled('div')`
+   margin-top: 2rem;
+`
+
 const Input = styled(TextArea)({
    width: '23.875rem',
    padding: '0.3rem',
@@ -70,6 +104,7 @@ const DescribeText = styled(Typography)({
    fontfamily: 'Gilroy',
    fontSize: '1.5rem',
    fontWeight: '400',
+   marginTop: '2rem',
 
    lineHeight: 'normal',
 })

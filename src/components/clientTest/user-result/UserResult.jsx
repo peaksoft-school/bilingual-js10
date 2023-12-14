@@ -29,6 +29,7 @@ const UserResult = () => {
    const [error, setError] = useState(null)
    const [userTestID, setUserTestID] = useState(null)
    const [userId, setUserId] = useState(null)
+
    const getData = async () => {
       try {
          const response = await axiosInstance.get('/result/userGetResults')
