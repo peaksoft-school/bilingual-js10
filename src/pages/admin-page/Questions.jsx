@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { styled } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,15 +10,24 @@ import { Modal } from '../../components/UI/UiModal'
 import { Table } from '../../components/table/Table'
 import { axiosInstance } from '../../config/axiosInstance'
 import { deleteQuestion, getTestThunk } from '../../store/admin/QuestionsSlice'
+import { questionsSlice } from '../../store/questions/questionsSlice'
+import {
+   getOptionByQuestionId,
+   getQuestionThunk,
+} from '../../store/questions/questionsThunk'
 
 export const Questions = ({ testID }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const [getId, setGetId] = useState()
    const [openModal, setOpenModal] = useState(false)
+   // const { pathname } = useLocation()
    const { questions } = useSelector((state) => state.questionSlice)
 
    useEffect(() => {
+      dispatch(
+         questionsSlice.actions.selectedOption('Select real English words')
+      )
       dispatch(getTestThunk(testID))
    }, [])
 
@@ -31,7 +41,7 @@ export const Questions = ({ testID }) => {
    const handleDeleteItem = () => {
       dispatch(deleteQuestion(getId))
       setOpenModal(false)
-      setTimeout(() => dispatch(getTestThunk(testID)), 300)
+      setTimeout(() => dispatch(getTestThunk(testID)), 600)
    }
    const handleOpenModal = (id) => {
       setOpenModal(true)
@@ -44,10 +54,37 @@ export const Questions = ({ testID }) => {
       color: #fff;
    `
    const goToCustomForm = () => {
-      navigate('/admin/custom-form')
+      dispatch(questionsSlice.actions.addTime(null))
+      dispatch(questionsSlice.actions.addTitle(''))
+      navigate('/admin/tests/create-question')
    }
+
+   const qestionTypes = {
+      RECORD_SAYING_STATEMENT: 'Record saying statement',
+      SELECT_REAL_ENGLISH_WORD: 'Select real English words',
+      LISTEN_AND_SELECT_ENGLISH_WORDS: 'Listen and select English word',
+      TYPE_WHAT_YOU_HEAR: 'Type what you hear',
+      DESCRIBE_IMAGE: 'Describe image',
+      RESPOND_AT_LEAST_N_WORDS: 'Respond in at least N words',
+      HIGHLIGHT_THE_ANSWER: 'Highlight the answer',
+      SELECT_THE_MAIN_IDEA: 'Select the main idea',
+      SELECT_THE_BEST_TITLE: 'Select the best title',
+   }
+
+   const editQuestionHandler = (item) => {
+      const select = qestionTypes[item.questionType]
+      navigate(
+         `/admin/tests/update-question/${select
+            .toLowerCase()
+            .replaceAll(' ', '-')}`
+      )
+      dispatch(questionsSlice.actions.selectedOption(select))
+      dispatch(questionsSlice.actions.setQuestionID(item.id))
+      dispatch(getOptionByQuestionId())
+      dispatch(getQuestionThunk())
+   }
+
    const columns = [
-      { id: 'row_number', label: '#' },
       {
          id: 'title',
          label: 'Name',
@@ -62,7 +99,7 @@ export const Questions = ({ testID }) => {
       },
       {
          id: 'Score',
-         label: <StyledLabel>ffffffffffffff</StyledLabel>,
+         label: <StyledLabel>o</StyledLabel>,
          render: (item) => {
             return (
                <Container>
@@ -72,7 +109,10 @@ export const Questions = ({ testID }) => {
                      value={item.score}
                      onChange={() => handleRadioChange(item)}
                   />
-                  <Edits className="Edits" />
+                  <Edits
+                     className="Edits"
+                     onClick={() => editQuestionHandler(item)}
+                  />
                   <TrashCan
                      onClick={() => handleOpenModal(item.id)}
                      className="TrashCan"
@@ -97,7 +137,7 @@ export const Questions = ({ testID }) => {
          <Table data={questions} columns={columns} />
          <MiniContainer2>
             <Button
-               onClick={() => navigate(-1)}
+               onClick={() => navigate('/admin')}
                variant="outlined"
                hoverStyle="#3A10E5"
             >

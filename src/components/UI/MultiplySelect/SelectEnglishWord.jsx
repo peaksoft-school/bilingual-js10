@@ -1,34 +1,56 @@
-import React from 'react'
-import { styled } from '@mui/material'
+import styled from 'styled-components'
+import { useRef, useState } from 'react'
+import { VolumeEnglishWord } from '../../../assets'
 
 export const SelectEnglishWord = ({
    words,
-   selectedWords,
+   answer,
    handleSelectWord,
    CheckIcon,
-   VolumeUp,
 }) => {
+   const audioRef = useRef(new Audio())
+   const [isPlaying, setIsPlaying] = useState(false)
+
+   const handleVolumeUpClick = (audioUrl) => {
+      if (audioRef.current.paused) {
+         audioRef.current.src = audioUrl
+         audioRef.current.play()
+      } else {
+         audioRef.current.pause()
+      }
+      setIsPlaying(!isPlaying)
+   }
+
    return (
       <Container>
          {words.map((word) => (
             <div
-               key={word}
+               key={word.id}
                className={`ContainerMultiply ${
-                  selectedWords.includes(word) ? 'checked' : ''
+                  answer.includes(word) ? 'checked' : ''
                }`}
             >
                <div className="textCon">
-                  {VolumeUp}
-                  <p>{word}</p>
+                  <VolumeEnglishWord
+                     className={`volumeIcon ${
+                        isPlaying ? 'playing' : 'paused'
+                     }`}
+                     style={{
+                        fill: isPlaying ? '#3A10E5' : '#655F5F',
+                     }}
+                     onClick={() => handleVolumeUpClick(word.audioUrl)}
+                  />
+                  <p>{word.title}</p>
                </div>
                <div className="InputCheckBox">
                   <button
+                     type="button"
                      className={`IconValue ${
-                        selectedWords.includes(word) ? 'checked' : ''
+                        answer.includes(word) ? 'checked' : ''
                      }`}
                      onClick={() => handleSelectWord(word)}
                   >
-                     {CheckIcon}
+                     {CheckIcon && <CheckIcon />}
                   </button>
                </div>
             </div>
@@ -36,21 +58,20 @@ export const SelectEnglishWord = ({
       </Container>
    )
 }
-
 const Container = styled('div')(() => ({
    display: 'flex',
+   justifyContent: 'center',
    width: '800px',
    flexWrap: 'wrap',
-   columnGap: '100px',
+   columnGap: '70px',
    rowGap: '20px',
    '.ContainerMultiply': {
       display: 'flex',
-      gap: '2rem',
       justifyContent: 'space-between',
       alignItems: 'center',
       border: '1.5px solid #D4D0D0',
       borderRadius: '0.5rem',
-      width: '12.3rem',
+      width: '12.7rem',
       height: '2.6rem',
       paddingLeft: '10px',
       color: '#4C4859',
@@ -58,9 +79,9 @@ const Container = styled('div')(() => ({
    },
    ' .textCon': {
       display: 'flex',
-      justifyContent: 'spase-between',
-      gap: '0.7rem',
+      justifyContent: 'space-between',
       alignItems: 'center',
+      gap: '15px',
    },
    ' .InputCheckBox': {
       display: 'flex',
@@ -82,10 +103,13 @@ const Container = styled('div')(() => ({
       borderRight: 'none',
       color: '#D4D0D0',
       background: 'white',
+      cursor: 'pointer',
    },
    ' .IconValue.checked': {
       color: 'white',
       background: '#3A10E5',
       border: ' 1.5px solid #3A10E5',
+      cursor: 'pointer',
    },
+   '.volumeIcon': { cursor: 'pointer' },
 }))

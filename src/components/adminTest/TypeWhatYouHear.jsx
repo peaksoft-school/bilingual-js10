@@ -2,20 +2,32 @@ import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material'
 import PauseIcon from '@mui/icons-material/Pause'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Input from '../UI/Input'
 import Button from '../UI/Buttons/Button'
 import { ReactComponent as PlayAudioIcon } from '../../assets/icons/playAudioIcon.svg'
-import { TypeWhatYouHearThunk } from '../../store/questions/questionsThunk'
+import {
+   postFileThunk,
+   updateQuestion,
+} from '../../store/questions/questionsThunk'
+import { questionsSlice } from '../../store/questions/questionsSlice'
+import Notify from '../UI/Notifay'
+import { axiosInstance } from '../../config/axiosInstance'
 
 export const TypeWhatYouHear = () => {
+   const { pathname } = useLocation()
+   const updateUrl =
+      pathname === '/admin/tests/update-question/type-what-you-hear'
+
+   const { title, questionDuration, question } = useSelector(
+      (state) => state.questions
+   )
    const [audioFile, setAudioFile] = useState(null)
    const [isAudioTrue, setIsAudioTrue] = useState(false)
    const [audio, setAudio] = useState(null)
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { title, questionDuration } = useSelector((state) => state.questions)
    const { testID } = useSelector((state) => state.createTestSlice)
 
    const formik = useFormik({
@@ -25,17 +37,55 @@ export const TypeWhatYouHear = () => {
       },
    })
 
-   const saveHandler = (e) => {
-      e.preventDefault()
-      const data = {
-         title,
-         duration: questionDuration,
-         numberOffReplays: formik.values.quantityInputValue,
-         correctAnswer: formik.values.correctAnswer,
-         audioFile,
-         testID,
+   const saveHandler = async () => {
+      if (title && questionDuration) {
+         if (updateUrl) {
+            await dispatch(
+               updateQuestion({
+                  title,
+                  statement: 'string',
+                  correctAnswer: formik.values.correctAnswer,
+                  duration: questionDuration,
+                  attempts: formik.values.quantityInputValue,
+                  fileUrl: audioFile,
+                  passage: 'string',
+               })
+            )
+         } else {
+            const data = {
+               title,
+               duration: questionDuration,
+               numberOffReplays: formik.values.quantityInputValue,
+               correctAnswer: formik.values.correctAnswer,
+               audioFile,
+               testID,
+            }
+            const fileUrl = await dispatch(
+               postFileThunk({ file: data.audioFile })
+            )
+            Notify(
+               {
+                  sucessTitle: 'Question saved ',
+                  successMessage: 'Successfully saved',
+                  errorTitle: 'Error',
+               },
+               axiosInstance.post(
+                  `/questions?testId=${data.testID}&questionType=TYPE_WHAT_YOU_HEAR`,
+                  {
+                     title: data.title,
+                     duration: data.duration,
+                     attempts: data.numberOffReplays,
+                     correctAnswer: data.correctAnswer,
+                     fileUrl: fileUrl.payload.data.link,
+                  }
+               )
+            )
+         }
+         navigate(`/admin/questions/${testID}`)
+      } else {
+         dispatch(questionsSlice.actions.titleValidate(true))
+         dispatch(questionsSlice.actions.durationValidate(true))
       }
-      dispatch(TypeWhatYouHearThunk(data))
    }
 
    const playAudio = () => {
@@ -43,7 +93,25 @@ export const TypeWhatYouHear = () => {
    }
 
    useEffect(() => {
-      if (audioFile) {
+      if (updateUrl) {
+         dispatch(questionsSlice.actions.addTitle(question.title))
+         dispatch(questionsSlice.actions.addTime(question.duration))
+         setAudioFile(question.fileUrl)
+         formik.setFieldValue('quantityInputValue', question.attempts)
+         formik.setFieldValue('correctAnswer', question.correctAnswer)
+         if (isAudioTrue) {
+            const audio = new Audio(audioFile)
+            audio.play()
+            setAudio(audio)
+            audio.onended = () => {
+               setIsAudioTrue(false)
+               setAudioFile(null)
+            }
+         } else if (audio) {
+            audio.pause()
+            setAudio(null)
+         }
+      } else if (!updateUrl && audioFile) {
          if (isAudioTrue) {
             const audio = new Audio(URL.createObjectURL(audioFile))
             audio.play()
@@ -53,7 +121,7 @@ export const TypeWhatYouHear = () => {
             setAudio(null)
          }
       }
-   }, [isAudioTrue, audioFile])
+   }, [isAudioTrue, question, audioFile])
 
    return (
       <MainContainer>
@@ -102,7 +170,7 @@ export const TypeWhatYouHear = () => {
                         )}
                      </Button>
                      <label htmlFor="fileInput">
-                        {audioFile ? audioFile.name : 'Выберите аудиофайл'}
+                        {audioFile ? audioFile?.name : 'Выберите аудиофайл'}
                      </label>
                   </div>
                </div>
@@ -132,7 +200,7 @@ export const TypeWhatYouHear = () => {
                      className="saveButton"
                      defaultStyle="#2AB930"
                      hoverStyle="#31CF38"
-                     onClick={(e) => saveHandler(e)}
+                     onClick={() => saveHandler()}
                   >
                      Save
                   </Button>
@@ -159,9 +227,16 @@ const MainContainer = styled('div')(() => ({
          display: 'flex',
          alignItems: 'end',
          '.replaceInput': {
-            width: '59px',
+            '-webkit-appearance': 'none',
+            '-moz-appearance': 'textfield',
+            width: '49px',
             marginTop: '10px',
+            '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+               '-webkit-appearance': 'none',
+               margin: 0,
+            },
          },
+
          '.uploadContainer': {
             display: 'flex',
             columnGap: '15px',

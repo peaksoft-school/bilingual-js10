@@ -17,12 +17,12 @@ export const TestItem = ({ setOpen, test, enableHandler, setDelID }) => {
 
    const updateFn = (id) => {
       dispatch(createTestActions.updatedTestId(id))
-      navigate('/admin/update-test')
+      navigate('/admin/tests/update-test')
    }
 
    const testQuestionsHandler = (id) => {
       dispatch(createTestActions.testID(id))
-      navigate('/admin/QuestionsPage')
+      navigate(`/admin/tests/questions/${id}`)
    }
 
    return (
@@ -61,6 +61,10 @@ const ContainerItems = styled('div')(() => ({
    borderRadius: '8px',
    background: '#fff',
    border: 'none',
+   ':hover': {
+      backgroundColor: '#f8f8f8',
+      transitionDuration: '0.6s',
+   },
    boxShadow:
       ' 0px 4px 10px 0px rgba(0, 0, 0, 0.066), 0px -4px 10px 0px rgba(0, 0, 0, 0.06)',
    '& .Buttons': {
@@ -81,6 +85,9 @@ const ContainerItems = styled('div')(() => ({
    '& .MuiButtonBase-root': {
       minWidth: '0',
       color: '#fff',
+   },
+   '& img': {
+      width: '22px',
    },
 }))
 
