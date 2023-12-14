@@ -55,11 +55,14 @@ import { ReactComponent as GrenCheck } from './icons/grenCheck.svg'
 import { ReactComponent as VolumeEnglishWord } from './icons/volumeEnglishWord.svg'
 import { ReactComponent as PlayAudio } from './icons/playAudio.svg'
 import { ReactComponent as StopRecordingAudio } from './icons/stopRecordingAudio.svg'
+
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
 import Avaz from './images/avazultramax.jpg'
 import Ulan from './images/ Ulan.jpg'
 import Aijan from './images/Aijan.png'
+
+export { default as Globus } from './icons/globus.svg'
 
 export {
    ModalDeleteIcon,

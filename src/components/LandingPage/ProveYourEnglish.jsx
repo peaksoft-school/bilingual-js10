@@ -1,9 +1,15 @@
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import { YellowBackground } from '../../assets'
 // import Button from '../UI/Buttons/Button'
 import { ToBeginButton } from '../UI/Buttons/ToBeginButton'
 
 export const ProveYourEnglish = () => {
+   const navigate = useNavigate()
+
+   const handleToBeginClick = () => {
+      navigate('/signin')
+   }
    return (
       <div>
          {/* <HeaderContiners>
@@ -32,7 +38,9 @@ export const ProveYourEnglish = () => {
                build the fluency
             </p>
             <span>and confidence they need to speak new languages.</span>
-            <ToBeginButton className="Buttons">TO BEGIN</ToBeginButton>
+            <ToBeginButton className="Buttons" onClick={handleToBeginClick}>
+               TO BEGIN
+            </ToBeginButton>
          </TextContiners>
          <ContainerBackground />
       </div>
