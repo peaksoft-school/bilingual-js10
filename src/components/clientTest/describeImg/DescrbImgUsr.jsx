@@ -1,79 +1,90 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Typography, styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
-const DescrbImgUsr = ({ img }) => {
-   const [value, setValue] = useState()
+const DescrbImgUsr = () => {
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const dispatch = useDispatch()
-   const duration = 20
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+   const navigate = useNavigate()
+   const [value, setValue] = useState(null)
+
    const handleInputChange = (e) => {
       setValue(e.target.value)
    }
    const handleAddTest = () => {
       const testPayload = {
          statement: value,
+         questionId: testComponent.id,
       }
       dispatch(addTest(testPayload))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
       <div>
-         <Background>
-            <Container>
-               <PrgressBlock>
-                  <ProgressBar
-                     timeObject={timeObject}
-                     timeProgress={chartPercent}
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+         <Container>
+            <div>
+               <DescribeText>
+                  Write one or more sentences that describe the image
+               </DescribeText>
+            </div>
+            <BlockImg>
+               <BoxImg>
+                  <img
+                     src={testComponent.fileUrl}
+                     alt="img comes with props"
+                     width="100%"
+                     height="100%"
                   />
-               </PrgressBlock>
-               <div>
-                  <DescribeText>
-                     Write one or more sentences that describe the image
-                  </DescribeText>
-               </div>
-               <BlockImg>
-                  <BoxImg>
-                     <img
-                        src={img}
-                        alt="img comes with props"
-                        width="100%"
-                        height="100%"
-                     />
-                  </BoxImg>
-                  <Input
-                     minRows={5}
-                     maxRows={5}
-                     onChange={handleInputChange}
-                     value={value}
-                  />
-               </BlockImg>
-               <BlockBottom>
-                  <hr />
-                  <ButtonBox>
-                     <Button
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        className="nextButton"
-                        padding="0.8rem 2.5rem"
-                        onClick={handleAddTest}
-                     >
-                        Next
-                     </Button>
-                  </ButtonBox>
-               </BlockBottom>
-            </Container>
-         </Background>
+               </BoxImg>
+               <Input
+                  minRows={5}
+                  maxRows={5}
+                  onChange={handleInputChange}
+                  value={value}
+               />
+            </BlockImg>
+            <BlockBottom>
+               <hr />
+               <ButtonBox>
+                  <Button
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="nextButton"
+                     padding="0.8rem 2.5rem"
+                     onClick={handleAddTest}
+                  >
+                     Next
+                  </Button>
+               </ButtonBox>
+            </BlockBottom>
+         </Container>
       </div>
    )
 }
@@ -89,10 +100,9 @@ const Container = styled('div')({
    flexDirection: 'column',
    gap: '3.1rem',
    alignItems: 'center',
+   marginTop: '2rem',
 })
-const PrgressBlock = styled('div')({
-   width: '50rem',
-})
+
 const BlockImg = styled('div')({
    width: '38rem',
    height: '15rem',

@@ -103,7 +103,8 @@ const HeaderContiners = styled('div')(({ isHeaderFixed }) => ({
    alignItems: 'center',
    height: '6rem',
    padding: '1.5rem 5rem',
-   transition: 'backgroundColor 0.1s ease,',
+   transition: 'background-color 1s ease',
+   boxShadow: isHeaderFixed ? '0px 4px 10px rgba(0, 0, 0, 0.1)' : 'none',
 }))
 
 const ContainerBackground = styled(YellowBackground)({

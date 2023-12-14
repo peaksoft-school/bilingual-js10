@@ -53,6 +53,8 @@ import { ReactComponent as Hear } from './icons/hear.svg'
 import { ReactComponent as CheckSquare } from './icons/check-square.svg'
 import { ReactComponent as GrenCheck } from './icons/grenCheck.svg'
 import { ReactComponent as VolumeEnglishWord } from './icons/volumeEnglishWord.svg'
+import { ReactComponent as Complete } from './icons/complete.svg'
+import { ReactComponent as Bilingual } from './icons/bilingual2.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -121,4 +123,6 @@ export {
    CheckSquare,
    GrenCheck,
    VolumeEnglishWord,
+   Complete,
+   Bilingual,
 }

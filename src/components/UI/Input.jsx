@@ -20,32 +20,36 @@ const Input = forwardRef(
       )
    }
 )
-
 const MyStyledInput = styled(TextField)((props) => ({
-   '.css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
-      border: 'none',
-   },
    '& .MuiInputBase-input': {
       padding: `${props.padding ? props.padding : '1rem 1.4rem'}`,
       lineHeight: '1.5rem',
       color: '#757575',
-      border: `${props.border ? props.border : '1px solid #D4D0D0'}`,
       borderRadius: '8px',
    },
    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused': {
-         '& fieldset': {
-            border: '1.3px solid #3A10E5',
-            borderRadius: '8px',
-         },
-         '& .MuiInputBase-input': {
-            border: 'none',
-         },
+      '& fieldset': {
+         border: `${props.border ? props.border : '1px solid #D4D0D0'}`,
       },
       '&:hover fieldset': {
          border: '1.3px solid #3A10E5',
          borderRadius: '8px',
       },
+      '&.Mui-focused': {
+         '& fieldset': {
+            border: '1.3px solid #3A10E5',
+            borderRadius: '8px',
+         },
+         '& .MuiInputLabel-outlined': {
+            transform: 'translate(14px, -6px) scale(0.75)',
+            color: '#3A10E5',
+            fontWeight: 'bold',
+            '&.MuiInputLabel-shrink': {
+               transform: 'translate(14px, 8px) scale(1)',
+            },
+         },
+      },
    },
 }))
+
 export default Input

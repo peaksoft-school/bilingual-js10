@@ -81,7 +81,7 @@ export const TypeWhatYouHear = () => {
                )
             )
          }
-         navigate(`/admin/questions/${testID}`)
+         navigate(-1)
       } else {
          dispatch(questionsSlice.actions.titleValidate(true))
          dispatch(questionsSlice.actions.durationValidate(true))
@@ -154,7 +154,6 @@ export const TypeWhatYouHear = () => {
                      <input
                         id="fileInput"
                         type="file"
-                        // value={audioFile}
                         onChange={(e) => setAudioFile(e.target.files[0])}
                      />
                      <Button
