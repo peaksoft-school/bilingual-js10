@@ -44,7 +44,6 @@ export const PassTest = () => {
    useEffect(() => {
       getQuestionTest()
    }, [currentComponent])
-   console.log(currentComponent)
 
    const questions = {
       SELECT_REAL_ENGLISH_WORD: <UserRealEnglishWord />,
