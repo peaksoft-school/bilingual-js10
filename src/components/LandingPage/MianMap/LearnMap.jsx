@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Road from '../../../assets/images/VectorIcon.png'
 import Planet from '../../../assets/images/globe.svg'
@@ -7,8 +8,13 @@ import Nonsense from '../../../assets/images/Nonsense.svg'
 import Access from '../../../assets/images/Access.svg'
 import Adaptive from '../../../assets/images/Adaptive.svg'
 import Button from '../../../assets/images/button.svg'
+import { ToBeginButton } from '../../UI/Buttons/ToBeginButton'
 
 export const LearnMap = () => {
+   const navigate = useNavigate()
+   const handleToBeginClick = () => {
+      navigate('/signin')
+   }
    return (
       <Main>
          <h1>Learn more</h1>
@@ -92,7 +98,9 @@ export const LearnMap = () => {
                </Cards5>
             </Right>
          </Sections>
-         <button>GET STARTED</button>
+         <ToBeginButton className="Buttons" onClick={handleToBeginClick}>
+            GET STARTED
+         </ToBeginButton>
       </Main>
    )
 }
