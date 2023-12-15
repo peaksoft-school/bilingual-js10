@@ -109,14 +109,16 @@ export const Questions = ({ testID }) => {
                      value={item.score}
                      onChange={() => handleRadioChange(item)}
                   />
-                  <Edits
-                     className="Edits"
-                     onClick={() => editQuestionHandler(item)}
-                  />
-                  <TrashCan
-                     onClick={() => handleOpenModal(item.id)}
-                     className="TrashCan"
-                  />
+                  <IconBox>
+                     <Edits
+                        className="Edits"
+                        onClick={() => editQuestionHandler(item)}
+                     />
+                     <TrashCan
+                        onClick={() => handleOpenModal(item.id)}
+                        className="TrashCan"
+                     />
+                  </IconBox>
                </Container>
             )
          },
@@ -184,6 +186,12 @@ export const Questions = ({ testID }) => {
       </div>
    )
 }
+const IconBox = styled('div')`
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   gap: 2rem;
+`
 
 const Container = styled('div')`
    display: flex;

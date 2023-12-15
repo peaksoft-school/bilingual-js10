@@ -42,7 +42,7 @@ export const UserRespondInAtleastNwords = () => {
    const isNextButtonDisabled = !wordCount
 
    function handleTimeUp() {}
-   const { duration } = testComponent
+   const { duration } = testComponent?.testComponent || {}
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {

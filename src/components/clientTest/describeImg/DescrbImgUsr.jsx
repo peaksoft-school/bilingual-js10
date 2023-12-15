@@ -36,7 +36,7 @@ const DescrbImgUsr = () => {
    }
 
    function handleTimeUp() {}
-   const { duration } = testComponent
+   const { duration } = testComponent?.testComponent || {}
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {

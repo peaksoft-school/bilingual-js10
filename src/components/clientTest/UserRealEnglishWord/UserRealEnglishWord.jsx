@@ -112,7 +112,7 @@ export default function UserRealEnglishWord() {
       }
    }
    function handleTimeUp() {}
-   const { duration } = testComponent
+   const { duration } = testComponent?.testComponent || {}
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {

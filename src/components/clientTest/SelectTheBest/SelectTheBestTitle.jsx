@@ -58,7 +58,7 @@ export const SelectTheBestTitle = () => {
    const isNextButtonDisabled = !selectedRadio
 
    function handleTimeUp() {}
-   const { duration } = testComponent
+   const { duration } = testComponent?.testComponent || {}
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {

@@ -52,7 +52,7 @@ export const InputRadio = ({
                onClick={() => setClicked((clickState) => !clickState)}
             >
                <div>
-                  <button>
+                  <button type="button" onChange={onChange}>
                      {clicked && (
                         <CheckIcon
                            sx={{
