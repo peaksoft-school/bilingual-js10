@@ -19,7 +19,6 @@ import { authWithGoogle, signUp } from '../../store/auth/authThunk'
 import { validationAuthSignUp } from '../../utils/helpers/validate/authValidate'
 import Button from '../UI/Buttons/Button'
 import Input from '../UI/Input'
-// import Notify from '../UI/Notifay'
 
 const SignupPage = () => {
    const dispatch = useDispatch()
@@ -28,7 +27,8 @@ const SignupPage = () => {
    const navigate = useNavigate()
    const handleClickShowPassword = () => setShowPassword((show) => !show)
 
-   const handleAuthWithGoogle = () => {
+   const handleAuthWithGoogle = (event) => {
+      event.preventDefault()
       signInWithPopup(auth, provider)
          .then((data) => {
             const userToken = data.user.accessToken
@@ -106,7 +106,7 @@ const SignupPage = () => {
                <ButtonContainer
                   defaultStyle="white"
                   hoverStyle="#d9d6d6"
-                  onClick={handleAuthWithGoogle}
+                  onClick={(event) => handleAuthWithGoogle(event)}
                >
                   <GoogleIcon />
                   sign up with google

@@ -5,13 +5,14 @@ import SelectRealEnglishWords from '../../components/adminCheckingUserTest/Selec
 import DescribeImage from '../../components/adminCheckingUserTest/DescribeImage'
 import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/HighlightedAnswerCheck'
 import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordStatementCheck'
+import { TypeWhatYouHear } from '../../components/adminCheckingUserTest/TypeWhatYouHear'
 import RespondleastUserTest from '../../components/adminCheckingUserTest/RespondleastUserTest'
 import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <SelectRealEnglishWords />,
    LISTEN_AND_SELECT_ENGLISH_WORDS: <div>LISTEN_AND_SELECT_ENGLISH_WORDS</div>,
-   TYPE_WHAT_YOU_HEAR: <div>TYPE_WHAT_YOU_HEAR</div>,
+   TYPE_WHAT_YOU_HEAR: <TypeWhatYouHear />,
    DESCRIBE_IMAGE: <DescribeImage />,
    RECORD_SAYING_STATEMENT: <RecordStatementCheck />,
    SELECT_THE_BEST_TITLE: <SelectTheBestTitle />,

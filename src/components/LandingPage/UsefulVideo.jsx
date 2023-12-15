@@ -188,18 +188,16 @@ const UsefulVideos = () => {
 export default UsefulVideos
 
 const Container = styled(motion(Grid))(() => ({
-   background: '#F0F0DC',
+   // background: '#F0F0DC',
 }))
 
 const FirstSection = styled(Grid)(() => ({
    display: 'flex',
    flexDirection: 'column',
 }))
-
 const TitleContainer = styled(motion(Grid))(() => ({
    textAlign: 'center',
 }))
-
 const Title = styled(Typography)(() => ({
    fontFamily: 'Gilroy',
    fontStyle: 'normal',
@@ -207,7 +205,6 @@ const Title = styled(Typography)(() => ({
    fontSize: '40px',
    lineHeight: '48px',
    color: '#3752B4',
-   marginTop: '138px',
 }))
 const SecondSection = styled(Grid)(() => ({
    display: 'flex',
@@ -218,11 +215,9 @@ const SecondSection = styled(Grid)(() => ({
 }))
 const StyledVideo = styled(Video)(() => ({
    borderRadius: '16px 16px 0px 0px',
-   marginBottom: -7,
    width: '370px',
    height: '261px',
 }))
-
 const VideoContainer = styled(motion(Grid))(() => ({
    background: '#FFFFFF',
    border: '1px solid #DDDDDD',

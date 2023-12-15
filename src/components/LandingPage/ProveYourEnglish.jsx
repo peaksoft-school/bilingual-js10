@@ -1,5 +1,5 @@
-import { styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { styled } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Logo, YellowBackground } from '../../assets'
 import Button from '../UI/Buttons/Button'
@@ -59,7 +59,9 @@ export const ProveYourEnglish = () => {
                build the fluency
             </p>
             <span>and confidence they need to speak new languages.</span>
-            <ToBeginButton className="Buttons">TO BEGIN</ToBeginButton>
+            <ToBeginButton className="Buttons" onClick={handleComeInClick}>
+               TO BEGIN
+            </ToBeginButton>
          </TextContiners>
          <ContainerBackground />
       </div>
@@ -71,7 +73,7 @@ const TextContiners = styled('div')({
    justifyContent: 'center',
    alignContent: 'center',
    flexDirection: 'column',
-   top: '17rem',
+   top: '11rem',
    left: '5rem',
    h1: {
       fontSize: '3.75rem',

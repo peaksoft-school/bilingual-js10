@@ -17,7 +17,8 @@ export const SelectBestModal = ({
    options,
    titlePlaceholder = 'Select Best title',
 }) => {
-   const trueOption = options.find((el) => el.checked !== true)
+   const trueOption = options.find((el) => el.isTrue === true)
+
    return (
       <Modal open={openModal} handleClose={handleClose} width="40rem">
          <ContainClose>
