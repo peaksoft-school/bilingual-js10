@@ -78,6 +78,7 @@ const AllDescriptionContainer = styled('div')({
       marginBottom: '34px',
       color: '#3752B4',
       fontFamily: 'Gilroy',
+      fontWeight: 400,
    },
    '& .description': {
       width: '40rem',

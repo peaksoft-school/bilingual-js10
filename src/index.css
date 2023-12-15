@@ -17,3 +17,7 @@ body {
 body .MuiPaper-elevation {
    box-shadow: 'none';
 }
+@font-face {
+   font-family: 'Gilroy';
+   src: url('./assets/fonts/Gilroy-Extrabold.woff2') format('woff2');
+}
