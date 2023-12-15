@@ -86,11 +86,14 @@ export const SelectMainIdea = () => {
       }
    }, [question, options])
 
-   const handleOpenModal = () => {
+   // const handleOpenModal = () => {
+   //    formik.setFieldValue('openModal', true)
+   //    const Url = new URL(window.location)
+   //    Url.searchParams.set('modal', 'true')
+   //    window.history.pushState({}, '', Url)
+   // }
+   const optionsModal = () => {
       formik.setFieldValue('openModal', true)
-      const Url = new URL(window.location)
-      Url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', Url)
    }
 
    const handleCheckboxChange = async (id) => {
@@ -152,11 +155,14 @@ export const SelectMainIdea = () => {
       }
    }
 
+   // const handleClose = () => {
+   //    formik.setFieldValue('openModal', false)
+   //    const Url = new URL(window.location)
+   //    Url.searchParams.delete('modal')
+   //    window.history.pushState({}, '', Url)
+   // }
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
-      const Url = new URL(window.location)
-      Url.searchParams.delete('modal')
-      window.history.pushState({}, '', Url)
    }
    const handleSave = async (e) => {
       e.preventDefault()
@@ -210,7 +216,8 @@ export const SelectMainIdea = () => {
                         defaultStyle="#3A10E5"
                         className="addNewTestButton"
                         variant="contained"
-                        onClick={handleOpenModal}
+                        onClick={optionsModal}
+                        type="button"
                      >
                         ADD OPTIONS
                      </Button>
