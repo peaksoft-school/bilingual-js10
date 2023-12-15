@@ -50,9 +50,7 @@ export const Questions = ({ testID }) => {
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-   // const StyledLabel = styled('span')`
-   //    color: #fff;
-   // `
+
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))
@@ -99,7 +97,6 @@ export const Questions = ({ testID }) => {
       },
       {
          id: 'Score',
-         // label: <StyledLabel>o</StyledLabel>,
          render: (item) => {
             return (
                <Container>
@@ -109,14 +106,16 @@ export const Questions = ({ testID }) => {
                      value={item.score}
                      onChange={() => handleRadioChange(item)}
                   />
-                  <Edits
-                     className="Edits"
-                     onClick={() => editQuestionHandler(item)}
-                  />
-                  <TrashCan
-                     onClick={() => handleOpenModal(item.id)}
-                     className="TrashCan"
-                  />
+                  <IconBox>
+                     <Edits
+                        className="Edits"
+                        onClick={() => editQuestionHandler(item)}
+                     />
+                     <TrashCan
+                        onClick={() => handleOpenModal(item.id)}
+                        className="TrashCan"
+                     />
+                  </IconBox>
                </Container>
             )
          },
@@ -184,6 +183,12 @@ export const Questions = ({ testID }) => {
       </div>
    )
 }
+const IconBox = styled('div')`
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   gap: 2rem;
+`
 
 const Container = styled('div')`
    display: flex;

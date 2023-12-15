@@ -45,7 +45,7 @@ export const UserTypeWhatYouHear = () => {
    const nextBtn = () => {
       dispatch(addTest({ statement: value, questionId: testComponent.id }))
       if (questions.length === currentComponent + 1) {
-         navigate('/user/send-the-results')
+         navigate('/user/test-list/send-the-results')
       } else {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }
@@ -56,10 +56,12 @@ export const UserTypeWhatYouHear = () => {
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {
-      if (+timeObject.seconds === 0) {
-         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
       }
-   }, [timeObject.seconds])
+   }, [+timeObject.seconds])
 
    return (
       <div>

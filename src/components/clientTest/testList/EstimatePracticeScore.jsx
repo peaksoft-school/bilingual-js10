@@ -55,7 +55,7 @@ export const EstimatePracticeScore = () => {
                      className="PRACTICE"
                      hoverStyle="#4E28E8"
                      defaultStyle="#3A10E5"
-                     onClick={() => navigate('/user/testing')}
+                     onClick={() => navigate('/user/test-list/testing')}
                   >
                      PRACTICE TEST
                   </Button>

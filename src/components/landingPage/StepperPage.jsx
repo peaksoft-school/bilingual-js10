@@ -72,12 +72,10 @@ const Container = styled(motion(Grid))(() => ({
    display: 'flex',
    justifyContent: 'center',
    '& .slick-center': {
-      transition: 'transform 0.5s ease, scale 0.5s ease',
-      // transform: 'scale(1.15)',
+      transition: 'transform 0.2s ease, scale 0.3s ease',
    },
    gap: '50px',
    overflow: 'hidden',
-   // marginBottom: '120px',
    marginTop: '30px',
    widht: '100%',
    height: '740px',
@@ -92,13 +90,12 @@ const Stepper = styled(Slider)({
    alignItems: 'center',
    justifyItems: 'center',
    gap: '30px',
-   // maxHeight: '600px',
 
    '& .slick-track': {
       display: 'flex',
       justifyContent: 'center',
       width: '100px',
-      transition: 'transform 0.5s ease',
+      transition: 'transform 0.3s ease',
    },
 
    '& .slick-list': {
@@ -113,11 +110,11 @@ const Stepper = styled(Slider)({
    },
    '& .slick-next': {
       position: 'relative',
-      right: '560px',
+      right: '460px',
    },
    '& .slick-prev': {
       position: 'relative',
-      left: '370px',
+      left: '360px',
    },
    '& .slick-next:hover, .slick-prev:hover': {
       content: 'none',

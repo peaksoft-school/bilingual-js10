@@ -53,14 +53,21 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                            color: isActive ? 'blue' : '#4C4859',
                         }
                      }}
-                     to={roles === 'user' ? '/user' : '/admin/tests'}
+                     to={roles === 'user' ? '/user/test-list' : '/admin/tests'}
                   >
                      <MyText>Tests</MyText>
                   </NavLink>
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <NavLink to="/user/my-results">
+                     <NavLink
+                        to="/user/results/my-results"
+                        style={({ isActive }) => {
+                           return {
+                              color: isActive ? 'blue' : '#4C4859',
+                           }
+                        }}
+                     >
                         <MyText>My Results</MyText>
                      </NavLink>
                   ) : (

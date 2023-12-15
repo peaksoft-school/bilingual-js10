@@ -14,6 +14,7 @@ const RecordStatementCheck = () => {
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
    const audioRef = useRef(new Audio())
+
    const { userId, questionId } = useSelector((state) => state.answer)
    const navigate = useNavigate()
 
@@ -28,10 +29,26 @@ const RecordStatementCheck = () => {
          setError(error)
       }
    }
+
+   useEffect(() => {
+      const audio = audioRef.current
+
+      const handleAudioEnded = () => {
+         setIsPlaying(false)
+      }
+
+      audio.addEventListener('ended', handleAudioEnded)
+
+      return () => {
+         audio.removeEventListener('ended', handleAudioEnded)
+      }
+   }, [])
+
    const playAudio = () => {
       if (state.response && state.response.audioFile) {
          const audio = audioRef.current
          audio.src = state.response.audioFile
+
          if (isPlaying) {
             audio.pause()
          } else {
@@ -39,7 +56,7 @@ const RecordStatementCheck = () => {
                console.error('Error playing audio:', error)
             })
          }
-         setIsPlaying((prev) => !prev)
+         setIsPlaying(!isPlaying)
       }
    }
    const postScore = async () => {
@@ -152,7 +169,7 @@ const RecordStatementCheck = () => {
                            ) : (
                               <AudioBoxPlay>
                                  <PlayCircleOutlineIcon />
-                                 <span>PLAY AUDIO</span>
+                                 <span> PLAY AUDIO</span>
                               </AudioBoxPlay>
                            )}
                         </div>
@@ -315,7 +332,7 @@ const BoxPlay = styled('div')({
 const AudioBoxPlay = styled('div')({
    display: 'flex',
    flexDirection: 'row',
-   gap: '1px',
+   gap: '10px',
 })
 
 const BoxCorrectAnswer = styled('div')({

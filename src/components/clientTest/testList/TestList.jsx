@@ -58,7 +58,7 @@ const TestList = () => {
                            <Button
                               onClick={() => {
                                  dispatch(typeTest.actions.setIDToTest(test.id))
-                                 navigate(`/user/test/${test.id}`)
+                                 navigate(`/user/test-list/test/${test.id}`)
                               }}
                               variant="outlined"
                               hoverStyle="#3A10E5"
@@ -86,8 +86,7 @@ const PurpleBackground = styled('div')({
 const ListContainerStyle = styled('div')({
    display: 'flex',
    alignItems: 'end',
-   columnGap: '16rem',
-
+   justifyContent: 'space-between',
    '.mainContainer': {
       display: 'flex',
       alignItems: 'center',
