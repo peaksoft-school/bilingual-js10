@@ -1,152 +1,131 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import { Background } from '../../../layout/Background'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import { InputRadio } from '../../UI/InputRadio'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const SelectTheBestTitle = () => {
-   const passage = ` Sed ut perspiciatis unde omnis iste natus error sit
-                           voluptatem accusantium doloremque laudantium, totam
-                           rem aperiam, eaque ipsa quae ab illo inventore
-                           veritatis et quasi architecto beatae vitae dicta sunt
-                           explicabo. Nemo enim ipsam voluptatem quia voluptas
-                           sit aspernatur aut odit aut fugit, sed quia
-                           consequuntur magni dolores eos qui ratione voluptatem
-                           sequi nesciunt. Neque porro quisquam est, qui dolorem
-                           ipsum quia dolor sit amet, consectetur, adipisci
-                           velit, sed quia non numquam eius modi tempora
-                           incidunt ut labore et dolore magnam aliquam quaerat
-                           voluptatem`
-   const arr = [
-      {
-         id: 1,
-         title: 'nurlan',
-      },
-      {
-         id: 2,
-         title: 'renat',
-      },
-      {
-         id: 3,
-         title: 'dasi012',
-      },
-      {
-         id: 4,
-         title: 'gul',
-      },
-   ]
-
    const [selectedRadio, setSelectedRadio] = useState(null)
    const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
 
    const formik = useFormik({
       initialValues: {
          options: [],
       },
-      onSubmit: (values) => {
-         console.log(values)
-      },
    })
 
-   const duration = 120
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 100)
-   }
-
    const SendingToTheServer = () => {
-      const newTest = arr.map((el) => ({
+      const newTest = testComponent.optionList.map((el) => ({
          id: el.id,
-         passage,
          title: el.title,
-         isTrue: formik.values.options[el.id - 1],
+         isTrue: el.isTrue,
       }))
       const answer = newTest.find((el) => el.isTrue === true)
-      dispatch(addTest({ options: [answer.id] }))
+      dispatch(
+         addTest({
+            questionId: testComponent.id,
+            optionsId: [answer.id],
+         })
+      )
+
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
 
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
    const handleRadioChange = (id) => {
       formik.setFieldValue(
          'options',
-         arr.map((el) => el.id === id)
+         testComponent.optionList.map((el) => el.id === id)
       )
       setSelectedRadio(id)
    }
    const isNextButtonDisabled = !selectedRadio
 
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
       <form onSubmit={formik.handleSubmit}>
          <ContainerSelectTest>
-            <Background maxWidth="1098px" className="ContainerBackground">
-               <ProgressBar
-                  timeObject={timeObject}
-                  timeProgress={chartPercent}
-               />
-               <ContainerUserTest>
-                  <ContainerTextArea>
-                     <div className="containerPassage">
-                        <span>PASSAGE</span>
-                     </div>
-                     <div className="ContainerParagraf">
-                        <p>{passage}</p>
-                     </div>
-                  </ContainerTextArea>
-                  <ContainerSelectRadio>
-                     <p className="passageBestTitle">
-                        Select the best title for the passage
-                     </p>
-                     <div className="ContainerCreateUserTest">
-                        {arr.map((el) => (
-                           <div key={el.id}>
-                              <div
-                                 className="ContainCreatTest"
-                                 style={{
-                                    border:
-                                       selectedRadio === el.id
-                                          ? '2px solid #3A10E5'
-                                          : '1px solid #D4D0D0',
-                                    background:
-                                       selectedRadio === el.id
-                                          ? '#EAF4FF'
-                                          : 'transparent',
-                                 }}
-                              >
-                                 <div className="ContainerRadio">
-                                    <InputRadio
-                                       variant="RADIO"
-                                       checkedSwitch={selectedRadio === el.id}
-                                       onChange={() => handleRadioChange(el.id)}
-                                    />
-                                    <p className="NameTitle">{el.title}</p>
-                                 </div>
+            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+            <ContainerUserTest>
+               <ContainerTextArea>
+                  <div className="containerPassage">
+                     <span>PASSAGE</span>
+                  </div>
+                  <div className="ContainerParagraf">
+                     <p>{testComponent.passage}</p>
+                  </div>
+               </ContainerTextArea>
+               <ContainerSelectRadio>
+                  <p className="passageBestTitle">
+                     Select the best title for the passage
+                  </p>
+                  <div className="ContainerCreateUserTest">
+                     {testComponent.optionList.map((el) => (
+                        <div key={el.id} className="ContainerCreateUserTest">
+                           <div
+                              className="ContainCreatTest"
+                              style={{
+                                 border:
+                                    selectedRadio === el.id
+                                       ? '2px solid #3A10E5'
+                                       : '1px solid #D4D0D0',
+                                 background:
+                                    selectedRadio === el.id
+                                       ? '#EAF4FF'
+                                       : 'transparent',
+                              }}
+                           >
+                              <div className="ContainerRadio">
+                                 <InputRadio
+                                    variant="RADIO"
+                                    checkedSwitch={selectedRadio === el.id}
+                                    onChange={() => handleRadioChange(el.id)}
+                                 />
+                                 <p className="NameTitle">{el.title}</p>
                               </div>
                            </div>
-                        ))}
-                     </div>
-                     <Button
-                        disabled={isNextButtonDisabled}
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        className="nextButton"
-                        variant="contained"
-                        type="submit"
-                        padding="0.81rem 3.5rem"
-                        onClick={() => {
-                           SendingToTheServer()
-                        }}
-                     >
-                        NEXT
-                     </Button>
-                  </ContainerSelectRadio>
-               </ContainerUserTest>
-            </Background>
+                        </div>
+                     ))}
+                  </div>
+                  <Button
+                     disabled={isNextButtonDisabled}
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="nextButton"
+                     variant="contained"
+                     type="submit"
+                     padding="0.81rem 3.5rem"
+                     onClick={SendingToTheServer}
+                  >
+                     NEXT
+                  </Button>
+               </ContainerSelectRadio>
+            </ContainerUserTest>
          </ContainerSelectTest>
       </form>
    )

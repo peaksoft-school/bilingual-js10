@@ -1,16 +1,16 @@
 import React from 'react'
 import { styled } from '@mui/material'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ALaptop, Contacts, Search, Time } from '../../../assets'
 import Button from '../../UI/Buttons/Button'
 import Header from '../../../layout/Header'
-import { testListArr } from '../../../utils/helpers/testListArr'
 
-export const TestListTwo = () => {
+export const EstimatePracticeScore = () => {
    const navigate = useNavigate()
-   const { id } = useParams()
+   const { testID, testsArr } = useSelector((state) => state.typeTest)
+   const currTest = testsArr.find((test) => test.id === testID)
 
-   const findTest = testListArr.find((test) => Number(id) === test.id)
    return (
       <div>
          <Header roles="user" />
@@ -19,16 +19,15 @@ export const TestListTwo = () => {
                <h2>Take a free practice test and estimate your score</h2>
                <ContainerIkons>
                   <Search className="Search" />
-
                   <MiniContainer>
                      <div className="divALaptop">
                         <ALaptop />
-                        <span>{findTest.title}</span>
+                        <span>{currTest.title}</span>
                      </div>
                      <div className="divTime">
                         <Time />
                         <span>
-                           Practice takes just {findTest.minutes} minutes
+                           Practice takes just {currTest.duration} minutes
                         </span>
                      </div>
                      <div className="divContacts">
@@ -42,6 +41,7 @@ export const TestListTwo = () => {
                   appear on the certified test.
                </p>
                <hr />
+
                <ContainerButtons>
                   <Button
                      onClick={() => navigate(-1)}
@@ -72,7 +72,6 @@ const ContainerIkons = styled('div')`
    justify-content: center;
    margin-top: 4rem;
    gap: 5rem;
-
    .Search {
       display: flex;
       align-items: center;

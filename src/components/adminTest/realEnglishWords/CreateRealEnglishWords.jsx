@@ -88,7 +88,7 @@ export const AdminCreateRealEnglishWord = () => {
       const newOption = {
          id: Math.random(),
          title,
-         checked,
+         isTrue: checked,
       }
       formik.setFieldValue('titleValues', title)
       formik.setFieldValue('options', [...formik.values.options, newOption])

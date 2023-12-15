@@ -55,6 +55,8 @@ import { ReactComponent as GrenCheck } from './icons/grenCheck.svg'
 import { ReactComponent as VolumeEnglishWord } from './icons/volumeEnglishWord.svg'
 import { ReactComponent as PlayAudio } from './icons/playAudio.svg'
 import { ReactComponent as StopRecordingAudio } from './icons/stopRecordingAudio.svg'
+import { ReactComponent as Complete } from './icons/complete.svg'
+import { ReactComponent as Bilingual } from './icons/bilingual2.svg'
 
 import Kamchy from './images/ Kamchy.jpeg'
 import Aziat from './images/Aziat.jpg'
@@ -127,4 +129,6 @@ export {
    VolumeEnglishWord,
    PlayAudio,
    StopRecordingAudio,
+   Complete,
+   Bilingual,
 }

@@ -1,26 +1,27 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useNavigate } from 'react-router-dom'
 import { Hear } from '../../../assets'
 import TextArea from '../../UI/textarea/TextArea'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 export const UserTypeWhatYouHear = () => {
    const [value, setValue] = useState('')
+   const navigate = useNavigate()
+
    const dispatch = useDispatch()
-   const duration = 120
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
-   const { link, numberOffReplays } = useSelector((state) => state.questions)
-   const [replaysLeft, setReplaysLeft] = useState(numberOffReplays)
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
+
+   const [replaysLeft, setReplaysLeft] = useState(testComponent.attempts)
    const [isPlaying, setIsPlaying] = useState(false)
    const audioRef = useRef(null)
    const handleInputChange = (e) => {
@@ -42,65 +43,77 @@ export const UserTypeWhatYouHear = () => {
          setIsPlaying(false)
       }
    }
+
+   const nextBtn = () => {
+      dispatch(addTest({ statement: value, questionId: testComponent.id }))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.seconds === 0) {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
+   }, [timeObject.seconds])
+
    return (
       <div>
-         <Background>
-            <Container>
-               <PrgressBlock>
-                  <ProgressBar
-                     timeObject={timeObject}
-                     timeProgress={chartPercent}
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+         <Container>
+            <div>
+               <DescribeText>Type the statement you hear</DescribeText>
+            </div>
+            <BlockImg>
+               <BoxImg>
+                  <Hear
+                     onClick={isPlaying ? stopAudio : playAudio}
+                     disabled={replaysLeft === 0}
                   />
-               </PrgressBlock>
+                  <audio ref={audioRef} src={testComponent.fileUrl}>
+                     <track kind="captions" />
+                  </audio>
+               </BoxImg>
                <div>
-                  <DescribeText>Type the statement you hear</DescribeText>
+                  <Input
+                     minRows={5}
+                     maxRows={5}
+                     onChange={handleInputChange}
+                     value={value}
+                  />
+                  <NumberReplace>
+                     Number of replays left:{replaysLeft}
+                  </NumberReplace>
                </div>
-               <BlockImg>
-                  <BoxImg>
-                     <Hear
-                        onClick={isPlaying ? stopAudio : playAudio}
-                        disabled={replaysLeft === 0}
-                     />
-                     <audio ref={audioRef} src={link}>
-                        <track kind="captions" />
-                     </audio>
-                  </BoxImg>
-                  <div>
-                     <Input
-                        minRows={5}
-                        maxRows={5}
-                        onChange={handleInputChange}
-                        value={value}
-                     />
-                     <NumberReplace>
-                        Number of replays left:{replaysLeft}
-                     </NumberReplace>
-                  </div>
-               </BlockImg>
+            </BlockImg>
 
-               <BlockBottom>
-                  <hr />
-                  <ButtonBox>
-                     <Button
-                        padding="0.8rem 2.5rem"
-                        disabled={isNextButtonDisabled}
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        className="nextButton"
-                        onClick={() => {
-                           dispatch(addTest({ statement: value }))
-                        }}
-                     >
-                        Next
-                     </Button>
-                  </ButtonBox>
-               </BlockBottom>
-            </Container>
-         </Background>
+            <BlockBottom>
+               <hr />
+               <ButtonBox>
+                  <Button
+                     padding="0.8rem 2.5rem"
+                     disabled={isNextButtonDisabled}
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     className="nextButton"
+                     onClick={nextBtn}
+                  >
+                     Next
+                  </Button>
+               </ButtonBox>
+            </BlockBottom>
+         </Container>
       </div>
    )
 }
 const Container = styled('div')({
+   marginTop: '2rem',
    fontfamily: 'Gilroy',
    fontStyle: 'normal',
    height: '30rem',
@@ -109,9 +122,7 @@ const Container = styled('div')({
    gap: '3.1rem',
    alignItems: 'center',
 })
-const PrgressBlock = styled('div')({
-   width: '50rem',
-})
+
 const NumberReplace = styled('span')({
    color: '#AFAFAF',
    fontWeight: '400',
