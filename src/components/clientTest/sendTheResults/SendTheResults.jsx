@@ -46,7 +46,7 @@ export const SendTheResults = () => {
                   className="buttonDone"
                   hoverStyle="#3A10E5"
                   onClick={() => {
-                     navigate(-4)
+                     navigate(-3)
                      handleSendTheResults()
                   }}
                >
