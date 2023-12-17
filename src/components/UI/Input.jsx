@@ -20,7 +20,6 @@ const Input = forwardRef(
       )
    }
 )
-
 const MyStyledInput = styled(TextField)((props) => ({
    '& .MuiInputBase-input': {
       padding: `${props.padding ? props.padding : '1rem 1.4rem'}`,
@@ -52,4 +51,5 @@ const MyStyledInput = styled(TextField)((props) => ({
       },
    },
 }))
+
 export default Input

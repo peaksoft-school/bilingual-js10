@@ -13,6 +13,7 @@ function App() {
       const userInfo = JSON.parse(
          localStorage.getItem(USER_KEY.BILINGUAL_USER_KEY)
       )
+
       if (userInfo) {
          const authorizedUserCredentials = {
             token: userInfo.token,
@@ -31,4 +32,5 @@ function App() {
       </div>
    )
 }
+
 export default App

@@ -83,7 +83,6 @@ export const RespondLeast = () => {
                <p className="LabelTop">Number off</p>
                <p className="LabelBottom">Words</p>
                <Input
-                  type="number"
                   id="numberReplays"
                   name="numberReplays"
                   value={formik.values.numberReplays}

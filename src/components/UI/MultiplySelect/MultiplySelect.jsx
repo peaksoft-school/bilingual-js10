@@ -34,8 +34,6 @@ export const MultiplySelect = ({
          answer={answer}
          handleSelectWord={handleSelectWord}
          CheckIcon={CheckIcon}
-         // audioRef={audioRef}
-         // onVolumeUpClick={(audioUrl) => handleVolumeUpClick(audioUrl)}
       />
    )
 }
