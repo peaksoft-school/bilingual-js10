@@ -186,11 +186,6 @@ const ListenAndSelectEnglishWord = () => {
                                        />
                                     ) : (
                                        <VolumeEnglishWord
-                                          style={{
-                                             fill: isPlayingArray
-                                                ? '#3A10E5'
-                                                : '#655F5F',
-                                          }}
                                           onClick={() => pauseOption(index)}
                                        />
                                     )}
@@ -229,11 +224,6 @@ const ListenAndSelectEnglishWord = () => {
                                           />
                                        ) : (
                                           <VolumeEnglishWord
-                                             style={{
-                                                fill: isPlayingArray
-                                                   ? '#3A10E5'
-                                                   : '#655F5F',
-                                             }}
                                              onClick={() =>
                                                 pauseOptionUserAnswer(id)
                                              }
