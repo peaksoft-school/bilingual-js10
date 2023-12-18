@@ -117,6 +117,7 @@ export const UserResponses = () => {
                   defaultStyle="white"
                   hoverStyle="#3A10E5"
                   onClick={sendResultHandler}
+                  disabled={!data.checked}
                >
                   SEND RESULTS TO USERS EMAIL
                </Button>

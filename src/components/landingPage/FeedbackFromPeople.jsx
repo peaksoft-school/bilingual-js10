@@ -110,9 +110,15 @@ export const FeedbackFromPeople = () => {
                onClick={() => setClickeds((clickState) => !clickState)}
             >
                {clickeds ? (
-                  <RoundLeftBlue onClick={handleNext} />
+                  <RoundLeftBlue
+                     onClick={handleNext}
+                     style={{ cursor: 'pointer' }}
+                  />
                ) : (
-                  <RoundRight onClick={handleNext} />
+                  <RoundRight
+                     onClick={handleNext}
+                     style={{ cursor: 'pointer' }}
+                  />
                )}
             </div>
          </Container>

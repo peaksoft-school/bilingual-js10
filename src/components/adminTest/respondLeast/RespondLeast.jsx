@@ -17,7 +17,7 @@ export const RespondLeast = () => {
 
    const { pathname } = useLocation()
    const updateUrl =
-      pathname === '/admin/update-question/respond-in-at-least-n-words'
+      pathname === '/admin/tests/update-question/respond-in-at-least-n-words'
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
@@ -83,7 +83,6 @@ export const RespondLeast = () => {
                <p className="LabelTop">Number off</p>
                <p className="LabelBottom">Words</p>
                <Input
-                  type="number"
                   id="numberReplays"
                   name="numberReplays"
                   value={formik.values.numberReplays}

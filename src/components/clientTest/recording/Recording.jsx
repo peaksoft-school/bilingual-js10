@@ -1,27 +1,33 @@
 /* eslint-disable react/self-closing-comp */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReactMic } from 'react-mic'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
 import { CircleIcon, SpeakIcon } from '../../../assets'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { postFileThunk } from '../../../store/questions/questionsThunk'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
 function Recording() {
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const [file, setFile] = useState(null)
    const [record, setRecord] = useState(false)
    const [disabled, setDisabled] = useState(false)
    const [isButtonStop, setIsButtonStop] = useState(false)
    const dispatch = useDispatch()
+   const navigate = useNavigate()
 
    const onStop = (blobFile) => {
       setFile(blobFile.blob)
    }
-
    const PlayHandler = () => {
       setIsButtonStop((prev) => !prev)
       if (isButtonStop) {
@@ -32,95 +38,106 @@ function Recording() {
       }
    }
 
-   const AddLink = (link) => {
+   const addLink = (res) => {
       const audioUrl = {
-         audioUrl: link.payload.data.link,
+         audioUrl: res.data.link,
+         questionId: testComponent.id,
       }
       dispatch(addTest(audioUrl))
    }
 
    const nextButtonHandler = async () => {
-      const links = await dispatch(postFileThunk({ file }))
-      AddLink(links)
+      dispatch(postFileThunk({ file }))
+         .unwrap()
+         .then((res) => {
+            addLink(res)
+            if (questions.length === currentComponent + 1) {
+               navigate('/user/send-the-results')
+            } else {
+               dispatch(globalTestSlice.actions.addCurrentComponent(1))
+            }
+         })
    }
 
-   const duration = 40
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
+   function handleTimeUp() {}
+   const { duration } = testComponent
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
+      }
+   }, [+timeObject.seconds])
 
    return (
       <div>
-         <BackgroundStyle marginTop="6.25rem">
-            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <MainRecordingContainer>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+         <MainRecordingContainer>
+            <div>
                <div>
-                  <div>
-                     <Title>Record yorself saying the statement below:</Title>
-                  </div>
-                  <SpeakContainer>
-                     <div>
-                        <SpeakIcon />
-                     </div>
-                     <div>&quot;My uncle is at work&quot;.</div>
-                  </SpeakContainer>
+                  <Title>Record yorself saying the statement below:</Title>
                </div>
-               <hr />
-               <ActiveContainer>
-                  {isButtonStop ? (
-                     <>
-                        <RecordingContainer>
-                           <CircleIcon />
-                           <div>RECORDING...</div>
-                        </RecordingContainer>
+               <SpeakContainer>
+                  <div>
+                     <SpeakIcon />
+                  </div>
+                  <div>{testComponent.statement}</div>
+               </SpeakContainer>
+            </div>
+            <hr />
+            <ActiveContainer>
+               {isButtonStop ? (
+                  <>
+                     <RecordingContainer>
+                        <CircleIcon />
+                        <div>RECORDING...</div>
+                     </RecordingContainer>
 
-                        <Container className="wave">
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                           <span className="stroka"></span>
-                        </Container>
-                     </>
-                  ) : null}
-                  <ButtonContainer>
-                     <Button
-                        onClick={PlayHandler}
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        padding={isButtonStop ? '13px 54px' : '13px 24px'}
-                     >
-                        {isButtonStop ? 'stop' : 'record now'}
-                     </Button>
-                     <Button
-                        disabled={!disabled}
-                        className="nextButton"
-                        variant="contained"
-                        defaultStyle="#3A10E5"
-                        hoverStyle="#4E28E8"
-                        padding="13px 50px"
-                        onClick={nextButtonHandler}
-                     >
-                        next
-                     </Button>
-                  </ButtonContainer>
-               </ActiveContainer>
-            </MainRecordingContainer>
-         </BackgroundStyle>
+                     <Container className="wave">
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                        <span className="stroka"></span>
+                     </Container>
+                  </>
+               ) : null}
+               <ButtonContainer>
+                  <Button
+                     onClick={PlayHandler}
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     padding={isButtonStop ? '13px 54px' : '13px 24px'}
+                  >
+                     {isButtonStop ? 'stop' : 'record now'}
+                  </Button>
+                  <Button
+                     disabled={!disabled}
+                     className="nextButton"
+                     variant="contained"
+                     defaultStyle="#3A10E5"
+                     hoverStyle="#4E28E8"
+                     padding="13px 50px"
+                     onClick={nextButtonHandler}
+                  >
+                     next
+                  </Button>
+               </ButtonContainer>
+            </ActiveContainer>
+         </MainRecordingContainer>
 
          <ReactMik
             record={record}
@@ -263,9 +280,4 @@ const ButtonContainer = styled('div')({
 const MainRecordingContainer = styled('div')({
    width: '56rem',
    marginTop: '3rem',
-})
-
-const BackgroundStyle = styled(Background)({
-   padding: '40px 45px',
-   borderRadius: '10px',
 })

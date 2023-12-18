@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import Slider from 'react-slick'
 import { Grid, Typography, styled } from '@mui/material'
 import StepperItem from './StepperItem'
 import { stepperText } from '../../utils/helpers/stepperText'
 import { BackIcon, NextIcon, Paging, PagingActive } from '../../assets/index'
+import { textAnimation } from '../../utils/helpers/animation'
 
 export const Back = (props) => <BackIcon {...props} />
 export const Next = (props) => <NextIcon {...props} />
@@ -15,27 +17,29 @@ const StepperPage = () => {
    const paging = (i) => (i === pointer ? <PagingActive /> : <Paging />)
 
    const settings = {
-      infinite: true,
+      infinite: false,
       className: 'center',
       slidesToShow: 1,
-      speed: 800,
+      speed: 900,
       dots: true,
       appendDots: (dots) => customDots(dots),
       customPaging: (i) => paging(i),
       nextArrow: <NextIcon />,
       prevArrow: <BackIcon />,
-      afterChange: (current) => {
-         setPointer(current)
-      },
+      beforeChange: (current, next) => setPointer(next),
    }
 
    return (
-      <div>
-         <ContainerTitle>
+      <motion.div
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ amount: 0.4 }}
+      >
+         <ContainerTitle variants={textAnimation}>
             <Title>Check out each question type</Title>
          </ContainerTitle>
-         <Container>
-            <Stepper {...settings}>
+         <Container variants={textAnimation}>
+            <Stepper style={{ position: 'relative' }} {...settings}>
                {stepperText.map((stepper, i) => (
                   <StepperItem
                      key={stepper.id}
@@ -45,18 +49,18 @@ const StepperPage = () => {
                ))}
             </Stepper>
          </Container>
-      </div>
+      </motion.div>
    )
 }
 
 export default StepperPage
 
-const ContainerTitle = styled(Grid)(() => ({
+const ContainerTitle = styled(motion(Grid))(() => ({
    display: 'flex',
    justifyContent: 'center',
 }))
 const Title = styled(Typography)(() => ({
-   fontfamily: 'Gilroy',
+   fontFamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
    fontSize: '40px',
@@ -64,14 +68,18 @@ const Title = styled(Typography)(() => ({
    color: '#3752B4',
 }))
 
-const Container = styled(Grid)(() => ({
+const Container = styled(motion(Grid))(() => ({
    display: 'flex',
    justifyContent: 'center',
+   '& .slick-center': {
+      transition: 'transform 0.5s ease, scale 0.5s ease',
+      // transform: 'scale(1.15)',
+   },
    gap: '50px',
    overflow: 'hidden',
-   height: '660px',
+   marginBottom: '120px',
    marginTop: '30px',
-   width: '100%',
+   widht: '100%',
 }))
 
 const Stepper = styled(Slider)({
@@ -83,12 +91,13 @@ const Stepper = styled(Slider)({
    alignItems: 'center',
    justifyItems: 'center',
    gap: '30px',
-   maxHeight: '600px',
+   // maxHeight: '600px',
 
    '& .slick-track': {
       display: 'flex',
       justifyContent: 'center',
       width: '100px',
+      transition: 'transform 0.5s ease',
    },
 
    '& .slick-list': {

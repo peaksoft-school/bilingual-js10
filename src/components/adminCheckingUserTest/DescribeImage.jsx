@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
@@ -8,10 +10,13 @@ const DescribeImage = () => {
    const [score, setScore] = useState()
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
+   const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
+
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            '/result/getQuestionsResults?userId=1&questionId=4'
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allresult = response.data
          setState({ response: allresult })
@@ -22,10 +27,11 @@ const DescribeImage = () => {
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 4,
+            userId,
+            questionId,
             score,
          })
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
@@ -140,7 +146,11 @@ const DescribeImage = () => {
                </ContainerUserAnswer>
             </ContainerFlex>
             <ContainerButtons>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={() => navigate(-1)}
+               >
                   GO BACK
                </Button>
                <Button

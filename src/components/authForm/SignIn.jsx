@@ -5,14 +5,7 @@ import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../../config/withGoogle'
-import {
-   ErrorIcon,
-   EyeClosed,
-   EyePassword,
-   Google,
-   Layer,
-   System,
-} from '../../assets'
+import { EyeClosed, EyePassword, Google, Layer, System } from '../../assets'
 import { authWithGoogle, signIn } from '../../store/auth/authThunk'
 import { validationAuthSignIn } from '../../utils/helpers/validate/authValidate'
 import Button from '../UI/Buttons/Button'
@@ -24,8 +17,8 @@ const SigninPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [showPassword, setShowPassword] = useState(false)
-
-   const handleAuthWithGoogle = () => {
+   const handleAuthWithGoogle = (event) => {
+      event.preventDefault()
       signInWithPopup(auth, provider)
          .then((data) => {
             const userToken = data.user.accessToken
@@ -45,7 +38,8 @@ const SigninPage = () => {
    const submitHandler = (values) => {
       dispatch(signIn({ userData: values, navigate, login: authActions.login }))
    }
-   const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+
+   const { values, handleChange, handleSubmit } = useFormik({
       initialValues: {
          email: '',
          password: '',
@@ -55,7 +49,7 @@ const SigninPage = () => {
          submitHandler(values)
       },
    })
-   const errorMessages = Object.values(errors).filter(Boolean)
+
    const gotToLandingPage = () => {
       navigate('/')
    }
@@ -72,7 +66,6 @@ const SigninPage = () => {
                <StyledInput
                   label="Email"
                   name="email"
-                  error={touched.email && !!errors.email}
                   value={values.email}
                   onChange={handleChange}
                   type="email"
@@ -80,7 +73,6 @@ const SigninPage = () => {
                <StyledInput
                   label="Password"
                   name="password"
-                  error={touched.password && !!errors.password}
                   value={values.password}
                   onChange={handleChange}
                   type={showPassword ? 'text' : 'password'}
@@ -88,17 +80,11 @@ const SigninPage = () => {
                <EyeIcon onClick={handleClickShowPassword}>
                   {showPassword ? <EyePassword /> : <EyeClosed />}
                </EyeIcon>
-
                <CheckboxContainer>
                   <StyledCheckbox variant="CHECKED" />
                   <Text>To remember me</Text>
                </CheckboxContainer>
-               {errorMessages.length > 0 && (
-                  <ErrorMessage>
-                     {`Incorrect ${errorMessages.join(', ')}!`}
-                     <Error />
-                  </ErrorMessage>
-               )}
+
                <StyledButton
                   defaultStyle="#3A10E5"
                   hoverStyle="#3A10E5E5"
@@ -110,7 +96,7 @@ const SigninPage = () => {
                <ButtonContainer
                   defaultStyle="white"
                   hoverStyle="#d9d6d6"
-                  onClick={handleAuthWithGoogle}
+                  onClick={(event) => handleAuthWithGoogle(event)}
                >
                   <GoogleIcon />
                   sign in with google
@@ -126,23 +112,14 @@ const SigninPage = () => {
 }
 export default SigninPage
 
-const ErrorMessage = styled(Typography)(() => ({
-   color: 'red',
-   display: 'flex',
-   justifyContent: 'center',
-}))
-const Error = styled(ErrorIcon)(() => ({
-   marginLeft: '5px',
-   marginTop: '2px',
-}))
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
-   padding: '40px 0',
+   padding: '40px',
+   height: '60rem',
 }))
 
 const SignInForm = styled('form')(() => ({
    width: '38.5rem',
-
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',

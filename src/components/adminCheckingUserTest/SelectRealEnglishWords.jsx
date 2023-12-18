@@ -1,151 +1,176 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Header from '../../layout/Header'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { axiosInstance } from '../../config/axiosInstance'
 import Button from '../UI/Buttons/Button'
 import { Background } from '../../layout/Background'
 import { InputRadio } from '../UI/InputRadio'
 
-const options = [
-   {
-      id: 1,
-      title: 'champion',
-   },
-   {
-      id: 2,
-      title: 'Dasi012',
-   },
-   {
-      id: 3,
-      title: 'Rinat',
-   },
-   {
-      id: 4,
-      title: 'Nurlan',
-   },
-   {
-      id: 5,
-      title: 'Begish',
-   },
-   {
-      id: 6,
-      title: 'Elizar',
-   },
-]
+const SelectRealEnglishWords = () => {
+   const [appState, setAppState] = useState({ response: null })
+   const [error, setError] = useState(null)
+   const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
 
-const answers = [
-   {
-      id: 1,
-      title: 'Listen',
-   },
-   {
-      id: 2,
-      title: 'Dastan',
-   },
-   {
-      id: 3,
-      title: 'Rinat',
-   },
-   {
-      id: 4,
-      title: 'Nurlan',
-   },
-]
-
-const SelectRealEnglishWords = ({ title, duration, questionType }) => {
-   const [score, setScore] = useState(7)
-
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const response = await fetch()
-            const data = await response.json()
-            const initialScoreFromBackend = data.score
-            setScore(initialScoreFromBackend)
-         } catch (error) {
-            console.error(error)
-         }
+   const getQuestionTest = async () => {
+      try {
+         const response = await axiosInstance.get(
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
+         )
+         const allRepos = response.data
+         setAppState({ response: allRepos })
+      } catch (error) {
+         setError(error)
       }
-      fetchData()
-   }, [])
+   }
+   const postScore = async () => {
+      try {
+         await axiosInstance.post('/result/', {
+            userId,
+            questionId,
+         })
+         navigate(-1)
+      } catch (error) {
+         setError(error)
+      }
+   }
+   useEffect(() => {
+      getQuestionTest()
+   }, [setAppState])
 
    return (
-      <>
-         <Header />
+      <div>
          <Container>
             <Background padding="0">
                <ContainerFlex>
+                  <ContainerUser>
+                     {appState.response && (
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">User:</span>
+                           <p className="ColorParagraf">
+                              {appState.response.fullName}
+                           </p>
+                        </div>
+                     )}
+                     {appState.response && (
+                        <div className="FixedDisplay">
+                           <span className="ColorBlue">Test:</span>
+                           <p className="ColorParagraf">
+                              {appState.response.testTitle}
+                           </p>
+                        </div>
+                     )}
+                  </ContainerUser>
                   <ContainerCkeckInTheTest>
                      <div>
-                        <p className="TextTestQuestion ">Test Question </p>
+                        <p className="TextTestQuestion">Test Question </p>
                         <ContainerTestQuestion>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Title:</span>
-                              <p> {title} </p>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">
-                                 Duration (in minutes):
-                              </span>
-                              <span>{duration} </span>
-                           </div>
-                           <div className="FixedDisplay">
-                              <span className="ColorBlue">Question Type:</span>
-                              <p>{questionType}</p>
-                           </div>
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Title:
+                                 </span>
+                                 <p className="ColorParagraf">
+                                    {appState.response.questionTitle}
+                                 </p>
+                              </div>
+                           )}
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Duration (in minutes):
+                                 </span>
+                                 <span className="ColorParagraf">
+                                    {appState.response.duration}
+                                 </span>
+                              </div>
+                           )}
+                           {appState.response && (
+                              <div className="FixedDisplay">
+                                 <span className="ColorBlue">
+                                    Question Type:
+                                 </span>
+                                 <p className="ColorParagraf">
+                                    {appState.response.questionType}
+                                 </p>
+                              </div>
+                           )}
                         </ContainerTestQuestion>
                      </div>
-
                      <ContaineScore>
                         <p>Evaluation</p>
                         <div className="ContainerEvaluation">
                            <p className="ColorBlue">Score:</p>
-                           <span>{score}</span>
+                           {appState.response && (
+                              <span>{appState.response.score}</span>
+                           )}
                         </div>
                      </ContaineScore>
                   </ContainerCkeckInTheTest>
                   <ContainerCreateTest>
-                     {options.map((option, index) => (
-                        <CreateTest key={option.id}>
-                           <div>
-                              <MainContainer>
-                                 <p className="Number-Words">{index + 1}</p>
-                                 <div className="NumberText">
-                                    <span>{option.title}</span>
-                                 </div>
-                              </MainContainer>
-                           </div>
-                           <div className="InputDelete">
-                              <InputRadio variant="CHECKBOX" />
-                           </div>
-                        </CreateTest>
-                     ))}
+                     {appState.response &&
+                        appState.response.optionList.map((el, index) => (
+                           <CreateTest key={el.id}>
+                              <div>
+                                 <MainContainer>
+                                    <p className="Number-Words">{index + 1}</p>
+                                    <div className="NumberText">
+                                       <span>{el.title}</span>
+                                    </div>
+                                 </MainContainer>
+                              </div>
+                              <div className="InputDelete">
+                                 <InputRadio
+                                    variant="CHECKBOX"
+                                    checkedSwitch={el.isTrue}
+                                 />
+                              </div>
+                           </CreateTest>
+                        ))}
                   </ContainerCreateTest>
                   <ContainerCreateAnswerTest>
                      <p className="TextUserAnswer">User’s Answer </p>
                      <div className="ContainerAnswerMap">
-                        {answers.map((el) => (
-                           <CreateAnswerTest key={el.id}>
-                              <MainContainer>
-                                 <div className="NumberText">
-                                    <p>{el.title}</p>
-                                 </div>
-                              </MainContainer>
-                           </CreateAnswerTest>
-                        ))}
+                        {appState.response &&
+                           appState.response.optionFromUser.map((item) => (
+                              <CreateAnswerTest key={item.id}>
+                                 <MainContainer>
+                                    <div className="NumberText">
+                                       <p>{item.title}</p>
+                                    </div>
+                                 </MainContainer>
+                              </CreateAnswerTest>
+                           ))}
                      </div>
+
+                     {error && (
+                        <ErrorBox>
+                           An error occurred:
+                           {error.message || 'Unknown error'}
+                        </ErrorBox>
+                     )}
                   </ContainerCreateAnswerTest>
                </ContainerFlex>
                <ContainerButtons>
-                  <Button variant="outlined" hoverStyle="#3A10E5">
+                  <Button
+                     variant="outlined"
+                     hoverStyle="#3A10E5"
+                     onClick={() => navigate(-1)}
+                  >
                      GO BACK
                   </Button>
-                  <Button defaultStyle="#2AB930" hoverStyle="#31CF38">
+                  <Button
+                     defaultStyle="#2AB930"
+                     hoverStyle="#31CF38"
+                     onClick={postScore}
+                  >
                      Save
                   </Button>
                </ContainerButtons>
             </Background>
          </Container>
-      </>
+      </div>
    )
 }
 
@@ -180,6 +205,24 @@ const Container = styled('div')({
       height: '10px',
    },
 })
+const ContainerUser = styled('div')({
+   display: 'flex',
+   flexDirection: 'column',
+   '.ColorBlue': {
+      color: '#3752B4',
+      fontSize: '1.12rem',
+   },
+   '.FixedDisplay': {
+      display: 'flex',
+      gap: '10px',
+      textAlign: 'center',
+      fontWeight: 500,
+   },
+})
+const ErrorBox = styled('div')({
+   color: 'red',
+   marginTop: '7px',
+})
 const ContaineScore = styled('div')({
    display: 'flex',
    flexDirection: 'column',
@@ -195,6 +238,7 @@ const ContainerFlex = styled('div')({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'start',
+   gap: '3.13rem',
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',

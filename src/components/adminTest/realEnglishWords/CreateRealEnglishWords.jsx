@@ -33,7 +33,9 @@ export const AdminCreateRealEnglishWord = () => {
    })
 
    useEffect(() => {
-      if (pathname === '/admin/update-question/select-real-english-words') {
+      if (
+         pathname === '/admin/tests/update-question/select-real-english-words'
+      ) {
          formik.setFieldValue('options', options)
          dispatch(questionsSlice.actions.addTime(question.duration))
          dispatch(questionsSlice.actions.addTitle(question.title))
@@ -42,7 +44,10 @@ export const AdminCreateRealEnglishWord = () => {
 
    const handleSave = async () => {
       if (title && questionDuration) {
-         if (pathname === '/admin/update-question/select-real-english-words') {
+         if (
+            pathname ===
+            '/admin/tests/update-question/select-real-english-words'
+         ) {
             dispatch(
                updateQuestion({
                   title,
@@ -83,7 +88,7 @@ export const AdminCreateRealEnglishWord = () => {
       const newOption = {
          id: Math.random(),
          title,
-         checked,
+         isTrue: checked,
       }
       formik.setFieldValue('titleValues', title)
       formik.setFieldValue('options', [...formik.values.options, newOption])
@@ -106,7 +111,9 @@ export const AdminCreateRealEnglishWord = () => {
       formik.setFieldValue('options', updatedOptions)
       const anyChecked = updatedOptions.some((option) => option.checked)
       formik.setFieldValue('checkboxValue', anyChecked)
-      if (pathname === '/admin/update-question/select-real-english-words') {
+      if (
+         pathname === '/admin/tests/update-question/select-real-english-words'
+      ) {
          dispatch(optionEnable({ e, id }))
          setTimeout(() => {
             dispatch(getOptionByQuestionId())

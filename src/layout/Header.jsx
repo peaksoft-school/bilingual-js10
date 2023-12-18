@@ -1,7 +1,7 @@
 import { Typography, styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import React from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Logo } from '../assets'
 import Button from '../components/UI/Buttons/Button'
 import { authActions } from '../store/auth/authSlice'
@@ -9,7 +9,6 @@ import { authActions } from '../store/auth/authSlice'
 const Header = ({ roles = 'guest', marginBottom }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
-   const { pathname } = useLocation()
 
    const handleLogout = () => {
       dispatch(authActions.logout(navigate))
@@ -49,14 +48,12 @@ const Header = ({ roles = 'guest', marginBottom }) => {
             <Options>
                <OptionsBlock>
                   <NavLink
-                     style={
-                        pathname === '/user' ||
-                        pathname === '/admin' ||
-                        pathname === '/admin/QuestionsPage'
-                           ? { color: 'blue' }
-                           : { color: '#4C4859' }
-                     }
-                     to={roles === 'user' ? '/user' : '/admin'}
+                     style={({ isActive }) => {
+                        return {
+                           color: isActive ? 'blue' : '#4C4859',
+                        }
+                     }}
+                     to={roles === 'user' ? '/user' : '/admin/tests'}
                   >
                      <MyText>Tests</MyText>
                   </NavLink>
@@ -68,13 +65,12 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                      </NavLink>
                   ) : (
                      <NavLink
-                        style={
-                           pathname === '/admin/users-answers' ||
-                           pathname === '/admin/user-responses'
-                              ? { color: 'blue' }
-                              : { color: '#4C4859' }
-                        }
-                        to="/admin/users-answers"
+                        style={({ isActive }) => {
+                           return {
+                              color: isActive ? 'blue' : '#4C4859',
+                           }
+                        }}
+                        to="/admin/results"
                      >
                         <MyText>Submitted Results</MyText>
                      </NavLink>
@@ -101,6 +97,7 @@ const ButtonsContainer = styled('div')(() => ({
    paddingRight: '80px',
    display: 'flex',
    columnGap: '24px',
+   alignItems: 'center',
 }))
 const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',

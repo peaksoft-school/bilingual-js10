@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router'
 import { USER_KEY } from './utils/constants/constants'
 import { authActions } from './store/auth/authSlice'
 import { AppRoutes } from './routes/AppRoutes'
-// import { UsersAnswers } from './components/adminCheckingUserTest/UsersAnswers'
 
 function App() {
    const dispatch = useDispatch()
@@ -14,6 +13,7 @@ function App() {
       const userInfo = JSON.parse(
          localStorage.getItem(USER_KEY.BILINGUAL_USER_KEY)
       )
+
       if (userInfo) {
          const authorizedUserCredentials = {
             token: userInfo.token,
@@ -32,4 +32,5 @@ function App() {
       </div>
    )
 }
+
 export default App

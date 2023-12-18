@@ -1,98 +1,99 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled } from '@mui/material'
-import { Background } from '../../../layout/Background'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/Buttons/Button'
 import TextArea from '../../UI/textarea/TextArea'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
-const passage = `Sed ut perspiciatis unde omnis iste natus error sit
-                           voluptatem accusantium doloremque laudantium, totam
-                           rem aperiam, eaque ipsa quae ab illo inventore
-                           veritatis et quasi architecto beatae vitae dicta sunt
-                           explicabo. Nemo enim ipsam voluptatem quia voluptas
-                           sit aspernatur aut odit aut fugit, sed quia
-                           consequuntur magni dolores eos qui ratione voluptatem
-                           sequi nesciunt. Neque porro quisquam est, qui dolorem
-                           ipsum quia dolor sit amet, consectetur, adipisci
-                           velit, sed quia non numquam eius modi tempora
-                           incidunt ut labore et dolore magnam aliquam quaerat
-                           voluptatem`
 const HighLightAnswerUser = () => {
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
    const [answerValue, setAnswerValue] = useState('')
    const dispatch = useDispatch()
-   const duration = 40
-   function handleTimeUp() {
-      // setTimeout(() => {
-      //    console.log('nextPage')
-      // }, 10000)
-   }
-   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+   const navigate = useNavigate()
+
    const handleAddTest = () => {
       const testPayload = {
          statement: answerValue,
+         questionId: testComponent.id,
       }
       dispatch(addTest(testPayload))
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
+
+   function handleTimeUp() {}
+   const { duration } = testComponent
+   const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
+      }
+   }, [+timeObject.seconds])
+
    return (
       <div>
-         <Background padding="3.125rem 2rem" maxWidth>
-            <Container>
-               <PrgressBlock>
-                  <ProgressBar
-                     timeObject={timeObject}
-                     timeProgress={chartPercent}
-                  />
-               </PrgressBlock>
-               <BottomBlock>
-                  <PassageBlock>
-                     <div>
-                        <ThePassage>Passage</ThePassage>
-                        <hr />
-                     </div>
-                     <TextBox>
-                        <Pstyle
-                           onMouseUp={() =>
-                              setAnswerValue(window.getSelection().toString())
-                           }
-                        >
-                           {passage}
-                        </Pstyle>
-                     </TextBox>
-                  </PassageBlock>
-                  <InputBlock>
-                     <TitleBox>
-                        <TextClick>
-                           Click and drad text to highlight the answer to the
-                           question below
-                        </TextClick>
-                     </TitleBox>
-                     <QuestionBox>
-                        <p>
-                           What did residents think couild happen with new
-                           bridge?
-                        </p>
-                     </QuestionBox>
-                     <HighlitedBox>
-                        <StyledInput
-                           disabled
-                           minRows={3}
-                           maxRows={3}
-                           placeholder="Highlight text in the passage to set an answer"
-                           value={answerValue}
-                        />
-                     </HighlitedBox>
-                     <ButtonBox>
-                        <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
-                           Next
-                        </Button>
-                     </ButtonBox>
-                  </InputBlock>
-               </BottomBlock>
-            </Container>
-         </Background>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+
+         <Container>
+            <BottomBlock>
+               <PassageBlock>
+                  <div>
+                     <ThePassage>Passage</ThePassage>
+                     <hr />
+                  </div>
+                  <TextBox>
+                     <Pstyle
+                        onMouseUp={() =>
+                           setAnswerValue(window.getSelection().toString())
+                        }
+                     >
+                        {testComponent.passage}
+                     </Pstyle>
+                  </TextBox>
+               </PassageBlock>
+               <InputBlock>
+                  <TitleBox>
+                     <TextClick>
+                        Click and drad text to highlight the answer to the
+                        question below
+                     </TextClick>
+                  </TitleBox>
+                  <QuestionBox>
+                     <p>{testComponent.statement}</p>
+                  </QuestionBox>
+                  <HighlitedBox>
+                     <StyledInput
+                        disabled
+                        minRows={3}
+                        maxRows={3}
+                        type="text"
+                        placeholder="Highlight text in the passage to set an answer"
+                        value={answerValue}
+                        onChange={(e) => setAnswerValue(e.target.value)}
+                     />
+                  </HighlitedBox>
+                  <ButtonBox>
+                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                        Next
+                     </Button>
+                  </ButtonBox>
+               </InputBlock>
+            </BottomBlock>
+         </Container>
       </div>
    )
 }
@@ -105,10 +106,9 @@ const Container = styled('div')({
    flexDirection: 'column',
    gap: '3.1rem',
    alignItems: 'center',
+   marginTop: '2.5rem',
 })
-const PrgressBlock = styled('div')({
-   width: '60.25rem',
-})
+
 const BottomBlock = styled('div')({
    width: '60.25rem',
    display: 'flex',

@@ -1,40 +1,30 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { useProgressBar } from '../../UI/progressBar/useProgressBar'
-import ProgressBar from '../../UI/progressBar/ProgressBar'
 import { MultiplySelect } from '../../UI/MultiplySelect/MultiplySelect'
-import { Background } from '../../../layout/Background'
 import Button from '../../UI/Buttons/Button'
-import { addTest } from '../../../store/userTest/global-test-slice'
+import {
+   addTest,
+   globalTestSlice,
+} from '../../../store/userTest/global-test-slice'
+import ProgressBar from '../../UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../UI/progressBar/useProgressBar'
 
-export const ListenSelectEnglish = ({
-   words = [
-      {
-         id: 1,
-         title: 'LASEW',
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
-      },
-      {
-         id: 2,
-         title: 'LASEW ',
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701176650836Set Fire To The Rain Remix.mp3',
-      },
-      {
-         id: 3,
-         title: 'LASEW',
-         audioUrl:
-            'https://billingual-10.s3.eu-central-1.amazonaws.com/1701253795142Violin.mp3',
-      },
-   ],
-}) => {
+export const ListenSelectEnglish = () => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-   const [selectedWords, setSelectedWords] = useState([...words])
    const [answer, setAnswer] = useState([])
-
+   const navigate = useNavigate()
    const dispatch = useDispatch()
+
+   const { testComponent, questions, currentComponent } = useSelector(
+      (state) => state.globalTestSlice
+   )
+   const [selectedWords, setSelectedWords] = useState([
+      ...testComponent.optionList,
+   ])
+
    const handleOptionSelect = (selectedWordId) => {
       setSelectedWords((prevWords) =>
          prevWords.map((word) =>
@@ -43,56 +33,67 @@ export const ListenSelectEnglish = ({
       )
    }
 
-   const duration = 240
-
-   const handleTimeUp = () => {
-      setIsButtonDisabled(true)
-   }
-
    const handleNextButtonClick = () => {
       const data = answer.map((el) => {
          return el.id
       })
-      dispatch(addTest({ options: data }))
+      dispatch(
+         addTest({
+            questionId: testComponent.id,
+            optionsId: data,
+         })
+      )
+      if (questions.length === currentComponent + 1) {
+         navigate('/user/send-the-results')
+      } else {
+         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      }
    }
 
+   function handleTimeUp() {
+      setIsButtonDisabled(true)
+   }
+   const { duration } = testComponent
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
+
+   useEffect(() => {
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
+      }
+   }, [+timeObject.seconds])
 
    return (
       <ContainerTest>
-         <Background>
-            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <h2>Select the Real English words in this list</h2>
-            <ContainerMultiplySelect>
-               <MultiplySelect
-                  words={selectedWords}
-                  answer={answer}
-                  setAnswer={setAnswer}
-                  onSelect={handleOptionSelect}
-                  setIsButtonDisabled={setIsButtonDisabled}
-               />
-            </ContainerMultiplySelect>
-            <hr className="ContainerHr" />
-            <ContainerButton>
-               <Button
-                  className="nextButton"
-                  defaultStyle="#3A10E5"
-                  hoverStyle="#4E28E8"
-                  disabled={isButtonDisabled}
-                  onClick={handleNextButtonClick}
-               >
-                  NEXT
-               </Button>
-            </ContainerButton>
-         </Background>
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
+         <h2>Select the Real English words in this list</h2>
+         <ContainerMultiplySelect>
+            <MultiplySelect
+               words={selectedWords}
+               answer={answer}
+               setAnswer={setAnswer}
+               onSelect={handleOptionSelect}
+               setIsButtonDisabled={setIsButtonDisabled}
+            />
+         </ContainerMultiplySelect>
+         <hr className="ContainerHr" />
+         <ContainerButton>
+            <Button
+               className="nextButton"
+               defaultStyle="#3A10E5"
+               hoverStyle="#4E28E8"
+               disabled={isButtonDisabled}
+               onClick={handleNextButtonClick}
+            >
+               NEXT
+            </Button>
+         </ContainerButton>
       </ContainerTest>
    )
 }
 
 const ContainerTest = styled('div')({
-   background: 'white',
-   width: '100vw',
-   height: '100vh',
    h2: {
       marginTop: '3.12rem',
       textAlign: 'center',

@@ -19,7 +19,6 @@ import {
 } from '../../../store/questions/questionsThunk'
 
 export const SelectBestTitle = () => {
-   const { testID } = useSelector((state) => state.createTestSlice)
    const { title, questionDuration, options, question } = useSelector(
       (state) => state.questions
    )
@@ -27,7 +26,8 @@ export const SelectBestTitle = () => {
    const dispatch = useDispatch()
 
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/select-the-best-title'
+   const updateUrl =
+      pathname === '/admin/tests/update-question/select-the-best-title'
 
    const formik = useFormik({
       initialValues: {
@@ -68,7 +68,7 @@ export const SelectBestTitle = () => {
             await dispatch(updateQuestion(data))
          }
 
-         navigate(`/admin/questions/${testID}`)
+         navigate(-1)
       } else {
          dispatch(questionsSlice.actions.titleValidate(true))
          dispatch(questionsSlice.actions.durationValidate(true))

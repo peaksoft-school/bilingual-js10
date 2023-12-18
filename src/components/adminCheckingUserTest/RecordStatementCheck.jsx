@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import Button from '../UI/Buttons/Button'
@@ -12,10 +14,14 @@ const RecordStatementCheck = () => {
    const [state, setState] = useState({ response: null })
    const [error, setError] = useState(null)
    const audioRef = useRef(new Audio())
+
+   const { userId, questionId } = useSelector((state) => state.answer)
+   const navigate = useNavigate()
+
    const getQuestionResult = async () => {
       try {
          const response = await axiosInstance.get(
-            '/result/getQuestionsResults?userId=1&questionId=5'
+            `/result/getQuestionsResults?userId=${userId}&questionId=${questionId}`
          )
          const allresult = response.data
          setState({ response: allresult })
@@ -23,6 +29,20 @@ const RecordStatementCheck = () => {
          setError(error)
       }
    }
+
+   useEffect(() => {
+      const audio = audioRef.current
+
+      const handleAudioEnded = () => {
+         setIsPlaying(false)
+      }
+
+      audio.addEventListener('ended', handleAudioEnded)
+
+      return () => {
+         audio.removeEventListener('ended', handleAudioEnded)
+      }
+   }, [])
 
    const playAudio = () => {
       if (state.response && state.response.audioFile) {
@@ -36,18 +56,17 @@ const RecordStatementCheck = () => {
                console.error('Error playing audio:', error)
             })
          }
-
-         setIsPlaying((prev) => !prev)
+         setIsPlaying(!isPlaying)
       }
    }
-
    const postScore = async () => {
       try {
          await axiosInstance.post('/result/', {
-            userId: 1,
-            questionId: 5,
+            userId,
+            questionId,
             score,
          })
+         navigate(-1)
       } catch (error) {
          setError(error)
       }
@@ -151,20 +170,20 @@ const RecordStatementCheck = () => {
                            ) : (
                               <AudioBoxPlay>
                                  <PlayCircleOutlineIcon />
-                                 <span>PLAY AUDIO</span>
+                                 <span> PLAY AUDIO</span>
                               </AudioBoxPlay>
                            )}
                         </div>
                      </Button>
                   </BoxPlay>
-                  {state.response && (
-                     <BoxCorrectAnswer>
-                        <span className="statement">Correct Answer:</span>
+                  <BoxCorrectAnswer>
+                     <span className="statement">Correct Answer:</span>
+                     {state.response && (
                         <p className="ColorParagraf">
                            {state.response.correctAnswer}
                         </p>
-                     </BoxCorrectAnswer>
-                  )}
+                     )}
+                  </BoxCorrectAnswer>
                </ContainerQuestion>
                {error && (
                   <ErrorBox>
@@ -174,7 +193,11 @@ const RecordStatementCheck = () => {
                )}
             </ContainerFlex>
             <ContainerButtons>
-               <Button variant="outlined" hoverStyle="#3A10E5">
+               <Button
+                  variant="outlined"
+                  hoverStyle="#3A10E5"
+                  onClick={() => navigate(-1)}
+               >
                   GO BACK
                </Button>
                <Button
@@ -297,8 +320,8 @@ const ContainerTestQuestion = styled('div')({
 const ContainerQuestion = styled('div')({
    display: 'flex',
    flexDirection: 'row',
-   gap: '2rem',
-   width: '38rem',
+   gap: '1rem',
+   width: '48rem',
    height: '2rem',
    alignItems: 'center',
 })
@@ -310,7 +333,7 @@ const BoxPlay = styled('div')({
 const AudioBoxPlay = styled('div')({
    display: 'flex',
    flexDirection: 'row',
-   gap: '0.7rem',
+   gap: '10px',
 })
 
 const BoxCorrectAnswer = styled('div')({
@@ -318,7 +341,8 @@ const BoxCorrectAnswer = styled('div')({
    flexDirection: 'row',
    justifyContent: 'start',
    alignItems: 'center',
-   gap: '1rem',
+   gap: '0.5rem',
+   margin: 0,
 })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',

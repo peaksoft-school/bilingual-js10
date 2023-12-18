@@ -56,7 +56,7 @@ export const Questions = ({ testID }) => {
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))
-      navigate('/admin/create-question')
+      navigate('/admin/tests/create-question')
    }
 
    const qestionTypes = {
@@ -74,7 +74,9 @@ export const Questions = ({ testID }) => {
    const editQuestionHandler = (item) => {
       const select = qestionTypes[item.questionType]
       navigate(
-         `/admin/update-question/${select.toLowerCase().replaceAll(' ', '-')}`
+         `/admin/tests/update-question/${select
+            .toLowerCase()
+            .replaceAll(' ', '-')}`
       )
       dispatch(questionsSlice.actions.selectedOption(select))
       dispatch(questionsSlice.actions.setQuestionID(item.id))
@@ -107,14 +109,16 @@ export const Questions = ({ testID }) => {
                      value={item.score}
                      onChange={() => handleRadioChange(item)}
                   />
-                  <Edits
-                     className="Edits"
-                     onClick={() => editQuestionHandler(item)}
-                  />
-                  <TrashCan
-                     onClick={() => handleOpenModal(item.id)}
-                     className="TrashCan"
-                  />
+                  <IconBox>
+                     <Edits
+                        className="Edits"
+                        onClick={() => editQuestionHandler(item)}
+                     />
+                     <TrashCan
+                        onClick={() => handleOpenModal(item.id)}
+                        className="TrashCan"
+                     />
+                  </IconBox>
                </Container>
             )
          },
@@ -182,6 +186,12 @@ export const Questions = ({ testID }) => {
       </div>
    )
 }
+const IconBox = styled('div')`
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   gap: 2rem;
+`
 
 const Container = styled('div')`
    display: flex;

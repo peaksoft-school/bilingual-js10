@@ -23,13 +23,13 @@ export const SelectMainIdea = () => {
    const { title, questionDuration, question, options } = useSelector(
       (state) => state.questions
    )
-   const { testID } = useSelector((state) => state.createTestSlice)
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
    const { pathname } = useLocation()
-   const updateUrl = pathname === '/admin/update-question/select-the-main-idea'
+   const updateUrl =
+      pathname === '/admin/tests/update-question/select-the-main-idea'
 
    const formik = useFormik({
       initialValues: {
@@ -70,7 +70,7 @@ export const SelectMainIdea = () => {
             await dispatch(updateQuestion(data))
          }
 
-         navigate(`/admin/questions/${testID}`)
+         navigate(-1)
       } else {
          dispatch(questionsSlice.actions.titleValidate(true))
          dispatch(questionsSlice.actions.durationValidate(true))
@@ -86,11 +86,14 @@ export const SelectMainIdea = () => {
       }
    }, [question, options])
 
-   const handleOpenModal = () => {
+   // const handleOpenModal = () => {
+   //    formik.setFieldValue('openModal', true)
+   //    const Url = new URL(window.location)
+   //    Url.searchParams.set('modal', 'true')
+   //    window.history.pushState({}, '', Url)
+   // }
+   const optionsModal = () => {
       formik.setFieldValue('openModal', true)
-      const Url = new URL(window.location)
-      Url.searchParams.set('modal', 'true')
-      window.history.pushState({}, '', Url)
    }
 
    const handleCheckboxChange = async (id) => {
@@ -152,11 +155,14 @@ export const SelectMainIdea = () => {
       }
    }
 
+   // const handleClose = () => {
+   //    formik.setFieldValue('openModal', false)
+   //    const Url = new URL(window.location)
+   //    Url.searchParams.delete('modal')
+   //    window.history.pushState({}, '', Url)
+   // }
    const handleClose = () => {
       formik.setFieldValue('openModal', false)
-      const Url = new URL(window.location)
-      Url.searchParams.delete('modal')
-      window.history.pushState({}, '', Url)
    }
    const handleSave = async (e) => {
       e.preventDefault()
@@ -210,7 +216,8 @@ export const SelectMainIdea = () => {
                         defaultStyle="#3A10E5"
                         className="addNewTestButton"
                         variant="contained"
-                        onClick={handleOpenModal}
+                        onClick={optionsModal}
+                        type="button"
                      >
                         ADD OPTIONS
                      </Button>
