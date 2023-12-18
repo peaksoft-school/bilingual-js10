@@ -146,7 +146,7 @@ const ContainerSelectTest = styled('div')({
       background: '#fff',
       padding: '0.88rem',
       width: '25.68rem',
-      height: '4rem',
+      height: '100%',
       '.ContainerRadio': {
          display: 'flex',
          alignItems: 'center',
@@ -158,7 +158,7 @@ const ContainerTextArea = styled('div')({
    border: '1px solid #D4D0D0',
    borderRadius: '0.5rem',
    background: '#F7F7F7',
-   width: '34.65rem',
+   width: '35.68rem',
    height: '28.43rem',
    '.ContainerParagraf': {
       padding: '2.9rem 3.13rem 3rem 1.06rem',
