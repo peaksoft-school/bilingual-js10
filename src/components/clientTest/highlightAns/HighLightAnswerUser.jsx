@@ -87,7 +87,12 @@ const HighLightAnswerUser = () => {
                      />
                   </HighlitedBox>
                   <ButtonBox>
-                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                     <Button
+                        defaultStyle="#3A10E5"
+                        hoverStyle="#4E28E8"
+                        padding="0.8rem 2.5rem"
+                        onClick={handleAddTest}
+                     >
                         Next
                      </Button>
                   </ButtonBox>
@@ -161,7 +166,7 @@ const ThePassage = styled(Typography)({
    alignSelf: 'flex-start',
    padding: '1rem 1.2rem',
    color: '#4C4859',
-   fontFamily: 'DIN Next Rounded LT W04 Medium',
+   fontFamily: 'Poppins',
    fontSize: '1rem',
    fontWeight: '500',
    lineHeight: '1.3rem',
