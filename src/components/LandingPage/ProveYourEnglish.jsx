@@ -73,7 +73,7 @@ const TextContiners = styled('div')({
    justifyContent: 'center',
    alignContent: 'center',
    flexDirection: 'column',
-   top: '11rem',
+   top: '17.5rem',
    left: '5rem',
    h1: {
       fontSize: '3.75rem',
@@ -88,7 +88,7 @@ const TextContiners = styled('div')({
       marginTop: '1.3rem',
    },
    '.Buttons': {
-      marginTop: '2rem',
+      marginTop: '3rem',
    },
 })
 const ButtonContinersss = styled('div')({
@@ -111,5 +111,5 @@ const HeaderContiners = styled('div')(({ isHeaderFixed }) => ({
 
 const ContainerBackground = styled(YellowBackground)({
    width: '100%',
-   height: '20%',
+   height: '100%',
 })

@@ -42,6 +42,7 @@ const MainTeamContainer = styled('div')(() => {
          width: '11.25rem',
          height: '11.25rem',
          transition: 'transform 0.5s ease-in-out',
+         cursor: 'pointer',
       },
       '& .imageDiv': {
          overflow: 'hidden',

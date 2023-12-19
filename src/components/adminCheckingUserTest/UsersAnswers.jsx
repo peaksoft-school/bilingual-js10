@@ -126,5 +126,5 @@ export const UserAnswers = () => {
 }
 const Container = styled('div')`
    display: flex;
-   gap: 0.7rem;
+   gap: 1.38rem;
 `

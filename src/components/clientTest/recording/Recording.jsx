@@ -252,7 +252,6 @@ const RecordingContainer = styled('div')({
       color: '#3A10E5',
       fontSize: '1rem',
       fontWeight: '500',
-      lineHeight: '124%',
    },
 })
 
@@ -263,7 +262,7 @@ const ActiveContainer = styled('div')({
    justifyContent: 'end',
    marginTop: '2rem',
    '.wave': {
-      marginLeft: '15.3vw',
+      marginLeft: '11.3vw',
       marginRight: '7vw',
    },
 })
@@ -272,6 +271,7 @@ const ReactMik = styled(ReactMic)({
    display: 'none',
 })
 const ButtonContainer = styled('div')({
+   display: 'flex',
    '& :nth-child(2)': {
       marginLeft: '11px',
    },

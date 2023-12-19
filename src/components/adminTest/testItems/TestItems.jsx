@@ -131,14 +131,14 @@ export const TestItems = () => {
 }
 
 const TestItemsContainer = styled('div')`
-   width: 58.5vw;
+   width: 55vw;
    display: flex;
    flex-direction: column;
    row-gap: 15px;
 `
 
 const TestButtonContainer = styled('div')`
-   width: 58.5vw;
+   width: 55vw;
    display: flex;
    justify-content: end;
    align-items: start;
