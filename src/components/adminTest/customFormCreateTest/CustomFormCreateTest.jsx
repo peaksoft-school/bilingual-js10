@@ -206,9 +206,19 @@ const FieldTime = styled('input')(() => ({
    padding: '9.5px 0 5px 25px',
    borderRadius: '8px',
    outline: 'none',
-   border: '1px solid #D4D0D0',
+   border: '2px solid #D4D0D0',
    color: '#4C4859',
    fontSize: '18px',
+   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+   },
+   '&[type=number]': {
+      '-moz-appearance': 'textfield',
+   },
+   '&:focus': {
+      border: '2px solid rgba(196, 196, 196, 0.60)',
+   },
    '&::placeholder': {
       color: '#c2c0c0',
       fontWeight: '500',

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 export const useProgressBar = (duration, onTimeUp) => {
    const [chartPercent, setChartPercent] = useState(0)
    const [time, setTime] = useState(duration)
+
    const calculatePercentage = useCallback(() => {
       const percent = (1 - time / duration) * 100
       setChartPercent(percent)
@@ -28,6 +29,12 @@ export const useProgressBar = (duration, onTimeUp) => {
          clearInterval(timer)
       }
    }, [timeTicking])
+
+   useEffect(() => {
+      if (time === 0 || time <= 0) {
+         onTimeUp() // Call       onTimeUp when time reaches zero
+      }
+   }, [time, onTimeUp])
 
    const minutes = Math.trunc(time / 60)
    const seconds = Math.trunc(time % 60)

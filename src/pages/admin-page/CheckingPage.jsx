@@ -8,10 +8,11 @@ import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/Highl
 import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordStatementCheck'
 import { TypeWhatYouHear } from '../../components/adminCheckingUserTest/TypeWhatYouHear'
 import RespondleastUserTest from '../../components/adminCheckingUserTest/RespondleastUserTest'
+import ListenAndSelectEnglishWord from '../../components/adminCheckingUserTest/ListenAndSelectEnglishWord'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <SelectRealEnglishWords />,
-   LISTEN_AND_SELECT_ENGLISH_WORDS: <div>LISTEN_AND_SELECT_ENGLISH_WORDS</div>,
+   LISTEN_AND_SELECT_ENGLISH_WORDS: <ListenAndSelectEnglishWord />,
    TYPE_WHAT_YOU_HEAR: <TypeWhatYouHear />,
    DESCRIBE_IMAGE: <DescribeImage />,
    RECORD_SAYING_STATEMENT: <RecordStatementCheck />,

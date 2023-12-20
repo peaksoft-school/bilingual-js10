@@ -44,12 +44,13 @@ export const UserRespondInAtleastNwords = () => {
    function handleTimeUp() {}
    const { duration } = testComponent
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
-
    useEffect(() => {
-      if (+timeObject.seconds === 0) {
-         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
       }
-   }, [timeObject.seconds])
+   }, [+timeObject.seconds])
 
    return (
       <Container>
@@ -64,7 +65,9 @@ export const UserRespondInAtleastNwords = () => {
             </Describe>
             <div>
                <Input minRows={5} maxRows={5} onChange={handleInputChange} />
-               <Word>Word:{testComponent.attempts}</Word>
+               <Word wordCount={wordCount}>
+                  Word:{testComponent.count} : {wordCount}
+               </Word>
             </div>
          </MainContainer>
          <BlockBottom>
@@ -85,6 +88,13 @@ export const UserRespondInAtleastNwords = () => {
       </Container>
    )
 }
+const Word = styled('span')(({ wordCount }) => {
+   return {
+      color: wordCount >= 35 ? '#3A10E5' : '#AFAFAF',
+      fontSize: '1rem',
+      fontWeight: '500',
+   }
+})
 const Container = styled('div')`
    margin-top: 2rem;
 `
@@ -93,11 +103,7 @@ const Input = styled(TextArea)({
    width: '23.875rem',
    padding: '0.3rem',
 })
-const Word = styled('span')({
-   color: '#AFAFAF',
-   fontSize: '1rem',
-   fontWeight: '400',
-})
+
 const DescribeText = styled(Typography)({
    textAlign: 'center',
    color: '#4C4859',

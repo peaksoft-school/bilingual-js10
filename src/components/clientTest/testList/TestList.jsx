@@ -18,7 +18,8 @@ const TestList = () => {
    const getQuestionTest = async () => {
       try {
          const response = await axiosInstance.get('/tests')
-         dispatch(typeTest.actions.addTestsArr(response.data))
+         const arr = response.data.filter((el) => el.enable === true)
+         dispatch(typeTest.actions.addTestsArr(arr))
       } catch (error) {
          setError(error)
       }
@@ -50,7 +51,7 @@ const TestList = () => {
                            <div className="mainContainer">
                               <TestListIcon />
                               <div className="description">
-                                 <p>{test.duration} MINUTES</p>
+                                 <p>{Math.floor(test.duration / 60)} MINUTES</p>
                                  <p>{test ? test.title : null}</p>
                                  <p>Train as much as you like.</p>
                               </div>
