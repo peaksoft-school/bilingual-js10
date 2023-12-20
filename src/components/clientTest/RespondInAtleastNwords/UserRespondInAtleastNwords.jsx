@@ -65,7 +65,7 @@ export const UserRespondInAtleastNwords = () => {
             </Describe>
             <div>
                <Input minRows={5} maxRows={5} onChange={handleInputChange} />
-               <Word>
+               <Word wordCount={wordCount}>
                   Word:{testComponent.count} : {wordCount}
                </Word>
             </div>
@@ -88,12 +88,13 @@ export const UserRespondInAtleastNwords = () => {
       </Container>
    )
 }
-const Word = styled('span')(({ wordCount }) => ({
-   color: wordCount >= 35 ? '#3A10E5' : '#AFAFAF',
-   fontSize: '1rem',
-   fontWeight: '400',
-}))
-
+const Word = styled('span')(({ wordCount }) => {
+   return {
+      color: wordCount >= 35 ? '#3A10E5' : '#AFAFAF',
+      fontSize: '1rem',
+      fontWeight: '500',
+   }
+})
 const Container = styled('div')`
    margin-top: 2rem;
 `

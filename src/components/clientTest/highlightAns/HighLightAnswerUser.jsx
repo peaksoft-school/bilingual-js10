@@ -43,7 +43,7 @@ const HighLightAnswerUser = () => {
          }
       }
    }, [+timeObject.seconds])
-
+   const isNextButtonDisabled = !answerValue
    return (
       <div>
          <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
@@ -92,6 +92,8 @@ const HighLightAnswerUser = () => {
                         hoverStyle="#4E28E8"
                         padding="0.8rem 2.5rem"
                         onClick={handleAddTest}
+                        className="nextButton"
+                        disabled={isNextButtonDisabled}
                      >
                         Next
                      </Button>

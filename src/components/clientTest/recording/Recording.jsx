@@ -86,7 +86,7 @@ function Recording() {
                   <div>{testComponent.statement}</div>
                </SpeakContainer>
             </div>
-            <hr />
+            <hr style={{ border: '1px #D4D0D0 solid' }} />
             <ActiveContainer>
                {isButtonStop ? (
                   <>

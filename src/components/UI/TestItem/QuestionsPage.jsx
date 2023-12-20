@@ -26,13 +26,20 @@ const QuestionsPage = () => {
                         <span> {test?.title}</span>
                      </Typography>
                      <Typography>
-                        <span className="Description">Description: </span>
+                        <span className="Description">Short Description: </span>
                         <span>{test?.description}</span>
                      </Typography>
                      <Typography>
                         <span className="Duration">Duration: </span>
                         <span>
-                           {questions[0] ? questions[0]?.testDuration : 0}
+                           {questions[0] &&
+                           questions[0].testDuration !== undefined
+                              ? `${String(
+                                   Math.floor(questions[0].testDuration / 60)
+                                ).padStart(2, '0')}:${String(
+                                   Math.round(questions[0].testDuration % 60)
+                                ).padStart(2, '0')}`
+                              : 'N/A'}
                         </span>
                      </Typography>
                   </Title>
