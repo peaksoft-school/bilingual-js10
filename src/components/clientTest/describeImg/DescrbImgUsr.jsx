@@ -131,7 +131,9 @@ const BlockBottom = styled('div')({
    gap: '1.5rem',
    flexDirection: 'column',
    hr: {
-      border: '1.5px #D4D0D0 solid',
+      hr: {
+         border: '1px #D4D0D0 solid',
+      },
    },
 })
 const ButtonBox = styled('div')({

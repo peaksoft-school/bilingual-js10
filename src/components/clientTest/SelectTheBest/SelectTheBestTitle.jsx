@@ -166,7 +166,7 @@ const ContainerSelectTest = styled('div')({
       border: '1px solid #D4D0D0',
       background: '#fff',
       padding: '0.88rem',
-      width: '25.68rem',
+      width: '24.68rem',
       height: '100%',
       '.ContainerRadio': {
          display: 'flex',
@@ -205,6 +205,6 @@ const ContainerSelectRadio = styled('div')({
       color: '#4C4859',
       fontSize: '1.45rem',
       fontWeight: 400,
-      lineHeight: '1.63rem',
+      lineHeight: '2.63rem',
    },
 })

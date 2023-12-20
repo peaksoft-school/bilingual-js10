@@ -30,9 +30,10 @@ const MyStyledInput = styled(TextField)((props) => ({
    '& .MuiOutlinedInput-root': {
       '& fieldset': {
          border: `${props.border ? props.border : '1px solid #D4D0D0'}`,
+         borderRadius: '8px',
       },
       '&:hover fieldset': {
-         border: '1.3px solid #3A10E5',
+         border: '1.53px solid #3A10E5',
          borderRadius: '8px',
       },
       '&.Mui-focused': {

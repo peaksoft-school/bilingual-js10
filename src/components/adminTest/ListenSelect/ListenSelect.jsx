@@ -61,7 +61,7 @@ export const ListenSelect = () => {
                title,
                statement: 'string',
                correctAnswer: 'string',
-               duration: questionDuration,
+               duration: questionDuration * 60,
                attempts: 0,
                fileUrl: 'string',
                passage: 'string',

@@ -158,8 +158,8 @@ const ContainerTextArea = styled('div')({
    border: '1px solid #D4D0D0',
    borderRadius: '0.5rem',
    background: '#F7F7F7',
-   width: '35.68rem',
-   height: '28.43rem',
+   width: '34.68rem',
+   height: '26.43rem',
    '.ContainerParagraf': {
       padding: '2.9rem 3.13rem 3rem 1.06rem',
       width: '100%',

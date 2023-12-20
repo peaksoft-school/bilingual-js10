@@ -79,7 +79,7 @@ const TestList = () => {
                            <div className="mainContainer">
                               <TestListIcon />
                               <div className="description">
-                                 <p>{test.duration} MINUTES</p>
+                                 <p>{Math.floor(test.duration / 60)} MINUTES</p>
                                  <p>{test ? test.title : null}</p>
                                  <p>Train as much as you like.</p>
                               </div>
@@ -109,8 +109,8 @@ const Container = styled('div')`
    display: flex;
    gap: 1rem;
    align-items: center;
-   height: 4rem;
-   font-weight: 700;
+   height: 7rem;
+   font-weight: 800;
    font-family: Poppins;
    .stroka {
       display: block;
@@ -121,7 +121,7 @@ const Container = styled('div')`
       width: 20px;
       border-radius: 3.1rem;
       margin: 0 1px;
-      animation: animate 1.6s linear infinite;
+      animation: animate 1.2s linear infinite;
       boxshadow: '0px 4px 10px rgba(0, 0, 0, 0.1), 0px 8px 20px rgba(0, 0, 0, 0.2)';
    }
    @keyframes animate {

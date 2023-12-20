@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FeedbackFromPeople } from '../components/LandingPage/FeedbackFromPeople'
-import ReaderCounter from '../components/readerCounter/ReaderCounter'
+import ReaderCounter from '../components/readerCounter/ ReaderCounter'
 import { OurTeam } from '../components/LandingPage/OurTeam'
 import { UserExperience } from '../components/LandingPage/UserExperience'
 import StepperPage from '../components/LandingPage/StepperPage'

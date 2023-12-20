@@ -29,16 +29,20 @@ export const TestItems = () => {
    }
 
    const deleteTestHandler = async () => {
-      await Notify(
-         {
-            sucessTitle: 'Test deleted ',
-            successMessage: 'Successfully deleted',
-            errorTitle: 'Error',
-         },
-         axiosInstance.delete(`/tests?testId=${delID}`)
-      )
-      setOpen(false)
-      getData()
+      try {
+         await Notify(
+            {
+               sucessTitle: 'Test deleted ',
+               successMessage: 'Successfully deleted',
+               errorTitle: 'Error',
+            },
+            axiosInstance.delete(`/tests?testId=${delID}`)
+         )
+         setOpen(false)
+         getData()
+      } catch (error) {
+         console.log(error)
+      }
    }
 
    const enableHandler = async (e, id) => {
