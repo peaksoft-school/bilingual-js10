@@ -50,9 +50,9 @@ export const Questions = ({ testID }) => {
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-   const StyledLabel = styled('span')`
-      color: #fff;
-   `
+   // const StyledLabel = styled('span')`
+   //    color: #fff;
+   // `
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))
@@ -87,19 +87,18 @@ export const Questions = ({ testID }) => {
    const columns = [
       {
          id: 'title',
-         label: 'Name',
+         label: <div style={{ marginLeft: '6.7vw' }}>Name</div>,
       },
       {
          id: 'duration',
-         label: 'Duration',
+         label: <div style={{ marginLeft: '9vw' }}>Duration</div>,
       },
       {
          id: 'questionType',
-         label: 'Question Type',
+         label: <div style={{ marginLeft: '8.3vw' }}>Question Type</div>,
       },
       {
          id: 'Score',
-         label: <StyledLabel>o</StyledLabel>,
          render: (item) => {
             return (
                <Container>

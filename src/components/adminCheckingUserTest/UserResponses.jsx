@@ -43,7 +43,7 @@ export const UserResponses = () => {
          render: (row) => {
             const color = row.checked ? '#2AB930' : 'red'
             return (
-               <p style={{ color }}>
+               <p style={{ color, width: '100.33px' }}>
                   {row.checked ? 'Evaluted' : 'Not Evaluted'}
                </p>
             )
@@ -123,12 +123,7 @@ export const UserResponses = () => {
                </Button>
             </BtnContainer>
             <hr />
-            <Table
-               data={data.questionResultResponseList}
-               columns={columns}
-               columnGap="110px"
-               rowGap="70px"
-            />
+            <Table data={data.questionResultResponseList} columns={columns} />
          </Background>
       </div>
    )
