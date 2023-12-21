@@ -35,33 +35,27 @@ const TestList = () => {
          <PurpleBackground>
             {testsArr.length === 0 ? (
                <Container className="StrokaClass">
-                  <span className="stroka">
-                     <h1>B</h1>
-                  </span>
-                  <span className="stroka">
-                     <h2>i</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>l</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>i</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>n</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>g</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>u</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>a</h2>
-                  </span>
-                  <span className="stroka">
-                     <h2>l</h2>
-                  </span>
+                  <h1 className="stroka">T</h1>
+                  <h2 className="stroka">h</h2>
+                  <h2 className="stroka">e</h2>
+                  <h2 className="stroka">r</h2>
+                  <h2 className="stroka">e</h2>
+                  <h2 className="stroka">i</h2>
+                  <h2 className="stroka">s</h2>
+                  <h2 className="stroka">n</h2>
+                  <h2 className="stroka">o</h2>
+                  <h2 className="stroka">t</h2>
+                  <h2 className="stroka">h</h2>
+                  <h2 className="stroka">i</h2>
+                  <h2 className="stroka">n</h2>
+                  <h2 className="stroka">g</h2>
+                  <h2 className="stroka">h</h2>
+                  <h2 className="stroka">e</h2>
+                  <h2 className="stroka">r</h2>
+                  <h2 className="stroka">e</h2>
+                  <h2 className="stroka">y</h2>
+                  <h2 className="stroka">e</h2>
+                  <h2 className="stroka">t</h2>
                </Container>
             ) : (
                testsArr.map((test) => {
@@ -109,7 +103,7 @@ const Container = styled('div')`
    display: flex;
    gap: 1rem;
    align-items: center;
-   height: 7rem;
+   height: 1.5rem;
    font-weight: 800;
    font-family: Poppins;
    .stroka {
@@ -120,9 +114,9 @@ const Container = styled('div')`
       height: 100%;
       width: 20px;
       border-radius: 3.1rem;
-      margin: 0 1px;
-      animation: animate 1.2s linear infinite;
-      boxshadow: '0px 4px 10px rgba(0, 0, 0, 0.1), 0px 8px 20px rgba(0, 0, 0, 0.2)';
+      top: 8rem;
+      animation: animate 2s linear infinite;
+      box-shadow: '0px 4px 10px rgba(0, 0, 0, 0.1), 0px 8px 20px rgba(0, 0, 0, 0.2)';
    }
    @keyframes animate {
       50% {
