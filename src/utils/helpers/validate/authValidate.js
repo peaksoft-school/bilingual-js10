@@ -31,8 +31,7 @@ const validationPassage = yup.object({
 })
 
 const schemaHighlight = yup.object().shape({
-   question: yup.string().required('This field is required !'),
-   text: yup.string().required('This field is required !'),
+   text: yup.string().required('Highlight the correct answer !'),
 })
 
 export {

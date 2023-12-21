@@ -25,7 +25,6 @@ const Container = styled(Grid)(({ background, prop }) => ({
    maxWidth: prop ? '1028px' : '780px',
    backgroundColor: background,
    boxShadow: '16px 16px 20px rgba(0, 0, 0, 0.3)',
-   // width: '100%',
    height: prop ? '440px' : '390px',
    borderRadius: '70px 70px 70px 0px',
    transition: 'all 0s ease',

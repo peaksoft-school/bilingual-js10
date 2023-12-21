@@ -29,16 +29,20 @@ export const TestItems = () => {
    }
 
    const deleteTestHandler = async () => {
-      await Notify(
-         {
-            sucessTitle: 'Test deleted ',
-            successMessage: 'Successfully deleted',
-            errorTitle: 'Error',
-         },
-         axiosInstance.delete(`/tests?testId=${delID}`)
-      )
-      setOpen(false)
-      getData()
+      try {
+         await Notify(
+            {
+               sucessTitle: 'Test deleted ',
+               successMessage: 'Successfully deleted',
+               errorTitle: 'Error',
+            },
+            axiosInstance.delete(`/tests?testId=${delID}`)
+         )
+         setOpen(false)
+         getData()
+      } catch (error) {
+         console.log(error)
+      }
    }
 
    const enableHandler = async (e, id) => {
@@ -131,14 +135,14 @@ export const TestItems = () => {
 }
 
 const TestItemsContainer = styled('div')`
-   width: 58.5vw;
+   width: 55vw;
    display: flex;
    flex-direction: column;
    row-gap: 15px;
 `
 
 const TestButtonContainer = styled('div')`
-   width: 58.5vw;
+   width: 55vw;
    display: flex;
    justify-content: end;
    align-items: start;

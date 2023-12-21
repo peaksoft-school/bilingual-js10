@@ -29,7 +29,7 @@ const DescrbImgUsr = () => {
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {
-         navigate('/user/send-the-results')
+         navigate('/user/test-list/send-the-results')
       } else {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }

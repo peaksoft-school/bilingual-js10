@@ -48,12 +48,12 @@ export const AdminCreateRealEnglishWord = () => {
             pathname ===
             '/admin/tests/update-question/select-real-english-words'
          ) {
-            dispatch(
+            await dispatch(
                updateQuestion({
                   title,
                   statement: 'string',
                   correctAnswer: 'string',
-                  duration: questionDuration,
+                  duration: questionDuration * 60,
                   attempts: 0,
                   fileUrl: 'string',
                   passage: 'string',
@@ -62,13 +62,13 @@ export const AdminCreateRealEnglishWord = () => {
          } else {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                options: formik.values.options.map((el) => ({
                   title: el.title,
                   isTrue: el.checked,
                })),
             }
-            dispatch(postQuestion(data))
+            await dispatch(postQuestion(data))
          }
          navigate(-1)
       } else {

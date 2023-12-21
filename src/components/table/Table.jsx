@@ -132,6 +132,7 @@ const MainContainerStyled = styled('div')`
 const TableContainerStyled = styled(TableContainer)(() => ({
    marginBottom: 'none',
    boxShadow: 'none',
+   width: '56.1vw',
    '&.css-lhr19p-MuiTable-root': {
       border: 'none',
       boxShadow: 'none',
@@ -144,24 +145,21 @@ const MuiTableStyled = styled(MuiTable)(() => ({
    flexDirection: 'column',
 }))
 const TableRowColumns = styled(TableRow)((props) => ({
-   width: '100%',
-   height: '4rem',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'space-around',
-   columnGap: props.columnGap || '60px',
+   columnGap: props.columnGap || '80px',
 }))
 const TableRowData = styled(TableRow)((props) => ({
    boxShadow:
       ' 0px 4px 10px 0px rgba(0, 0, 0, 0.06), 0px -4px 10px 0px rgba(0, 0, 0, 0.06);',
    borderRadius: '0.5rem',
-   width: '58vw',
+   width: '50vw',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'space-around',
-   gap: props.rowGap || '2rem',
-   marginLeft: '1rem',
+   gap: props.rowGap || '1rem',
    marginBottom: '1rem',
    cursor: props.pathname === '/admin/user-responses' ? 'pointer' : 'auto',
    ':hover': {

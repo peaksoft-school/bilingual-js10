@@ -44,7 +44,7 @@ const SelectImage = () => {
                   title,
                   statement: 'string',
                   correctAnswer: formik.values.inputValue,
-                  duration: questionDuration,
+                  duration: questionDuration * 60,
                   attempts: 0,
                   fileUrl: selectedImage,
                   passage: 'string',
@@ -53,7 +53,7 @@ const SelectImage = () => {
          } else {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                correctAnswer: formik.values.inputValue,
             }
             await dispatch(postDescribeImage({ selectedImage, data, testID }))
