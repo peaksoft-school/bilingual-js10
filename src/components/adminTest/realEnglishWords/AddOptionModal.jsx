@@ -20,7 +20,7 @@ const OptionModal = ({
    const { pathname } = useLocation()
 
    const updateUrl =
-      pathname === '/admin/update-question/select-real-english-words'
+      pathname === '/admin/tests/update-question/select-real-english-words'
 
    const handleSave = () => {
       if (updateUrl) {
@@ -29,8 +29,7 @@ const OptionModal = ({
             isTrue: checked,
          }
          dispatch(postOption(option))
-      }
-      if (title) {
+      } else if (title) {
          handleSaveOption(title, checked)
          setTitle('')
          setIsTrueOption(false)

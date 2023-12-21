@@ -48,7 +48,7 @@ export const AdminCreateRealEnglishWord = () => {
             pathname ===
             '/admin/tests/update-question/select-real-english-words'
          ) {
-            dispatch(
+            await dispatch(
                updateQuestion({
                   title,
                   statement: 'string',
@@ -68,7 +68,7 @@ export const AdminCreateRealEnglishWord = () => {
                   isTrue: el.checked,
                })),
             }
-            dispatch(postQuestion(data))
+            await dispatch(postQuestion(data))
          }
          navigate(-1)
       } else {
