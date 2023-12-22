@@ -108,6 +108,8 @@ const SelectTheMainIdea = () => {
                            <InputNumber
                               type="number"
                               onChange={handleInputChange}
+                              max={10}
+                              min={0}
                            />
                         </div>
                      </ContaineScore>

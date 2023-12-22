@@ -114,8 +114,9 @@ export default SigninPage
 
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
-   padding: '40px',
-   height: '60rem',
+   padding: '40px 0',
+   width: '100%',
+   height: '100vh',
 }))
 
 const SignInForm = styled('form')(() => ({

@@ -50,9 +50,6 @@ export const Questions = ({ testID }) => {
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-   // const StyledLabel = styled('span')`
-   //    color: #fff;
-   // `
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))

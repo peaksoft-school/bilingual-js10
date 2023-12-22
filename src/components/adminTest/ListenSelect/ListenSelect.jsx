@@ -61,7 +61,7 @@ export const ListenSelect = () => {
                title,
                statement: 'string',
                correctAnswer: 'string',
-               duration: questionDuration,
+               duration: questionDuration * 60,
                attempts: 0,
                fileUrl: 'string',
                passage: 'string',
@@ -154,28 +154,34 @@ export const ListenSelect = () => {
          (option) => option.id === id
       )?.audioUrl
       if (audioFile) {
-         if (formik.values.audioPlaying && formik.values.audioPlaying[id]) {
+         if (formik.values.currentlyPlayingId) {
+            formik.values.audioPlaying[formik.values.currentlyPlayingId].pause()
+         }
+         if (formik.values.currentlyPlayingId === id) {
             formik.values.audioPlaying[id].pause()
             formik.setValues({
                ...formik.values,
-               audioPlaying: { ...formik.values.audioPlaying, [id]: null },
+               currentlyPlayingId: null,
             })
-            return
-         }
-         const audio = new Audio(audioFile)
-         audio.play()
-         audio.addEventListener('ended', () => {
+         } else {
+            const audio = new Audio(audioFile)
+            audio.play()
+            audio.addEventListener('ended', () => {
+               formik.setValues({
+                  ...formik.values,
+                  audioPlaying: { ...formik.values.audioPlaying, [id]: null },
+                  currentlyPlayingId: null,
+               })
+            })
             formik.setValues({
                ...formik.values,
-               audioPlaying: { ...formik.values.audioPlaying, [id]: null },
+               audioPlaying: { ...formik.values.audioPlaying, [id]: audio },
+               currentlyPlayingId: id,
             })
-         })
-         formik.setValues({
-            ...formik.values,
-            audioPlaying: { ...formik.values.audioPlaying, [id]: audio },
-         })
+         }
       }
    }
+
    const removeElement = (id) => {
       const newOption = formik.values.options.filter(
          (option) => option.id !== id
@@ -207,12 +213,13 @@ export const ListenSelect = () => {
                            <VolumeForEnglishWord
                               onClick={() => handlePlayAudio(el.id)}
                               style={{
-                                 fill: formik.values.audioPlaying?.[el.id]
-                                    ? '#3A10E5'
-                                    : '#655F5F',
+                                 fill:
+                                    formik.values.currentlyPlayingId === el.id
+                                       ? '#3A10E5'
+                                       : '#655F5F',
                               }}
                            />
-                           <p>{el.title}</p>
+                           <p className="CreateTestTitle">{el.title}</p>
                         </AudioContainer>
                         <ContainDeleteChek>
                            <InputRadio
@@ -335,4 +342,7 @@ const AudioContainer = styled('div')(() => ({
    alignItems: 'center',
    gap: '15px',
    cursor: 'pointer',
+   '.CreateTestTitle': {
+      cursor: 'text',
+   },
 }))

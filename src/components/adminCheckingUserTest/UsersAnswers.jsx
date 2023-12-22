@@ -65,7 +65,7 @@ export const UserAnswers = () => {
       { id: 'testName', label: 'Test Name' },
       {
          id: 'checked',
-         label: <div style={{ marginLeft: '5.6vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '4.7vw' }}>Status</div>,
          render: (row) => {
             const statusText =
                row.checked === true ? 'Evalauted' : 'Not evalauted'
@@ -75,7 +75,7 @@ export const UserAnswers = () => {
       },
       {
          id: 'finalScore',
-         label: <div style={{ marginLeft: '5vw' }}>Score</div>,
+         label: <div style={{ marginLeft: '6vw' }}>Score</div>,
          render: (row) => {
             const color = row.finalScore > 0 ? '#2AB930' : '#F61414'
             return <p style={{ color }}>{row.finalScore}</p>

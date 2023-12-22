@@ -70,15 +70,17 @@ const UserResult = () => {
    }
 
    const columns = [
-      { label: '#' },
       {
          id: 'dateOfSubmission',
-         label: 'Date of submissions',
+         label: <div style={{ marginLeft: '6vw' }}>Date of submissions</div>,
       },
-      { id: 'testName', label: 'Test name' },
+      {
+         id: 'testName',
+         label: <div style={{ marginLeft: '1vw' }}>Test name</div>,
+      },
       {
          id: 'status',
-         label: 'Status',
+         label: <div style={{ marginLeft: '4.7vw' }}>Status</div>,
          render: (row) => {
             const statusText =
                row.checked === true ? 'Evaluated' : 'Not evaluated'
@@ -88,7 +90,7 @@ const UserResult = () => {
       },
       {
          id: 'finalScore',
-         label: 'Score',
+         label: <div style={{ marginLeft: '6.3vw' }}>Score</div>,
          render: (row) => {
             const scoreText = row.score === 'true' ? 'true' : 'false'
             const color = row.score === 'true' ? 'green' : 'red'

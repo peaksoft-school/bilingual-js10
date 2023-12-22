@@ -4,7 +4,7 @@ export const animation = {
    },
    visible: (custom) => ({
       opacity: 1,
-      transition: { delay: custom * 0.9 },
+      transition: { delay: custom * 0.5 },
    }),
 }
 export const textAnimation = {
@@ -15,6 +15,6 @@ export const textAnimation = {
    visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.9 }, // Adjust the duration as needed
+      transition: { duration: 0.5 },
    },
 }

@@ -1,34 +1,55 @@
 import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
-import { YellowBackground } from '../../assets'
-// import Button from '../UI/Buttons/Button'
+import { useEffect, useState } from 'react'
+import { Logo, YellowBackground } from '../../assets'
+import Button from '../UI/Buttons/Button'
 import { ToBeginButton } from '../UI/Buttons/ToBeginButton'
 
 export const ProveYourEnglish = () => {
+   const [isHeaderFixed, setIsHeaderFixed] = useState(false)
    const navigate = useNavigate()
 
-   const handleToBeginClick = () => {
+   const handleComeInClick = () => {
       navigate('/signin')
    }
+   const handleLoginClick = () => {
+      navigate('/signup')
+   }
+   useEffect(() => {
+      const handleScroll = () => {
+         const offset = window.scrollY
+         setIsHeaderFixed(offset > 0)
+      }
+      window.addEventListener('scroll', handleScroll)
+      return () => {
+         window.removeEventListener('scroll', handleScroll)
+      }
+   }, [isHeaderFixed])
+
    return (
       <div>
-         {/* <HeaderContiners>
+         <HeaderContiners isHeaderFixed={isHeaderFixed}>
             <div>
                <Logo />
             </div>
             <ButtonContinersss>
-               <Button defaultStyle="#3A10E5" hoverStyle="#4E28E8">
-                  to come in
+               <Button
+                  defaultStyle="#3A10E5"
+                  hoverStyle="#4E28E8"
+                  onClick={handleComeInClick}
+               >
+                  TO COME IN
                </Button>
                <Button
                   defaultStyle="white"
                   hoverStyle="#F0EDED"
                   className="registerButton"
+                  onClick={handleLoginClick}
                >
-                  Registration
+                  REGISTER
                </Button>
             </ButtonContinersss>
-         </HeaderContiners> */}
+         </HeaderContiners>
          <TextContiners>
             <h2>Prove your English </h2>
             <h2>proficiency today with</h2>
@@ -38,7 +59,7 @@ export const ProveYourEnglish = () => {
                build the fluency
             </p>
             <span>and confidence they need to speak new languages.</span>
-            <ToBeginButton className="Buttons" onClick={handleToBeginClick}>
+            <ToBeginButton className="Buttons" onClick={handleComeInClick}>
                TO BEGIN
             </ToBeginButton>
          </TextContiners>
@@ -52,7 +73,7 @@ const TextContiners = styled('div')({
    justifyContent: 'center',
    alignContent: 'center',
    flexDirection: 'column',
-   top: '11rem',
+   top: '17.5rem',
    left: '5rem',
    h1: {
       fontSize: '3.75rem',
@@ -67,23 +88,28 @@ const TextContiners = styled('div')({
       marginTop: '1.3rem',
    },
    '.Buttons': {
-      marginTop: '2rem',
+      marginTop: '3rem',
    },
 })
-// const HeaderContiners = styled('div')({
-//    padding: '1.5rem 5rem 0 5rem',
-//    width: '100%',
-//    display: 'flex',
-//    justifyContent: 'space-between',
-//    alignItems: 'center',
-//    position: 'absolute',
-// })
+const ButtonContinersss = styled('div')({
+   display: 'flex',
+   gap: '1.5rem',
+})
+const HeaderContiners = styled('div')(({ isHeaderFixed }) => ({
+   backgroundColor: isHeaderFixed ? 'white' : '#FCD200',
+   width: '100%',
+   zIndex: 3,
+   position: 'fixed',
+   display: 'flex',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   height: '6rem',
+   padding: '1.5rem 5rem',
+   transition: 'background-color 1s ease',
+   boxShadow: isHeaderFixed ? '0px 4px 10px rgba(0, 0, 0, 0.1)' : 'none',
+}))
 
-// const ButtonContinersss = styled('div')({
-//    display: 'flex',
-//    gap: '1.5rem',
-// })
 const ContainerBackground = styled(YellowBackground)({
    width: '100%',
-   height: '20%',
+   height: '100%',
 })

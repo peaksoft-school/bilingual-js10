@@ -45,7 +45,7 @@ export const TypeWhatYouHear = () => {
                   title,
                   statement: 'string',
                   correctAnswer: formik.values.correctAnswer,
-                  duration: questionDuration,
+                  duration: questionDuration * 60,
                   attempts: formik.values.quantityInputValue,
                   fileUrl: audioFile,
                   passage: 'string',
@@ -54,7 +54,7 @@ export const TypeWhatYouHear = () => {
          } else {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                numberOffReplays: formik.values.quantityInputValue,
                correctAnswer: formik.values.correctAnswer,
                audioFile,
@@ -81,7 +81,7 @@ export const TypeWhatYouHear = () => {
                )
             )
          }
-         navigate(`/admin/questions/${testID}`)
+         navigate(-1)
       } else {
          dispatch(questionsSlice.actions.titleValidate(true))
          dispatch(questionsSlice.actions.durationValidate(true))
@@ -154,7 +154,6 @@ export const TypeWhatYouHear = () => {
                      <input
                         id="fileInput"
                         type="file"
-                        // value={audioFile}
                         onChange={(e) => setAudioFile(e.target.files[0])}
                      />
                      <Button

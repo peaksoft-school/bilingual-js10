@@ -42,7 +42,7 @@ const StatementInput = () => {
                   title,
                   statement: formik.values.inputValue,
                   correctAnswer: 'string',
-                  duration: questionDuration,
+                  duration: questionDuration * 60,
                   attempts: 0,
                   fileUrl: 'string',
                   passage: 'string',
@@ -51,7 +51,7 @@ const StatementInput = () => {
          } else {
             const result = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                statement: formik.values.inputValue,
             }
             await dispatch(postRecordStatement(result))
