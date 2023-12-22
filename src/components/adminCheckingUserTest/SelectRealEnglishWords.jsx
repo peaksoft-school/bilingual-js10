@@ -45,22 +45,22 @@ const SelectRealEnglishWords = () => {
             <Background padding="0">
                <ContainerFlex>
                   <ContainerUser>
-                     {appState.response && (
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">User:</span>
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">User:</span>
+                        {appState.response && (
                            <p className="ColorParagraf">
                               {appState.response.fullName}
                            </p>
-                        </div>
-                     )}
-                     {appState.response && (
-                        <div className="FixedDisplay">
-                           <span className="ColorBlue">Test:</span>
+                        )}
+                     </div>
+                     <div className="FixedDisplay">
+                        <span className="ColorBlue">Test:</span>
+                        {appState.response && (
                            <p className="ColorParagraf">
                               {appState.response.testTitle}
                            </p>
-                        </div>
-                     )}
+                        )}
+                     </div>
                   </ContainerUser>
                   <ContainerCkeckInTheTest>
                      <div>

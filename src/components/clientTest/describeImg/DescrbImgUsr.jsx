@@ -29,7 +29,7 @@ const DescrbImgUsr = () => {
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {
-         navigate('/user/send-the-results')
+         navigate('/user/test-list/send-the-results')
       } else {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }
@@ -40,10 +40,12 @@ const DescrbImgUsr = () => {
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {
-      if (+timeObject.seconds === 0) {
-         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
       }
-   }, [timeObject.seconds])
+   }, [+timeObject.seconds])
 
    return (
       <div>
@@ -129,7 +131,9 @@ const BlockBottom = styled('div')({
    gap: '1.5rem',
    flexDirection: 'column',
    hr: {
-      border: '1.5px #D4D0D0 solid',
+      hr: {
+         border: '1px #D4D0D0 solid',
+      },
    },
 })
 const ButtonBox = styled('div')({

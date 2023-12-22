@@ -33,7 +33,7 @@ export const RespondLeast = () => {
       if (title && questionDuration) {
          const data = {
             title,
-            duration: questionDuration,
+            duration: questionDuration * 60,
             statement: formik.values.questionStatement,
             attempts: formik.values.numberReplays,
             correctAnswer: 'string',
@@ -83,7 +83,6 @@ export const RespondLeast = () => {
                <p className="LabelTop">Number off</p>
                <p className="LabelBottom">Words</p>
                <Input
-                  type=""
                   id="numberReplays"
                   name="numberReplays"
                   value={formik.values.numberReplays}

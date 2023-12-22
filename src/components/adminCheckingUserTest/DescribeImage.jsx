@@ -75,8 +75,7 @@ const DescribeImage = () => {
                            <div className="FixedDisplay">
                               <span className="ColorBlue">Question Title:</span>
                               <p className="ColorParagraf">
-                                 {' '}
-                                 {state.response.questionTitle}{' '}
+                                 {state.response.questionTitle}
                               </p>
                            </div>
                         )}
@@ -86,7 +85,7 @@ const DescribeImage = () => {
                                  Duration (in minutes):
                               </span>
                               <span className="ColorParagraf">
-                                 {state.response.duration}{' '}
+                                 {state.response.duration}
                               </span>
                            </div>
                         )}
@@ -113,14 +112,14 @@ const DescribeImage = () => {
                   </ContaineScore>
                </ContainerCkeckInTheTest>
                <ContainerImgQuestion>
-                  {state.response && (
-                     <BoxImg>
+                  <BoxImg>
+                     {state.response && (
                         <img
                            src={state.response.audioFile}
                            alt="img comes with props"
                         />
-                     </BoxImg>
-                  )}
+                     )}
+                  </BoxImg>
                   <BoxCorrectAnswer>
                      <p className="CarrentAnswer">Correct Answer:</p>
                      {state.response && (

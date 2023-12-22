@@ -85,7 +85,7 @@ export const UserResponses = () => {
                </Title>
                <div>
                   <p>
-                     <span>Final Score:</span>{' '}
+                     <span>Final Score:</span>
                      <span
                         style={
                            data.checked

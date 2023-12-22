@@ -1,7 +1,7 @@
 import Dastan from '../../assets/images/dasi012.jpg'
 import Rinat from '../../assets/images/rinat.jpg'
 import Bael from '../../assets/images/baelBack.png'
-// import Gulaiym from '../../assets/images/gulaiym.png'
+import Gulaiym from '../../assets/images/gulaiym.png'
 import Ayzada from '../../assets/images/AyzadaBack.jpg'
 import Nurlan from '../../assets/images/nurlanBayke.jpg'
 import Daniel from '../../assets/images/daniel.png'
@@ -14,12 +14,12 @@ export const developers = [
       profession: 'Frontend Dev',
       id: 1,
    },
-   // {
-   //    image: Gulaiym,
-   //    name: 'Гулайым Едилбаева',
-   //    profession: 'Frontend Dev',
-   //    id: 2,
-   // },
+   {
+      image: Gulaiym,
+      name: 'Гулайым Эдилбаева',
+      profession: 'Frontend Dev',
+      id: 2,
+   },
    {
       image: Rinat,
       name: 'Ринат Кундузов',

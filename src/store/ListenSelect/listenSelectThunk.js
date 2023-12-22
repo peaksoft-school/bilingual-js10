@@ -33,7 +33,7 @@ export const postListenSelect = createAsyncThunk(
                `/questions?testId=${testID}&questionType=LISTEN_AND_SELECT_ENGLISH_WORDS`,
                {
                   title,
-                  duration: questionDuration,
+                  duration: questionDuration * 60,
                   options: formik.values.options.map((el) => {
                      return {
                         title: el.title,

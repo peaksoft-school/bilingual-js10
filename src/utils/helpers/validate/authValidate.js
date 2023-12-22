@@ -29,9 +29,9 @@ const validationAuthSignIn = yup.object().shape({
 const validationPassage = yup.object({
    passage: yup.string().required('Passage should not be empty!'),
 })
+
 const schemaHighlight = yup.object().shape({
-   question: yup.string().required('This field is required !'),
-   text: yup.string().required('This field is required !'),
+   text: yup.string().required('Highlight the correct answer !'),
 })
 
 export {

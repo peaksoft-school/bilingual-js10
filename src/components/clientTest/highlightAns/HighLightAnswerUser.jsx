@@ -26,7 +26,7 @@ const HighLightAnswerUser = () => {
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {
-         navigate('/user/send-the-results')
+         navigate('/user/test-list/send-the-results')
       } else {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }
@@ -37,11 +37,13 @@ const HighLightAnswerUser = () => {
    const { timeObject, chartPercent } = useProgressBar(duration, handleTimeUp)
 
    useEffect(() => {
-      if (+timeObject.seconds === 0) {
-         dispatch(globalTestSlice.actions.addCurrentComponent(1))
+      if (+timeObject.minute === 0) {
+         if (+timeObject.seconds === 0) {
+            dispatch(globalTestSlice.actions.addCurrentComponent(1))
+         }
       }
-   }, [timeObject.seconds])
-
+   }, [+timeObject.seconds])
+   const isNextButtonDisabled = !answerValue
    return (
       <div>
          <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
@@ -85,7 +87,14 @@ const HighLightAnswerUser = () => {
                      />
                   </HighlitedBox>
                   <ButtonBox>
-                     <Button padding="0.8rem 2.5rem" onClick={handleAddTest}>
+                     <Button
+                        defaultStyle="#3A10E5"
+                        hoverStyle="#4E28E8"
+                        padding="0.8rem 2.5rem"
+                        onClick={handleAddTest}
+                        className="nextButton"
+                        disabled={isNextButtonDisabled}
+                     >
                         Next
                      </Button>
                   </ButtonBox>
@@ -159,7 +168,7 @@ const ThePassage = styled(Typography)({
    alignSelf: 'flex-start',
    padding: '1rem 1.2rem',
    color: '#4C4859',
-   fontFamily: 'DIN Next Rounded LT W04 Medium',
+   fontFamily: 'Poppins',
    fontSize: '1rem',
    fontWeight: '500',
    lineHeight: '1.3rem',
@@ -175,7 +184,7 @@ const InputBlock = styled('div')({
 })
 const ButtonBox = styled('div')({
    alignSelf: 'end',
-   marginTop: '2rem',
+   marginTop: '2.2rem',
 })
 const TitleBox = styled('div')({
    marginBottom: '0.6rem',
