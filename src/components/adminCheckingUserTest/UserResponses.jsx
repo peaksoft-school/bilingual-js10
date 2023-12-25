@@ -34,17 +34,17 @@ export const UserResponses = () => {
    const columns = [
       {
          id: 'questionType',
-         label: <div style={{ paddingLeft: '80px' }}>Question</div>,
+         label: <div style={{ marginLeft: '8.4vw' }}>Question</div>,
       },
-      { id: 'score', label: 'Score' },
+      { id: 'score', label: <div style={{ marginLeft: '8vw' }}>Score</div> },
       {
          id: 'checked',
-         label: 'Status',
+         label: <div style={{ marginLeft: '9.3vw' }}>Status</div>,
          render: (row) => {
             const color = row.checked ? '#2AB930' : 'red'
             return (
-               <p style={{ color }}>
-                  {row.checked ? 'Evaluted' : 'Not Evaluted'}
+               <p style={{ color, width: '7rem' }}>
+                  {row.checked ? 'Evaluated' : 'Not Evaluated'}
                </p>
             )
          },
@@ -85,7 +85,7 @@ export const UserResponses = () => {
                </Title>
                <div>
                   <p>
-                     <span>Final Score:</span>
+                     <span>Final Score: </span>
                      <span
                         style={
                            data.checked
@@ -105,7 +105,7 @@ export const UserResponses = () => {
                               : { color: 'red' }
                         }
                      >
-                        {data.checked ? 'Evalauted' : 'Not Evaluted'}
+                        {data.checked ? 'Evaluated' : 'Not Evaluated'}
                      </span>
                   </p>
                </div>
@@ -123,12 +123,7 @@ export const UserResponses = () => {
                </Button>
             </BtnContainer>
             <hr />
-            <Table
-               data={data.questionResultResponseList}
-               columns={columns}
-               columnGap="110px"
-               rowGap="70px"
-            />
+            <Table data={data.questionResultResponseList} columns={columns} />
          </Background>
       </div>
    )

@@ -21,7 +21,6 @@ export const Questions = ({ testID }) => {
    const dispatch = useDispatch()
    const [getId, setGetId] = useState()
    const [openModal, setOpenModal] = useState(false)
-   // const { pathname } = useLocation()
    const { questions } = useSelector((state) => state.questionSlice)
 
    useEffect(() => {
@@ -50,7 +49,6 @@ export const Questions = ({ testID }) => {
    const handleCloseModal = () => {
       setOpenModal(false)
    }
-
    const goToCustomForm = () => {
       dispatch(questionsSlice.actions.addTime(null))
       dispatch(questionsSlice.actions.addTitle(''))
@@ -85,15 +83,15 @@ export const Questions = ({ testID }) => {
    const columns = [
       {
          id: 'title',
-         label: 'Name',
+         label: <div style={{ marginLeft: '5.5vw' }}>Name</div>,
       },
       {
          id: 'duration',
-         label: 'Duration',
+         label: <div style={{ marginLeft: '7.7vw' }}>Duration</div>,
       },
       {
          id: 'questionType',
-         label: 'Question Type',
+         label: <div style={{ marginLeft: '6.9vw' }}>Question Type</div>,
       },
       {
          id: 'Score',

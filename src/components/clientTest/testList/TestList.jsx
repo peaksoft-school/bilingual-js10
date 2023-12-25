@@ -40,8 +40,10 @@ const TestList = () => {
                   <h2 className="stroka">e</h2>
                   <h2 className="stroka">r</h2>
                   <h2 className="stroka">e</h2>
+                  <div style={{ width: '15px' }} />
                   <h2 className="stroka">i</h2>
                   <h2 className="stroka">s</h2>
+                  <div style={{ width: '15px' }} />
                   <h2 className="stroka">n</h2>
                   <h2 className="stroka">o</h2>
                   <h2 className="stroka">t</h2>
@@ -49,10 +51,12 @@ const TestList = () => {
                   <h2 className="stroka">i</h2>
                   <h2 className="stroka">n</h2>
                   <h2 className="stroka">g</h2>
+                  <div style={{ width: '15px' }} />
                   <h2 className="stroka">h</h2>
                   <h2 className="stroka">e</h2>
                   <h2 className="stroka">r</h2>
                   <h2 className="stroka">e</h2>
+                  <div style={{ width: '15px' }} />
                   <h2 className="stroka">y</h2>
                   <h2 className="stroka">e</h2>
                   <h2 className="stroka">t</h2>
