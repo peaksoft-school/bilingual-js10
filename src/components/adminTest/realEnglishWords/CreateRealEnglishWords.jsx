@@ -53,7 +53,7 @@ export const AdminCreateRealEnglishWord = () => {
                   title,
                   statement: 'string',
                   correctAnswer: 'string',
-                  duration: questionDuration,
+                  duration: questionDuration * 60,
                   attempts: 0,
                   fileUrl: 'string',
                   passage: 'string',
@@ -62,7 +62,7 @@ export const AdminCreateRealEnglishWord = () => {
          } else {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                options: formik.values.options.map((el) => ({
                   title: el.title,
                   isTrue: el.checked,

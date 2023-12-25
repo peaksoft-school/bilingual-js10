@@ -8,22 +8,25 @@ export const SelectEnglishWord = ({
    handleSelectWord,
    CheckIcon,
 }) => {
-   const audioRef = useRef(new Audio())
-   const [isPlaying, setIsPlaying] = useState(false)
+   const audioRefs = useRef(words.map(() => new Audio()))
+   const [isPlaying, setIsPlaying] = useState(words.map(() => false))
 
-   const handleVolumeUpClick = (audioUrl) => {
-      if (audioRef.current.paused) {
-         audioRef.current.src = audioUrl
-         audioRef.current.play()
+   const handleVolumeUpClick = (audioUrl, index) => {
+      const currentAudio = audioRefs.current[index]
+      if (currentAudio.paused) {
+         currentAudio.src = audioUrl
+         currentAudio.play()
       } else {
-         audioRef.current.pause()
+         currentAudio.pause()
       }
-      setIsPlaying(!isPlaying)
+      const updatedIsPlaying = [...isPlaying]
+      updatedIsPlaying[index] = !updatedIsPlaying[index]
+      setIsPlaying(updatedIsPlaying)
    }
 
    return (
       <Container>
-         {words.map((word) => (
+         {words.map((word, index) => (
             <div
                key={word.id}
                className={`ContainerMultiply ${
@@ -33,12 +36,12 @@ export const SelectEnglishWord = ({
                <div className="textCon">
                   <VolumeEnglishWord
                      className={`volumeIcon ${
-                        isPlaying ? 'playing' : 'paused'
+                        isPlaying[index] ? 'playing' : 'paused'
                      }`}
                      style={{
-                        fill: isPlaying ? '#3A10E5' : '#655F5F',
+                        fill: isPlaying[index] ? '#3A10E5' : '#655F5F',
                      }}
-                     onClick={() => handleVolumeUpClick(word.audio_url)}
+                     onClick={() => handleVolumeUpClick(word.audio_url, index)}
                   />
                   <p>{word.title}</p>
                </div>
@@ -58,6 +61,7 @@ export const SelectEnglishWord = ({
       </Container>
    )
 }
+
 const Container = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',

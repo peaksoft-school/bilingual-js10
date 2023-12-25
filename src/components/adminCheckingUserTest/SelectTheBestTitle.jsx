@@ -42,9 +42,9 @@ const SelectTheBestTitle = () => {
    }, [setAppState])
 
    const handleInputChange = (e) => {
-      const value = parseInt(e.target.value, 10)
-      const clampedValue = Math.min(Math.max(value, 0), 10)
-      setScore(clampedValue)
+      // const value = parseInt(e.target.value, 10)
+      // const clampedValue = Math.min(Math.max(value, 0), 10)
+      setScore(e.target.value)
    }
    return (
       <div>
@@ -107,6 +107,8 @@ const SelectTheBestTitle = () => {
                            <p className="ColorBlue">Score:(1-10)</p>
                            <InputNumber
                               type="number"
+                              max={10}
+                              min={0}
                               onChange={handleInputChange}
                            />
                         </div>

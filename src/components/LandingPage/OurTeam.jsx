@@ -36,15 +36,19 @@ export const OurTeam = () => {
       </MainTeamContainer>
    )
 }
-
 const MainTeamContainer = styled('div')(() => {
    return {
       '& img': {
          width: '11.25rem',
          height: '11.25rem',
+         transition: 'transform 0.5s ease-in-out',
+         cursor: 'pointer',
       },
       '& .imageDiv': {
          overflow: 'hidden',
+         '&:hover img': {
+            transform: 'scale(0.90)',
+         },
       },
       '& h1': {
          textAlign: 'center',

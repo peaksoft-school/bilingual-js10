@@ -44,7 +44,6 @@ export const ListenModal = ({
                   ref={fileInputRef}
                   type="file"
                   id="myFileInput"
-                  // name="file"
                   onChange={(e) => {
                      handleFile(e)
                      formik.setFieldValue('selectedFile', e.target.files[0])
@@ -149,6 +148,7 @@ const ModalList = styled(Modal)(() => ({
       padding: '0.5rem',
       background: '#fff',
       marginRight: '1rem',
+      cursor: 'pointer',
    },
    '.label': {
       fontFamly: 'Poppins',

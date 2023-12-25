@@ -25,6 +25,7 @@
       "react-dropzone": "^14.2.3",
       "react-hook-form": "^7.47.0",
       "react-hover-video-player": "^10.0.1",
+      "react-html5video": "^2.5.1",
       "react-mic": "12.4.6",
       "react-player": "^2.13.0",
       "react-redux": "^8.1.3",

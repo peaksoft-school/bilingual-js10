@@ -18,7 +18,7 @@ export const SendTheResults = () => {
       <Container>
          <Background>
             <ContainerTestComplete>
-               <h1>Test is complete!</h1>
+               <span>Test is complete!</span>
                <Complete />
             </ContainerTestComplete>
             <ContainerImgParagraf>
@@ -58,11 +58,11 @@ export const SendTheResults = () => {
    )
 }
 const Container = styled('div')({
+   marginTop: '5rem',
    '.hrTop': {
       marginTop: '3.75rem',
-      width: '41rem',
-      marginLeft: ' 2.5rem',
-      border: ' 2px solid #d4d0d0',
+      width: '51rem',
+      border: ' 1px solid #d4d0d0',
    },
 })
 
@@ -73,13 +73,14 @@ const ContainerTestComplete = styled('div')({
    gap: '1.12rem',
    justifyContent: 'center',
    alignContent: 'center',
-   h1: {
+   span: {
       color: '#4C4859',
-      paddingRight: '1px',
       display: 'flex',
       justifyContent: 'center',
       alignContent: 'center',
-      flexShrink: '0',
+      fontSize: '1.75rem',
+      fontWeight: '500',
+      fontFamily: 'DINNextRoundedLTW01 - Regular',
    },
 })
 

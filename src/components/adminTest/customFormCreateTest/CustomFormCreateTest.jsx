@@ -99,10 +99,6 @@ const CustomFormCreateTest = ({ selectLabel, formStyles, labelStyles }) => {
                      Duration
                      <span>(in minutes)</span>
                   </TimeText>
-                  {/* <FieldTime
-                     
-                     format="mm:00"
-                  /> */}
                   <FieldTime
                      placeholder="00:00"
                      type="number"
@@ -206,7 +202,8 @@ const FieldTime = styled('input')(() => ({
    padding: '9.5px 0 5px 25px',
    borderRadius: '8px',
    outline: 'none',
-   border: '2px solid #D4D0D0',
+   marginBottom: '1.3px',
+   border: '1.53px solid #D4D0D0',
    color: '#4C4859',
    fontSize: '18px',
    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
@@ -217,7 +214,7 @@ const FieldTime = styled('input')(() => ({
       '-moz-appearance': 'textfield',
    },
    '&:focus': {
-      border: '2px solid rgba(196, 196, 196, 0.60)',
+      border: '1.53px solid rgba(196, 196, 196, 0.60)',
    },
    '&::placeholder': {
       color: '#c2c0c0',

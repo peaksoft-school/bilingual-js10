@@ -26,7 +26,7 @@ const HighLightAnswerUser = () => {
       }
       dispatch(addTest(testPayload))
       if (questions.length === currentComponent + 1) {
-         navigate('/user/send-the-results')
+         navigate('/user/test-list/send-the-results')
       } else {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }
@@ -68,7 +68,7 @@ const HighLightAnswerUser = () => {
                <InputBlock>
                   <TitleBox>
                      <TextClick>
-                        Click and drad text to highlight the answer to the
+                        Click and drag text to highlight the answer to the
                         question below
                      </TextClick>
                   </TitleBox>
@@ -184,7 +184,7 @@ const InputBlock = styled('div')({
 })
 const ButtonBox = styled('div')({
    alignSelf: 'end',
-   marginTop: '2rem',
+   marginTop: '2.2rem',
 })
 const TitleBox = styled('div')({
    marginBottom: '0.6rem',

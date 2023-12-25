@@ -33,7 +33,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   hoverStyle="#4E28E8"
                   onClick={handleComeInClick}
                >
-                  to come in
+                  TO COME IN
                </Button>
                <Button
                   defaultStyle="white"
@@ -41,7 +41,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   className="registerButton"
                   onClick={handleLoginClick}
                >
-                  Registration
+                  REGISTER
                </Button>
             </ButtonsContainer>
          ) : (
@@ -53,14 +53,21 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                            color: isActive ? 'blue' : '#4C4859',
                         }
                      }}
-                     to={roles === 'user' ? '/user' : '/admin/tests'}
+                     to={roles === 'user' ? '/user/test-list' : '/admin/tests'}
                   >
                      <MyText>Tests</MyText>
                   </NavLink>
                </OptionsBlock>
                <OptionsBlock>
                   {roles === 'user' ? (
-                     <NavLink to="/user/my-results">
+                     <NavLink
+                        to="/user/results/my-results"
+                        style={({ isActive }) => {
+                           return {
+                              color: isActive ? 'blue' : '#4C4859',
+                           }
+                        }}
+                     >
                         <MyText>My Results</MyText>
                      </NavLink>
                   ) : (
@@ -103,8 +110,8 @@ const MyHeader = styled('header')(({ marginBottom }) => ({
    maxWidth: '100vw',
    height: '94px',
    display: 'flex',
+   background: '#fff',
    justifyContent: 'space-between',
-   backgroundColor: '#ffff',
    marginBottom: marginBottom || null,
 }))
 const LogoBox = styled('div')({

@@ -57,6 +57,7 @@ export const TypeWhatYouHear = () => {
             questionId,
             score: inputValue,
          })
+         navigate(-1)
       } catch (error) {
          setError(`Ошибка при отправке результата: ${error.message}`)
       }
