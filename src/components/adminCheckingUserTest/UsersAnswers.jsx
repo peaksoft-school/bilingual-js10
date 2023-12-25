@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import { Table } from './components/components/table/Table'
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -48,11 +47,11 @@ export const UserAnswers = () => {
    const columns = [
       {
          id: 'userFullName',
-         label: <div style={{ marginLeft: '5.5vw' }}>User Name</div>,
+         label: <div style={{ marginLeft: '4vw' }}>User Name</div>,
       },
       {
          id: 'newDate',
-         label: <div style={{ marginLeft: '3.4vw' }}>Date of Submition</div>,
+         label: <div style={{ marginLeft: '2.1vw' }}>Date of Submission</div>,
          render: (row) => {
             return (
                <div>
@@ -62,23 +61,26 @@ export const UserAnswers = () => {
             )
          },
       },
-      { id: 'testName', label: 'Test Name' },
+      {
+         id: 'testName',
+         label: <div style={{ marginLeft: '-1.6vw' }}>Test Name</div>,
+      },
       {
          id: 'checked',
-         label: <div style={{ marginLeft: '4.7vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '3vw' }}>Status</div>,
          render: (row) => {
             const statusText =
-               row.checked === true ? 'Evalauted' : 'Not evalauted'
+               row.checked === true ? 'Evaluated' : 'Not evaluated'
             const color = row.checked === true ? '#2AB930' : '#F61414'
             return <p style={{ color, width: '113px' }}>{statusText}</p>
          },
       },
       {
          id: 'finalScore',
-         label: <div style={{ marginLeft: '6vw' }}>Score</div>,
+         label: <div style={{ marginLeft: '4.7vw' }}>Score</div>,
          render: (row) => {
             const color = row.finalScore > 0 ? '#2AB930' : '#F61414'
-            return <p style={{ color }}>{row.finalScore}</p>
+            return <p style={{ color, width: '30px' }}>{row.finalScore}</p>
          },
       },
       {
@@ -124,5 +126,5 @@ export const UserAnswers = () => {
 }
 const Container = styled('div')`
    display: flex;
-   gap: 0.7rem;
+   gap: 1.3rem;
 `

@@ -21,7 +21,6 @@ export const Questions = ({ testID }) => {
    const dispatch = useDispatch()
    const [getId, setGetId] = useState()
    const [openModal, setOpenModal] = useState(false)
-   // const { pathname } = useLocation()
    const { questions } = useSelector((state) => state.questionSlice)
 
    useEffect(() => {
@@ -84,15 +83,15 @@ export const Questions = ({ testID }) => {
    const columns = [
       {
          id: 'title',
-         label: <div style={{ marginLeft: '6.7vw' }}>Name</div>,
+         label: <div style={{ marginLeft: '5.5vw' }}>Name</div>,
       },
       {
          id: 'duration',
-         label: <div style={{ marginLeft: '9vw' }}>Duration</div>,
+         label: <div style={{ marginLeft: '7.7vw' }}>Duration</div>,
       },
       {
          id: 'questionType',
-         label: <div style={{ marginLeft: '8.3vw' }}>Question Type</div>,
+         label: <div style={{ marginLeft: '6.9vw' }}>Question Type</div>,
       },
       {
          id: 'Score',

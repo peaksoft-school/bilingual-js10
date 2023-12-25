@@ -129,20 +129,10 @@ const TableHeadStyle = styled(TableHead)(() => ({
       textAlign: 'start',
       fontDize: '0.8rem',
       color: '#222222',
+      marginBottom: '1.25rem',
    },
 }))
 
-// const MainContainerStyled = styled('div')`
-//    display: flex;
-//    align-items: center;
-//    justify-content: space-around;
-//    flex-direction: column;
-//    margin-right: 2rem;
-//    && .css-txc5l5-MuiTableCell-root {
-//       border: none;
-//       padding: 0;
-//    }
-// `
 const TableContainerStyled = styled(TableContainer)(() => ({
    marginBottom: 'none',
    boxShadow: 'none',
