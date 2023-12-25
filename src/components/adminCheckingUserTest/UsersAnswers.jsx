@@ -16,7 +16,7 @@ export const UserAnswers = () => {
    const result = async () => {
       try {
          const response = await axiosInstance.get(
-            'http://ec2-18-153-48-98.eu-central-1.compute.amazonaws.com/api/result/'
+            'http://billingual.peaksoftprojects.com/api/result/'
          )
          setData(
             response.data.map((el) => {
