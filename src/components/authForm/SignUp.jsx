@@ -26,6 +26,7 @@ const SignupPage = () => {
 
    const navigate = useNavigate()
    const handleClickShowPassword = () => setShowPassword((show) => !show)
+   const latinRegExp = /^[a-zA-Z]+$/
 
    const handleAuthWithGoogle = (event) => {
       event.preventDefault()
@@ -56,6 +57,12 @@ const SignupPage = () => {
       },
       validationSchema: validationAuthSignUp,
       onSubmit: (values) => {
+         if (
+            !latinRegExp.test(values.firstName) ||
+            !latinRegExp.test(values.lastName)
+         ) {
+            return
+         }
          submitHandler(values)
       },
    })
