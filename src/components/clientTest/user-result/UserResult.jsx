@@ -72,11 +72,11 @@ const UserResult = () => {
    const columns = [
       {
          id: 'dateOfSubmission',
-         label: <div style={{ marginLeft: '5vw' }}>Date of submissions</div>,
+         label: <div style={{ marginLeft: '6.5vw' }}>Date of submissions</div>,
       },
       {
          id: 'testName',
-         label: <div style={{ marginLeft: '4.1vw' }}>Test name</div>,
+         label: <div style={{ marginLeft: '6.1vw' }}>Test name</div>,
       },
       {
          id: 'status',

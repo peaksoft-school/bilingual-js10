@@ -65,7 +65,7 @@ export const AdminCreateRealEnglishWord = () => {
                duration: questionDuration * 60,
                options: formik.values.options.map((el) => ({
                   title: el.title,
-                  isTrue: el.checked,
+                  isTrue: el.isTrue,
                })),
             }
             await dispatch(postQuestion(data))
@@ -84,15 +84,15 @@ export const AdminCreateRealEnglishWord = () => {
    const handleCloseModal = () => {
       formik.setFieldValue('openModal', false)
    }
-   const handleSaveOption = (title, checked) => {
+   const handleSaveOption = (title, isTrue) => {
       const newOption = {
          id: Math.random(),
          title,
-         isTrue: checked,
+         isTrue,
       }
       formik.setFieldValue('titleValues', title)
       formik.setFieldValue('options', [...formik.values.options, newOption])
-      formik.setFieldValue('checkboxValue', checked)
+      formik.setFieldValue('checkboxValue', isTrue)
    }
 
    const handleCheckboxChange = (id, e) => {
@@ -100,16 +100,13 @@ export const AdminCreateRealEnglishWord = () => {
          if (option.id === id) {
             return {
                ...option,
-               checked: !option.checked,
+               isTrue: !option.isTrue,
             }
          }
-         return {
-            ...option,
-            checked: false,
-         }
+         return option
       })
       formik.setFieldValue('options', updatedOptions)
-      const anyChecked = updatedOptions.some((option) => option.checked)
+      const anyChecked = updatedOptions.some((option) => option.isTrue)
       formik.setFieldValue('checkboxValue', anyChecked)
       if (
          pathname === '/admin/tests/update-question/select-real-english-words'

@@ -105,7 +105,7 @@ const SigninPage = () => {
                </ButtonContainer>
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
-                  <StyledNavLink to="/signup"> SIGN UP</StyledNavLink>
+                  <StyledNavLink to="/signup">SIGN UP</StyledNavLink>
                </StyledText>
             </Container>
          </SignInForm>
