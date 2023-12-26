@@ -37,7 +37,7 @@ export const LearnMap = () => {
                <div>
                   <h2>Built on the latest assessment science</h2>
                   <p>
-                     The Duolingo English Test is a computer adaptive test
+                     The Bilingual English Test is a computer adaptive test
                      backed
                      <br />
                      by rigorous research, with results that are highly

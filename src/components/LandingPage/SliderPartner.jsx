@@ -64,7 +64,7 @@ const StyledBox1 = styled('div')({
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'end',
-   gap: '2.5rem',
+   gap: '2.7rem',
    perspective: '100px',
    animation: 'scroll 10s linear infinite',
    '@keyframes scroll': {
@@ -86,7 +86,7 @@ const StyledBox2 = styled('div')({
    flexDirection: 'row',
    justifyContent: 'space between',
    alignItems: 'end',
-   gap: '2.5rem',
+   gap: '2.7rem',
    perspective: '100px',
    animation: 'scroll2 10s linear infinite',
    '@keyframes scroll2': {
