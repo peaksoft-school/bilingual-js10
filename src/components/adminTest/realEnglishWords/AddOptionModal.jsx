@@ -20,7 +20,7 @@ const OptionModal = ({
    const { pathname } = useLocation()
 
    const updateUrl =
-      pathname === '/admin/update-question/select-real-english-words'
+      pathname === '/admin/tests/update-question/select-real-english-words'
 
    const handleSave = () => {
       if (updateUrl) {

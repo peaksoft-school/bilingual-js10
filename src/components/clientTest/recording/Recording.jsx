@@ -52,7 +52,7 @@ function Recording() {
          .then((res) => {
             addLink(res)
             if (questions.length === currentComponent + 1) {
-               navigate('/user/send-the-results')
+               navigate('user/test-list/send-the-results')
             } else {
                dispatch(globalTestSlice.actions.addCurrentComponent(1))
             }
@@ -86,7 +86,7 @@ function Recording() {
                   <div>{testComponent.statement}</div>
                </SpeakContainer>
             </div>
-            <hr />
+            <hr style={{ border: '1px #D4D0D0 solid' }} />
             <ActiveContainer>
                {isButtonStop ? (
                   <>
@@ -252,7 +252,6 @@ const RecordingContainer = styled('div')({
       color: '#3A10E5',
       fontSize: '1rem',
       fontWeight: '500',
-      lineHeight: '124%',
    },
 })
 
@@ -263,7 +262,7 @@ const ActiveContainer = styled('div')({
    justifyContent: 'end',
    marginTop: '2rem',
    '.wave': {
-      marginLeft: '15.3vw',
+      marginLeft: '11.3vw',
       marginRight: '7vw',
    },
 })
@@ -272,6 +271,7 @@ const ReactMik = styled(ReactMic)({
    display: 'none',
 })
 const ButtonContainer = styled('div')({
+   display: 'flex',
    '& :nth-child(2)': {
       marginLeft: '11px',
    },

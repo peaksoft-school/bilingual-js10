@@ -47,7 +47,7 @@ export const SelectMainIdea = () => {
          if (!updateUrl) {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                passage: formik.values.passage,
                options: formik.values.options.map((el) => {
                   return {
@@ -60,7 +60,7 @@ export const SelectMainIdea = () => {
          } else {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                passage: formik.values.passage,
                statement: 'string',
                correctAnswer: 'string',

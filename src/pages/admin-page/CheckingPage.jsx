@@ -2,17 +2,17 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import SelectTheBestTitle from '../../components/adminCheckingUserTest/SelectTheBestTitle'
 import SelectRealEnglishWords from '../../components/adminCheckingUserTest/SelectRealEnglishWords'
-import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 import DescribeImage from '../../components/adminCheckingUserTest/DescribeImage'
 import HighlightedAnswerCheck from '../../components/adminCheckingUserTest/HighlightedAnswerCheck'
 import RecordStatementCheck from '../../components/adminCheckingUserTest/RecordStatementCheck'
 import { TypeWhatYouHear } from '../../components/adminCheckingUserTest/TypeWhatYouHear'
 import RespondleastUserTest from '../../components/adminCheckingUserTest/RespondleastUserTest'
-import { ListenSelectEnglish } from '../../components/clientTest/ListenSelect_User/ListenSelectEnglish'
+import ListenAndSelectEnglishWord from '../../components/adminCheckingUserTest/ListenAndSelectEnglishWord'
+import SelectTheMainIdea from '../../components/adminCheckingUserTest/SelectTheMainIdea'
 
 const questionsPages = {
    SELECT_REAL_ENGLISH_WORD: <SelectRealEnglishWords />,
-   LISTEN_AND_SELECT_ENGLISH_WORDS: <ListenSelectEnglish />,
+   LISTEN_AND_SELECT_ENGLISH_WORDS: <ListenAndSelectEnglishWord />,
    TYPE_WHAT_YOU_HEAR: <TypeWhatYouHear />,
    DESCRIBE_IMAGE: <DescribeImage />,
    RECORD_SAYING_STATEMENT: <RecordStatementCheck />,

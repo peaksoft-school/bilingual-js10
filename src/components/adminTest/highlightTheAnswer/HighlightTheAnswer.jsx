@@ -32,10 +32,10 @@ export const HighlightTheAnswer = () => {
    })
 
    const handleSave = async () => {
-      if (title && questionDuration) {
+      if (title && questionDuration && answerValue) {
          const result = {
             title,
-            duration: questionDuration,
+            duration: questionDuration * 60,
             statement: formik.values.question,
             passage: formik.values.text,
             correctAnswer: answerValue,
@@ -78,9 +78,6 @@ export const HighlightTheAnswer = () => {
                value={formik.values.question}
                onChange={formik.handleChange}
             />
-            {formik.errors.question ? (
-               <div className="error">{formik.errors.question}</div>
-            ) : null}
             <span>Passage</span>
             <TextFieldStyle>
                <TextArea
@@ -91,11 +88,9 @@ export const HighlightTheAnswer = () => {
                   fullWidth
                   className="textarea"
                />
-               {formik.errors.text ? (
-                  <div className="error">{formik.errors.text}</div>
-               ) : null}
             </TextFieldStyle>
             <span>Highlight correct answer:</span>
+
             <CorrectAnswerBlock>
                <Pstyle
                   onMouseUp={() =>
@@ -105,6 +100,9 @@ export const HighlightTheAnswer = () => {
                   {formik.values.text}
                </Pstyle>
             </CorrectAnswerBlock>
+            {formik.errors.text ? (
+               <div className="error">{formik.errors.text}</div>
+            ) : null}
             <ButtonContainer>
                <Button
                   onClick={() => navigate(-1)}
@@ -162,12 +160,9 @@ const MainPassageContainer = styled('div')(() => ({
       marginTop: '12px',
    },
    '.error': {
-      color: '#ff0000',
-      fontWeight: '700',
-      fontSize: '14px',
-      lineHeight: '8px',
-      letterSpacing: '1px',
-      marginBottom: '10px',
+      color: 'red',
+      fontWeight: '400',
+      fontSize: '15px',
    },
 }))
 

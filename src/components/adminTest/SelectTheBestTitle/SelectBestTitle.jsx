@@ -45,7 +45,7 @@ export const SelectBestTitle = () => {
          if (!updateUrl) {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                passage: formik.values.passage,
                options: formik.values.options.map((el) => {
                   return {
@@ -58,7 +58,7 @@ export const SelectBestTitle = () => {
          } else {
             const data = {
                title,
-               duration: questionDuration,
+               duration: questionDuration * 60,
                passage: formik.values.passage,
                statement: 'string',
                correctAnswer: 'string',

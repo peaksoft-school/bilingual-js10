@@ -33,7 +33,7 @@ export const RespondLeast = () => {
       if (title && questionDuration) {
          const data = {
             title,
-            duration: questionDuration,
+            duration: questionDuration * 60,
             statement: formik.values.questionStatement,
             attempts: formik.values.numberReplays,
             correctAnswer: 'string',

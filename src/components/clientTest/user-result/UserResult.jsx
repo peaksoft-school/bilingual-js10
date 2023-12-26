@@ -70,30 +70,31 @@ const UserResult = () => {
    }
 
    const columns = [
-      { label: '#' },
       {
          id: 'dateOfSubmission',
-         label: 'Date of submissions',
+         label: <div style={{ marginLeft: '6.6vw' }}>Date of submissions</div>,
       },
-      { id: 'testName', label: 'Test name' },
+      {
+         id: 'testName',
+         label: <div style={{ marginLeft: '2.2vw' }}>Test name</div>,
+      },
       {
          id: 'status',
-         label: 'Status',
+         label: <div style={{ marginLeft: '5.7vw' }}>Status</div>,
          render: (row) => {
             const statusText =
                row.checked === true ? 'Evaluated' : 'Not evaluated'
             const color = row.checked === true ? 'green' : 'red'
-            return <p style={{ color }}>{statusText}</p>
+            return <p style={{ color, width: '113px' }}>{statusText}</p>
          },
       },
       {
          id: 'finalScore',
-         label: 'Score',
+         label: <div style={{ marginLeft: '6.7vw' }}>Score</div>,
          render: (row) => {
-            const scoreText = row.score === 'true' ? 'true' : 'false'
-            const color = row.score === 'true' ? 'green' : 'red'
+            const color = row.checked === true ? 'green' : 'red'
 
-            return <p style={{ color }}>{row.finalScore}</p>
+            return <p style={{ color, width: '20px' }}>{row.finalScore}</p>
          },
       },
       {
@@ -115,57 +116,63 @@ const UserResult = () => {
       const stringDate = convertDateString(data.dateOfSubmission)
       return { ...data, dateOfSubmission: stringDate }
    })
+
    return (
       <Container>
          <Header roles="user" />
          <Background>
-            <Table data={transferedData} columns={columns} />
-            <Modal
-               open={openModal}
-               handleCloseModal={handleCloseModal}
-               width="32rem"
-               height="23rem"
-            >
-               <div>
-                  <ClosedModal>
-                     <CancelModal onClick={handleCloseModal} />
-                  </ClosedModal>
-                  <ModalDeleteStyled>
-                     <div>
-                        <ModalDeleteIcon onClick={handleCloseModal} />
-                     </div>
-                  </ModalDeleteStyled>
-                  <ModalContainerStyled>
-                     <h3>Do you want delete? </h3>
-                     <p>You can not restore this file </p>
-                  </ModalContainerStyled>
-                  <ModalContainer>
-                     <Button
-                        variant="outlined"
-                        hoverStyle="#3A10E5"
-                        onClick={handleCloseModal}
-                     >
-                        Cancel
-                     </Button>
-                     <Button
-                        hoverStyle="#4E28E8"
-                        defaultStyle="#3A10E5"
-                        onClick={deleteData}
-                     >
-                        Delete
-                     </Button>
-                  </ModalContainer>
-               </div>
-            </Modal>
-            {error && (
-               <div style={{ color: 'red', marginTop: '10px' }}>
-                  An error occurred: {error.message || 'Unknown error'}
-               </div>
-            )}
+            <ContainerBackground>
+               <Table data={transferedData} columns={columns} />
+               <Modal
+                  open={openModal}
+                  handleCloseModal={handleCloseModal}
+                  width="32rem"
+                  height="23rem"
+               >
+                  <div>
+                     <ClosedModal>
+                        <CancelModal onClick={handleCloseModal} />
+                     </ClosedModal>
+                     <ModalDeleteStyled>
+                        <div>
+                           <ModalDeleteIcon onClick={handleCloseModal} />
+                        </div>
+                     </ModalDeleteStyled>
+                     <ModalContainerStyled>
+                        <h3>Do you want delete? </h3>
+                        <p>You can not restore this file </p>
+                     </ModalContainerStyled>
+                     <ModalContainer>
+                        <Button
+                           variant="outlined"
+                           hoverStyle="#3A10E5"
+                           onClick={handleCloseModal}
+                        >
+                           Cancel
+                        </Button>
+                        <Button
+                           hoverStyle="#4E28E8"
+                           defaultStyle="#3A10E5"
+                           onClick={deleteData}
+                        >
+                           Delete
+                        </Button>
+                     </ModalContainer>
+                  </div>
+               </Modal>
+               {error && (
+                  <div style={{ color: 'red', marginTop: '10px' }}>
+                     An error occurred: {error.message || 'Unknown error'}
+                  </div>
+               )}
+            </ContainerBackground>
          </Background>
       </Container>
    )
 }
+const ContainerBackground = styled('div')`
+   width: 20rem;
+`
 const Container = styled('div')`
    display: flex;
    flex-direction: column;

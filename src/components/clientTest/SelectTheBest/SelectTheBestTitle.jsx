@@ -42,7 +42,7 @@ export const SelectTheBestTitle = () => {
       )
 
       if (questions.length === currentComponent + 1) {
-         navigate('/user/send-the-results')
+         navigate('/user/test-list/send-the-results')
       } else {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }
@@ -87,32 +87,33 @@ export const SelectTheBestTitle = () => {
                      Select the best title for the passage
                   </p>
                   <div className="ContainerCreateUserTest">
-                     {testComponent.optionList.map((el) => (
-                        <div key={el.id} className="ContainerCreateUserTest">
-                           <div
-                              className="ContainCreatTest"
-                              style={{
-                                 border:
-                                    selectedRadio === el.id
-                                       ? '2px solid #3A10E5'
-                                       : '1px solid #D4D0D0',
-                                 background:
-                                    selectedRadio === el.id
-                                       ? '#EAF4FF'
-                                       : 'transparent',
-                              }}
-                           >
-                              <div className="ContainerRadio">
-                                 <InputRadio
-                                    variant="RADIO"
-                                    checkedSwitch={selectedRadio === el.id}
-                                    onChange={() => handleRadioChange(el.id)}
-                                 />
-                                 <p className="NameTitle">{el.title}</p>
+                     {testComponent.optionList &&
+                        testComponent.optionList.map((el) => (
+                           <div key={el.id} className="ContainerCreateUserTest">
+                              <div
+                                 className="ContainCreatTest"
+                                 style={{
+                                    border:
+                                       selectedRadio === el.id
+                                          ? '2px solid #3A10E5'
+                                          : '1px solid #D4D0D0',
+                                    background:
+                                       selectedRadio === el.id
+                                          ? '#EAF4FF'
+                                          : 'transparent',
+                                 }}
+                              >
+                                 <div className="ContainerRadio">
+                                    <InputRadio
+                                       variant="RADIO"
+                                       checkedSwitch={selectedRadio === el.id}
+                                       onChange={() => handleRadioChange(el.id)}
+                                    />
+                                    <p className="NameTitle">{el.title}</p>
+                                 </div>
                               </div>
                            </div>
-                        </div>
-                     ))}
+                        ))}
                   </div>
                   <Button
                      disabled={isNextButtonDisabled}
@@ -165,7 +166,8 @@ const ContainerSelectTest = styled('div')({
       border: '1px solid #D4D0D0',
       background: '#fff',
       padding: '0.88rem',
-      width: '25.68rem',
+      width: '24.68rem',
+      height: '100%',
       '.ContainerRadio': {
          display: 'flex',
          alignItems: 'center',
@@ -179,8 +181,8 @@ const ContainerTextArea = styled('div')({
    background: '#F7F7F7',
    '.ContainerParagraf': {
       padding: '2.9rem 3.13rem 3rem 1.06rem',
-      width: '100%',
-      height: '100%',
+      width: '34.68rem',
+      height: '22.37rem',
       color: '#4C4859',
       fontSize: '1rem',
       fontWeight: '400',
@@ -203,6 +205,6 @@ const ContainerSelectRadio = styled('div')({
       color: '#4C4859',
       fontSize: '1.45rem',
       fontWeight: 400,
-      lineHeight: '1.63rem',
+      lineHeight: '2.63rem',
    },
 })

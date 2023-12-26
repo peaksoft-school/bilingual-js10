@@ -27,12 +27,14 @@ export const EstimatePracticeScore = () => {
                      <div className="divTime">
                         <Time />
                         <span>
-                           Practice takes just {currTest.duration} minutes
+                           {`The trial test takes only ${Math.floor(
+                              currTest.duration / 60
+                           )} minutes`}
                         </span>
                      </div>
                      <div className="divContacts">
                         <Contacts />
-                        <span>get an unofficial score estimate</span>
+                        <span>Get an unofficial score estimate</span>
                      </div>
                   </MiniContainer>
                </ContainerIkons>
@@ -55,7 +57,7 @@ export const EstimatePracticeScore = () => {
                      className="PRACTICE"
                      hoverStyle="#4E28E8"
                      defaultStyle="#3A10E5"
-                     onClick={() => navigate('/user/testing')}
+                     onClick={() => navigate('/user/test-list/testing')}
                   >
                      PRACTICE TEST
                   </Button>
