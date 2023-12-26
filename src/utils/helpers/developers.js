@@ -16,7 +16,7 @@ export const developers = [
    },
    {
       image: Gulaiym,
-      name: 'Gulaiym Edilbekova',
+      name: 'Gulaiym Edilaeva',
       profession: 'Frontend Dev',
       id: 2,
    },

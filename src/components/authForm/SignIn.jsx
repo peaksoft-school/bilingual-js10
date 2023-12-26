@@ -62,7 +62,7 @@ const SigninPage = () => {
             </IconContainer>
             <Container>
                <Icon2 />
-               <Title> Sign in</Title>
+               <Title>Sign in</Title>
                <StyledInput
                   label="Email"
                   name="email"
@@ -105,7 +105,7 @@ const SigninPage = () => {
                </ButtonContainer>
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
-                  <StyledNavLink to="/signup">REGISTER</StyledNavLink>
+                  <StyledNavLink to="/signup">SIGN UP</StyledNavLink>
                </StyledText>
             </Container>
          </SignInForm>
