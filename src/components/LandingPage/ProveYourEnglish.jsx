@@ -38,7 +38,7 @@ export const ProveYourEnglish = () => {
                   hoverStyle="#4E28E8"
                   onClick={handleComeInClick}
                >
-                  TO COME IN
+                  LOG IN
                </Button>
                <Button
                   defaultStyle="white"
@@ -46,7 +46,7 @@ export const ProveYourEnglish = () => {
                   className="registerButton"
                   onClick={handleLoginClick}
                >
-                  REGISTER
+                  SIGN UP
                </Button>
             </ButtonContinersss>
          </HeaderContiners>
