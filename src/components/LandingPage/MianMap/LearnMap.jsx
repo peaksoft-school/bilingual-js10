@@ -7,7 +7,6 @@ import Сhemistry from '../../../assets/images/Chemistry.svg'
 import Nonsense from '../../../assets/images/Nonsense.svg'
 import Access from '../../../assets/images/Access.svg'
 import Adaptive from '../../../assets/images/Adaptive.svg'
-import Button from '../../../assets/images/button.svg'
 import { ToBeginButton } from '../../UI/Buttons/ToBeginButton'
 
 export const LearnMap = () => {
@@ -117,13 +116,12 @@ const Main = styled('div')`
       justify-content: center;
       color: #3752b4;
    }
-   button {
-      margin-left: 46%;
+   .Buttons {
+      margin-left: 48%;
       margin-bottom: 1rem;
       width: 200px;
       height: 60px;
       color: white;
-      background-image: url(${Button});
       border: none;
       border-radius: 2rem;
    }

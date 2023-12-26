@@ -64,7 +64,7 @@ export const UserRespondInAtleastNwords = () => {
             <div>
                <Input minRows={5} maxRows={5} onChange={handleInputChange} />
                <Word wordCount={wordCount} res={testComponent.attempts}>
-                  Word:{testComponent.count} : {wordCount}
+                  Word{testComponent.count} : {wordCount}
                </Word>
             </div>
          </MainContainer>
@@ -76,7 +76,7 @@ export const UserRespondInAtleastNwords = () => {
                   hoverStyle="#4E28E8"
                   className="nextButton"
                   padding="0.8rem 2.5rem"
-                  disabled={wordCount <= testComponent.attempts}
+                  disabled={wordCount + 1 <= testComponent.attempts}
                   onClick={handleAddTest}
                >
                   Next
@@ -95,6 +95,7 @@ const Word = styled('span')(({ wordCount, res }) => {
 })
 const Container = styled('div')`
    margin-top: 2rem;
+   padding: 2.5rem 2.69rem;
 `
 
 const Input = styled(TextArea)({
@@ -114,16 +115,16 @@ const DescribeText = styled(Typography)({
 })
 const MainContainer = styled('div')({
    display: 'flex',
+   justifyContent: 'space-between',
    marginTop: '2rem',
-   gap: '7rem',
+   gap: '6rem',
 })
 const Describe = styled(Typography)({
    color: '#4C4859',
    fontSize: '1.2rem',
 })
-
 const BlockBottom = styled('div')({
-   width: '55.5rem',
+   width: '59rem',
    display: 'flex',
    gap: '1.5rem',
    marginTop: '4rem',

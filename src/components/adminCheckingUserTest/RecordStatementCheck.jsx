@@ -175,14 +175,14 @@ const RecordStatementCheck = () => {
                         </div>
                      </Button>
                   </BoxPlay>
-                  <BoxCorrectAnswer>
+                  {/* <BoxCorrectAnswer>
                      <span className="statement">Correct Answer:</span>
                      {state.response && (
                         <p className="ColorParagraf">
                            {state.response.correctAnswer}
                         </p>
                      )}
-                  </BoxCorrectAnswer>
+                  </BoxCorrectAnswer> */}
                </ContainerQuestion>
                {error && (
                   <ErrorBox>
@@ -335,14 +335,14 @@ const AudioBoxPlay = styled('div')({
    gap: '10px',
 })
 
-const BoxCorrectAnswer = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   justifyContent: 'start',
-   alignItems: 'center',
-   gap: '0.5rem',
-   margin: 0,
-})
+// const BoxCorrectAnswer = styled('div')({
+//    display: 'flex',
+//    flexDirection: 'row',
+//    justifyContent: 'start',
+//    alignItems: 'center',
+//    gap: '0.5rem',
+//    margin: 0,
+// })
 const ContainerCkeckInTheTest = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',

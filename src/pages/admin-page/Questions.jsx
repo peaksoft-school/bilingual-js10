@@ -83,15 +83,15 @@ export const Questions = ({ testID }) => {
    const columns = [
       {
          id: 'title',
-         label: <div style={{ marginLeft: '5.5vw' }}>Name</div>,
+         label: <div style={{ marginLeft: '6vw' }}>Name</div>,
       },
       {
          id: 'duration',
-         label: <div style={{ marginLeft: '7.7vw' }}>Duration</div>,
+         label: <div style={{ marginLeft: '9.5vw' }}>Duration</div>,
       },
       {
          id: 'questionType',
-         label: <div style={{ marginLeft: '6.9vw' }}>Question Type</div>,
+         label: <div style={{ marginLeft: '9.5vw' }}>Question Type</div>,
       },
       {
          id: 'Score',

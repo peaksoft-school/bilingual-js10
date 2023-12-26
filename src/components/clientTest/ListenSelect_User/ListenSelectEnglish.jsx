@@ -68,7 +68,7 @@ export const ListenSelectEnglish = () => {
       <ContainerTest>
          <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <p className="RealEnglish">
-            Select the Real English words in this list
+            Listen and Select English words in this list
          </p>
          <ContainerMultiplySelect>
             <MultiplySelect
