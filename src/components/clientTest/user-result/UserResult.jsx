@@ -171,7 +171,7 @@ const UserResult = () => {
    )
 }
 const ContainerBackground = styled('div')`
-   width: 20rem;
+   width: 100%;
 `
 const Container = styled('div')`
    display: flex;

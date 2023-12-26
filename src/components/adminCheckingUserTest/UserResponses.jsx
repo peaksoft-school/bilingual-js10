@@ -36,10 +36,10 @@ export const UserResponses = () => {
          id: 'questionType',
          label: <div style={{ marginLeft: '8.4vw' }}>Question</div>,
       },
-      { id: 'score', label: <div style={{ marginLeft: '8vw' }}>Score</div> },
+      { id: 'score', label: <div style={{ marginLeft: '10vw' }}>Score</div> },
       {
          id: 'checked',
-         label: <div style={{ marginLeft: '11.9vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '12.5vw' }}>Status</div>,
          render: (row) => {
             const color = row.checked ? '#2AB930' : 'red'
             return (
