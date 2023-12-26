@@ -23,7 +23,7 @@ export const UserExperience = () => {
                         a wealth of carefully structured content. Each learner
                         has the opportunity to balance independent study with
                         optional online tutoring in a way that fits their
-                        schedule and language learning goals
+                        schedule and language learning goals.
                      </p>
                   </div>
                   <ExperiencesCotainer>
