@@ -45,7 +45,7 @@ export const UserResponses = () => {
       { id: 'score', label: <div style={{ marginLeft: '8vw' }}>Score</div> },
       {
          id: 'checked',
-         label: <div style={{ marginLeft: '9.3vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '11.9vw' }}>Status</div>,
          render: (row) => {
             const color = row.checked ? '#2AB930' : 'red'
             return (
