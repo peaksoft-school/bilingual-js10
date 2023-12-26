@@ -113,7 +113,7 @@ const SignupPage = () => {
                </ButtonContainer>
                <StyledText>
                   ALREADY HAVE AN ACCOUNT?
-                  <StyledNavLink to="/signin">LOG IN</StyledNavLink>
+                  <StyledNavLink to="/signin"> LOG IN</StyledNavLink>
                </StyledText>
             </Container>
          </SignUpForm>
@@ -138,6 +138,8 @@ const Background = styled(Grid)(() => ({
    padding: '30px',
    width: '100%',
    height: '100vh',
+   display: 'flex',
+   alignItems: 'center',
 }))
 
 const SignUpForm = styled('form')(() => ({

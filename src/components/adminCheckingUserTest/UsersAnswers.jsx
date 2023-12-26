@@ -63,11 +63,11 @@ export const UserAnswers = () => {
       },
       {
          id: 'testName',
-         label: <div style={{ marginLeft: '-1.6vw' }}>Test Name</div>,
+         label: <div style={{ marginLeft: '0.5vw' }}>Test Name</div>,
       },
       {
          id: 'checked',
-         label: <div style={{ marginLeft: '3vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '5vw' }}>Status</div>,
          render: (row) => {
             const statusText =
                row.checked === true ? 'Evaluated' : 'Not evaluated'
@@ -77,7 +77,7 @@ export const UserAnswers = () => {
       },
       {
          id: 'finalScore',
-         label: <div style={{ marginLeft: '4.7vw' }}>Score</div>,
+         label: <div style={{ marginLeft: '3.8vw' }}>Score</div>,
          render: (row) => {
             const color = row.checked === true ? '#2AB930' : '#F61414'
             return <p style={{ color, width: '30px' }}>{row.finalScore}</p>
