@@ -80,7 +80,7 @@ const UserResult = () => {
       },
       {
          id: 'status',
-         label: <div style={{ marginLeft: '8vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '8.5vw' }}>Status</div>,
          render: (row) => {
             const statusText =
                row.checked === true ? 'Evaluated' : 'Not evaluated'
@@ -90,7 +90,7 @@ const UserResult = () => {
       },
       {
          id: 'finalScore',
-         label: <div style={{ marginLeft: '5.9vw' }}>Score</div>,
+         label: <div style={{ marginLeft: '7vw' }}>Score</div>,
          render: (row) => {
             const color = row.checked === true ? 'green' : 'red'
 

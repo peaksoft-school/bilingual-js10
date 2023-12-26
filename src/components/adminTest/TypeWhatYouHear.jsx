@@ -130,7 +130,7 @@ export const TypeWhatYouHear = () => {
                <div className="audioContainer">
                   <div>
                      <label htmlFor="quantity">
-                        <p>Number off</p>
+                        <p>Number of</p>
                         <p>Replays</p>
                      </label>
                      <input
@@ -149,7 +149,7 @@ export const TypeWhatYouHear = () => {
                         className="goBackButton"
                         hoverStyle="#4E28E8"
                      >
-                        <label htmlFor="fileInput">uppload</label>
+                        <label htmlFor="fileInput">upload</label>
                      </Button>
                      <input
                         id="fileInput"
@@ -169,7 +169,7 @@ export const TypeWhatYouHear = () => {
                         )}
                      </Button>
                      <label htmlFor="fileInput">
-                        {audioFile ? audioFile?.name : 'Выберите аудиофайл'}
+                        {audioFile ? audioFile?.name : 'Choose an audio file'}
                      </label>
                   </div>
                </div>
@@ -230,6 +230,7 @@ const MainContainer = styled('div')(() => ({
             '-moz-appearance': 'textfield',
             width: '49px',
             marginTop: '10px',
+            paddingLeft: '18px',
             '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
                '-webkit-appearance': 'none',
                margin: 0,
