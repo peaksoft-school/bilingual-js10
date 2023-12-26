@@ -16,7 +16,6 @@ export const UserRespondInAtleastNwords = () => {
    const [userInput, setUserInput] = useState('')
    const dispatch = useDispatch()
    const navigate = useNavigate()
-
    const { testComponent, questions, currentComponent } = useSelector(
       (state) => state.globalTestSlice
    )
@@ -39,7 +38,6 @@ export const UserRespondInAtleastNwords = () => {
          dispatch(globalTestSlice.actions.addCurrentComponent(1))
       }
    }
-   const isNextButtonDisabled = !wordCount
 
    function handleTimeUp() {}
    const { duration } = testComponent
@@ -57,7 +55,7 @@ export const UserRespondInAtleastNwords = () => {
          <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
 
          <DescribeText>
-            Respond to the question in at least 50 words
+            Respond to the question in at least {testComponent.attempts} words
          </DescribeText>
          <MainContainer>
             <Describe>
@@ -65,7 +63,7 @@ export const UserRespondInAtleastNwords = () => {
             </Describe>
             <div>
                <Input minRows={5} maxRows={5} onChange={handleInputChange} />
-               <Word wordCount={wordCount}>
+               <Word wordCount={wordCount} res={testComponent.attempts}>
                   Word:{testComponent.count} : {wordCount}
                </Word>
             </div>
@@ -78,7 +76,7 @@ export const UserRespondInAtleastNwords = () => {
                   hoverStyle="#4E28E8"
                   className="nextButton"
                   padding="0.8rem 2.5rem"
-                  disabled={isNextButtonDisabled}
+                  disabled={wordCount <= testComponent.attempts}
                   onClick={handleAddTest}
                >
                   Next
@@ -88,9 +86,9 @@ export const UserRespondInAtleastNwords = () => {
       </Container>
    )
 }
-const Word = styled('span')(({ wordCount }) => {
+const Word = styled('span')(({ wordCount, res }) => {
    return {
-      color: wordCount >= 35 ? '#3A10E5' : '#AFAFAF',
+      color: wordCount >= res ? '#3A10E5' : '#AFAFAF',
       fontSize: '1rem',
       fontWeight: '500',
    }

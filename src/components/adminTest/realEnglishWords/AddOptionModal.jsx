@@ -14,7 +14,7 @@ const OptionModal = ({
    handleSaveOption,
    titleInput,
 }) => {
-   const [checked, setIsTrueOption] = useState(false)
+   const [isTrue, setIsTrueOption] = useState(false)
    const [title, setTitle] = useState('')
    const dispatch = useDispatch()
    const { pathname } = useLocation()
@@ -26,12 +26,11 @@ const OptionModal = ({
       if (updateUrl) {
          const option = {
             title,
-            isTrue: checked,
+            isTrue,
          }
          dispatch(postOption(option))
-      }
-      if (title) {
-         handleSaveOption(title, checked)
+      } else if (title) {
+         handleSaveOption(title, isTrue)
          setTitle('')
          setIsTrueOption(false)
          handleCloseModal()
@@ -62,8 +61,8 @@ const OptionModal = ({
                <TextOption> Is true option?</TextOption>
                <Radio
                   variant="CHECKBOX"
-                  checkedSwitch={checked}
-                  onChange={() => setIsTrueOption(!checked)}
+                  checkedSwitch={isTrue}
+                  onChange={() => setIsTrueOption(!isTrue)}
                />
             </Container>
             <ContainerForButtons>
