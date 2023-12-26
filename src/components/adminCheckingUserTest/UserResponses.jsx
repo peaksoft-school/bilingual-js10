@@ -10,6 +10,7 @@ import { axiosInstance } from '../../config/axiosInstance'
 export const UserResponses = () => {
    const { userId, testId } = useSelector((state) => state.answer)
    const [data, setData] = useState([])
+   const [disabled, setDisabled] = useState(false)
    const getData = async () => {
       try {
          const response = await axiosInstance.get(
@@ -26,9 +27,14 @@ export const UserResponses = () => {
    }, [])
 
    const sendResultHandler = async () => {
-      await axiosInstance.post(
-         `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
-      )
+      try {
+         await axiosInstance.post(
+            `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
+         )
+         setDisabled(true)
+      } catch (error) {
+         console.log(error)
+      }
    }
 
    const columns = [
@@ -117,7 +123,7 @@ export const UserResponses = () => {
                   defaultStyle="white"
                   hoverStyle="#3A10E5"
                   onClick={sendResultHandler}
-                  disabled={!data.checked}
+                  disabled={!data.checked || disabled}
                >
                   SEND RESULTS TO USERS EMAIL
                </Button>
