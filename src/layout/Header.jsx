@@ -33,7 +33,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   hoverStyle="#4E28E8"
                   onClick={handleComeInClick}
                >
-                  TO COME IN
+                  LOG IN
                </Button>
                <Button
                   defaultStyle="white"
@@ -41,7 +41,7 @@ const Header = ({ roles = 'guest', marginBottom }) => {
                   className="registerButton"
                   onClick={handleLoginClick}
                >
-                  REGISTER
+                  SIGN UP
                </Button>
             </ButtonsContainer>
          ) : (
