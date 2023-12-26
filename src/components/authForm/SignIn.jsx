@@ -62,15 +62,17 @@ const SigninPage = () => {
             </IconContainer>
             <Container>
                <Icon2 />
-               <Title> Sign in</Title>
+               <Title>Log in</Title>
                <StyledInput
                   label="Email"
                   name="email"
                   value={values.email}
                   onChange={handleChange}
                   type="email"
+                  id="outlined-basic"
                />
                <StyledInput
+                  id="outlined-basic"
                   label="Password"
                   name="password"
                   value={values.password}
@@ -82,7 +84,7 @@ const SigninPage = () => {
                </EyeIcon>
                <CheckboxContainer>
                   <StyledCheckbox variant="CHECKED" />
-                  <Text>To remember me</Text>
+                  <Text>Remember me</Text>
                </CheckboxContainer>
 
                <StyledButton
@@ -91,7 +93,7 @@ const SigninPage = () => {
                   variant="contained"
                   type="submit"
                >
-                  sign in
+                  log in
                </StyledButton>
                <ButtonContainer
                   defaultStyle="white"
@@ -99,11 +101,11 @@ const SigninPage = () => {
                   onClick={(event) => handleAuthWithGoogle(event)}
                >
                   <GoogleIcon />
-                  sign in with google
+                  log in with google
                </ButtonContainer>
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
-                  <StyledNavLink to="/signup"> REGISTER</StyledNavLink>
+                  <StyledNavLink to="/signup">SIGN UP</StyledNavLink>
                </StyledText>
             </Container>
          </SignInForm>

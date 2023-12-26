@@ -35,9 +35,9 @@ export const LearnMap = () => {
             <Cards2 style={{ paddingTop: '9rem' }}>
                <img src={Сhemistry} alt="Сhemistry" />
                <div>
-                  <h2>Built on the latest assessment sciencee</h2>
+                  <h2>Built on the latest assessment science</h2>
                   <p>
-                     The Duolingo English Test is a computer adaptive test
+                     The Bilingual English Test is a computer adaptive test
                      backed
                      <br />
                      by rigorous research, with results that are highly

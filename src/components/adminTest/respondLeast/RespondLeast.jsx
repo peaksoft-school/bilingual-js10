@@ -80,7 +80,7 @@ export const RespondLeast = () => {
          </Container>
          <AudioContainer>
             <div>
-               <p className="LabelTop">Number off</p>
+               <p className="LabelTop">Number of</p>
                <p className="LabelBottom">Words</p>
                <Input
                   id="numberReplays"
