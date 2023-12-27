@@ -11,6 +11,9 @@ import { axiosInstance } from '../../../config/axiosInstance'
 
 function convertDateString(timestamp) {
    const dateObject = new Date(timestamp)
+   // Add 6 hours
+   dateObject.setUTCHours(dateObject.getUTCHours() + 6)
+
    const hours = String(dateObject.getUTCHours()).padStart(2, '0')
    const minutes = String(dateObject.getUTCMinutes()).padStart(2, '0')
    const day = String(dateObject.getUTCDate()).padStart(2, '0')
@@ -22,7 +25,6 @@ function convertDateString(timestamp) {
    }
    return date
 }
-
 const UserResult = () => {
    const [apiData, setApiData] = useState([])
    const [openModal, setOpenModal] = useState(false)

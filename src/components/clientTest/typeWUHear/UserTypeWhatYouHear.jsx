@@ -73,6 +73,7 @@ export const UserTypeWhatYouHear = () => {
             <BlockImg>
                <BoxImg>
                   <Hear
+                     style={{ cursor: 'pointer' }}
                      onClick={isPlaying ? stopAudio : playAudio}
                      disabled={replaysLeft === 0}
                   />
