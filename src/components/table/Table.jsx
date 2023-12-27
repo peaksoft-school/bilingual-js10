@@ -127,7 +127,7 @@ const TableHeadStyle = styled(TableHead)(() => ({
       width: 'max-content',
       height: '41px',
       textAlign: 'start',
-      fontDize: '0.8rem',
+      fontSize: '0.8rem',
       color: '#222222',
       marginBottom: '1.25rem',
    },
@@ -136,7 +136,7 @@ const TableHeadStyle = styled(TableHead)(() => ({
 const TableContainerStyled = styled(TableContainer)(() => ({
    marginBottom: 'none',
    boxShadow: 'none',
-   width: '56.1vw',
+   width: '55vw',
    '&.css-lhr19p-MuiTable-root': {
       border: 'none',
       boxShadow: 'none',
@@ -151,13 +151,14 @@ const TableRowData = styled(TableRow)((props) => ({
    boxShadow:
       ' 0px 4px 10px 0px rgba(0, 0, 0, 0.06), 0px -4px 10px 0px rgba(0, 0, 0, 0.06);',
    borderRadius: '0.5rem',
-   maxWidth: '60vw',
+   maxWidth: '100%',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
-   justifyContent: 'space-around',
+   justifyContent: 'space-between',
    gap: props.rowGap || '1rem',
    marginBottom: '1rem',
+   padding: ' 0 1rem',
    cursor: props.pathname === '/admin/user-responses' ? 'pointer' : 'auto',
    ':hover': {
       backgroundColor:

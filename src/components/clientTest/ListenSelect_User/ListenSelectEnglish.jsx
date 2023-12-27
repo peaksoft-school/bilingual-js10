@@ -67,7 +67,9 @@ export const ListenSelectEnglish = () => {
    return (
       <ContainerTest>
          <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-         <h2>Select the Real English words in this list</h2>
+         <p className="RealEnglish">
+            Listen and Select English words in this list
+         </p>
          <ContainerMultiplySelect>
             <MultiplySelect
                words={selectedWords}
@@ -94,7 +96,7 @@ export const ListenSelectEnglish = () => {
 }
 
 const ContainerTest = styled('div')({
-   h2: {
+   '.RealEnglish': {
       marginTop: '3.12rem',
       textAlign: 'center',
       color: '#4C4859',

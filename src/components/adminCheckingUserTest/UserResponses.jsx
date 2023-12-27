@@ -10,6 +10,7 @@ import { axiosInstance } from '../../config/axiosInstance'
 export const UserResponses = () => {
    const { userId, testId } = useSelector((state) => state.answer)
    const [data, setData] = useState([])
+   const [disabled, setDisabled] = useState(false)
    const getData = async () => {
       try {
          const response = await axiosInstance.get(
@@ -26,9 +27,14 @@ export const UserResponses = () => {
    }, [])
 
    const sendResultHandler = async () => {
-      await axiosInstance.post(
-         `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
-      )
+      try {
+         await axiosInstance.post(
+            `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
+         )
+         setDisabled(true)
+      } catch (error) {
+         console.log(error)
+      }
    }
 
    const columns = [
@@ -36,10 +42,10 @@ export const UserResponses = () => {
          id: 'questionType',
          label: <div style={{ marginLeft: '8.4vw' }}>Question</div>,
       },
-      { id: 'score', label: <div style={{ marginLeft: '8vw' }}>Score</div> },
+      { id: 'score', label: <div style={{ marginLeft: '10vw' }}>Score</div> },
       {
          id: 'checked',
-         label: <div style={{ marginLeft: '9.3vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '12.5vw' }}>Status</div>,
          render: (row) => {
             const color = row.checked ? '#2AB930' : 'red'
             return (
@@ -117,7 +123,7 @@ export const UserResponses = () => {
                   defaultStyle="white"
                   hoverStyle="#3A10E5"
                   onClick={sendResultHandler}
-                  disabled={!data.checked}
+                  disabled={!data.checked || disabled}
                >
                   SEND RESULTS TO USERS EMAIL
                </Button>

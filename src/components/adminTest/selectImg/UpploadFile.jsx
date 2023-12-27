@@ -52,7 +52,7 @@ const UpploadFile = ({ setSelectedImage, selectedImage }) => {
                   <label htmlFor="fileInput">
                      {selectedImage ? null : (
                         <StyledTextUppload className="upploads">
-                           Uppload Image
+                           Upload Image
                         </StyledTextUppload>
                      )}
                   </label>
@@ -62,7 +62,7 @@ const UpploadFile = ({ setSelectedImage, selectedImage }) => {
 
          <BoxText>
             <p className="filename">
-               {selectedImage ? imageName : 'The file name'}
+               {selectedImage ? imageName : 'Choose the file'}
             </p>
          </BoxText>
       </Container>

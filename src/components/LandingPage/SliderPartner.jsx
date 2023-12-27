@@ -61,10 +61,11 @@ const StyledBox1 = styled('div')({
    left: '0%',
    width: '100vw',
    height: '126px',
+   overflow: 'hidden',
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'end',
-   gap: '2.5rem',
+   gap: '3.5rem',
    perspective: '100px',
    animation: 'scroll 10s linear infinite',
    '@keyframes scroll': {
@@ -82,11 +83,12 @@ const StyledBox2 = styled('div')({
    left: '0%',
    width: '100vw',
    height: '126px',
+   overflow: 'hidden',
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'space between',
    alignItems: 'end',
-   gap: '2.5rem',
+   gap: '3.5rem',
    perspective: '100px',
    animation: 'scroll2 10s linear infinite',
    '@keyframes scroll2': {
@@ -111,11 +113,8 @@ const InnerBox = styled('div')({
    perspective: '100px',
    borderRadius: '20px',
    transition: 'transform 3s',
-   '&:hover': {
-      transform: 'translateY(-20px) scale(1.3)',
-   },
-   '& .img': {
+   '& img': {
       width: '100%',
-      height: '86px',
+      height: '100px',
    },
 })

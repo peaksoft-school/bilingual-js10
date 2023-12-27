@@ -18,7 +18,7 @@ export const SendTheResults = () => {
       <Container>
          <Background>
             <ContainerTestComplete>
-               <span>Test is complete!</span>
+               <span>Test is completed!</span>
                <Complete />
             </ContainerTestComplete>
             <ContainerImgParagraf>
@@ -33,14 +33,6 @@ export const SendTheResults = () => {
             </ContainerImgParagraf>
             <hr className="hrTop" />
             <ContainerButton>
-               <Button
-                  variant="outlined"
-                  hoverStyle="#3A10E5"
-                  className="buttonTry"
-                  onClick={() => navigate(-2)}
-               >
-                  TRY AGAIN
-               </Button>
                <Button
                   variant="contained"
                   className="buttonDone"
@@ -58,7 +50,7 @@ export const SendTheResults = () => {
    )
 }
 const Container = styled('div')({
-   marginTop: '5rem',
+   marginTop: '13rem',
    '.hrTop': {
       marginTop: '3.75rem',
       width: '51rem',
@@ -104,7 +96,7 @@ const ContainerImgParagraf = styled('div')({
 
 const ContainerButton = styled('div')({
    display: 'flex',
-   justifyContent: 'space-between',
+   justifyContent: 'end',
    alignContent: 'center',
    marginTop: '2rem',
    '.buttonTry': {

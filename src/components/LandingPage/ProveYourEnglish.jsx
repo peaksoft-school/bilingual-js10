@@ -38,7 +38,7 @@ export const ProveYourEnglish = () => {
                   hoverStyle="#4E28E8"
                   onClick={handleComeInClick}
                >
-                  TO COME IN
+                  LOG IN
                </Button>
                <Button
                   defaultStyle="white"
@@ -46,7 +46,7 @@ export const ProveYourEnglish = () => {
                   className="registerButton"
                   onClick={handleLoginClick}
                >
-                  REGISTER
+                  SIGN UP
                </Button>
             </ButtonContinersss>
          </HeaderContiners>
@@ -55,8 +55,8 @@ export const ProveYourEnglish = () => {
             <h2>proficiency today with</h2>
             <h1>BILINGUAL</h1>
             <p>
-               For nearly 30 years, learners have turned to Rosetta Stone to
-               build the fluency
+               For nearly 30 years, learners have turned to Bilingual to build
+               the fluency
             </p>
             <span>and confidence they need to speak new languages.</span>
             <ToBeginButton className="Buttons" onClick={handleComeInClick}>

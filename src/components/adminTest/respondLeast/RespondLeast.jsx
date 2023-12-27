@@ -80,7 +80,7 @@ export const RespondLeast = () => {
          </Container>
          <AudioContainer>
             <div>
-               <p className="LabelTop">Number off</p>
+               <p className="LabelTop">Number of</p>
                <p className="LabelBottom">Words</p>
                <Input
                   id="numberReplays"
@@ -88,6 +88,7 @@ export const RespondLeast = () => {
                   value={formik.values.numberReplays}
                   onChange={formik.handleChange}
                   min="0"
+                  className="NumberContainer"
                />
                {formik.errors.numberReplays && (
                   <ErrorMessagesesaa>
@@ -121,6 +122,7 @@ const ErrorMessage = styled(Typography)(() => ({
 }))
 const ErrorMessagesesaa = styled(Typography)(() => ({
    color: 'red',
+   marginTop: '1rem',
 }))
 const Container = styled('div')`
    display: flex;
@@ -159,5 +161,9 @@ const AudioContainer = styled('div')`
    }
    .MuiInputBase-input {
       padding: 1rem 0rem 1rem 1rem;
+   }
+   .NumberContainer {
+      width: 3.7rem;
+      height: 2.6rem;
    }
 `

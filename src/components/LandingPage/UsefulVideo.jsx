@@ -3,30 +3,30 @@ import { DefaultPlayer as Video } from 'react-html5video'
 import 'react-html5video/dist/styles.css'
 import { motion } from 'framer-motion'
 import { textAnimation } from '../../utils/helpers/animation'
-import video1 from '../../assets/video/video1.MP4'
-import video2 from '../../assets/video/video2.MP4'
-import video3 from '../../assets/video/video3.MP4'
+import Ehings from '../../assets/video/Ehings.mp4'
+import Everyday from '../../assets/video/Everyday.mp4'
+import Paddington from '../../assets/video/Paddington.mp4'
 import poster from '../../assets/images/poster.jpg'
 
 const videos = [
    {
       id: 1,
       poster,
-      video: video1,
+      video: Ehings,
       title: 'Test Overview',
       duration: 'Duration 1:00',
    },
    {
       id: 2,
       poster,
-      video: video2,
+      video: Everyday,
       title: 'Test Walkthrough',
       duration: 'Duration 5:00',
    },
    {
       id: 3,
       poster,
-      video: video3,
+      video: Paddington,
       title: 'Integrated Subscores',
       duration: 'Duration 2:55',
    },
