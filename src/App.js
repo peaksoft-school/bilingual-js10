@@ -28,11 +28,7 @@ function App() {
 
    return (
       <div>
-<<<<<<< HEAD
          <AppRoutes />
-=======
-         <h1>Bilingual js`9</h1>
->>>>>>> 765689d (fixed conflicts)
       </div>
    )
 }
