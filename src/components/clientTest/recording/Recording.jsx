@@ -77,7 +77,7 @@ function Recording() {
          <MainRecordingContainer>
             <div>
                <div>
-                  <Title>Record yorself saying the statement below:</Title>
+                  <Title>Record yourself saying the statement below:</Title>
                </div>
                <SpeakContainer>
                   <div>
