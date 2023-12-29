@@ -1,6 +1,5 @@
 {
    "name": "bilingual",
-   "homepage": "https://github.com/Nurlan-Abdullaev/BILINGUAL.git",
    "version": "0.1.0",
    "private": true,
    "dependencies": {
