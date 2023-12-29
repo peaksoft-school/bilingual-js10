@@ -68,7 +68,7 @@ const HighLightAnswerUser = () => {
                <InputBlock>
                   <TitleBox>
                      <TextClick>
-                        Click and drad text to highlight the answer to the
+                        Click and drag text to highlight the answer to the
                         question below
                      </TextClick>
                   </TitleBox>

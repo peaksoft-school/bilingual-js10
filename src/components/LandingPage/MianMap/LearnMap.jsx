@@ -7,7 +7,6 @@ import Сhemistry from '../../../assets/images/Chemistry.svg'
 import Nonsense from '../../../assets/images/Nonsense.svg'
 import Access from '../../../assets/images/Access.svg'
 import Adaptive from '../../../assets/images/Adaptive.svg'
-import Button from '../../../assets/images/button.svg'
 import { ToBeginButton } from '../../UI/Buttons/ToBeginButton'
 
 export const LearnMap = () => {
@@ -35,9 +34,9 @@ export const LearnMap = () => {
             <Cards2 style={{ paddingTop: '9rem' }}>
                <img src={Сhemistry} alt="Сhemistry" />
                <div>
-                  <h2>Built on the latest assessment sciencee</h2>
+                  <h2>Built on the latest assessment science</h2>
                   <p>
-                     The Duolingo English Test is a computer adaptive test
+                     The Bilingual English Test is a computer adaptive test
                      backed
                      <br />
                      by rigorous research, with results that are highly
@@ -117,13 +116,12 @@ const Main = styled('div')`
       justify-content: center;
       color: #3752b4;
    }
-   button {
-      margin-left: 46%;
+   .Buttons {
+      margin-left: 48%;
       margin-bottom: 1rem;
       width: 200px;
       height: 60px;
       color: white;
-      background-image: url(${Button});
       border: none;
       border-radius: 2rem;
    }

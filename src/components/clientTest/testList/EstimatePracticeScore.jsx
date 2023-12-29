@@ -27,13 +27,14 @@ export const EstimatePracticeScore = () => {
                      <div className="divTime">
                         <Time />
                         <span>
-                           Practice takes just{' '}
-                           {Math.floor(currTest.duration / 60)} minutes
+                           {`The trial test takes only ${Math.floor(
+                              currTest.duration / 60
+                           )} minutes`}
                         </span>
                      </div>
                      <div className="divContacts">
                         <Contacts />
-                        <span>get an unofficial score estimate</span>
+                        <span>Get an unofficial score estimate</span>
                      </div>
                   </MiniContainer>
                </ContainerIkons>

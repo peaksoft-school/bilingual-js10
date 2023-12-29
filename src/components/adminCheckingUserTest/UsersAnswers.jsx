@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import { Table } from './components/components/table/Table'
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +16,7 @@ export const UserAnswers = () => {
    const result = async () => {
       try {
          const response = await axiosInstance.get(
-            'http://ec2-18-153-48-98.eu-central-1.compute.amazonaws.com/api/result/'
+            'http://billingual.peaksoftprojects.com/api/result/'
          )
          setData(
             response.data.map((el) => {
@@ -46,10 +45,13 @@ export const UserAnswers = () => {
    }, [])
 
    const columns = [
-      { id: 'userFullName', label: 'User Name' },
+      {
+         id: 'userFullName',
+         label: <div style={{ marginLeft: '4.5vw' }}>User Name</div>,
+      },
       {
          id: 'newDate',
-         label: 'Date of Submition',
+         label: <div style={{ marginLeft: '6.1vw' }}>Date of Submission</div>,
          render: (row) => {
             return (
                <div>
@@ -59,23 +61,26 @@ export const UserAnswers = () => {
             )
          },
       },
-      { id: 'testName', label: 'Test Name' },
+      {
+         id: 'testName',
+         label: <div style={{ marginLeft: '0.1vw' }}>Test Name</div>,
+      },
       {
          id: 'checked',
-         label: 'Status',
+         label: <div style={{ marginLeft: '6.5vw' }}>Status</div>,
          render: (row) => {
             const statusText =
-               row.checked === true ? 'Evalauted' : 'Not evalauted'
+               row.checked === true ? 'Evaluated' : 'Not evaluated'
             const color = row.checked === true ? '#2AB930' : '#F61414'
-            return <p style={{ color }}>{statusText}</p>
+            return <p style={{ color, width: '113px' }}>{statusText}</p>
          },
       },
       {
          id: 'finalScore',
-         label: 'Score',
+         label: <div style={{ marginLeft: '4.8vw' }}>Score</div>,
          render: (row) => {
-            const color = row.finalScore > 0 ? '#2AB930' : '#F61414'
-            return <p style={{ color }}>{row.finalScore}</p>
+            const color = row.checked === true ? '#2AB930' : '#F61414'
+            return <p style={{ color, width: '30px' }}>{row.finalScore}</p>
          },
       },
       {
@@ -114,17 +119,12 @@ export const UserAnswers = () => {
    return (
       <div>
          <Background>
-            <Table
-               data={data}
-               columns={columns}
-               columnGap="40px"
-               rowGap="3px"
-            />
+            <Table data={data} columns={columns} />
          </Background>
       </div>
    )
 }
 const Container = styled('div')`
    display: flex;
-   gap: 1.38rem;
+   gap: 1.3rem;
 `

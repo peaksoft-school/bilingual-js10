@@ -1,13 +1,13 @@
 import React from 'react'
 import {
    Table as MuiTable,
-   TableBody,
    TableCell,
    TableContainer,
    TableHead,
    TableRow,
    Paper,
    styled,
+   TableBody,
 } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,8 +28,8 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
    return (
       <Container>
          <TableContainerStyled component={Paper}>
-            <MuiTableStyled>
-               <TableHead>
+            <MuiTable>
+               <TableHeadStyle>
                   <TableRowColumns columnGap={columnGap}>
                      {questions?.length === 0 && data?.length === 0 ? (
                         <p>There s no one here yet</p>
@@ -39,65 +39,64 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                         ))
                      )}
                   </TableRowColumns>
-               </TableHead>
+               </TableHeadStyle>
                <TableBodyStyled>
-                  <MainContainerStyled>
-                     {Array.isArray(data) &&
-                        data.map((row, i) => (
-                           <TableRowData
-                              rowGap={rowGap}
-                              pathname={pathname}
-                              key={row.id}
-                              onClick={() => {
-                                 if (
-                                    pathname === '/admin/results/user-responses'
-                                 ) {
-                                    handleCheck(row.id, row.questionType)
-                                 }
-                              }}
-                           >
-                              {i + 1}
-                              {columns?.map((column) => {
-                                 if (column.render) {
-                                    return column.render(row)
-                                 }
-                                 return (
-                                    <TableCell
-                                       key={column.id}
-                                       title={String(row[column.id])}
-                                       className="tableCell"
-                                    >
-                                       {column.id !== 'dateOfSubmission' &&
-                                          (row[column.id]?.length > 10
-                                             ? `${row[column.id].substring(
-                                                  0,
-                                                  10
-                                               )}...`
-                                             : row[column.id])}
-                                       {column.id === 'dateOfSubmission' && (
-                                          <div>
-                                             <p>
-                                                {
-                                                   row[column.id]
-                                                      ?.hoursAndMinutes
-                                                }
-                                             </p>
-                                             <p>
-                                                {
-                                                   row[column.id]
-                                                      ?.dayMonthAndYear
-                                                }
-                                             </p>
-                                          </div>
-                                       )}
-                                    </TableCell>
-                                 )
-                              })}
-                           </TableRowData>
-                        ))}
-                  </MainContainerStyled>
+                  {/* <MainContainerStyled> */}
+                  {Array.isArray(data) &&
+                     data.map((row, i) => (
+                        <TableRowData
+                           rowGap={rowGap}
+                           pathname={pathname}
+                           key={row.id}
+                           onClick={() => {
+                              if (
+                                 pathname === '/admin/results/user-responses'
+                              ) {
+                                 handleCheck(row.id, row.questionType)
+                              }
+                           }}
+                        >
+                           {i + 1}
+                           {columns?.map((column) => {
+                              if (column.render) {
+                                 return column.render(row)
+                              }
+                              return (
+                                 <TableCell
+                                    key={column.id}
+                                    title={String(row[column.id])}
+                                    className="tableCell"
+                                 >
+                                    {column.id !== 'dateOfSubmission' &&
+                                       (row[column.id]?.length > 10
+                                          ? `${row[column.id].substring(
+                                               0,
+                                               10
+                                            )}...`
+                                          : row[column.id])}
+                                    {column.id === 'dateOfSubmission' && (
+                                       <div
+                                          style={{
+                                             height: '50px',
+                                             marginTop: '-10px',
+                                          }}
+                                       >
+                                          <p>
+                                             {row[column.id]?.hoursAndMinutes}
+                                          </p>
+                                          <p>
+                                             {row[column.id]?.dayMonthAndYear}
+                                          </p>
+                                       </div>
+                                    )}
+                                 </TableCell>
+                              )
+                           })}
+                        </TableRowData>
+                     ))}
+                  {/* </MainContainerStyled> */}
                </TableBodyStyled>
-            </MuiTableStyled>
+            </MuiTable>
          </TableContainerStyled>
       </Container>
    )
@@ -114,53 +113,52 @@ const Container = styled('div')`
    margin: 0;
 `
 const TableBodyStyled = styled(TableBody)(() => ({
-   '&& .css-ecxqme-MuiTableRow-root': {
-      borderBottom: '0.1px solid grey',
+   '.MuiTableCell-root': {
+      width: '17%',
+      height: '100%',
+      textAlign: 'start',
+      border: 'none',
+      marginTop: '14px',
    },
 }))
-const MainContainerStyled = styled('div')`
-   display: flex;
-   align-items: center;
-   justify-content: space-around;
-   flex-direction: column;
-   margin-right: 2rem;
-   && .css-txc5l5-MuiTableCell-root {
-      border: none;
-      padding: 0;
-   }
-`
+
+const TableHeadStyle = styled(TableHead)(() => ({
+   '.MuiTableCell-root ': {
+      width: 'max-content',
+      height: '41px',
+      textAlign: 'start',
+      fontSize: '0.8rem',
+      color: '#222222',
+      marginBottom: '1.25rem',
+   },
+}))
+
 const TableContainerStyled = styled(TableContainer)(() => ({
    marginBottom: 'none',
    boxShadow: 'none',
-   width: '56.1vw',
+   width: '55vw',
    '&.css-lhr19p-MuiTable-root': {
       border: 'none',
       boxShadow: 'none',
    },
 }))
-const MuiTableStyled = styled(MuiTable)(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   justifyContent: 'space-around',
-   flexDirection: 'column',
-}))
 const TableRowColumns = styled(TableRow)((props) => ({
    display: 'flex',
    alignItems: 'center',
-   justifyContent: 'space-around',
-   columnGap: props.columnGap || '80px',
+   columnGap: props.columnGap,
 }))
 const TableRowData = styled(TableRow)((props) => ({
    boxShadow:
       ' 0px 4px 10px 0px rgba(0, 0, 0, 0.06), 0px -4px 10px 0px rgba(0, 0, 0, 0.06);',
    borderRadius: '0.5rem',
-   width: '50vw',
+   maxWidth: '100%',
    height: '4rem',
    display: 'flex',
    alignItems: 'center',
-   justifyContent: 'space-around',
+   justifyContent: 'space-between',
    gap: props.rowGap || '1rem',
    marginBottom: '1rem',
+   padding: ' 0 1rem',
    cursor: props.pathname === '/admin/user-responses' ? 'pointer' : 'auto',
    ':hover': {
       backgroundColor:

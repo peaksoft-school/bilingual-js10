@@ -86,14 +86,14 @@ export function FooterAccordions() {
                <img src={bilingual} alt="Bilingual" />
             </div>
             <div className="ControledIcon">
-               <a href="https://www.youtube.com/watch?v=JBB9iAo7yrM">
-                  <img src={youTube} alt="YouTube" />
+               <a href="https://www.youtube.com/@bilinguallittlestars">
+                  <img src={instagram} alt="Instagram" />
                </a>
-               <a href="https://www.youtube.com/watch?v=JBB9iAo7yrM">
+               <a href="https://www.facebook.com/?locale=ru_RU">
                   <img src={facebook} alt="Facebook" />
                </a>
                <a href="https://www.instagram.com/">
-                  <img src={instagram} alt="Instagram" />
+                  <img src={youTube} alt="YouTube" />
                </a>
             </div>
          </ContainerIcon>

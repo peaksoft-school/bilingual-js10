@@ -6,13 +6,6 @@ import { Background } from '../../layout/Background'
 import Button from '../UI/Buttons/Button'
 import { axiosInstance } from '../../config/axiosInstance'
 
-const answers = [
-   {
-      id: 1,
-      title: ' "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam". ',
-   },
-]
-
 const RespondleastUserTest = () => {
    const [appState, setAppState] = useState({ response: null })
    const { userId, questionId } = useSelector((appState) => appState.answer)
@@ -140,14 +133,12 @@ const RespondleastUserTest = () => {
             </ContainerMain>
             <div className="ContainerTitleMap">
                <p className="TextUserAnswer">User’s Answer </p>
-               {answers.map((el) => (
-                  <CreateAnswerTest key={el.id}>
-                     <p>Respond: </p>
-                     <div className="TitleText">
-                        <p>{el.title}</p>
-                     </div>
-                  </CreateAnswerTest>
-               ))}
+               <CreateAnswerTest>
+                  <p>Respond: </p>
+                  <div className="TitleText">
+                     <p>{appState.response?.respond}</p>
+                  </div>
+               </CreateAnswerTest>
             </div>
             <div className="TextUserAnswer">
                <span>Number of words:</span>

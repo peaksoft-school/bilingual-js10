@@ -10,6 +10,7 @@ import { axiosInstance } from '../../config/axiosInstance'
 export const UserResponses = () => {
    const { userId, testId } = useSelector((state) => state.answer)
    const [data, setData] = useState([])
+   const [disabled, setDisabled] = useState(false)
    const getData = async () => {
       try {
          const response = await axiosInstance.get(
@@ -26,25 +27,30 @@ export const UserResponses = () => {
    }, [])
 
    const sendResultHandler = async () => {
-      await axiosInstance.post(
-         `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
-      )
+      try {
+         await axiosInstance.post(
+            `/emailSender/send-html-email?userId=${userId}&testId=${testId}`
+         )
+         setDisabled(true)
+      } catch (error) {
+         console.log(error)
+      }
    }
 
    const columns = [
       {
          id: 'questionType',
-         label: <div style={{ paddingLeft: '80px' }}>Question</div>,
+         label: <div style={{ marginLeft: '8.4vw' }}>Question</div>,
       },
-      { id: 'score', label: 'Score' },
+      { id: 'score', label: <div style={{ marginLeft: '10vw' }}>Score</div> },
       {
          id: 'checked',
-         label: 'Status',
+         label: <div style={{ marginLeft: '12.5vw' }}>Status</div>,
          render: (row) => {
             const color = row.checked ? '#2AB930' : 'red'
             return (
-               <p style={{ color }}>
-                  {row.checked ? 'Evaluted' : 'Not Evaluted'}
+               <p style={{ color, width: '7rem' }}>
+                  {row.checked ? 'Evaluated' : 'Not Evaluated'}
                </p>
             )
          },
@@ -85,7 +91,7 @@ export const UserResponses = () => {
                </Title>
                <div>
                   <p>
-                     <span>Final Score:</span>
+                     <span>Final Score: </span>
                      <span
                         style={
                            data.checked
@@ -105,7 +111,7 @@ export const UserResponses = () => {
                               : { color: 'red' }
                         }
                      >
-                        {data.checked ? 'Evalauted' : 'Not Evaluted'}
+                        {data.checked ? 'Evaluated' : 'Not Evaluated'}
                      </span>
                   </p>
                </div>
@@ -117,18 +123,13 @@ export const UserResponses = () => {
                   defaultStyle="white"
                   hoverStyle="#3A10E5"
                   onClick={sendResultHandler}
-                  disabled={!data.checked}
+                  disabled={!data.checked || disabled}
                >
                   SEND RESULTS TO USERS EMAIL
                </Button>
             </BtnContainer>
             <hr />
-            <Table
-               data={data.questionResultResponseList}
-               columns={columns}
-               columnGap="110px"
-               rowGap="70px"
-            />
+            <Table data={data.questionResultResponseList} columns={columns} />
          </Background>
       </div>
    )

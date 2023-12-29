@@ -57,7 +57,7 @@ const MainTeamContainer = styled('div')(() => {
          fontFamily: 'Gilroy',
       },
       '& b': {
-         color: ' #3A10E5',
+         color: '#3752B4',
          fontFamily: 'Poppins',
       },
       '& p': {
