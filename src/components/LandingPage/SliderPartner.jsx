@@ -34,7 +34,7 @@ const Container = styled('div')({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
-   gap: '2.4rem',
+   gap: '3.5rem',
    marginBottom: '120px',
 })
 const Slider = styled('div')({
@@ -43,6 +43,7 @@ const Slider = styled('div')({
    height: '126px',
    display: 'flex',
    flexDirection: 'row',
+   columnGap: '3.5rem',
    justifyContent: 'spaceAround',
    alignItems: 'center',
 })
@@ -58,14 +59,13 @@ const MyText = styled(Typography)({
 
 const StyledBox1 = styled('div')({
    position: 'absolute',
-   left: '0%',
    width: '100vw',
    height: '126px',
    overflow: 'hidden',
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'end',
-   gap: '3.5rem',
+   gap: '2.8rem',
    perspective: '100px',
    animation: 'scroll 10s linear infinite',
    '@keyframes scroll': {
@@ -88,7 +88,7 @@ const StyledBox2 = styled('div')({
    flexDirection: 'row',
    justifyContent: 'space between',
    alignItems: 'end',
-   gap: '3.5rem',
+   gap: '2.8rem',
    perspective: '100px',
    animation: 'scroll2 10s linear infinite',
    '@keyframes scroll2': {

@@ -73,7 +73,7 @@ const TextContiners = styled('div')({
    justifyContent: 'center',
    alignContent: 'center',
    flexDirection: 'column',
-   top: '17.5rem',
+   top: '10.5rem',
    left: '5rem',
    h1: {
       fontSize: '3.75rem',

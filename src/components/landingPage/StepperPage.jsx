@@ -72,12 +72,12 @@ const Container = styled(motion(Grid))(() => ({
    display: 'flex',
    justifyContent: 'center',
    '& .slick-center': {
-      transition: 'transform 0.2s ease, scale 0.3s ease',
+      transition: 'transform 0.1s ease, scale 0.1s ease',
    },
    gap: '50px',
    overflow: 'hidden',
    marginTop: '30px',
-   widht: '100%',
+   width: '100%',
    height: '740px',
 }))
 

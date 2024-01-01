@@ -11,7 +11,6 @@ import { axiosInstance } from '../../../config/axiosInstance'
 
 function convertDateString(timestamp) {
    const dateObject = new Date(timestamp)
-   // Add 6 hours
    dateObject.setUTCHours(dateObject.getUTCHours() + 6)
 
    const hours = String(dateObject.getUTCHours()).padStart(2, '0')
@@ -78,11 +77,11 @@ const UserResult = () => {
       },
       {
          id: 'testName',
-         label: <div style={{ marginLeft: '6.1vw' }}>Test name</div>,
+         label: <div style={{ marginLeft: '4.8vw' }}>Test name</div>,
       },
       {
          id: 'status',
-         label: <div style={{ marginLeft: '8.5vw' }}>Status</div>,
+         label: <div style={{ marginLeft: '7.7vw' }}>Status</div>,
          render: (row) => {
             const statusText =
                row.checked === true ? 'Evaluated' : 'Not evaluated'
@@ -92,7 +91,7 @@ const UserResult = () => {
       },
       {
          id: 'finalScore',
-         label: <div style={{ marginLeft: '7vw' }}>Score</div>,
+         label: <div style={{ marginLeft: '7.8vw' }}>Score</div>,
          render: (row) => {
             const color = row.checked === true ? 'green' : 'red'
 
@@ -123,7 +122,7 @@ const UserResult = () => {
       <Container>
          <Header roles="user" />
          <Background>
-            <ContainerBackground>
+            <>
                <Table data={transferedData} columns={columns} />
                <Modal
                   open={openModal}
@@ -167,14 +166,12 @@ const UserResult = () => {
                      An error occurred: {error.message || 'Unknown error'}
                   </div>
                )}
-            </ContainerBackground>
+            </>
          </Background>
       </Container>
    )
 }
-const ContainerBackground = styled('div')`
-   width: 100%;
-`
+
 const Container = styled('div')`
    display: flex;
    flex-direction: column;
@@ -215,7 +212,7 @@ const ModalContainer = styled('div')`
    gap: 1rem;
    margin-top: 3rem;
    border-radius: 0.625rem;
-   width: 32rem;
+   width: 61rem;
    height: 5.875rem;
    background-color: #f0f1f1;
 `

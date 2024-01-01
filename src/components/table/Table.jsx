@@ -32,7 +32,7 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                <TableHeadStyle>
                   <TableRowColumns columnGap={columnGap}>
                      {questions?.length === 0 && data?.length === 0 ? (
-                        <p>There s no one here yet</p>
+                        <p>There is no one here yet</p>
                      ) : (
                         columns?.map((column) => (
                            <TableCell key={column.id}>{column.label}</TableCell>
@@ -41,7 +41,6 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                   </TableRowColumns>
                </TableHeadStyle>
                <TableBodyStyled>
-                  {/* <MainContainerStyled> */}
                   {Array.isArray(data) &&
                      data.map((row, i) => (
                         <TableRowData
@@ -94,7 +93,6 @@ export const Table = ({ data, columns, columnGap, rowGap }) => {
                            })}
                         </TableRowData>
                      ))}
-                  {/* </MainContainerStyled> */}
                </TableBodyStyled>
             </MuiTable>
          </TableContainerStyled>
@@ -136,7 +134,7 @@ const TableHeadStyle = styled(TableHead)(() => ({
 const TableContainerStyled = styled(TableContainer)(() => ({
    marginBottom: 'none',
    boxShadow: 'none',
-   width: '55vw',
+   width: '59vw',
    '&.css-lhr19p-MuiTable-root': {
       border: 'none',
       boxShadow: 'none',
