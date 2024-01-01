@@ -1,6 +1,5 @@
 {
-   "name": "bilingual-js10",
-   "homepage": "https://Dasi012.github.io/bilingual-js10/",
+   "name": "bilingual",
    "version": "0.1.0",
    "private": true,
    "dependencies": {
